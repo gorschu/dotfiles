@@ -1,0 +1,31 @@
+[DEFAULT]
+jobs = 5
+
+[rofi-pass]
+checkout = git clone --depth=1 'https://github.com/carnager/rofi-pass.git' 'rofi-pass'
+
+[tomb]
+checkout = git clone --depth=1 'https://github.com/dyne/Tomb.git' 'tomb'
+
+[autorandr]
+checkout = git clone --depth=1 'https://github.com/phillipberndt/autorandr.git' 'autorandr'
+
+[clipster]
+checkout = git clone --depth=1 'https://github.com/mrichar1/clipster.git' 'clipster'
+
+[fzf]
+checkout = git clone --depth=1 'https://github.com/junegunn/fzf.git' 'fzf'
+
+[tpm]
+checkout = git clone --depth=1 'https://github.com/tmux-plugins/tpm.git' 'tpm'
+
+[diff-so-fancy]
+checkout = git clone --depth=1 'https://github.com/so-fancy/diff-so-fancy.git' 'diff-so-fancy'
+
+[gruvbox-contrib]
+checkout = git clone --depth=1 https://github.com/gruvbox-community/gruvbox-contrib 'gruvbox-contrib'
+
+[gogh]
+checkout = git clone --depth 1 https://github.com/Mayccoll/Gogh.git 'gogh'
+
+# vim: ft=dosini

@@ -1,0 +1,40 @@
+[general]
+status_path = "~/.local/share/vdirsyncer/status"
+
+[pair fastmail_contacts]
+a = "fastmail_contacts_local"
+b = "fastmail_contacts_remote"
+#collections = ["from a", "from b"]
+collections = ["from b"]
+metadata = ["displayname"]
+conflict_resolution = "b wins"
+
+[storage fastmail_contacts_local]
+type = "filesystem"
+path = "~/.local/share/contacts"
+fileext = ".vcf"
+
+[storage fastmail_contacts_remote]
+type = "carddav"
+url = "https://carddav.messagingengine.com/"
+username = "gordon@gordonschulz.de"
+password.fetch = ["command", "~/bin/mail/get_carddav_password.sh"]
+
+[pair fastmail_calendars]
+a = "fastmail_calendars_local"
+b = "fastmail_calendars_remote"
+#collections = ["from a", "from b"]
+collections = ["from b"]
+metadata = ["displayname", "color"]
+conflict_resolution = "b wins"
+
+[storage fastmail_calendars_local]
+type = "filesystem"
+path = "~/.local/share/calendars"
+fileext = ".ics"
+
+[storage fastmail_calendars_remote]
+type = "caldav"
+url = "https://caldav.messagingengine.com/"
+username = "gordon@gordonschulz.de"
+password.fetch = ["command", "~/bin/mail/get_caldav_password.sh"]

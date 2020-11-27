@@ -1,0 +1,58 @@
+robbyrussell/oh-my-zsh
+robbyrussell/oh-my-zsh path:plugins/direnv
+robbyrussell/oh-my-zsh path:plugins/git
+robbyrussell/oh-my-zsh path:plugins/github
+robbyrussell/oh-my-zsh path:plugins/git-extras
+robbyrussell/oh-my-zsh path:plugins/git-flow-avh
+robbyrussell/oh-my-zsh path:plugins/git-auto-fetch
+robbyrussell/oh-my-zsh path:plugins/vi-mode
+robbyrussell/oh-my-zsh path:plugins/fancy-ctrl-z
+robbyrussell/oh-my-zsh path:plugins/python
+robbyrussell/oh-my-zsh path:plugins/pyenv
+robbyrussell/oh-my-zsh path:plugins/pip
+robbyrussell/oh-my-zsh path:plugins/pylint
+robbyrussell/oh-my-zsh path:plugins/gnu-utils
+robbyrussell/oh-my-zsh path:plugins/pass
+robbyrussell/oh-my-zsh path:plugins/extract
+robbyrussell/oh-my-zsh path:plugins/systemd
+robbyrussell/oh-my-zsh path:plugins/rsync
+robbyrussell/oh-my-zsh path:plugins/compleat
+robbyrussell/oh-my-zsh path:plugins/ansible
+robbyrussell/oh-my-zsh path:plugins/tmux
+robbyrussell/oh-my-zsh path:plugins/golang
+robbyrussell/oh-my-zsh path:plugins/vscode
+robbyrussell/oh-my-zsh path:plugins/docker
+robbyrussell/oh-my-zsh path:plugins/docker-compose
+robbyrussell/oh-my-zsh path:plugins/docker-machine
+robbyrussell/oh-my-zsh path:plugins/vagrant
+robbyrussell/oh-my-zsh path:plugins/lxd
+robbyrussell/oh-my-zsh path:plugins/fasd
+{{ if eq .chezmoi.osRelease.id "ubuntu" }}
+robbyrussell/oh-my-zsh path:plugins/ubuntu
+{{ else if eq .chezmoi.osRelease.id "debian" }}
+robbyrussell/oh-my-zsh path:plugins/debian
+{{ else if eq .chezmoi.osRelease.id "opensuse" }}
+robbyrussell/oh-my-zsh path:plugins/suse
+{{ else if eq .chezmoi.osRelease.id "fedora" }}
+robbyrussell/oh-my-zsh path:plugins/fedora
+{{ else if eq .chezmoi.osRelease.id "arch" }}
+robbyrussell/oh-my-zsh path:plugins/archlinux
+{{ end }}
+
+hlissner/zsh-autopair
+hcgraf/zsh-sudo
+zsh-users/zsh-completions
+
+## theme
+# denysdovhan/spaceship-prompt
+
+# mafredri/zsh-async
+# sindresorhus/pure
+
+romkatv/powerlevel10k
+
+zdharma/fast-syntax-highlighting
+
+# this fucker needs to be last in plugins
+robbyrussell/oh-my-zsh path:plugins/history-substring-search
+{{ .chezmoi.homedir }}/.zshrc.d

@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# Usage: container@host -u <ssh user>
+# Will connect you to a shell to the (nspawn-)container over SSH
+
+usage="Usage: -u <ssh user> container@host"
+
+args=$(getopt -l "user:,help" -o "u:h" -- "$@")
+eval set -- "$args"
+
+while [ $# -ge 1 ]; do
+    case "$1" in
+        --)
+            # No more options left.
+            shift
+            break
+            ;;
+        -u|--user)
+            user="$2"
+            shift
+            ;;
+        -h|--help)
+            echo "${usage}"
+            exit 0
+            ;;
+    esac
+    shift
+done
+
+if [[ ! "${1}" =~ .*@.* ]]; then
+    echo "${usage}"
+    exit 1
+fi
+if [[ -z "${user}" ]]; then
+    user=$(whoami)
+fi
+
+container=$(echo "${1}" | cut -d'@' -f 1)
+host=$(echo "${1}" | cut -d'@' -f 2)
+
+# we need a pseudo-tty for sudo-password and the shell
+ssh -t "${user}"@"${host}" "sudo machinectl shell "${container}""

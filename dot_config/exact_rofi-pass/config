@@ -1,0 +1,59 @@
+# permanently set alternative root dir
+# root=/path/to/root
+
+# optional rofi parameters:
+# keep in mind that 0.15.7 has different arguments compared to
+# latest git. for rofi-pass this means that "-i" will not work with
+# 0.15.7.
+# rofi command. Make sure to have "$@" as last argument
+# rofi command. Make sure to have "$@" as last argument
+_rofi () {
+    rofi -i -no-auto-select "$@"
+}
+
+# fields to be used
+URL_field='url'
+USERNAME_field='user'
+AUTOTYPE_field='autotype'
+
+# set keyboard for xdotool
+fix_layout=true
+
+layout_cmd () {
+  setxkbmap de -variant nodeadkeys
+}
+
+# delay to be used for :delay keyword
+delay=2
+
+## Programs to be used
+# Editor
+EDITOR='gvim -f'
+# Browser
+BROWSER='chromium'
+
+## Misc settings
+help_color='#cda869'
+auto_enter='false'
+notify='false'
+default_do='autopass' # copyPass, typeUser, typePass, copyUser, copyUrl, viewEntry, typeMenu, actionMenu, copyMenu, openUrl
+
+# Clipboard settings
+# Possible options: primary, clipboard, both
+clip=primary
+
+# Custom Keybindings
+autotype="Alt+1"
+type_user="Alt+2"
+type_pass="Alt+3"
+open_url="Alt+4"
+copy_name="Alt+u"
+copy_url="Alt+l"
+copy_pass="Alt+p"
+show="Alt+o"
+copy_entry="Alt+2"
+type_entry="Alt+1"
+copy_menu="Alt+c"
+action_menu="Alt+a"
+type_menu="Alt+t"
+help="Alt+h"

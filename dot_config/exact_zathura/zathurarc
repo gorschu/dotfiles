@@ -1,0 +1,3 @@
+# load color scheme
+# source: https://github.com/rwrr/zathura-gruvbox
+include     ./zathura-gruvbox-dark

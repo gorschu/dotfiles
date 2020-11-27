@@ -1,0 +1,3 @@
+for profile in $HOME/.zprofile.d/*.sh; do
+    . "${profile}"
+done

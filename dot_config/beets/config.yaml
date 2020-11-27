@@ -1,0 +1,28 @@
+directory: /mnt/data/media/music/files
+library: /mnt/data/media/music/musiclibrary.blb
+plugins: replaygain scrub embedart fetchart lastgenre acousticbrainz lyrics
+per_disc_numbering: yes
+art_filename: cover
+
+replaygain:
+        overwrite: yes
+        albumgain: yes
+        backend: gstreamer
+fetchart:
+        autofetch: yes
+        maxwidth: 600
+embedart:
+        autoembed: yes
+scrub:
+        autoscrub: yes
+lyrics:
+        auto: yes
+        sources: lyricwiki lyrics.com musixmatch
+acousticbrainz:
+        auto: yes
+
+paths:
+        default: %asciify{$albumartist}/%asciify{$album%aunique{}} ($year)/%right{$disc,1}$track-%asciify{$artist-$title-$album%aunique{}}-$year
+        albumtype_soundtrack: Soundtracks/%asciify{$album%aunique{}} ($year)/%right{$disc,1}$track-%asciify{$artist-$title-$album%aunique{}}-$year
+        singleton: Non-Album/%asciify{$artist-$title}-$year
+        comp: Compilations/%asciify{$album%aunique{}} ($year)/%right{$disc,1}$track-%asciify{$artist-$title-$album%aunique{}}-$year
