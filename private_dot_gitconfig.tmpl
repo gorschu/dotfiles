@@ -1,0 +1,67 @@
+[user]
+  name = Gordon Schulz
+  email = {{ .email }}
+  signingkey = {{ .gpgkey }}
+
+[core]
+  quotepath = false
+  pager = delta
+
+[delta]
+    features = side-by-side line-numbers decorations
+    syntax-theme = gruvbox
+ 
+[interactive]
+  diffFilter = delta --color-only
+
+[commit]
+    gpgsign = true
+
+[credential]
+    helper = cache --timeout=3600
+
+[color]
+  ui = auto
+
+[include]
+  path=/home/azmo/.password-store/.gitconfig
+
+[help]
+  autocorrect = 20
+
+[diff]
+    tool = kdiff3
+    colorMoved = default
+
+[difftool]
+    prompt = false
+    keepBackup = false
+    trustExitCode = false
+[merge]
+    tool = kdiff3
+[mergetool]
+    prompt = false
+    keepBackup = false
+    keepTemporaries = false
+
+[gui]
+  historybrowser = git-dag
+
+[pull]
+  rebase = true
+
+[push]
+  default = simple
+
+[submodule]
+  fetchJobs = 4
+
+[http "https://gopkg.in"]
+  followRedirects = true
+[github]
+	user = azmodude
+[gpg]
+	program = gpg2
+[init]
+	templatedir = ~/.git-template
+	defaultBranch = main

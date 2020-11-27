@@ -1,0 +1,5 @@
+$pdf_mode=1;
+$recorder=0;
+$pdflatex='lualatex -file-line-error -synctex=1 %O %S';
+$hash_calc_ignore_pattern{'lua'} = '^.*$';
+$hash_calc_ignore_pattern{'luc'} = '^.*$';

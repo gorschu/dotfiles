@@ -1,0 +1,44 @@
+# -*- mode: sh -*-
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block, everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# add to fpath before ohmyzsh calls compinit
+fpath=(${fpath} $HOME/.zsh/completions)
+# this seems to be needed for oh-my-zsh to function correctly with antibody
+# https://github.com/getantibody/antibody/issues/218
+ZSH="${HOME}/.cache/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh"
+
+# disable ohmyzsh auto-updates; antibody update covers it
+DISABLE_AUTO_UPDATE="true"
+# disable ohmyzsh AUTOCORRECTION
+ENABLE_CORRECTION="false"
+# automatically start tmux, but only if $TERM Variable is set and
+# we are not running a SSH session
+# else we running into all sorts of problems on emacs/vim/tmux startup
+if [[ -n $TERM ]] && [[ -z "$SSH_CLIENT" ]] && [[ -z "$SSH_TTY" ]]; then
+    ZSH_TMUX_AUTOSTART="false"
+    ZSH_TMUX_AUTOQUIT="false"
+else
+    ZSH_TMUX_AUTOSTART="false"
+fi
+# let oh-my-zsh set the terminal title
+DISABLE_AUTO_TITLE=false
+
+# seems like oh-my-zsh isn't doing this by default anymore, its using the
+# default database
+eval $(dircolors ~/.dircolors)
+# load antibody plugins
+# antibody bundle < ~/.zsh_plugins.txt >! .zsh_plugins.sh
+source ~/.zsh_plugins.sh
+
+# sourcing /etc/profile stomps over paths set in .zshenv; source that file
+# again. It's not great, but it works.
+source $HOME/.zshenv.d/00-paths.zsh
+
+# source in fzf last
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

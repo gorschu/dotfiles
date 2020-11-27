@@ -1,0 +1,171 @@
+# paths
+set folder = ~/mail
+set mbox_type = Maildir
+set spoolfile = +Inbox
+
+set header_cache = $XDG_CACHE_HOME/mutt/headers
+set message_cachedir = $XDG_CACHE_HOME/mutt/bodies
+set mailcap_path = $XDG_CONFIG_HOME/neomutt/mailcap
+set tmpdir = $TMPDIR/mutt
+
+# don't ask to recall drafts
+set recall=no
+
+# don't mark mails as old
+set mark_old=no
+
+# Sort by threads
+set sort = threads
+# Sort threads by last date recieved - newest first
+set sort_aux = reverse-last-date-received
+# Show date in year/month/day hour:minute format
+set date_format="%y/%m/%d %I:%M%p"
+
+set folder_format="%2C %t %N %F %2l %-8.8u %-8.8g %8s %d %f"
+set index_format="%4C %-17.17D %Z %-25.25n (%?l?%4l&%4c?) %s"
+
+set alias_format="%4n %2d %t %-12a %r"
+set sort_alias=alias
+set reverse_alias=yes
+
+# charset definitions, encode from simple ascii up to utf-8 as needed
+set charset="utf-8"
+set send_charset="us-ascii:iso-8859-15:utf-8"
+set attribution_locale="en_US"
+#
+# set nvim to last empty line (before signature)
+# -c'noh' turns off search highlighting (hlsearch) as triggered by the
+# search for last line
+set editor="nvim '+:silent+?^$' %s -c'noh'"
+
+# setup address book query and completion
+set query_command = "echo %s | khard email --parsable --"
+set query_format = "%4c %t %-40.40n %-40.40a %?e?(%e)?"
+bind editor <Tab> complete-query
+bind editor ^T    complete
+
+# no default signature, we set that in the account configs
+unset signature
+#
+# don't ask for confirmation before printing
+set print
+# split each messages selected for printing
+set print_split
+# formail is from procmail
+# re-joins header lines that mutt - rightfully so - splits according to RFC
+set print_command="formail -c | mutt-print.sh"
+
+# which headers to show?
+ignore *
+unignore from date subject to cc
+unignore organization organisation x-mailer: x-newsreader: x-mailing-list: user-agent:
+unignore posted-to:
+unignore Message-Id
+unignore Content-Type
+my_hdr X-Mailer: `neomutt -v | head -n 1`, `nvim --version | head -n 1`
+
+# Sidebar
+set sidebar_visible
+set sidebar_short_path
+set sidebar_folder_indent
+set sidebar_width = 80
+set sidebar_format = '%B%?F? [%F]?%* %?N?%N/?%S'
+set sidebar_delim_chars = "/"
+unset sidebar_short_path
+# Move the highlight to the previous mailbox
+bind index,pager \Cp sidebar-prev
+# Move the highlight to the next mailbox
+bind index,pager \Cn sidebar-next
+# Open the highlighted mailbox
+bind index,pager \Co sidebar-open
+bind index \Ct sidebar-toggle-visible
+
+set sidebar_divider_char = '|' # unicode 2502
+# our finds sort them already and so we have the folder-hook Inboxes always at
+# the bottom
+set sidebar_sort_method = unsorted
+set mail_check_stats = yes
+
+# compose View Options
+set use_from
+set envelope_from                    # which from?
+set edit_headers                     # show headers when composing
+set fast_reply                       # skip to compose when replying
+unset askcc                            # ask for CC:
+set fcc_attach                       # save attachments with the body
+# set reply attribution
+set attribution='On %{!%A, %d %b %Y %H:%M}, %n <%a> wrote:\n'
+set reply_to                         # reply to Reply to: field
+set reverse_name                     # reply as whomever it was to
+set include                          # include message in replies
+set forward_format="Fwd: [%a: %s]"
+unset forward_quote                    # include message as quote in forwards
+set text_flowed
+# set and honor followups
+set followup_to
+set honor_followup_to
+# forward attachments as part of body
+unset mime_forward
+# if we cannot decode something, attach it as mime
+set mime_forward_rest
+# decode forward messages
+set forward_decode
+
+# thread messages with same message-id
+set duplicate_threads
+# never collapse unread threads
+unset collapse_unread
+# jump to first unread message of thread when uncollapsing
+set uncollapse_jump
+
+# pager settings
+set pager_context=4
+set pager_index_lines=15
+
+# don't jump to next message when reaching the end of previous one
+set pager_stop= yes
+# Don't move read mail.
+set move = no
+# don't wait for confirmation if exit code of external program was 0
+set wait_key=no
+#
+# use $HOME/.mime_types for attachments that get labeled falsely
+mime_lookup application/octet-stream
+
+# GPG/PGP
+set pgp_sign_as = 0xDEE550054AA972F6
+set pgp_use_gpg_agent = yes
+set pgp_self_encrypt = yes
+set postpone_encrypt = yes
+set crypt_autopgp = yes
+set crypt_use_gpgme = yes
+set crypt_autosign = no
+set crypt_autoencrypt = no
+set crypt_verify_sig = yes
+set crypt_replysign = yes
+set crypt_replyencrypt = yes
+set crypt_replysignencrypted = yes
+
+source $XDG_CONFIG_HOME/neomutt/colors-gruvbox-shuber.muttrc
+source $XDG_CONFIG_HOME/neomutt/colors-gruvbox-shuber-extended.muttrc
+
+
+# view html mails as text
+set implicit_autoview
+# auto-view html
+auto_view text/html application/pdf
+# prefer text over html
+alternative_order text/plain text/enriched text/html
+
+# use main address by default
+source $XDG_CONFIG_HOME/neomutt/private/accounts/g@gordonschulz.de
+
+# source in account definitions
+source $XDG_CONFIG_HOME/neomutt/private/accounts/config
+
+
+# general keybindings
+# mark all messages in folder as read
+macro index ,m "T ~O | ~N\n;N" "Mark all messages in folder as read"
+# open urls with urlscan
+macro pager ,u "<pipe-message> urlscan<Enter>" "call urlscan to extract URLs out of a message"

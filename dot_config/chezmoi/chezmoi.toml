@@ -1,0 +1,7 @@
+[gpg]
+    recipient = "0xDEE550054AA972F6"
+
+[data]
+    wm = "i3"
+    email = "gordon@gordonschulz.de"
+    gpgkey = "0xDEE550054AA972F6"

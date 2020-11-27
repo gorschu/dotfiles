@@ -1,0 +1,443 @@
+# start polybar early
+exec_always --no-startup-id $XDG_CONFIG_HOME/polybar/launch.sh
+
+{{ define "gaps" }}
+# i3-gaps
+default_border pixel 2
+default_floating_border pixel 3
+
+set $default_gaps_inner 4
+set $default_gaps_outer 2
+
+gaps inner $default_gaps_inner
+gaps outer $default_gaps_outer
+smart_gaps on
+smart_borders on
+
+set $mode_gaps Gaps: (o) outer, (i) inner
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+
+bindsym $mod+Shift+g mode "$mode_gaps"
+mode "$mode_gaps" {
+        bindsym o      mode "$mode_gaps_outer"
+        bindsym i      mode "$mode_gaps_inner"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+mode "$mode_gaps_inner" {
+        bindsym plus  gaps inner current plus 5
+        bindsym minus gaps inner current minus 5
+        bindsym 0     gaps inner current set 0
+
+        bindsym Shift+plus  gaps inner all plus 5
+        bindsym Shift+minus gaps inner all minus 5
+        bindsym Shift+0     gaps inner all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_outer" {
+        bindsym plus  gaps outer current plus 5
+        bindsym minus gaps outer current minus 5
+        bindsym 0     gaps outer current set 0
+
+        bindsym Shift+plus  gaps outer all plus 5
+        bindsym Shift+minus gaps outer all minus 5
+        bindsym Shift+0     gaps outer all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+{{ end }}
+
+{{ define "vanilla" }}
+# new windows are normal and get a 1 pixel border
+default_border normal 1
+# new floats are normal and get 2 pixels border
+default_floating_border normal 2
+{{ end }}
+
+set $mod Mod4
+set $workspace1 1
+set $workspace2 2
+set $workspace3 3
+set $workspace4 4
+set $workspace5 5
+set $workspace6 6
+set $workspace7 7
+set $workspace8 8
+set $workspace9 9
+set $workspace10 10
+workspace $workspace1 output  eDP1 DP1-1
+workspace $workspace2 output  eDP1 DP1-1
+workspace $workspace3 output  eDP1 DP1-1
+workspace $workspace4 output  eDP1 DP1-1
+workspace $workspace5 output  eDP1 DP1-1
+workspace $workspace6 output  eDP1 DP1-8
+workspace $workspace7 output  eDP1 DP1-8
+workspace $workspace8 output  eDP1 DP1-8
+workspace $workspace9 output  eDP1 DP1-8
+workspace $workspace10 output eDP1 DP1-8
+
+hide_edge_borders smart
+
+# font to use for titles
+font pango:Sans 9
+
+# focus following fucks up intellij
+focus_follows_mouse no
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec i3-sensible-terminal
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# custom keybindings
+bindsym $mod+p exec --no-startup-id $HOME/.vendor/rofi-pass/rofi-pass
+bindsym $mod+d exec --no-startup-id rofi -modi drun -display-drun "drun " -show-icons -show drun
+bindsym $mod+w exec --no-startup-id rofi -show-icons -display-window "window " -show window
+bindsym $mod+shift+c exec --no-startup-id rofi -show calc -modi calc -lines 5 -width 40 -no-show-match -no-sort
+bindsym $mod+shift+w exec --no-startup-id rofi -display-windowcd "window current desktop " -show windowcd
+bindsym $mod+shift+s exec --no-startup-id rofi -display-ssh "ssh " -show ssh
+bindsym $mod+shift+v exec pavucontrol
+bindsym $mod+c exec python3 $HOME/.vendor/clipster/clipster -s -c
+# run autorandr when pressing FN+F7 (XF86Display)
+bindsym XF86Display exec --no-startup-id /usr/bin/autorandr --change --default mobile
+bindsym $mod+shift+e exec sh -c 'i3-msg [class="Emacs"] focus || emacs'
+bindsym $mod+shift+f exec sh -c 'i3-msg [instance="ranger"] focus || i3-sensible-terminal --class="ranger" -e "ranger"'
+bindsym $mod+shift+m exec sh -c 'i3-msg [instance="neomutt"] focus || i3-sensible-terminal --class="neomutt" -e "neomutt"'
+bindsym $mod+shift+z [con_mark="zeal"] scratchpad show; [con_mark="zeal"] move position center
+
+# change workspaces with $mod+tab
+bindsym $mod+Tab workspace next
+bindsym $mod+Shift+Tab workspace prev
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+o split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+t layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+bindsym $mod+shift+d focus child
+
+# Make the currently focused window a scratchpad
+bindsym $mod+Shift+minus move scratchpad
+# Show the first scratchpad window
+bindsym $mod+minus scratchpad show
+
+# switch to workspace
+bindsym $mod+1 workspace $workspace1
+bindsym $mod+2 workspace $workspace2
+bindsym $mod+3 workspace $workspace3
+bindsym $mod+4 workspace $workspace4
+bindsym $mod+5 workspace $workspace5
+bindsym $mod+6 workspace $workspace6
+bindsym $mod+7 workspace $workspace7
+bindsym $mod+8 workspace $workspace8
+bindsym $mod+9 workspace $workspace9
+bindsym $mod+0 workspace $workspace10
+
+# auto_back_and_forth by hitting current workspace again to go back
+workspace_auto_back_and_forth yes
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $workspace1
+bindsym $mod+Shift+2 move container to workspace $workspace2
+bindsym $mod+Shift+3 move container to workspace $workspace3
+bindsym $mod+Shift+4 move container to workspace $workspace4
+bindsym $mod+Shift+5 move container to workspace $workspace5
+bindsym $mod+Shift+6 move container to workspace $workspace6
+bindsym $mod+Shift+7 move container to workspace $workspace7
+bindsym $mod+Shift+8 move container to workspace $workspace8
+bindsym $mod+Shift+9 move container to workspace $workspace9
+bindsym $mod+Shift+0 move container to workspace $workspace10
+
+# brightness keys
+bindcode 232 exec brightnessctl -q s 10%-
+bindcode 233 exec brightnessctl -q s +10%
+# volume keys
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+
+{{ $gaps_dists := list "arch" "opensuse" }}
+
+{{ if has .chezmoi.osRelease.id $gaps_dists }}
+{{ template "gaps" }}
+{{ else }}
+{{ template "vanilla" }}
+{{ end }}
+
+
+# Enable popup during fullscreen
+popup_during_fullscreen smart
+
+# resize window (you can also use the mouse for that)
+mode "ﭕ  resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+# trigger resize
+bindsym $mod+r mode "ﭕ  resize"
+
+# move floating windows with keys
+mode "  floating" {
+    # tab to select floating windows
+    bindsym $mod+Tab focus right
+
+    bindsym h move left 20px
+    bindsym j move down 20px
+    bindsym k move up 20px
+    bindsym l move right 20px
+
+    # same bindings, but for the arrow keys
+    bindsym Left  move left 20px
+    bindsym Down  move down 20px
+    bindsym Up    move up 20px
+    bindsym Right move right 20px
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+# trigger floating
+bindsym $mod+m mode "  floating" focus floating
+
+set $mode_system    system: (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
+mode "$mode_system" {
+    bindsym l exec --no-startup-id loginctl lock-session $XDG_SESSION_ID, mode "default"
+    bindsym e exec --no-startup-id i3-msg exit, mode "default"
+    bindsym s exec --no-startup-id systemctl suspend, mode "default"
+    bindsym h exec --no-startup-id systemctl hibernate, mode "default"
+    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id systemctl poweroff, mode "default"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+# trigger system
+bindsym $mod+Delete mode "$mode_system"
+
+set $mode_restart    i3 mgmgt: (c) reload, (r) restart, (e) exit
+mode "$mode_restart" {
+    # reload the configuration file
+    bindsym c reload
+    # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+    bindsym r restart
+    # exit i3 (logs you out of your X session)
+    bindsym e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+shift+r mode "$mode_restart"
+
+# set primary gruvbox colorscheme colors
+set $bg #282828
+set $red #cc241d
+set $green #98971a
+set $yellow #d79921
+set $blue #458588
+set $purple #b16286
+set $aqua #689d68
+set $gray #a89984
+set $darkgray #1d2021
+
+#start of window title bars and borders section
+# green gruvbox
+# class                     border|backgr|text|indicator|child_border
+# client.focused             $green $green $darkgray $purple $green
+# client.focused_inactive    $darkgray $darkgray $yellow $purple $darkgray
+# client.unfocused           $darkgray $darkgray $yellow $purple $darkgray
+# client.urgent              $red $red $white $red $red
+# client.background          $green
+
+# blue gruvbox
+# class                     border|backgr|text|indicator|child_border
+client.focused              $blue $blue $darkgray $purple $blue
+client.focused_inactive     $darkgray $darkgray $yellow $purple $darkgray
+client.unfocused            $darkgray $darkgray $yellow $purple $darkgray
+client.urgent               $red $red $white $red $red
+client.background           $blue
+#end of window title bars and borders section
+
+#set $i3blocks SCRIPT_DIR=$HOME/.config/i3blocks/scripts i3blocks
+#
+#bar {
+#    font pango:Sans 10
+#    tray_output primary
+#    position bottom
+#    status_command $i3blocks
+#    colors {
+#        # bar background color
+#        background $bg
+#        # text color used for blocks that do not have a color specified.
+#        statusline $yellow
+#        # workspaces section
+#        #                    border  backgr. text
+#        focused_workspace    $aqua $aqua $darkgray
+#        inactive_workspace   $darkgray $darkgray $yellow
+#        active_workspace     $darkgray $darkgray $yellow
+#        urgent_workspace     $purple $purple $bg
+#    }
+#}
+
+# window/class specific options
+for_window [title=".* - Zeal"] mark "zeal", move scratchpad
+# make Firefox's PiP windows sticky
+for_window [title="Picture-in-Picture"] sticky enable
+
+assign [class="firefox"] $workspace1
+assign [class="Thunderbird"] $workspace6
+assign [class="Google-chrome"] $workspace1
+assign [class="jetbrains-pycharm"] $workspace3
+assign [title="Eddie"] $workspace9
+assign [instance="Steam"] $workspace6
+# ffxiv
+assign [class="steam_app_39210"] $workspace4
+assign [instance="battle.net.exe"] $workspace4
+assign [instance="wow.exe"] $workspace4
+assign [instance="lutris"] $workspace4
+# no window titles for certain programs
+for_window [class="Google-chrome"] border pixel1
+for_window [class="Chromium"] border pixel1
+for_window [class="firefox"] border pixel1
+for_window [class="Thunderbird"] border pixel1
+for_window [class="^mpv$"] floating enable
+# float these
+for_window [class="^Pavucontrol$"] floating enable
+for_window [class="^Zeal$"] floating enable
+for_window [title="^pinentry$"] floating enable
+for_window [class="Qalculate-gtk"] floating enable
+
+exec --no-startup-id picom -b
+exec --no-startup-id dunst
+exec --no-startup-id udiskie -s -a -n
+exec --no-startup-id unclutter
+exec --no-startup-id redshift-gtk
+exec --no-startup-id nm-applet
+exec --no-startup-id hp-systray
+exec --no-startup-id solaar -w hide
+exec --no-startup-id yubikey-touch-detector --libnotify
+
+# Session Manager startups sometimes suck and disallow preprocessing.
+# Do it ourselves
+exec --no-startup-id xrdb -merge ~/.Xresources
+
+# make sure we do have an authentication agent and gnome-keyring-daemon started
+exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=secrets
+{{/* this is a fucking mess */}}
+{{ if stat "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1" }}
+{{/* arch */}}
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+{{ else if stat "/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1" }}
+{{/* debian */}}
+exec --no-startup-id /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1
+{{ else if stat "/usr/libexec/polkit-gnome-authentication-agent-1" }}
+{{/* fedora */}}
+exec --no-startup-id /usr/libexec/polkit-gnome-authentication-agent-1
+{{ else if stat "/usr/lib/polkit-gnome-authentication-agent-1" }}
+{{/* opensuse */}}
+exec --no-startup-id /usr/lib/polkit-gnome-authentication-agent-1
+{{ end }}
+
+exec --no-startup-id /usr/bin/autorandr --change --default mobile
+
+# dpms standby and suspend after 10, off after 15 minutes
+exec_always --no-startup-id xset dpms 600 600 900
+# dim screen after 5 minutes, lock after another 4 minutes
+exec_always --no-startup-id xset s 300 240
+# run xss-lock to dim screen after first xset argument, lock after second
+exec --no-startup-id xss-lock -l -n $HOME/bin/i3/dim-screen.sh -- i3lock -c 000000
+
+# keyboard map
+exec --no-startup-id setxkbmap -model pc105 -layout de -variant nodeadkeys -option caps:escape
+# keyboard repeat delay and rate
+exec_always --no-startup-id xset r rate 250 40
+# turn on numlock
+exec numlockx
+# initial backlight brightness to 40%
+exec --no-startup-id brightnessctl -q s 40%
+# clipboard manager
+exec --no-startup-id python3 $HOME/.vendor/clipster/clipster -d
+#exec hsetroot -solid "#282a36"
+exec_always --no-startup-id feh --randomize --bg-scale ~/Pictures/wallpapers/*
+
+# host specific sections
+{{ if eq .chezmoi.hostname "hephaestus"  }}
+{{/* hephaestus, X1 Carbon 2017 5th Gen */}}
+# speed up trackpoint
+exec --no-startup-id xinput set-prop "TPPS/2 ALPS TrackPoint" 'libinput Accel Speed' 0.1
+# enable natural scrolling
+exec --no-startup-id xinput set-prop "Synaptics TM3289-002" "libinput Natural Scrolling Enabled" "1"
+# enable tap-to-click
+exec --no-startup-id xinput set-prop "Synaptics TM3289-002" "libinput Tapping Enabled" "1"
+{{ end }}

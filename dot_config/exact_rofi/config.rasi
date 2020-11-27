@@ -1,0 +1,22 @@
+configuration {
+	width: 75;
+	lines: 10;
+	font: "Monospace 12";
+	padding: 1;
+	terminal: "kitty";
+	ssh-client: "ssh";
+	ssh-command: "{terminal} -e "{ssh-client} {host}"";
+	run-command: "{cmd}";
+	run-shell-command: "{terminal} -e "{cmd}"";
+	theme: "gruvbox-dark";
+	fake-transparency: true;
+	display-window: "window>";
+	display-run: "run>";
+	display-ssh: "ssh>";
+	display-drun: "drun>";
+}
+
+window {
+    anchor: south;
+    location: south;
+    }

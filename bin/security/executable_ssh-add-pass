@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Add a passphrased ssh-key to ssh-agent using pass
+# Calls expect entering your passphrase for you.
+
+if [ $# -lt 2 ] ; then
+  echo "Usage: $0 ssh-keyfile pass-entry <key-lifetime>"
+  exit 1
+fi
+
+keyfile=$1
+pass=$2
+keylifetime=$3
+passphrase=$(pass show "${pass}")
+
+# if we did get a keylifetime, add as -t argument for ssh-add invocation
+if [ -n "${keylifetime}" ]; then
+    keylifetime=" -t ${keylifetime}"
+fi
+
+# spawn expect to feed ssh-add our passphrase
+# pass passphrase as env var to avoid hickups on special chars
+passphrase=${passphrase} expect << EOF
+  spawn ssh-add ${keylifetime} ${keyfile}
+  expect "Enter passphrase"
+  send \$env(passphrase)
+  send "\\r"
+  expect eof
+EOF

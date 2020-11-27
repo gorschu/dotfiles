@@ -1,0 +1,44 @@
+#!/bin/bash
+# Add passphrase protected ssh-keys to ssh-agent
+# Either uses pass (if available) or standard stdin method
+
+# Gordon Schulz. https://github.com/azmodude
+# BSD License
+
+nonpass() {
+    key=$1
+    keylifetime=$2
+    # fingerprint key to add
+    fingerprint=$(ssh-keygen -l -f "${key}" | cut -d " " -f2)
+    if echo "${fingerprint}" | grep -v "$(ssh-add -l | cut -d " " -f2)"; then
+        # only add key when its fingerprint is not yet in the agent
+        ssh-add -t "${keylifetime}" "${key}"
+    fi
+}
+
+# keep keys in memory for this many seconds
+keylifetime=3600
+confirm='-c'
+# keys to add
+keys=("$HOME/.ssh/id_rsa" "$HOME/.ssh/id_rsa-work")
+keys+=("$HOME/.ssh/id_rsa-cloud" "$HOME/.ssh/id_rsa-git")
+keys+=("$HOME/.ssh/id_rsa-root" "$HOME/.ssh/id_ed25519-kimsufi")
+keys+=("$HOME/.ssh/id_ed25519-netcup")
+# and the corresponding entries in pass (if any)
+passentries=(keys/ssh-main keys/ssh-work keys/ssh-cloud keys/ssh-git)
+passentries+=(keys/ssh-root keys/ssh-kimsufi keys/ssh-netcup)
+
+if [ -z "${SSH_AUTH_SOCK}" ]; then
+    echo 'SSH_AUTH_SOCK is not set - is ssh-agent running?' && exit 1
+fi
+
+pass_avail=$(type pass 2>/dev/null)
+for i in "${!keys[@]}"; do
+    if [ -n "${pass_avail}" ]; then
+        # pass available, shell out to helper script
+        ssh-add-pass "${keys[$i]}" "${passentries[$i]}" \
+            ${keylifetime} ${confirm}
+    else
+        nonpass "${keys[$i]}" ${keylifetime} ${confirm}
+    fi
+done

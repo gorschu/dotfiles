@@ -1,0 +1,474 @@
+[colors]
+gruvbox-background=#282828
+gruvbox-black=#282828
+gruvbox-foreground=#ebdbb2
+gruvbox-white=#ebdbb2
+
+gruvbox-darkgrey=#928374
+gruvbox-darkred=#cc241d
+gruvbox-red=#fb4934
+gruvbox-darkgreen=#98971a
+gruvbox-green=#b8bb26
+gruvbox-darkyellow=#d79921
+gruvbox-yellow=#fabd2f
+gruvbox-darkblue=#458588
+gruvbox-blue=#83a598
+gruvbox-darkmagenta=#b16286
+gruvbox-magenta=#d3869b
+gruvbox-darkcyan=#689d6a
+gruvbox-cyan=#8ec07c
+gruvbox-lightgrey=#a89984
+
+background = ${colors.gruvbox-background}
+background-alt = ${colors.gruvbox-darkgrey}
+foreground = ${colors.gruvbox-foreground}
+foreground-alt = ${colors.gruvbox-lightgrey}
+primary = ${colors.gruvbox-blue}
+secondary = ${colors.gruvbox-darkblue}
+alert = ${colors.gruvbox-red}
+
+[bar/azmo-primary]
+monitor = ${env:MONITOR:eDP1}
+width = 100%
+height = 20
+;offset-x = 3%
+;offset-y = 0%
+radius = 1.0
+fixed-center = false
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 1
+line-color = ${colors.foreground}
+
+border-size = 1
+border-color = ${colors.background}
+
+padding-left = 0
+padding-right = 2
+
+module-margin-left = 1
+module-margin-right = 2
+
+font-0 = Sans:pixelsize=10;0
+font-1 = SauceCodePro Nerd Font:pixelsize=10;1
+
+modules-left = i3
+modules-center = xwindow
+modules-right = backlight volume filesystem cpu memory temperature battery wlan eth-internal eth-docking cups vpncheck date
+
+tray-position = right
+tray-padding = 2
+;tray-transparent = true
+;tray-background = #0063ff
+
+;wm-restack = i3
+;override-redirect = true
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+
+[bar/azmo-secondary]
+monitor = ${env:MONITOR}
+width = 100%
+height = 20
+;offset-x = 3%
+;offset-y = 0%
+radius = 1.0
+fixed-center = false
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 1
+line-color = ${colors.foreground}
+
+border-size = 1
+border-color = ${colors.background}
+
+padding-left = 0
+padding-right = 2
+
+module-margin-left = 1
+module-margin-right = 2
+
+font-0 = Sans:pixelsize=10;0
+font-1 = SauceCodePro Nerd Font:pixelsize=10;1
+
+modules-left = i3
+modules-center = xwindow
+modules-right = date
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:50:...%
+
+[module/xkeyboard]
+type = internal/xkeyboard
+blacklist-0 = num lock
+
+format-prefix = " "
+format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-underline = ${colors.secondary}
+
+label-layout = %layout%
+label-layout-underline = ${colors.secondary}
+
+label-indicator-padding = 2
+label-indicator-margin = 1
+label-indicator-background = ${colors.secondary}
+label-indicator-underline = ${colors.secondary}
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+index-sort = true
+wrapping-scroll = false
+
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+ws-icon-5 = 6;
+ws-icon-6 = 7;
+ws-icon-default = 
+
+; Only show workspaces on the same output as the bar
+pin-workspaces = true
+
+label-mode = %mode%
+label-mode-padding = 2
+label-mode-foreground = ${colors.gruvbox-magenta}
+label-mode-background = ${colors.background}
+
+; focused = Active workspace on focused monitor
+label-focused = %index% %icon%
+label-focused-foreground = ${colors.gruvbox-magenta}
+label-focused-background = ${colors.background}
+label-focused-underline = ${colors.gruvbox-magenta}
+label-focused-padding = 2
+
+; unfocused = Inactive workspace on any monitor
+label-unfocused = %index% %icon%
+label-unfocused-foreground = ${colors.foreground-alt}
+label-unfocused-padding = 2
+
+; visible = Active workspace on unfocused monitor
+label-visible = %index% %icon%
+label-visible-foreground = ${colors.primary}
+label-visible-background = ${colors.background}
+label-visible-padding = 2
+
+; urgent = Workspace with urgency hint set
+label-urgent = "%index% "
+label-urgent-foreground = ${colors.alert}
+label-urgent-background = ${colors.background}
+label-urgent-underline = ${colors.alert}
+label-urgent-padding = 2
+
+[module/backlight]
+type = internal/backlight
+; Use the following command to list available cards:
+; $ ls -1 /sys/class/backlight/
+card = intel_backlight
+
+format = <ramp> <label> <bar>
+;format-foreground = ${colors.primary}
+label = %percentage:3%%
+label-foreground = ${colors.foreground}
+
+ramp-foreground = ${colors.primary}
+ramp-0=" "
+ramp-1="ﯧ "
+ramp-2="ﯧ "
+ramp-3="ﯦ "
+ramp-4="ﯦ "
+
+bar-width = 10
+bar-indicator = ""
+bar-indicator-foreground = ${colors.primary}
+bar-indicator-font = 2
+bar-fill = ―
+bar-fill-font = 2
+bar-fill-foreground = ${colors.gruvbox-yellow}
+bar-empty = ―
+bar-empty-font = 2
+bar-empty-foreground = ${colors.gruvbox-magenta}
+
+[module/volume]
+type = internal/pulseaudio
+
+format-volume = <ramp-volume> <label-volume> <bar-volume>
+format-volume-foreground = ${colors.primary}
+label-volume = %percentage:3%%
+label-volume-foreground = ${colors.foreground}
+
+format-muted-prefix = "婢 "
+format-muted-foreground = ${colors.foreground-alt}
+label-muted = muted
+
+ramp-foreground = ${colors.primary}
+ramp-volume-0 = "奄 "
+ramp-volume-1 = "奔 "
+ramp-volume-2 = "墳 "
+
+bar-volume-width = 10
+bar-volume-foreground-0 = ${colors.gruvbox-darkyellow}
+bar-volume-foreground-1 = ${colors.gruvbox-darkyellow}
+bar-volume-foreground-2 = ${colors.gruvbox-yellow}
+bar-volume-foreground-3 = ${colors.gruvbox-yellow}
+bar-volume-foreground-4 = ${colors.gruvbox-darkgreen}
+bar-volume-foreground-5 = ${colors.gruvbox-darkgreen}
+bar-volume-foreground-6 = ${colors.gruvbox-green}
+bar-volume-foreground-7 = ${colors.gruvbox-green}
+bar-volume-gradient = true
+bar-volume-indicator = 
+bar-volume-indicator-font = 2
+bar-volume-indicator-foreground = ${colors.primary}
+bar-volume-fill = ―
+bar-volume-fill-font = 2
+bar-volume-empty = ―
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = ${colors.gruvbox-magenta}
+
+[module/filesystem]
+type = internal/fs
+interval = 30
+
+mount-0 = /
+
+format-mounted-prefix = " "
+format-mounted-foreground = ${colors.primary}
+label-mounted = %mountpoint% %percentage_used%%
+label-mounted-foreground = ${colors.foreground}
+#label-mounted-underline = ${colors.gruvbox-green}
+label-unmounted = %mountpoint% unmounted
+label-unmounted-foreground = ${colors.foreground-alt}
+label-unmounted-underline = ${colors.alert}
+
+[module/zfs]
+type = custom/script
+exec = $XDG_CONFIG_HOME/polybar/scripts/zfs
+exec-if = $XDG_CONFIG_HOME/polybar/scripts/zfs
+interval = 60
+#format-underline = ${colors.gruvbox-green}
+format-prefix = " "
+format-prefix-foreground = ${colors.primary}
+
+
+[module/cpu]
+type = internal/cpu
+interval = 5
+format-prefix = "龍  "
+format-prefix-foreground = ${colors.primary}
+#format-underline = ${colors.DraculaCyan}
+label = %percentage%%
+
+[module/memory]
+type = internal/memory
+interval = 5
+format-prefix = "  "
+format-prefix-foreground = ${colors.primary}
+#format-underline = ${colors.DraculaCyan}
+label = %percentage_used%%
+
+[module/temperature]
+type = internal/temperature
+thermal-zone = 0
+warn-temperature = 60
+
+format = <ramp> <label>
+#format-underline = ${colors.DraculaCyan}
+format-warn = <ramp> <label-warn>
+format-warn-underline = ${colors.alert}
+
+label = %temperature-c%
+label-warn = %temperature-c%
+label-warn-foreground = ${colors.alert}
+
+ramp-foreground = ${colors.primary}
+ramp-0 = " "
+ramp-1 = " "
+ramp-2 = " "
+ramp-3 = " "
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = AC
+full-at = 95
+
+label-charging = %percentage:2%% %time%
+label-charging-foreground = ${colors.gruvbox-yellow}
+format-charging = <animation-charging> <label-charging>
+format-charging-foreground = ${colors.gruvbox-yellow}
+#format-charging-underline = ${colors.DraculaOrange}
+
+label-discharging = %percentage:2%% %time%
+label-discharging-foreground = ${colors.gruvbox-darkyellow}
+format-discharging = <ramp-capacity> <label-discharging>
+format-discharging-foreground = ${colors.gruvbox-darkyellow}
+#format-discharging-underline = ${colors.DraculaRed}
+
+label-full = "%percentage:2%%"
+label-full-foreground = ${colors.gruvbox-darkgreen}
+format-full =  <label-full>
+format-full-foreground = ${colors.gruvbox-darkgreen}
+#format-full-underline = ${colors.DraculaGreen}
+
+ramp-capacity-0 = " "
+ramp-capacity-1 = " "
+ramp-capacity-2 = " "
+ramp-capacity-3 = " "
+ramp-capacity-4 = " "
+;ramp-capacity-foreground = ${colors.primary}
+
+animation-charging-0 = " "
+animation-charging-1 = " "
+animation-charging-2 = " "
+animation-charging-3 = " "
+animation-charging-4 = " "
+;animation-charging-foreground = ${colors.primary}
+animation-charging-framerate = 750
+
+[module/wlan]
+type = internal/network
+interface = wlan0
+interval = 5
+
+format-packetloss = <animation-packetloss> <label-connected>
+format-connected = "   <label-connected>"
+format-connected-foreground = ${colors.primary}
+#format-connected-underline = ${colors.DraculaGreen}
+label-connected = %essid% (%signal%%) ﯴ%upspeed:9% ﯲ%downspeed:9%
+label-connected-foreground = ${colors.foreground}
+
+format-disconnected = "睊  <label-disconnected>"
+format-disconnected-foreground = ${colors.gruvbox-darkred}
+#format-disconnected-underline = ${colors.DraculaRed}
+label-disconnected = %ifname% disconnected
+label-disconnected-foreground = ${colors.foreground}
+
+;ramp-signal-0 = 
+;ramp-signal-1 = 
+;ramp-signal-2 = 
+;ramp-signal-3 = 
+;ramp-signal-4 = 
+;ramp-signal-foreground = ${colors.foreground-alt}
+
+[module/eth-internal]
+type = internal/network
+interface = {{ if eq .chezmoi.hostname "hephaestus" }}enp0s31f6{{ else }}enp0s25{{ end }}
+interval = 5
+
+format-packetloss = <animation-packetloss> <label-connected>
+format-connected =   <label-connected>
+format-connected-foreground = ${colors.primary}
+#format-connected-underline = ${colors.DraculaGreen}
+label-connected = %linkspeed% ﯴ%upspeed:9% ﯲ%downspeed:9%
+label-connected-foreground = ${colors.foreground}
+
+format-disconnected =   <label-disconnected>
+format-disconnected-foreground = ${colors.gruvbox-darkred}
+#format-disconnected-underline = ${colors.DraculaRed}
+label-disconnected = %ifname%
+label-disconnected-foreground = ${colors.foreground}
+
+{{ if eq .chezmoi.hostname "hephaestus" }}
+[module/eth-docking]
+type = internal/network
+interface= enp60s0u1u1
+interval = 5
+
+format-packetloss = <animation-packetloss> <label-connected>
+format-connected =   <label-connected>
+format-connected-foreground = ${colors.primary}
+#format-connected-underline = ${colors.DraculaGreen}
+label-connected = %linkspeed% ﯴ%upspeed:9% ﯲ%downspeed:9%
+label-connected-foreground = ${colors.foreground}
+
+format-disconnected =   <label-disconnected>
+format-disconnected-foreground = ${colors.gruvbox-darkred}
+#format-disconnected-underline = ${colors.DraculaRed}
+label-disconnected = %ifname%
+label-disconnected-foreground = ${colors.foreground}
+{{ end }}
+
+[module/cups]
+type = custom/script
+exec = $HOME/.config/polybar/scripts/cups
+exec-if = $HOME/.config/polybar/scripts/cups
+interval = 10
+#format-underline = ${colors.DraculaGreen}
+format-prefix = "朗 "
+format-prefix-foreground = ${colors.primary}
+
+[module/vpncheck]
+type = custom/script
+exec = "echo -n 'VPN: ' && $HOME/.config/polybar/scripts/geoip"
+exec-if = pgrep -x openvpn
+interval = 60
+#format-underline = ${colors.DraculaGreen}
+format-prefix = "  "
+format-prefix-foreground = ${colors.primary}
+
+[module/date]
+type = internal/date
+interval = 5
+
+date = %Y-%m-%d
+date-alt =
+
+time = %H:%M
+time-alt = %H:%M:%S
+
+format = "  <label>"
+format-foreground = ${colors.primary}
+;format-underline = ${colors.draculaOrange}
+label = %date% %time%
+label-foreground = ${colors.foreground}
+
+[module/powermenu]
+type = custom/menu
+
+format-spacing = 1
+
+label-open = 
+label-open-foreground = ${colors.secondary}
+label-close =  cancel
+label-close-foreground = ${colors.secondary}
+label-separator = |
+label-separator-foreground = ${colors.foreground-alt}
+
+menu-0-0 = reboot
+menu-0-0-exec = menu-open-1
+menu-0-1 = power off
+menu-0-1-exec = menu-open-2
+
+menu-1-0 = cancel
+menu-1-0-exec = menu-open-0
+menu-1-1 = reboot
+menu-1-1-exec = sudo reboot
+
+menu-2-0 = power off
+menu-2-0-exec = sudo poweroff
+menu-2-1 = cancel
+menu-2-1-exec = menu-open-0
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+
+; vim:ft=dosini

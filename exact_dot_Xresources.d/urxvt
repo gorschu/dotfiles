@@ -1,0 +1,26 @@
+URxvt*iconFile:                         .config/rxvt/rxvt.png
+URxvt*termName:                         rxvt-unicode-256color
+URxvt*loginShell:                       true
+URxvt*cursorBlink:                      true
+URxvt*font:                             xft:Monospace:size=10
+URxvt*boldFont:                         xft:Monospace:size=10
+! Solarized needs this to be false, else bold 1-8 colors are off
+URxvt*intensityStyles:                  true
+! use one/two less pixel(s) between font characters
+! not needed when using rxvt-unicode-patched from AUR
+!URxvt*letterSpace:                      -1
+URxvt*internalBorder:                   0
+URxvt*jumpScroll:                       true
+URxvt*scrollBar:                        false
+URxvt*scrollWithBuffer:                 true
+URxvt*scrollTtyOutput:                  false
+URxvt*scrollTtyKeypress:                true
+URxvt*secondaryScroll:                  true
+URxvt*saveLines:                        65535
+URxvt*urgentOnBell:                     true
+URxvt*visualBell:                       false
+URxvt*perl-ext-common:                  default,matcher,searchable-scrollback,selection-to-clipboard
+URxvt*url-launcher:                     google-chrome
+URxvt*matcher.button:                   1
+
+! vim: ft=xdefaults
