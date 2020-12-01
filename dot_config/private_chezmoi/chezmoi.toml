@@ -1,6 +1,10 @@
 [gpg]
     recipient = "0xDEE550054AA972F6"
 
+[merge]
+    command = "nvim"
+    args = "-d"
+
 [data]
     wm = "i3"
     email = "gordon@gordonschulz.de"
