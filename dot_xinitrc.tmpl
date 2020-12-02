@@ -1,7 +1,6 @@
+{{ if not (eq .loginmanager "true") }}
 #!/bin/sh
-
 {{ $debian := list "debian" "ubuntu" }}
-
 {{ if not (has .chezmoi.osRelease.id $debian) }}
 # invoke global and local xprofiles if they exists
 [ -f $HOME/.zprofile ] && . $HOME/.zprofile
@@ -18,5 +17,6 @@ exec dbus-launch $XDG_CURRENT_DESKTOP
 {{ else }}
 # invoke global X session script (which ultimately invokes $HOME/.xsession)
 . /etc/X11/Xsession
+{{ end }}
 {{ end }}
 
