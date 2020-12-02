@@ -31,7 +31,7 @@ robbyrussell/oh-my-zsh path:plugins/fasd
 robbyrussell/oh-my-zsh path:plugins/ubuntu
 {{ else if eq .chezmoi.osRelease.id "debian" }}
 robbyrussell/oh-my-zsh path:plugins/debian
-{{ else if (or (eq .chezmoi.osRelease.id "opensuse-leap") (eq .chezmoi.osRelease.id "opensuse-tumbleweed")) }}
+{{ else if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
 robbyrussell/oh-my-zsh path:plugins/suse
 {{ else if eq .chezmoi.osRelease.id "fedora" }}
 robbyrussell/oh-my-zsh path:plugins/fedora
