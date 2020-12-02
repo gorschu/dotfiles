@@ -1,3 +1,4 @@
+{{ if not (eq .loginmanager "true") }}
 {{ $debian := list "debian" "ubuntu" }}
 
 {{ if has .chezmoi.osRelease.id $debian }}
@@ -13,4 +14,5 @@ export XDG_CURRENT_DESKTOP='{{ .wm }}'
 export XDG_SESSION_DESKTOP='{{ .wm }}'
 
 exec dbus-launch $XDG_CURRENT_DESKTOP
+{{ end }}
 {{ end }}
