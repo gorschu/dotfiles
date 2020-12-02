@@ -1,4 +1,15 @@
 robbyrussell/oh-my-zsh
+{{ if eq .chezmoi.osRelease.id "ubuntu" }}
+robbyrussell/oh-my-zsh path:plugins/ubuntu
+{{ else if eq .chezmoi.osRelease.id "debian" }}
+robbyrussell/oh-my-zsh path:plugins/debian
+{{ else if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
+robbyrussell/oh-my-zsh path:plugins/suse
+{{ else if eq .chezmoi.osRelease.id "fedora" }}
+robbyrussell/oh-my-zsh path:plugins/fedora
+{{ else if eq .chezmoi.osRelease.id "arch" }}
+robbyrussell/oh-my-zsh path:plugins/archlinux
+{{ end }}
 robbyrussell/oh-my-zsh path:plugins/direnv
 robbyrussell/oh-my-zsh path:plugins/git
 robbyrussell/oh-my-zsh path:plugins/github
@@ -27,17 +38,6 @@ robbyrussell/oh-my-zsh path:plugins/docker-machine
 robbyrussell/oh-my-zsh path:plugins/vagrant
 robbyrussell/oh-my-zsh path:plugins/lxd
 robbyrussell/oh-my-zsh path:plugins/fasd
-{{ if eq .chezmoi.osRelease.id "ubuntu" }}
-robbyrussell/oh-my-zsh path:plugins/ubuntu
-{{ else if eq .chezmoi.osRelease.id "debian" }}
-robbyrussell/oh-my-zsh path:plugins/debian
-{{ else if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
-robbyrussell/oh-my-zsh path:plugins/suse
-{{ else if eq .chezmoi.osRelease.id "fedora" }}
-robbyrussell/oh-my-zsh path:plugins/fedora
-{{ else if eq .chezmoi.osRelease.id "arch" }}
-robbyrussell/oh-my-zsh path:plugins/archlinux
-{{ end }}
 
 hlissner/zsh-autopair
 hcgraf/zsh-sudo
