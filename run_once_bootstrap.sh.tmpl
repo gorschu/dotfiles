@@ -38,3 +38,5 @@ curl -sfL git.io/antibody | sh -s - -b $HOME/bin &&
     $HOME/bin/antibody bundle <{{ .chezmoi.homedir }}/.zsh_plugins.txt > \
         {{ .chezmoi.homedir }}/.zsh_plugins.sh
 
+echo "${green}Changing from (possible) https to ssh${reset}"
+git remote set-url origin git@github.com:azmodude/dotfiles
