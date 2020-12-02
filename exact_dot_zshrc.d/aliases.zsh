@@ -6,7 +6,7 @@ else;
 fi
 
 # define bash as shell for mc, it does not like zsh for its subshell support
-alias mc='SHELL=/bin/bash mc -S $HOME/.vendor/gruvbox-contrib/midnightcommander/gruvbox256.ini'
+alias mc='SHELL=/bin/bash mc'
 alias dmesg='dmesg --human'
 alias ND=find_newest_directory_universal
 alias NF=find_newest_file_universal
