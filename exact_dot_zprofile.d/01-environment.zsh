@@ -1,5 +1,7 @@
 # environment variables relevant for whole X-Session, not just shells
 
+. /etc/zshenv
+
 export XDG_CONFIG_HOME="${HOME}/.config"
 export XDG_DATA_HOME="${HOME}/.local/share"
 export XDG_CACHE_HOME="${HOME}/.cache"
@@ -9,21 +11,19 @@ expr "$XDG_CURRENT_DESKTOP" : ".*KDE.*" 1>/dev/null || export QT_QPA_PLATFORMTHE
 
 # set pinentry binary used
 expr "$XDG_CURRENT_DESKTOP" : ".*KDE.*" 1>/dev/null && export PINENTRY_BINARY="/usr/bin/pinentry-qt"
-expr "$XDG_CURRENT_DESKTOP" : ".*GNOME.*" 1>/dev/null && export PINENTRY_BINARY="/usr/bin/pinentry-gtk-2"
+expr "$XDG_CURRENT_DESKTOP" : ".*GNOME.*" 1>/dev/null && export PINENTRY_BINARY="/usr/bin/pinentry-gnome3"
 [ -z "${PINENTRY_BINARY}" ] && export PINENTRY_BINARY='/usr/bin/pinentry-gtk-2'
 
 # set SSH_AUTH_SOCK
 export SSH_AUTH_SOCK=${XDG_RUNTIME_DIR}/ssh-agent.socket
 
 # use gnome-askpass if available, else decide yourself
-if [ -e "/usr/libexec/openssh/gnome-ssh-askpass" ]; then
-    export SSH_ASKPASS=/usr/libexec/openssh/gnome-ssh-askpass
+if [ -e "/usr/libexec/ssh/gnome-ssh-askpass" ]; then
+    export SSH_ASKPASS=/usr/libexec/ssh/gnome-ssh-askpass
 fi
 
 # use new freetype 2.7 default interpreter
 export FREETYPE_PROPERTIES="truetype:interpreter-version=40"
-
-export SSH_ASKPASS=/usr/lib/ssh/x11-ssh-askpass
 
 export TMPDIR="/tmp/${USER}"
 
