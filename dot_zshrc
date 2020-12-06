@@ -37,9 +37,11 @@ eval $(dircolors ~/.dircolors)
 # antibody bundle < ~/.zsh_plugins.txt >! .zsh_plugins.sh
 source ~/.zsh_plugins.sh
 
-# sourcing /etc/profile stomps over paths set in .zshenv; source that file
-# again. It's not great, but it works.
-source $HOME/.zshenv.d/00-paths.zsh
+# this should usually be set, but I guess some theming or w/e stomps over the pre_cmd
+# functions set early. So source that vte configuration again very late
+if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+        . /etc/profile.d/vte.sh
+fi
 
 # source in fzf last
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
