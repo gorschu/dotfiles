@@ -1,0 +1,4 @@
+# disable openSUSE automatic starting of ssh-agent and gpg-agent
+# we handle this ourself
+usessh=no
+usegpg=no
