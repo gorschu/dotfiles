@@ -14,13 +14,9 @@ expr "$XDG_CURRENT_DESKTOP" : ".*KDE.*" 1>/dev/null && export PINENTRY_BINARY="/
 expr "$XDG_CURRENT_DESKTOP" : ".*GNOME.*" 1>/dev/null && export PINENTRY_BINARY="/usr/bin/pinentry-gnome3"
 [ -z "${PINENTRY_BINARY}" ] && export PINENTRY_BINARY='/usr/bin/pinentry-gtk-2'
 
-# set SSH_AUTH_SOCK
+# set SSH Variables
 export SSH_AUTH_SOCK=${XDG_RUNTIME_DIR}/ssh-agent.socket
-
-# use gnome-askpass if available, else decide yourself
-if [ -e "/usr/libexec/ssh/gnome-ssh-askpass" ]; then
-    export SSH_ASKPASS=/usr/libexec/ssh/gnome-ssh-askpass
-fi
+export SSH_ASKPASS=/usr/libexec/ssh/gnome-ssh-askpass
 
 # use new freetype 2.7 default interpreter
 export FREETYPE_PROPERTIES="truetype:interpreter-version=40"
