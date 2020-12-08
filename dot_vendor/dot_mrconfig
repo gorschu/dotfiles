@@ -16,9 +16,6 @@ checkout = git clone --depth=1 'https://github.com/mrichar1/clipster.git' 'clips
 [fzf]
 checkout = git clone --depth=1 'https://github.com/junegunn/fzf.git' 'fzf'
 
-[tpm]
-checkout = git clone --depth=1 'https://github.com/tmux-plugins/tpm.git' 'tpm'
-
 [diff-so-fancy]
 checkout = git clone --depth=1 'https://github.com/so-fancy/diff-so-fancy.git' 'diff-so-fancy'
 
