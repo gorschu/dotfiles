@@ -9,10 +9,10 @@ typeset -gU cdpath fpath mailpath path
 # Set the list of directories that Zsh searches for programs.
 path=(
     ~/.local/bin
-    ${path}
     ~/bin
     ~/bin/**
     ${GOPATH}/bin
+    ${path}
     /usr/local/{bin,sbin}
 )
 # ... then remove those that are either dead links (-/) or do not
