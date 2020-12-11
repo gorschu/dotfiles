@@ -29,7 +29,10 @@ robbyrussell/oh-my-zsh path:plugins/systemd
 robbyrussell/oh-my-zsh path:plugins/rsync
 robbyrussell/oh-my-zsh path:plugins/compleat
 robbyrussell/oh-my-zsh path:plugins/ansible
+{{- /* Remove the tmux plugin for now until it realized $XDG_CONFIG_HOME is
+       now a default
 robbyrussell/oh-my-zsh path:plugins/tmux
+*/}}
 robbyrussell/oh-my-zsh path:plugins/golang
 robbyrussell/oh-my-zsh path:plugins/vscode
 robbyrussell/oh-my-zsh path:plugins/docker
@@ -44,12 +47,13 @@ hcgraf/zsh-sudo
 zsh-users/zsh-completions
 
 ## theme
-# denysdovhan/spaceship-prompt
-
-# mafredri/zsh-async
-# sindresorhus/pure
-
 romkatv/powerlevel10k
+{{- /*
+denysdovhan/spaceship-prompt
+
+mafredri/zsh-async
+sindresorhus/pure
+*/}}
 
 zdharma/fast-syntax-highlighting
 
