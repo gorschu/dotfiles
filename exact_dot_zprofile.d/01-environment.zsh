@@ -55,6 +55,8 @@ export PASSWORD_STORE_GPG_OPTS='--no-throw-keyids'
 
 # set GOPATH
 export GOPATH="${HOME}/go"
+# turn on Go Modules
+export GO111MODULE=on
 
 # virtualenv
 export WORKON_HOME=$HOME/.cache/virtualenvs
