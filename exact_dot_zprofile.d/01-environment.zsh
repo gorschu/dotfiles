@@ -40,12 +40,9 @@ export VISUAL='nvim'
 if command -v "bat" >/dev/null; then
     export MANPAGER="sh -c 'col -bx | bat -l man -p'"
     export MANROFFOPT="-c"
-    export PAGER='bat'
-else
-    export PAGER='less'
 fi
 
-export PYGMENTIZE_STYLE="nord"
+export PAGER='less'
 
 export PASSWORD_STORE_X_SELECTION="primary"
 export PASSWORD_STORE_CLIP_TIME="60"
