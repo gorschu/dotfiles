@@ -14,7 +14,7 @@ font:
   bold_italic:
     family: Source Code Pro
     style: Bold Italic
-  size: 6.0
+  size: 10.0
 selection:
   save_to_clipboard: true
 
