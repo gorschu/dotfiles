@@ -29,10 +29,8 @@ robbyrussell/oh-my-zsh path:plugins/systemd
 robbyrussell/oh-my-zsh path:plugins/rsync
 robbyrussell/oh-my-zsh path:plugins/compleat
 robbyrussell/oh-my-zsh path:plugins/ansible
-{{- /* Remove the tmux plugin for now until it realized $XDG_CONFIG_HOME is
-       now a default
+{{- /* OMZ pr 8962 seems to fix the $XDG_CONFIG_HOME behavior for tmux plugin */}}
 robbyrussell/oh-my-zsh path:plugins/tmux
-*/}}
 robbyrussell/oh-my-zsh path:plugins/golang
 robbyrussell/oh-my-zsh path:plugins/vscode
 robbyrussell/oh-my-zsh path:plugins/docker
