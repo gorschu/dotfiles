@@ -13,40 +13,6 @@ source $HOME/.config/nvim/plugins/noplaintext.vim
 " plugins {{{
 call plug#begin('~/.cache/nvim/plugged')
 
-function! BuildYCM(info)
-  " info is a dictionary with 3 fields
-  " - name:   name of the plugin
-  " - status: 'installed', 'updated', or 'unchanged'
-  " - force:  set on PlugInstall! or PlugUpdate!
-    if a:info.status == 'installed' || a:info.force
-        !./install.py --all
-    endif
-endfunction
-
-"function! BuildYCM(info)
-"  " info is a dictionary with 3 fields
-"  " - name:   name of the plugin
-"  " - status: 'installed', 'updated', or 'unchanged'
-"  " - force:  set on PlugInstall! or PlugUpdate!
-"    if a:info.status == 'installed' || a:info.force
-"        " Get our distribution since we use system-libclang on Arch or else we
-"        " will run into troubles with libtinfo later on
-"        let distribution = substitute(system("lsb_release -i | awk -F':' '{print $2}' | sed 's/^[ \t]*//' | sed 's/[ \t]*$//'"), '\n\+$','','')
-"        if distribution == 'Arch'
-"            let clang = ' --system-libclang'
-"        else
-"            let clang = ''
-"        endif
-
-"        " Use the gocode-completer if we actually do have go installed
-"        if executable('go')
-"            execute '!python3 ./install.py --clang-completer --gocode-completer' . clang
-"        else
-"            execute '!python3 ./install.py --clang-completer' . clang
-"        endif
-"    endif
-"endfunction
-
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'petobens/poet-v'
 let g:poetv_executables = ['poetry']
@@ -102,7 +68,6 @@ Plug 'dense-analysis/ale'               " automatic linting and syntax checking
 Plug 'majutsushi/tagbar'                " Tagbar
 Plug 'cohama/lexima.vim'                " handle brackets
 Plug 'mbbill/undotree'                  " massively great undo
-Plug 'ycm-core/YouCompleteMe', { 'do': function('BuildYCM') }
 
 if executable('go')
     Plug 'fatih/vim-go'                 " everything for golang
@@ -317,15 +282,6 @@ endif
 "}}}
 
 " {{{ plugin configuration
-" YouCompleteMe
-" close preview window after insertion
-let g:ycm_use_ultisnips_completer = 1
-let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_add_preview_to_completeopt = 1
-"let g:ycm_seed_identifiers_with_syntax = 1
-
-let g:ycm_key_list_stop_completion = ['<C-y>', '<CR>']
 
 " clever-f
 let g:clever_f_across_no_line = 1
@@ -470,8 +426,6 @@ let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets", "mysnippets-privat
 let g:snips_author = "Gordon Schulz (azmo)"
 let g:snips_email = "gordon.schulz@gmail.com"
 let g:snips_github = "https://github.com/azmd"
-" use python2 until ycm no longer demands it
-"let g:UltiSnipsUsePythonVersion = 2
 
 " tagbar
 nmap <F9> :TagbarToggle<CR>
@@ -674,8 +628,6 @@ cmap w!! w !sudo tee > /dev/null %
 " delete current buffer by switching to another first -> effectively keeping my splits
 nmap ,bd :b#<bar>bd#<CR>
 
-" YouCompleteMe Mappings
-nnoremap <leader>gd :YcmCompleter GoTo<CR>
 "}}}
 
 let g:ale_linters = {
