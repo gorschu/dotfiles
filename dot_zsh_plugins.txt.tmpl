@@ -29,16 +29,21 @@ robbyrussell/oh-my-zsh path:plugins/systemd
 robbyrussell/oh-my-zsh path:plugins/rsync
 robbyrussell/oh-my-zsh path:plugins/compleat
 robbyrussell/oh-my-zsh path:plugins/ansible
-{{- /* OMZ pr 8962 seems to fix the $XDG_CONFIG_HOME behavior for tmux plugin */}}
+{{- /* OMZ pr 8962 seems to fix the $XDG_CONFIG_HOME behavior for tmux plugin
 robbyrussell/oh-my-zsh path:plugins/tmux
+*/}}
 robbyrussell/oh-my-zsh path:plugins/golang
 robbyrussell/oh-my-zsh path:plugins/vscode
 robbyrussell/oh-my-zsh path:plugins/docker
 robbyrussell/oh-my-zsh path:plugins/docker-compose
 robbyrussell/oh-my-zsh path:plugins/docker-machine
 robbyrussell/oh-my-zsh path:plugins/vagrant
-robbyrussell/oh-my-zsh path:plugins/lxd
 robbyrussell/oh-my-zsh path:plugins/fasd
+
+{{- /* Use external lxd completion, it also completes arguments
+robbyrussell/oh-my-zsh path:plugins/lxd
+*/}}
+endaaman/lxd-completion-zsh
 
 hlissner/zsh-autopair
 hcgraf/zsh-sudo
