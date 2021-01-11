@@ -1,18 +1,23 @@
 [user]
-  name = Gordon Schulz
-  email = {{ .email }}
-  signingkey = {{ .gpgkey }}
+    name = Gordon Schulz
+    email = {{ .email }}
+    signingkey = {{ .gpgkey }}
 
 [core]
-  quotepath = false
-  pager = delta
+    quotepath = false
+    pager = delta
+
+[init]
+    templatedir = ~/.git-template
+    defaultBranch = main
 
 [delta]
-    features = side-by-side line-numbers decorations
     syntax-theme = gruvbox
- 
+    line-numbers = true
+    side-by-side = true
+
 [interactive]
-  diffFilter = delta --color-only
+    diffFilter = delta --color-only
 
 [commit]
     gpgsign = true
@@ -21,47 +26,52 @@
     helper = cache --timeout=3600
 
 [color]
-  ui = auto
+    ui = auto
 
 [include]
-  path=/home/azmo/.password-store/.gitconfig
+    path=/home/azmo/.password-store/.gitconfig
 
 [help]
-  autocorrect = 20
+    autocorrect = 20
 
 [diff]
-    tool = kdiff3
+    tool = meld
     colorMoved = default
-
 [difftool]
-    prompt = false
+    prompt = true
     keepBackup = false
-    trustExitCode = false
+[difftool "meld"]
+    trustExitCode = true
+    cmd = meld "$LOCAL" "$REMOTE"
+
 [merge]
-    tool = kdiff3
+    tool = meld
 [mergetool]
     prompt = false
     keepBackup = false
     keepTemporaries = false
+[mergetool "meld"]
+    # ONLY use one of these, personal preference
+    cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
+    # cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
+    trustExitCode = true
 
 [gui]
-  historybrowser = git-dag
+    historybrowser = git-dag
 
 [pull]
-  rebase = true
+    rebase = true
 
 [push]
-  default = simple
+    default = simple
 
 [submodule]
-  fetchJobs = 4
+    fetchJobs = 4
 
 [http "https://gopkg.in"]
-  followRedirects = true
+    followRedirects = true
+
 [github]
-	user = azmodude
+    user = azmodude
 [gpg]
-	program = gpg2
-[init]
-	templatedir = ~/.git-template
-	defaultBranch = main
+    program = gpg2
