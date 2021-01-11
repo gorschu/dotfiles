@@ -1,0 +1,52 @@
+# -*- mode: sh -*-
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block, everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# add to fpath before ohmyzsh calls compinit
+fpath=(${fpath} $HOME/.zsh/completions)
+# this seems to be needed for oh-my-zsh to function correctly with antibody
+# https://github.com/getantibody/antibody/issues/218
+ZSH="${HOME}/.cache/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh"
+
+# disable ohmyzsh auto-updates; antibody update covers it
+DISABLE_AUTO_UPDATE="true"
+# disable ohmyzsh AUTOCORRECTION
+ENABLE_CORRECTION="false"
+# automatically start tmux, but only if $TERM Variable is set and
+# we are not running a SSH session
+# else we running into all sorts of problems on emacs/vim/tmux startup
+if [[ -v TERM ]] && [[ ! -v SSH_CLIENT ]] && [[ ! -v SSH_TTY ]]; then
+    ZSH_TMUX_AUTOSTART="false"
+else
+    ZSH_TMUX_AUTOSTART="false"
+    ZSH_TMUX_AUTOQUIT="false"
+fi
+# let oh-my-zsh set the terminal title
+DISABLE_AUTO_TITLE=false
+# disabled dots while waiting for completion
+COMPLETION_WAITING_DOTS=true
+
+# seems like oh-my-zsh isn't doing this by default anymore, its using the
+# default database
+eval $(dircolors ~/.dircolors)
+# load antibody plugins
+# antibody bundle < ~/.zsh_plugins.txt >! .zsh_plugins.sh
+source ~/.zsh_plugins.sh
+
+# this should usually be set, but I guess some theming or w/e stomps over the pre_cmd
+# functions set early. So source that vte configuration again very late
+if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+{{- if not (eq .chezmoi.osRelease.id "ubuntu" "debian") }}
+    . /etc/profile.d/vte.sh
+{{- else }}
+    . /etc/profile.d/vte-2.91.sh
+{{- end }}
+fi
+
+# source in fzf last
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
