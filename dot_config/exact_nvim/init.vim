@@ -13,7 +13,7 @@ source $HOME/.config/nvim/plugins/noplaintext.vim
 " plugins {{{
 call plug#begin('~/.cache/nvim/plugged')
 
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'petobens/poet-v'
 let g:poetv_executables = ['poetry']
 
