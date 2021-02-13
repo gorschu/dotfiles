@@ -39,7 +39,7 @@ set attribution_locale="en_US"
 set editor="nvim '+:silent+?^$' %s -c'noh'"
 
 # setup address book query and completion
-set query_command = "echo %s | khard email --parsable --"
+set query_command = "khard email --parsable %s"
 set query_format = "%4c %t %-40.40n %-40.40a %?e?(%e)?"
 bind editor <Tab> complete-query
 bind editor ^T    complete
