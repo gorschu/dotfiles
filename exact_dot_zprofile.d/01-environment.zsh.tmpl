@@ -19,7 +19,12 @@ expr "$XDG_CURRENT_DESKTOP" : ".*GNOME.*" 1>/dev/null && export PINENTRY_BINARY=
 
 # set SSH Variables
 export SSH_AUTH_SOCK=${XDG_RUNTIME_DIR}/ssh-agent.socket
-export SSH_ASKPASS=/usr/libexec/ssh/gnome-ssh-askpass
+{{ if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
+expr "$XDG_CURRENT_DESKTOP" : ".*GNOME.*" 1>/dev/null && export SSH_ASKPASS=/usr/libexec/ssh/gnome-ssh-askpass
+{{ else if eq .chezmoi.osRelease.id "ubuntu" "debian" }}
+expr "$XDG_CURRENT_DESKTOP" : ".*GNOME.*" 1>/dev/null && export SSH_ASKPASS=/usr/lib/openssh/gnome-ssh-askpass
+{{ end }}
+[ -z "${SSH_ASKPASS}" ] && export SSH_ASKPASS='/usr/lib/ssh/x11-ssh-askpass'
 
 # use new freetype 2.7 default interpreter
 export FREETYPE_PROPERTIES="truetype:interpreter-version=40"
