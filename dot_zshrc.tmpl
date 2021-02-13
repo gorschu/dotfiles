@@ -8,7 +8,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # add to fpath before ohmyzsh calls compinit
-fpath=(${fpath} $HOME/.zsh/completions)
+fpath=(${fpath} $HOME/.zshrc.d/completions)
 # this seems to be needed for oh-my-zsh to function correctly with antibody
 # https://github.com/getantibody/antibody/issues/218
 ZSH="${HOME}/.cache/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh"
