@@ -22,6 +22,10 @@
 [commit]
     gpgsign = true
 
+[tag]
+    forceSignAnnotated = true
+    gpgSign = true
+
 [credential]
     helper = cache --timeout=3600
 
@@ -46,6 +50,9 @@
 
 [merge]
     tool = meld
+{{- /* This would required signed pushes, which... GitHub does not support
+    verifySignatures = true
+*/}}
 [mergetool]
     prompt = false
     keepBackup = false
@@ -64,6 +71,9 @@
 
 [push]
     default = simple
+{{- /* GitHub does not support signed pushes
+ gpgSign = true
+ */}}
 
 [submodule]
     fetchJobs = 4
