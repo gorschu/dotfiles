@@ -215,7 +215,7 @@ WARNING: This will update the secret content to the latest format. This might be
 	      
 	      ;;
 	  show)
-	      _arguments : "--clip[Copy the password value into the clipboard]" "--alsoclip[Copy the password and show everything]" "--qr[Print the password as a QR Code]" "--unsafe[Display unsafe content (e.g. the password) even if safecontent is enabled]" "--password[Display only the password. Takes precedence over all other flags.]" "--revision[Show a past revision. Does NOT support RCS specific shortcuts. Use exact revision or -N to select the Nth oldest revision of this entry.]"
+	      _arguments : "--clip[Copy the password value into the clipboard]" "--alsoclip[Copy the password and show everything]" "--qr[Print the password as a QR Code]" "--unsafe[Display unsafe content (e.g. the password) even if safecontent is enabled]" "--password[Display only the password. Takes precedence over all other flags.]" "--revision[Show a past revision. Does NOT support RCS specific shortcuts. Use exact revision or -N to select the Nth oldest revision of this entry.]" "--noparsing[Do not parse the output.]"
 	      _describe -t commands "gopass show" subcommands
 	      
 	      _gopass_complete_passwords
@@ -314,7 +314,7 @@ WARNING: This will update the secret content to the latest format. This might be
 	  "help:Shows a list of commands or help for one command"
 	)
 	_describe -t command 'gopass' subcommands
-	_arguments : "--help[show help]" "--version[print the version]" 
+	_arguments : "--clip[Copy the password value into the clipboard]" "--unsafe[Display unsafe content (e.g. the password) even if safecontent is enabled]" "--yes[Assume yes on all yes/no questions or use the default on all others]" "--help[show help]" "--version[print the version]" 
 	_gopass_complete_passwords
     fi
 }
