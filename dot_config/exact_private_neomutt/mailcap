@@ -11,7 +11,7 @@ application/vnd.ms-powerpoint; catppt %s; copiousoutput
 application/vnd.ms-excel; xls2csv %s; copiousoutput
 application/vnd.openxmlformats-officedocument.presentationml.presentation; pptx2txt.sh %s; copiousoutput;
 
-application/pdf; evince %s 2>/dev/null; test=test -n "$DISPLAY";
+application/pdf; zathura %s 2>/dev/null; test=test -n "$DISPLAY";
 application/pdf; pdftotext %s -; copiousoutput
 
 image/*; sxiv %s; test=test -n "$DISPLAY"
