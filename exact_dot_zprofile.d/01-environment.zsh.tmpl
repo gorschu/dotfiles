@@ -21,6 +21,7 @@ expr "$XDG_CURRENT_DESKTOP" : ".*GNOME.*" 1>/dev/null && export PINENTRY_BINARY=
 export SSH_AUTH_SOCK=${XDG_RUNTIME_DIR}/ssh-agent.socket
 {{ if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
 expr "$XDG_CURRENT_DESKTOP" : ".*GNOME.*" 1>/dev/null && export SSH_ASKPASS=/usr/libexec/ssh/gnome-ssh-askpass
+expr "$XDG_CURRENT_DESKTOP" : ".*KDE.*" 1>/dev/null && export SSH_ASKPASS=/usr/libexec/ssh/ksshaskpass
 {{ else if eq .chezmoi.osRelease.id "ubuntu" "debian" }}
 expr "$XDG_CURRENT_DESKTOP" : ".*GNOME.*" 1>/dev/null && export SSH_ASKPASS=/usr/lib/openssh/gnome-ssh-askpass
 {{ end }}
