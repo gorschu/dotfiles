@@ -48,5 +48,10 @@ if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
 {{- end }}
 fi
 
+# initialize asdf
+. $HOME/.vendor/asdf/asdf.sh
+
 # source in fzf last
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# vim: ft=sh
