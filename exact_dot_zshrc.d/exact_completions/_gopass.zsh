@@ -21,7 +21,7 @@ _gopass () {
 	      
 	      ;;
 	  audit)
-	      _arguments : "--jobs[The number of jobs to run concurrently when auditing]"
+	      
 	      _describe -t commands "gopass audit" subcommands
 	      
 	      
@@ -33,7 +33,7 @@ _gopass () {
 	      
 	      ;;
 	  clone)
-	      _arguments : "--path[Path to clone the repo to]" "--crypto[Select crypto backend (gpgcli, age, plain, xc)]"
+	      _arguments : "--path[Path to clone the repo to]" "--crypto[Select crypto backend [age gpgcli plain]]"
 	      _describe -t commands "gopass clone" subcommands
 	      
 	      
@@ -52,13 +52,13 @@ _gopass () {
 	      
 	      ;;
 	  config)
-	      _arguments : "--store[Set value to remote substore config]"
+	      
 	      _describe -t commands "gopass config" subcommands
 	      
 	      
 	      ;;
 	  convert)
-	      _arguments : "--store[Specify which store to convert]" "--move[Replace store?]" "--crypto[Which crypto backend? (gpgcli, age, xc)]" "--storage[Which storage backend? (fs, ondisk)]" "--rcs[Which RCS backend? (gitcli, ondisk)]"
+	      _arguments : "--store[Specify which store to convert]" "--move[Replace store?]" "--crypto[Which crypto backend? [age gpgcli plain]]" "--storage[Which storage backend? [fs gitfs]]"
 	      _describe -t commands "gopass convert" subcommands
 	      
 	      
@@ -107,13 +107,13 @@ WARNING: This will update the secret content to the latest format. This might be
 	      
 	      ;;
 	  fscopy)
-	      _arguments : "--force[Force to move the secret and overwrite existing one]"
+	      
 	      _describe -t commands "gopass fscopy" subcommands
 	      
 	      
 	      ;;
 	  fsmove)
-	      _arguments : "--force[Force to move the secret and overwrite existing one]"
+	      
 	      _describe -t commands "gopass fsmove" subcommands
 	      
 	      
@@ -151,7 +151,7 @@ WARNING: This will update the secret content to the latest format. This might be
 	      
 	      ;;
 	  init)
-	      _arguments : "--path[Set the sub-store path to operate on]" "--store[Set the name of the sub-store]" "--crypto[Select crypto backend (gpgcli, age, xc, plain)]" "--storage[Select storage backend (gitfs, fs, ondisk)]"
+	      _arguments : "--path[Set the sub-store path to operate on]" "--store[Set the name of the sub-store]" "--crypto[Select crypto backend [age gpgcli plain]]" "--storage[Select storage backend [fs gitfs]]"
 	      _describe -t commands "gopass init" subcommands
 	      
 	      
@@ -163,7 +163,7 @@ WARNING: This will update the secret content to the latest format. This might be
 	      _gopass_complete_passwords
 	      ;;
 	  list|ls)
-	      _arguments : "--limit[Max tree depth]" "--flat[Print flat list]" "--folders[Print flat list of folders]" "--strip-prefix[Strip prefix from filtered entries]"
+	      _arguments : "--limit[Display no more than this many levels of the tree]" "--flat[Print a flat list]" "--folders[Print a flat list of folders]" "--strip-prefix[Strip this prefix from filtered entries]"
 	      _describe -t commands "gopass list" subcommands
 	      _gopass_complete_folders
 	      
@@ -192,7 +192,7 @@ WARNING: This will update the secret content to the latest format. This might be
 	      
 	      ;;
 	  pwgen)
-	      _arguments : "--no-numerals[Do not include numerals in the generated passwords.]" "--one-per-line[Print one password per line]" "--xkcd[Use multiple random english words combined to a password. By default, space is used as separator and all words are lowercase]" "--sep[Word separator for generated xkcd style password. If no separator is specified, the words are combined without spaces/separator and the first character of words is capitalised. This flag implies -xkcd]" "--lang[Language to generate password from, currently de (german) and en (english, default) are supported]"
+	      _arguments : "--no-numerals[Do not include numerals in the generated passwords.]" "--no-capitalize[Do not include capital letter in the generated passwords.]" "--ambiguous[Do not include characters that could be easily confused with each other, like '1' and 'l' or '0' and 'O']" "--one-per-line[Print one password per line]" "--xkcd[Use multiple random english words combined to a password. By default, space is used as separator and all words are lowercase]" "--sep[Word separator for generated xkcd style password. If no separator is specified, the words are combined without spaces/separator and the first character of words is capitalised. This flag implies -xkcd]" "--lang[Language to generate password from, currently de (german) and en (english, default) are supported]"
 	      _describe -t commands "gopass pwgen" subcommands
 	      
 	      
@@ -209,7 +209,7 @@ WARNING: This will update the secret content to the latest format. This might be
 	      
 	      ;;
 	  setup)
-	      _arguments : "--remote[URL to a git remote, will attempt to join this team]" "--alias[Local mount point for the given remote]" "--create[Create a new team (default: false, i.e. join an existing team)]" "--name[Firstname and Lastname for unattended GPG key generation]" "--email[EMail for unattended GPG key generation]" "--crypto[Select crypto backend (gpg, gpgcli, plain, xc)]" "--rcs[Select sync backend (git, gitcli, noop)]"
+	      _arguments : "--remote[URL to a git remote, will attempt to join this team]" "--alias[Local mount point for the given remote]" "--create[Create a new team (default: false, i.e. join an existing team)]" "--name[Firstname and Lastname for unattended GPG key generation]" "--email[EMail for unattended GPG key generation]" "--crypto[Select crypto backend [age gpgcli plain]]" "--storage[Select storage backend [fs gitfs]]"
 	      _describe -t commands "gopass setup" subcommands
 	      
 	      
@@ -251,7 +251,7 @@ WARNING: This will update the secret content to the latest format. This might be
 	      
 	      ;;
 	  update)
-	      _arguments : "--pre[Update to prereleases]"
+	      
 	      _describe -t commands "gopass update" subcommands
 	      
 	      
@@ -276,15 +276,15 @@ WARNING: This will update the secret content to the latest format. This might be
 	local -a subcommands
 	subcommands=(
 	  "alias:Manage domain aliases"
-	  "audit:Scan for weak passwords"
+	  "audit:Decrypt all secrets and scan for weak or leaked passwords"
 	  "cat:Print content of a secret to stdout, or insert from stdin"
-	  "clone:Clone a store from git"
+	  "clone:Clone a password store from a git repository"
 	  "completion:Bash and ZSH completion"
-	  "config:Edit configuration"
-	  "convert:Convert a store"
+	  "config:Display and edit the configuration file"
+	  "convert:Convert a store to different backends"
 	  "copy:Copy secrets from one location to another"
 	  "create:Easy creation of new secrets"
-	  "delete:Remove secrets"
+	  "delete:Remove one or many secrets from the store"
 	  "edit:Edit new or existing secrets"
 	  "env:Run a subprocess with a pre-populated environment"
 	  "find:Search for secrets"
@@ -304,7 +304,7 @@ WARNING: This will update the secret content to the latest format. This might be
 	  "pwgen:Generate passwords"
 	  "recipients:Edit recipient permissions"
 	  "setup:Initialize a new password store"
-	  "show:Display a secret"
+	  "show:Display the content of a secret"
 	  "sum:Compute the SHA256 checksum"
 	  "sync:Sync all local stores with their remotes"
 	  "templates:Edit templates"
@@ -314,7 +314,7 @@ WARNING: This will update the secret content to the latest format. This might be
 	  "help:Shows a list of commands or help for one command"
 	)
 	_describe -t command 'gopass' subcommands
-	_arguments : "--clip[Copy the password value into the clipboard]" "--unsafe[Display unsafe content (e.g. the password) even if safecontent is enabled]" "--yes[Assume yes on all yes/no questions or use the default on all others]" "--help[show help]" "--version[print the version]" 
+	_arguments : "--clip[Copy the password value into the clipboard]" "--alsoclip[Copy the password and show everything]" "--qr[Print the password as a QR Code]" "--unsafe[Display unsafe content (e.g. the password) even if safecontent is enabled]" "--password[Display only the password. Takes precedence over all other flags.]" "--revision[Show a past revision. Does NOT support RCS specific shortcuts. Use exact revision or -N to select the Nth oldest revision of this entry.]" "--noparsing[Do not parse the output.]" "--help[show help]" "--version[print the version]" 
 	_gopass_complete_passwords
     fi
 }
