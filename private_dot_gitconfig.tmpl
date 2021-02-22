@@ -41,7 +41,7 @@
     autocorrect = 20
 
 [diff]
-    tool = meld
+    tool = bc3
     colorMoved = default
 [difftool]
     prompt = true
@@ -49,9 +49,11 @@
 [difftool "meld"]
     trustExitCode = true
     cmd = meld "$LOCAL" "$REMOTE"
+[difftool "bc3"]
+    trustExitCode = true
 
 [merge]
-    tool = meld
+    tool = bc3
 {{- /* This would required signed pushes, which... GitHub does not support
     verifySignatures = true
 */}}
@@ -64,6 +66,9 @@
     cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
     # cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
     trustExitCode = true
+[mergetool "bc3"]
+    trustExitCode = true
+
 
 [gui]
     historybrowser = git-dag
