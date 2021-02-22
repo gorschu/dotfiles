@@ -3,6 +3,10 @@ jobs = 5
 
 [asdf]
 checkout = git clone --depth=1 https://github.com/asdf-vm/asdf.git 'asdf'
+
+[fasd]
+checkout = git clone --depth=1 https://github.com/clvv/fasd 'fasd'
+
 [rofi-pass]
 checkout = git clone --depth=1 'https://github.com/carnager/rofi-pass.git' 'rofi-pass'
 
@@ -28,6 +32,6 @@ checkout = git clone --depth=1 https://github.com/gruvbox-community/gruvbox-cont
 checkout = git clone --depth 1 https://github.com/Mayccoll/Gogh.git 'gogh'
 
 [doom-emacs]
-checkout = git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.config/emacs
+checkout = git clone --depth 1 https://github.com/hlissner/doom-emacs 'doom-emacs'
 
 # vim: ft=dosini
