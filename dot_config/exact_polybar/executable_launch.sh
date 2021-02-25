@@ -8,10 +8,10 @@ while pgrep -x polybar >/dev/null; do sleep 1; done
 
 for m in $(polybar --list-monitors | cut -d":" -f1); do
     case $m in
-        eDP1)
+        eDP-1)
             MONITOR=$m polybar --reload azmo-primary &
             ;;
-        DP1-1)
+        DP-1-1)
             MONITOR=$m polybar --reload azmo-primary &
             ;;
         *)
