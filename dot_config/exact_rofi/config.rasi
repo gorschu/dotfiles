@@ -1,7 +1,7 @@
 configuration {
 	width: 75;
 	lines: 10;
-	font: "Monospace 12";
+	font: "Monospace 11";
 	padding: 1;
 	terminal: "kitty";
 	ssh-client: "ssh";
