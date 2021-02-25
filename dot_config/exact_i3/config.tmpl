@@ -378,10 +378,9 @@ for_window [class="^Zeal$"] floating enable
 for_window [title="^pinentry$"] floating enable
 for_window [class="Qalculate-gtk"] floating enable
 
-exec --no-startup-id picom -b
+exec --no-startup-id picom -b --experimental-backends
 exec --no-startup-id dunst
 exec --no-startup-id udiskie -s -a -n
-exec --no-startup-id unclutter
 exec --no-startup-id redshift-gtk
 exec --no-startup-id nm-applet
 exec --no-startup-id hp-systray
