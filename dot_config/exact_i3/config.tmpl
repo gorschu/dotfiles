@@ -108,7 +108,7 @@ bindsym $mod+shift+s exec --no-startup-id rofi -display-ssh "ssh " -show ssh
 bindsym $mod+shift+v exec pavucontrol
 bindsym $mod+c exec python3 $HOME/.vendor/clipster/clipster -s -c
 # run autorandr when pressing FN+F7 (XF86Display)
-bindsym XF86Display exec --no-startup-id /usr/bin/autorandr --change --default mobile
+bindsym XF86Display exec --no-startup-id $HOME/.local/bin/autorandr --change --default mobile
 bindsym $mod+shift+e exec sh -c 'i3-msg [class="Emacs"] focus || emacs'
 bindsym $mod+shift+f exec sh -c 'i3-msg [instance="ranger"] focus || i3-sensible-terminal --class="ranger" -e "ranger"'
 bindsym $mod+shift+m exec sh -c 'i3-msg [instance="neomutt"] focus || i3-sensible-terminal --class="neomutt" -e "neomutt"'
@@ -409,7 +409,7 @@ exec --no-startup-id /usr/libexec/polkit-gnome-authentication-agent-1
 exec --no-startup-id /usr/lib/polkit-gnome-authentication-agent-1
 {{ end }}
 
-exec --no-startup-id /usr/bin/autorandr --change --default mobile
+exec --no-startup-id $HOME/.local/bin/autorandr --change --default mobile
 
 # dpms standby and suspend after 10, off after 15 minutes
 exec_always --no-startup-id xset dpms 600 600 900
