@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-id=$(xdo id)
-xdo hide
+id=$(xdotool getwindowfocus)
+xdotool windowunmap --sync "${id}"
 $("$@") > /dev/null 2>&1
-xdo show "$id"
+xdotool windowmap --sync "${id}"
