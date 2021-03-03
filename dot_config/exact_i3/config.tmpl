@@ -99,19 +99,20 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+q kill
 
 # custom keybindings
-bindsym $mod+p exec --no-startup-id $HOME/.vendor/rofi-pass/rofi-pass
+bindsym $mod+shift+p exec --no-startup-id $HOME/.vendor/rofi-pass/rofi-pass
 bindsym $mod+d exec --no-startup-id rofi -modi drun -display-drun "drun " -show-icons -show drun
 bindsym $mod+w exec --no-startup-id rofi -show-icons -display-window "window " -show window
-bindsym $mod+shift+c exec --no-startup-id rofi -show calc -modi calc -lines 5 -width 40 -no-show-match -no-sort
 bindsym $mod+shift+w exec --no-startup-id rofi -display-windowcd "window current desktop " -show windowcd
 bindsym $mod+shift+s exec --no-startup-id rofi -display-ssh "ssh " -show ssh
 bindsym $mod+shift+v exec pavucontrol
 bindsym $mod+c exec python3 $HOME/.vendor/clipster/clipster -s -c
 # run autorandr when pressing FN+F7 (XF86Display)
 bindsym XF86Display exec --no-startup-id $HOME/.local/bin/autorandr --change --default mobile
+bindsym $mod+shift+c exec qalculate-gtk
 bindsym $mod+shift+e exec sh -c 'i3-msg [class="Emacs"] focus || emacs'
 bindsym $mod+shift+f exec sh -c 'i3-msg [instance="ranger"] focus || i3-sensible-terminal --class="ranger" -e "ranger"'
 bindsym $mod+shift+m exec sh -c 'i3-msg [instance="neomutt"] focus || i3-sensible-terminal --class="neomutt" -e "neomutt"'
+bindsym $mod+shift+n [con_mark="joplin"] scratchpad show; [con_mark="joplin"] move position center
 bindsym $mod+shift+z [con_mark="zeal"] scratchpad show; [con_mark="zeal"] move position center
 
 # change workspaces with $mod+tab
@@ -352,6 +353,7 @@ client.background           $blue
 
 # window/class specific options
 for_window [title=".* - Zeal"] mark "zeal", move scratchpad
+for_window [class="Joplin"] mark "joplin", move scratchpad
 # make Firefox's PiP windows sticky
 for_window [title="Picture-in-Picture"] sticky enable
 
@@ -370,11 +372,13 @@ assign [instance="lutris"] $workspace4
 for_window [class="Google-chrome"] border pixel1
 for_window [class="Chromium"] border pixel1
 for_window [class="Firefox"] border pixel1
+for_window [class="Joplin"] border pixel1
 for_window [class="Thunderbird"] border pixel1
 for_window [class="^mpv$"] floating enable
 # float these
 for_window [class="^Pavucontrol$"] floating enable
 for_window [class="^Zeal$"] floating enable
+for_window [class="^Joplin"] floating enable
 for_window [title="^pinentry$"] floating enable
 for_window [class="Qalculate-gtk"] floating enable
 
@@ -385,7 +389,8 @@ exec --no-startup-id redshift-gtk
 exec --no-startup-id nm-applet
 exec --no-startup-id hp-systray
 exec --no-startup-id solaar -w hide
-exec --no-startup-id yubikey-touch-detector --libnotify
+exec --no-startup-id zeal
+exec --no-startup-id $HOME/.joplin/Joplin.AppImage
 
 # Session Manager startups sometimes suck and disallow preprocessing.
 # Do it ourselves
