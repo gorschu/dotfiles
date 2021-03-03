@@ -15,17 +15,23 @@ expr "$XDG_CURRENT_DESKTOP" : ".*KDE.*" 1>/dev/null || export QT_QPA_PLATFORMTHE
 # set pinentry binary used
 expr "$XDG_CURRENT_DESKTOP" : ".*KDE.*" 1>/dev/null && export PINENTRY_BINARY="/usr/bin/pinentry-qt"
 expr "$XDG_CURRENT_DESKTOP" : ".*GNOME.*" 1>/dev/null && export PINENTRY_BINARY="/usr/bin/pinentry-gnome3"
-[ -z "${PINENTRY_BINARY}" ] && export PINENTRY_BINARY='/usr/bin/pinentry-gtk-2'
+[ -z "${PINENTRY_BINARY+1}" ] && export PINENTRY_BINARY='/usr/bin/pinentry-gtk-2'
 
 # set SSH Variables
 export SSH_AUTH_SOCK=${XDG_RUNTIME_DIR}/ssh-agent.socket
+{{ $ssh_askpass_base := "" }}
 {{ if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
-expr "$XDG_CURRENT_DESKTOP" : ".*GNOME.*" 1>/dev/null && export SSH_ASKPASS=/usr/libexec/ssh/gnome-ssh-askpass
-expr "$XDG_CURRENT_DESKTOP" : ".*KDE.*" 1>/dev/null && export SSH_ASKPASS=/usr/libexec/ssh/ksshaskpass
+    {{ $ssh_askpass_base = "/usr/libexec/ssh" }}
 {{ else if eq .chezmoi.osRelease.id "ubuntu" "debian" }}
-expr "$XDG_CURRENT_DESKTOP" : ".*GNOME.*" 1>/dev/null && export SSH_ASKPASS=/usr/lib/openssh/gnome-ssh-askpass
+    {{ $ssh_askpass_base = "/usr/lib/openssh" }}
+{{ else if eq .chezmoi.osRelease.id "fedora" }}
+    {{ $ssh_askpass_base = "/usr/libexec/openssh" }}
 {{ end }}
-[ -z "${SSH_ASKPASS}" ] && export SSH_ASKPASS='/usr/lib/ssh/x11-ssh-askpass'
+expr "$XDG_CURRENT_DESKTOP" : ".*GNOME.*" 1>/dev/null && export SSH_ASKPASS={{ $ssh_askpass_base }}/gnome-ssh-askpass
+expr "$XDG_CURRENT_DESKTOP" : ".*KDE.*" 1>/dev/null && export SSH_ASKPASS={{ $ssh_askpass_base }}/ksshaskpass
+[ -z "${SSH_ASKPASS+1}" ] && export SSH_ASKPASS={{ $ssh_askpass_base }}/x11-ssh-askpass
+# import to systemctl user-environment
+systemctl --user import-environment SSH_AUTH_SOCK SSH_ASKPASS
 
 # use new freetype 2.7 default interpreter
 export FREETYPE_PROPERTIES="truetype:interpreter-version=40"
