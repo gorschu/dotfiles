@@ -4,14 +4,10 @@ IgnoreOnIsolate=true
 
 [Service]
 Type=simple
-# this is probably redundant since we set it in .zprofile.d
+# We need to set this here instead of inject it since it is needed for startup
 Environment=SSH_AUTH_SOCK=%t/ssh-agent.socket
-# DISPLAY required for ssh-askpass to work
-Environment=DISPLAY=:0
-Environment=XAUTHORITY=%t/gdm/Xauthority
-{{ if stat "/usr/libexec/ssh/gnome-ssh-askpass" }}
-Environment=SSH_ASKPASS=/usr/libexec/ssh/gnome-ssh-askpass
-{{ end }}
+# Variable such as SSH_ASKPASS and SSH_AUTH_SOCK are set in
+# .zprofile.d/01-environment.zsh and imported into systemd user-environment
 ExecStart=/usr/bin/ssh-agent -D -a $SSH_AUTH_SOCK
 
 [Install]
