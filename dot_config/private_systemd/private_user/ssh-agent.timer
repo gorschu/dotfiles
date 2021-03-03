@@ -1,0 +1,10 @@
+[Unit]
+Description=ssh-agent timer
+
+[Timer]
+# Time to wait after booting before it run for first time
+OnStartupSec=15s
+Unit=ssh-agent.service
+
+[Install]
+WantedBy=default.target
