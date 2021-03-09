@@ -6,6 +6,10 @@ IgnoreOnIsolate=true
 Type=simple
 # We need to set this here instead of inject it since it is needed for startup
 Environment=SSH_AUTH_SOCK=%t/ssh-agent.socket
+{{ if eq .wm "kde" }}
+# Set QT_PLUGIN_PATH for ksshaskpass5
+Environment=QT_PLUGIN_PATH=/usr/lib64/qt5/plugins
+{{ end }}
 # Variable such as SSH_ASKPASS and SSH_AUTH_SOCK are set in
 # .zprofile.d/01-environment.zsh and imported into systemd user-environment
 ExecStart=/usr/bin/ssh-agent -D -a $SSH_AUTH_SOCK
