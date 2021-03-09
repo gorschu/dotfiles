@@ -1,6 +1,7 @@
 [Unit]
 Description=Backup with restic daily
 [Timer]
+OnStartupSec=5m
 OnCalendar=daily
 Persistent=true
 [Install]
