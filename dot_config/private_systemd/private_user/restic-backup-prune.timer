@@ -1,6 +1,7 @@
 [Unit]
-Description=Prune data from the restic repository monthly
+Description=Prune data from the restic repository weekly
 [Timer]
+OnStartupSec=30m
 OnCalendar=weekly
 Persistent=true
 [Install]
