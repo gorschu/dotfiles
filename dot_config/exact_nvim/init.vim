@@ -18,6 +18,7 @@ Plug 'petobens/poet-v'
 let g:poetv_executables = ['poetry']
 
 " 'Self'-Vim plugins
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'gruvbox-community/gruvbox'
 
 Plug 'vim-airline/vim-airline'
