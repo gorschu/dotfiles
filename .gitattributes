@@ -1,1 +1,1 @@
-encrypted_* diff=gpg
+encrypted_* diff=gpg filter=gpg
