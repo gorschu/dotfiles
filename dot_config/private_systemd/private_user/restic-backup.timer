@@ -1,8 +1,8 @@
 [Unit]
-Description=Backup with restic daily
+Description=Backup with restic every hour
 [Timer]
 OnStartupSec=5m
-OnCalendar=daily
+OnUnitActiveSec=1h
 Persistent=true
 [Install]
 WantedBy=timers.target
