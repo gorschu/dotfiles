@@ -18,7 +18,7 @@ fileext = ".vcf"
 type = "carddav"
 url = "https://carddav.messagingengine.com/"
 username = "gordon@gordonschulz.de"
-password.fetch = ["command", "~/bin/mail/get_carddav_password.sh"]
+password.fetch = ["command", "secret-tool","lookup","fastmail/carddav/gordon@gordonschulz.de","password"]
 
 [pair fastmail_calendars]
 a = "fastmail_calendars_local"
@@ -37,4 +37,4 @@ fileext = ".ics"
 type = "caldav"
 url = "https://caldav.messagingengine.com/"
 username = "gordon@gordonschulz.de"
-password.fetch = ["command", "~/bin/mail/get_caldav_password.sh"]
+password.fetch = ["command", "secret-tool","lookup","fastmail/caldav/gordon@gordonschulz.de","password"]
