@@ -404,8 +404,6 @@ exec --no-startup-id $HOME/.joplin/Joplin.AppImage
 # Do it ourselves
 exec --no-startup-id xrdb -merge ~/.Xresources
 
-# make sure we do have an authentication agent and gnome-keyring-daemon started
-exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=secrets
 {{/* this is a fucking mess */}}
 {{ if stat "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1" }}
 {{/* arch */}}
