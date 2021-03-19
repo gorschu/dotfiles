@@ -13,7 +13,7 @@
 export XDG_CURRENT_DESKTOP='i3'
 export XDG_SESSION_DESKTOP='i3'
 
-exec dbus-launch $XDG_CURRENT_DESKTOP
+exec dbus-run-session $XDG_CURRENT_DESKTOP
 {{ else }}
 # invoke global X session script (which ultimately invokes $HOME/.xsession)
 . /etc/X11/Xsession
