@@ -44,8 +44,5 @@ asdf plugin list | grep -q "^golang$" || asdf plugin-add golang https://github.c
 asdf plugin list | grep -q "^java$" || asdf plugin-add java https://github.com/halcyon/asdf-java.git
 asdf plugin list | grep -q "^python$" || asdf plugin-add python https://github.com/danhper/asdf-python.git
 
-echo "${green}Protect $HOME/.config/fontconfig/fonts.conf${reset}"
-sudo chattr +i $HOME/.config/fontconfig/fonts.conf
-
 echo "${green}Changing from (possible) https to ssh${reset}"
 chezmoi git remote set-url origin git@github.com:azmodude/dotfiles
