@@ -1,20 +1,17 @@
 [DEFAULT]
 jobs = 5
 
+[fasd]
+checkout = git clone --depth=1 https://github.com/clvv/fasd.git 'fasd'
+
 [asdf]
 checkout = git clone --depth=1 https://github.com/asdf-vm/asdf.git 'asdf'
-
-[fasd]
-checkout = git clone --depth=1 https://github.com/clvv/fasd 'fasd'
 
 [rofi-pass]
 checkout = git clone --depth=1 'https://github.com/carnager/rofi-pass.git' 'rofi-pass'
 
 [tomb]
 checkout = git clone --depth=1 'https://github.com/dyne/Tomb.git' 'tomb'
-
-[autorandr]
-checkout = git clone --depth=1 'https://github.com/phillipberndt/autorandr.git' 'autorandr'
 
 [clipster]
 checkout = git clone --depth=1 'https://github.com/mrichar1/clipster.git' 'clipster'
