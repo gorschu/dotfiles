@@ -387,6 +387,7 @@ for_window [class="^Joplin"] floating enable
 for_window [title="^pinentry$"] floating enable
 for_window [class="Qalculate-gtk"] floating enable
 
+exec --no-startup-id systemctl --user start geoclue-agent.service
 exec --no-startup-id picom -b --experimental-backends
 exec --no-startup-id dunst
 exec --no-startup-id udiskie -s -a -n
