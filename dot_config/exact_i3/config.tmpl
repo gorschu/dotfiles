@@ -361,6 +361,7 @@ for_window [title="Picture-in-Picture"] sticky enable
 # Citrix@work
 for_window [class="^Wfica$"] floating enable
 assign [class="^Wfica$"] $workspace8
+
 assign [class="firefox"] $workspace1
 assign [class="Thunderbird"] $workspace6
 assign [class="Google-chrome"] $workspace1
@@ -396,6 +397,7 @@ exec --no-startup-id nm-applet
 exec --no-startup-id hp-systray
 exec --no-startup-id solaar -w hide
 exec --no-startup-id zeal
+exec --no-startup-id keepassxc
 exec --no-startup-id $HOME/.joplin/Joplin.AppImage
 
 # Session Manager startups sometimes suck and disallow preprocessing.
