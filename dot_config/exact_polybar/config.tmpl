@@ -364,7 +364,7 @@ label-disconnected-foreground = ${colors.foreground}
 
 [module/eth-internal]
 type = internal/network
-interface = {{ if eq .chezmoi.hostname "hephaestus" }}enp60s0u1u1{{ else }}enp0s25{{ end }}
+interface = {{ if eq .chezmoi.hostname "hephaestus" }}enp03s31f6{{ else }}enp0s25{{ end }}
 interval = 5
 
 format-packetloss = <animation-packetloss> <label-connected>
