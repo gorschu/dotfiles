@@ -353,7 +353,7 @@ client.background           $blue
 
 # window/class specific options
 for_window [title=".* - Zeal"] mark "zeal", move scratchpad
-for_window [class="KeePassXC"] mark "keepassxc", move scratchpad
+for_window [class="KeePassXC" window_type="normal"] mark "keepassxc", move scratchpad
 for_window [class="Joplin"] mark "joplin", move scratchpad
 # make Firefox's PiP windows sticky
 for_window [title="Picture-in-Picture"] sticky enable
