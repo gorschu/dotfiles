@@ -29,7 +29,7 @@ export SSH_AUTH_SOCK=${XDG_RUNTIME_DIR}/ssh-agent.socket
 {{ end }}
 expr "$XDG_CURRENT_DESKTOP" : ".*GNOME.*" 1>/dev/null && export SSH_ASKPASS={{ $ssh_askpass_base }}/gnome-ssh-askpass
 expr "$XDG_CURRENT_DESKTOP" : ".*KDE.*" 1>/dev/null && export SSH_ASKPASS={{ $ssh_askpass_base }}/ksshaskpass
-[ -z "${SSH_ASKPASS+1}" ] && export SSH_ASKPASS={{ $ssh_askpass_base }}/x11-ssh-askpass
+[ -z "$SSH_ASKPASS" ] && export SSH_ASKPASS={{ $ssh_askpass_base }}/x11-ssh-askpass
 # import to systemctl user-environment
 systemctl --user import-environment SSH_AUTH_SOCK SSH_ASKPASS
 
