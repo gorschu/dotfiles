@@ -10,7 +10,8 @@ export XDG_DATA_HOME="${HOME}/.local/share"
 export XDG_CACHE_HOME="${HOME}/.cache"
 
 # requires qt5ct (and settings there)
-expr "$XDG_CURRENT_DESKTOP" : ".*KDE.*" 1>/dev/null || export QT_QPA_PLATFORMTHEME="qt5ct"
+# Let KDE and GNOME handle themselves
+expr "$XDG_CURRENT_DESKTOP" : ".*\(KDE\|GNOME\).*" 1>/dev/null || export QT_QPA_PLATFORMTHEME="qt5ct"
 
 # set pinentry binary used
 expr "$XDG_CURRENT_DESKTOP" : ".*KDE.*" 1>/dev/null && export PINENTRY_BINARY="/usr/bin/pinentry-qt"
