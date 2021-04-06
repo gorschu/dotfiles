@@ -23,7 +23,7 @@ setopt hist_ignore_all_dups
 setopt hist_find_no_dups
 setopt hist_save_no_dups
 # quote globs in remote commads
-__remote_commands=(scp sftp rsync curl wget lftp)
+__remote_commands=(scp sftp rsync rsync-move rsync-copy curl wget lftp)
 zstyle -e :urlglobber url-other-schema \
     '[[ $__remote_commands[(i)$words[1]] -le ${#__remote_commands} ]] && reply=("*") || reply=(http https ftp)'
     #
