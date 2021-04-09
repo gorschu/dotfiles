@@ -21,15 +21,19 @@ expr "$XDG_CURRENT_DESKTOP" : ".*GNOME.*" 1>/dev/null && export PINENTRY_BINARY=
 # set SSH Variables
 export SSH_AUTH_SOCK=${XDG_RUNTIME_DIR}/ssh-agent.socket
 {{ $ssh_askpass_base := "" }}
+{{ $kssh_askpass_base := "" }}
 {{ if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
     {{ $ssh_askpass_base = "/usr/libexec/ssh" }}
+    {{ $kssh_askpass_base = $ssh_askpass_base }}
 {{ else if eq .chezmoi.osRelease.id "ubuntu" "debian" }}
     {{ $ssh_askpass_base = "/usr/lib/openssh" }}
+    {{ $kssh_askpass_base = "/bin" }}
 {{ else if eq .chezmoi.osRelease.id "fedora" }}
     {{ $ssh_askpass_base = "/usr/libexec/openssh" }}
+    {{ $kssh_askpass_base = $ssh_askpass_base }}
 {{ end }}
 expr "$XDG_CURRENT_DESKTOP" : ".*GNOME.*" 1>/dev/null && export SSH_ASKPASS={{ $ssh_askpass_base }}/gnome-ssh-askpass
-expr "$XDG_CURRENT_DESKTOP" : ".*KDE.*" 1>/dev/null && export SSH_ASKPASS={{ $ssh_askpass_base }}/ksshaskpass
+expr "$XDG_CURRENT_DESKTOP" : ".*KDE.*" 1>/dev/null && export SSH_ASKPASS={{ $kssh_askpass_base }}/ksshaskpass
 [ -z "$SSH_ASKPASS" ] && export SSH_ASKPASS={{ $ssh_askpass_base }}/x11-ssh-askpass
 # import to systemctl user-environment
 systemctl --user import-environment SSH_AUTH_SOCK SSH_ASKPASS

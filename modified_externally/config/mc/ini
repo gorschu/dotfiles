@@ -83,9 +83,12 @@ editor_stop_format_chars=-+*\\,.;:&>
 mcview_eof=
 skin=gruvbox256
 
+shadows=true
+fish_directory_timeout=900
+
 [Layout]
 output_lines=0
-left_panel_size=136
+left_panel_size=119
 top_panel_size=0
 message_visible=true
 keybar_visible=true
@@ -107,6 +110,8 @@ source_codepage=Other_8_bit
 autodetect_codeset=
 clipboard_store=
 clipboard_paste=
+
+spell_language=en
 
 [Colors]
 base_color=
