@@ -5,7 +5,7 @@ DimmValue=37
 Font=JetBrainsMono Nerd Font,10,-1,5,57,0,0,0,0,0,Medium
 
 [General]
-DimWhenInactive=false
+DimWhenInactive=true
 Name=azmo
 Parent=FALLBACK/
 
