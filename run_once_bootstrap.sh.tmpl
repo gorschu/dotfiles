@@ -29,8 +29,8 @@ mr -c $HOME/.vendor/.mrconfig update
 echo "${green}Install fzf${reset}"
 $HOME/.vendor/fzf/install --all
 
-echo "${green}Populating ssh keys${reset}"
-"${HOME}"/bin/security/populate_ssh_keys.sh
+echo "${green}Protect $HOME/.config/fontconfig/fonts.conf${reset}"
+sudo chattr +i $HOME/.config/fontconfig/fonts.conf
 
 echo "${green}Installing antibody and creating static plugin list${reset}"
 curl -sfL git.io/antibody | sh -s - -b $HOME/bin &&
