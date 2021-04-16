@@ -18,9 +18,9 @@ echo "${green}Installing requirements${reset}"
         yay -S --noconfirm --needed myrepos
     fi
 {{ else if eq .chezmoi.osRelease.id "fedora" }}
-    sudo dnf install -y myrepos git git-crypt zsh gocryptfs redhat-lsb-core
+    sudo dnf install -y myrepos git git-crypt zsh gocryptfs redhat-lsb-core keepassxc mc
 {{ else if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
-    sudo zypper install -y mr git zsh
+    sudo zypper install -y mr git zsh keepassxc mc
 {{ end }}
 
 echo "${green}Updating vendor dependencies${reset}"
