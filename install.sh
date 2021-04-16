@@ -22,6 +22,8 @@ GPGKEY=DEE550054AA972F6
 GPGKEY_FINGERPRINT=0A47650A15E4F0F4003EC450DEE550054AA972F6
 gpg --keyserver keyserver.ubuntu.com --receive-keys ${GPGKEY}
 echo -e "5\ny\n" | gpg --command-fd 0 --expert --edit-key ${GPGKEY_FINGERPRINT} trust
+# power up yubikey
+gpg --card-status
 
 # POSIX way to get script's dir: https://stackoverflow.com/a/29834779/12156188
 script_dir="$(cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P)"
