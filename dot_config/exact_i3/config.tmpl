@@ -404,21 +404,7 @@ exec --no-startup-id $HOME/.joplin/Joplin.AppImage
 # Do it ourselves
 exec --no-startup-id xrdb -merge ~/.Xresources
 
-{{/* this is a fucking mess */}}
-{{ if stat "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1" }}
-{{/* arch */}}
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-{{ else if stat "/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1" }}
-{{/* debian */}}
-exec --no-startup-id /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1
-{{ else if stat "/usr/libexec/polkit-gnome-authentication-agent-1" }}
-{{/* fedora */}}
-exec --no-startup-id /usr/libexec/polkit-gnome-authentication-agent-1
-{{ else if stat "/usr/lib/polkit-gnome-authentication-agent-1" }}
-{{/* opensuse */}}
-exec --no-startup-id /usr/lib/polkit-gnome-authentication-agent-1
-{{ end }}
-
+# Switch to detected monitor/resolution configuration
 exec --no-startup-id $HOME/.local/bin/autorandr --change --default mobile
 
 # dpms standby and suspend after 10, off after 15 minutes
