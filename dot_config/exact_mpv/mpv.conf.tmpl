@@ -1,0 +1,7 @@
+hwdec=vaapi
+vo=gpu
+ytdl-format=best
+ytdl
+{{- if eq .wm "kde" }}
+x11-bypass-compositor=no
+{{ end }}
