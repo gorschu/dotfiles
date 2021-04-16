@@ -2,6 +2,8 @@
 # invoke emacsclient with proper socketfile.
 # echo "thisthat" | ec -
 # or anything piped into this script with - as argument opens it in emacs
+#
+# raising an existing frame needs KDE's focus stealing prevention to set to 'None'
 
 # find emacs' socketfile to connect to
 if [ "$(uname -s)" == 'Darwin' ]; then
@@ -12,21 +14,31 @@ fi
 socketfile=$(lsof -c ${binary} 2>/dev/null | grep "/server" | tr -s " " | \
     cut -d' ' -f9 | uniq | grep ${binary})
 
+# check whether we need to create a display
+createframe=""
+if ! emacsclient -e "(frames-on-display-list \"$DISPLAY\")" &>/dev/null ]]; then
+    createframe="-c"
+fi
+
 # If the argument is - then write stdin to a tempfile and open the
 # tempfile.
 if [[ $# -ge 1 ]] && [[ "$1" == - ]]; then
     tempfile="$(mktemp "emacs-stdin-$USER.XXXXXXX" --tmpdir)"
     cat - > "$tempfile"
-    emacsclient -c -n -s "${socketfile}" \
+    # the +variable makes sure we only actually insert a variable if it's not empty
+    emacsclient ${createframe:+"$createframe"} -n -s "${socketfile}" \
         --eval "(find-file \"$tempfile\")" \
         --eval '(set-visited-file-name nil)' \
-        --eval '(rename-buffer "*stdin*" t))'
+        --eval '(rename-buffer "*stdin*" t))' \
+        --eval "(progn (select-frame-set-input-focus (selected-frame)))"
 else
     # just a normal invocation.
     if [ -z "${socketfile}" ]; then
-        emacsclient -a "" -c "$@"
+        emacsclient -a "" ${createframe:+"$createframe"} -n \
+            --eval "(progn (find-file \"$@\") (select-frame-set-input-focus (selected-frame)))"
     else
-        emacsclient -s "${socketfile}" "$@"
+        emacsclient -s "${socketfile}" ${createframe:+"$createframe"} -n \
+            --eval "(progn (find-file \"$@\") (select-frame-set-input-focus (selected-frame)))"
     fi
 fi
 
