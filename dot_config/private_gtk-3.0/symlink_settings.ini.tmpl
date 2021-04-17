@@ -1,1 +1,5 @@
+{{ if .eq wm "kde" }}
+{{ .chezmoi.sourceDir }}/modified_externally/config/gtk-3.0/settings_kde.ini
+{{ else }}
 {{ .chezmoi.sourceDir }}/modified_externally/config/gtk-3.0/settings.ini
+{{ end }}
