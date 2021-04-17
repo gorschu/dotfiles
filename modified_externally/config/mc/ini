@@ -88,7 +88,7 @@ fish_directory_timeout=900
 
 [Layout]
 output_lines=0
-left_panel_size=159
+left_panel_size=120
 top_panel_size=0
 message_visible=true
 keybar_visible=true
@@ -117,6 +117,8 @@ spell_language=en
 base_color=
 xterm-256color=
 color_terminals=
+
+xterm-kitty=
 
 [Panels]
 show_mini_info=true
