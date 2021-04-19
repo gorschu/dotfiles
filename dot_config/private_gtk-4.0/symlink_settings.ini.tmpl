@@ -1,4 +1,4 @@
-{{ if .eq wm "kde" }}
+{{ if eq .wm "kde" }}
 {{ .chezmoi.sourceDir }}/modified_externally/config/gtk-4.0/settings_kde.ini
 {{ else }}
 {{ .chezmoi.sourceDir }}/modified_externally/config/gtk-4.0/settings.ini
