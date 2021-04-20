@@ -31,6 +31,9 @@ export SSH_AUTH_SOCK=${XDG_RUNTIME_DIR}/ssh-agent.socket
 {{ else if eq .chezmoi.osRelease.id "fedora" }}
     {{ $ssh_askpass_base = "/usr/libexec/openssh" }}
     {{ $kssh_askpass_base = $ssh_askpass_base }}
+{{ else if eq .chezmoi.osRelease.id "arch" }}
+    {{ $ssh_askpass_base = "/usr/lib/ssh" }}
+    {{ $kssh_askpass_base = "/usr/bin" }}
 {{ end }}
 expr "$XDG_CURRENT_DESKTOP" : ".*GNOME.*" 1>/dev/null && export SSH_ASKPASS={{ $ssh_askpass_base }}/gnome-ssh-askpass
 expr "$XDG_CURRENT_DESKTOP" : ".*KDE.*" 1>/dev/null && export SSH_ASKPASS={{ $kssh_askpass_base }}/ksshaskpass
