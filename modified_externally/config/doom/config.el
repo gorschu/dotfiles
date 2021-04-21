@@ -6,8 +6,8 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
-(setq user-full-name "John Doe"
-      user-mail-address "john@doe.com")
+(setq user-full-name "Gordon Schulz"
+      user-mail-address "gordon@gordonschulz.de")
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
@@ -62,3 +62,5 @@
 ;; we filter the print-stuff here
 (define-advice server-eval-and-print (:filter-args (args) no-print)
   (list (car args) nil))
+
+(doom-load-envvars-file (concat doom-private-dir "env"))
