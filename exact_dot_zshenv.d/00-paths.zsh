@@ -11,6 +11,7 @@ path=(
     ${HOME}/.local/bin
     ${HOME}/bin
     ${HOME}/bin/**
+    ${HOME}/go/bin
     ${path}
     /usr/local/{bin,sbin}
 )
