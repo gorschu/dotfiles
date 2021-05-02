@@ -1,0 +1,15 @@
+[Desktop Entry]
+DefaultProfile=azmo.profile
+
+[KonsoleWindow]
+SaveGeometryOnExit=false
+UseSingleInstance=true
+
+[MainWindow]
+State=AAAA/wAAAAD9AAAAAAAAB4AAAAPTAAAABAAAAAQAAAAIAAAACPwAAAAA
+ToolBarsMovable=Disabled
+eDP-1 Window-Maximized 1920x1080=true
+
+[TabBar]
+ExpandTabWidth=true
+TabBarPosition=Top
