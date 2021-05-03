@@ -512,6 +512,7 @@ augroup filetypes
     autocmd BufNewFile,BufRead /dev/shm/pass.* setlocal noswapfile nobackup noundofile
     autocmd BufNewFile,BufRead /dev/shm/gopass.* setlocal noswapfile nobackup noundofile
     autocmd FileType json setlocal foldmethod=syntax   " set foldmethod to syntax for json files
+    autocmd FileType markdown setlocal tw=80 " set textwidth to 80 when doing markdown
     autocmd BufNewFile,BufRead *.j2 setl ft=jinja
     autocmd BufNewFile,BufRead *.jinja setl ft=jinja
     autocmd Filetype yaml setl tabstop=2
