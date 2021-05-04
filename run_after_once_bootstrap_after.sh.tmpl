@@ -23,6 +23,10 @@ curl -sfL git.io/antibody | sh -s - -b $HOME/bin &&
     $HOME/bin/antibody bundle <{{ .chezmoi.homedir }}/.zsh_plugins.txt > \
         {{ .chezmoi.homedir }}/.zsh_plugins.sh
 
+tmpfile=$(mktemp)
+curl -fsSL -o ${tmpfile} https://starship.rs/install.sh && bash ${tmpfile} --bin-dir \
+    $HOME/bin --yes
+
 echo "${green}Updating vendor dependencies${reset}"
 mr -c $HOME/.vendor/.mrconfig update
 
