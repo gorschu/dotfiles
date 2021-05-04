@@ -1,0 +1,34 @@
+[cmd_duration]
+style = "#d79921"
+
+[directory]
+read_only = "  "
+read_only_style = "#cc241d"
+truncation_symbol = "…/"
+truncation_length = 3
+
+[git_branch]
+symbol = " "
+
+[git_status]
+ahead = "⇡${count}"
+diverged = "😰⇡${ahead_count}⇣${behind_count}"
+behind = "⇣${count}"
+style = "#b16286"
+
+[docker_context]
+disabled = false
+symbol = " "
+
+[line_break]
+disabled = true
+
+[package]
+symbol = "  "
+
+[shlvl]
+disabled = false
+symbol = "溜"
+
+[status]
+disabled = false
