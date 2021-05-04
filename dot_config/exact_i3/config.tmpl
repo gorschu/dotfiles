@@ -70,6 +70,7 @@ set $workspace7 7
 set $workspace8 8
 set $workspace9 9
 set $workspace10 10
+{{ if eq .chezmoi.hostname "hephaestus" }}
 workspace $workspace1 output  eDP-1 DP-1-1
 workspace $workspace2 output  eDP-1 DP-1-1
 workspace $workspace3 output  eDP-1 DP-1-1
@@ -80,6 +81,18 @@ workspace $workspace7 output  eDP-1 DP-1-8
 workspace $workspace8 output  eDP-1 DP-1-8
 workspace $workspace9 output  eDP-1 DP-1-8
 workspace $workspace10 output eDP-1 DP-1-8
+{{ else if eq .chezmoi.hostname "artemis" }}
+workspace $workspace1 output  DP-0.1
+workspace $workspace2 output  DP-0.1
+workspace $workspace3 output  DP-0.1
+workspace $workspace4 output  DP-0.1
+workspace $workspace5 output  DP-0.1
+workspace $workspace6 output  DP-0.8
+workspace $workspace7 output  DP-0.8
+workspace $workspace8 output  DP-0.8
+workspace $workspace9 output  DP-0.8
+workspace $workspace10 output DP-0.8
+{{ end }}
 
 hide_edge_borders smart
 
