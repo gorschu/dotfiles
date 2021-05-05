@@ -17,24 +17,26 @@ fi
 rm -rf {{ .chezmoi.homedir }}/.cache/antibody
 ${chezmoi} execute-template -o {{ .chezmoi.homedir }}/.zsh_plugins.txt < {{ .chezmoi.sourceDir }}/dot_zsh_plugins.txt.tmpl
 
-echo "${green}Installing antibody and creating static plugin list${reset}"
-curl -sfL git.io/antibody | sh -s - -b $HOME/bin &&
-    chmod +x $HOME/bin/antibody &&
-    $HOME/bin/antibody bundle <{{ .chezmoi.homedir }}/.zsh_plugins.txt > \
-        {{ .chezmoi.homedir }}/.zsh_plugins.sh
+if [ ! -e $HOME/bin/antibody ]; then
+    echo "${green}Installing antibody and creating static plugin list${reset}"
+    curl -sfL git.io/antibody | sh -s - -b $HOME/bin &&
+        chmod +x $HOME/bin/antibody &&
+        $HOME/bin/antibody bundle <{{ .chezmoi.homedir }}/.zsh_plugins.txt > \
+            {{ .chezmoi.homedir }}/.zsh_plugins.sh
+fi
 
-tmpfile=$(mktemp)
-curl -fsSL -o ${tmpfile} https://starship.rs/install.sh && bash ${tmpfile} --bin-dir \
-    $HOME/bin --yes
+if [ ! -e $HOME/bin/starship ]; then
+    echo "${green}Installing starship${reset}"
+    tmpfile=$(mktemp)
+    curl -fsSL -o ${tmpfile} https://starship.rs/install.sh && bash ${tmpfile} --bin-dir \
+        $HOME/bin --yes
+fi
 
 echo "${green}Updating vendor dependencies${reset}"
 mr -c $HOME/.vendor/.mrconfig update
 
 echo "${green}Install fzf${reset}"
 $HOME/.vendor/fzf/install --all
-
-echo "${green}Protect $HOME/.config/fontconfig/fonts.conf${reset}"
-sudo chattr +i $HOME/.config/fontconfig/fonts.conf
 
 echo "${green}Install asdf plugins${reset}"
 . $HOME/.vendor/asdf/asdf.sh
