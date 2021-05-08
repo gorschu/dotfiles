@@ -1,3 +1,6 @@
+[aws]
+symbol = " "
+
 [cmd_duration]
 style = "#d79921"
 
@@ -15,6 +18,9 @@ ahead = "⇡${count}"
 diverged = "😰⇡${ahead_count}⇣${behind_count}"
 behind = "⇣${count}"
 style = "#b16286"
+
+[golang]
+symbol = "ﳑ "
 
 [docker_context]
 disabled = false
