@@ -2,6 +2,13 @@
 update_info=kwinrules.upd:replace-placement-string-to-enum
 
 [1]
+Description=Application settings for steam_app_39210 (Final Fantasy XIV)
+aboverule=2
+wmclass=ffxiv_dx11.exe steam_app_39210
+wmclasscomplete=true
+wmclassmatch=1
+
+[2]
 Description=Application settings for keepassxc
 placement=6
 placementrule=2
@@ -14,7 +21,7 @@ skiptaskbarrule=2
 wmclass=keepassxc
 wmclassmatch=1
 
-[2]
+[3]
 Description=Application settings for joplin
 placement=6
 placementrule=2
@@ -27,7 +34,7 @@ skiptaskbarrule=2
 wmclass=joplin
 wmclassmatch=1
 
-[3]
+[4]
 Description=Window settings for konsole - tridactyl
 placement=6
 placementrule=2
@@ -36,7 +43,7 @@ types=1
 wmclass=konsole
 wmclassmatch=1
 
-[4]
+[5]
 Description=Window settings for konsole - joplin
 placement=6
 placementrule=2
@@ -46,4 +53,4 @@ wmclass=konsole
 wmclassmatch=1
 
 [General]
-count=4
+count=5
