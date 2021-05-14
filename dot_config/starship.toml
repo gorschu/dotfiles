@@ -22,6 +22,10 @@ style = "#b16286"
 [golang]
 symbol = "ﳑ "
 
+[java]
+symbol = " "
+style = "blue"
+
 [docker_context]
 disabled = false
 symbol = " "
