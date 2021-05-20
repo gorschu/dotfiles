@@ -1,6 +1,6 @@
 configuration {
-	width: 75;
-	lines: 10;
+	width: 40;
+	lines: 8;
 	font: "Monospace 11";
 	padding: 1;
 	terminal: "kitty";
@@ -8,7 +8,7 @@ configuration {
 	ssh-command: "{terminal} -e "{ssh-client} {host}"";
 	run-command: "{cmd}";
 	run-shell-command: "{terminal} -e "{cmd}"";
-	theme: "gruvbox-dark";
+	theme: "nord";
 	fake-transparency: true;
 	display-window: "window>";
 	display-run: "run>";
@@ -17,6 +17,6 @@ configuration {
 }
 
 window {
-    anchor: south;
     location: south;
+    anchor: south;
     }
