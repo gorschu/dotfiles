@@ -2,11 +2,11 @@
 symbol = " "
 
 [cmd_duration]
-style = "#d79921"
+style = "#EBCB8B"
 
 [directory]
 read_only = "  "
-read_only_style = "#cc241d"
+read_only_style = "#BF616A"
 truncation_symbol = "…/"
 truncation_length = 3
 
@@ -17,7 +17,7 @@ symbol = " "
 ahead = "⇡${count}"
 diverged = "😰⇡${ahead_count}⇣${behind_count}"
 behind = "⇣${count}"
-style = "#b16286"
+style = "#81A1C1"
 
 [golang]
 symbol = "ﳑ "
