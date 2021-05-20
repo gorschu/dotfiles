@@ -34,6 +34,9 @@ checkout = git clone --depth 1 https://github.com/hlissner/doom-emacs 'doom-emac
 [nord-konsole]
 checkout = git clone --depth 1 https://github.com/arcticicestudio/nord-konsole.git 'nord-konsole'
 
+[nord-alacritty]
+checkout = git clone --depth 1 https://github.com/arcticicestudio/nord-alacritty.git 'nord-alacritty'
+
 [nord-dircolors]
 checkout = git clone --depth 1 https://github.com/arcticicestudio/nord-dircolors.git 'nord-dircolors'
 

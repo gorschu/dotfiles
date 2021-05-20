@@ -19,7 +19,7 @@ let g:poetv_executables = ['poetry']
 
 " 'Self'-Vim plugins
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'gruvbox-community/gruvbox'
+Plug 'arcticicestudio/nord-vim''
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -140,11 +140,12 @@ let mapleader = ","     " map my leader key to a comma
 " colors
 syntax enable
 set background=dark
-let g:gruvbox_italic = 1
-let g:gruvbox_improved_strings = 0
-let g:gruvbox_improved_warnings = 1
+let g:nord_uniform_diff_background = 1
+let g:nord_bold = 1
+let g:nord_italic = 1
+let g:nord_italic_comments = 1
 
-colorscheme gruvbox
+colorscheme nord
 
 set updatetime=250       " update stuff after 2.5s
 set title                " try to set window title

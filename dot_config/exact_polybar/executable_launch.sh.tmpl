@@ -9,10 +9,10 @@ while pgrep -x polybar >/dev/null; do sleep 1; done
 for m in $(polybar --list-monitors | cut -d":" -f1); do
     case $m in
         {{ if eq .chezmoi.hostname "hephaestus" }}
-        eDP-1)
+        eDP1)
             MONITOR=$m polybar --reload azmo-primary &
             ;;
-        DP-1-1)
+        DP1-1)
             MONITOR=$m polybar --reload azmo-primary &
             ;;
         {{ else if eq .chezmoi.hostname "artemis" }}
