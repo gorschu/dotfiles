@@ -314,55 +314,61 @@ mode "$mode_restart" {
 }
 bindsym $mod+shift+r mode "$mode_restart"
 
-# set primary gruvbox colorscheme colors
-set $bg #282828
-set $red #cc241d
-set $green #98971a
-set $yellow #d79921
-set $blue #458588
-set $purple #b16286
-set $aqua #689d68
-set $gray #a89984
-set $darkgray #1d2021
+## Base16 Nord
+# Author: arcticicestudio
+#
+# You can use these variables anywhere in the i3 configuration file.
 
-#start of window title bars and borders section
-# green gruvbox
-# class                     border|backgr|text|indicator|child_border
-# client.focused             $green $green $darkgray $purple $green
-# client.focused_inactive    $darkgray $darkgray $yellow $purple $darkgray
-# client.unfocused           $darkgray $darkgray $yellow $purple $darkgray
-# client.urgent              $red $red $white $red $red
-# client.background          $green
+set $base00 #2E3440
+set $base01 #3B4252
+set $base02 #434C5E
+set $base03 #4C566A
+set $base04 #D8DEE9
+set $base05 #E5E9F0
+set $base06 #ECEFF4
+set $base07 #8FBCBB
+set $base08 #88C0D0
+set $base09 #81A1C1
+set $base0A #5E81AC
+set $base0B #BF616A
+set $base0C #D08770
+set $base0D #EBCB8B
+set $base0E #A3BE8C
+set $base0F #B48EAD
 
-# blue gruvbox
-# class                     border|backgr|text|indicator|child_border
-client.focused              $blue $blue $darkgray $purple $blue
-client.focused_inactive     $darkgray $darkgray $yellow $purple $darkgray
-client.unfocused            $darkgray $darkgray $yellow $purple $darkgray
-client.urgent               $red $red $darkgray $red $red
-client.background           $blue
-#end of window title bars and borders section
+# Basic color configuration using the Base16 variables for windows and borders.
+# Property Name         Border  BG      Text    Indicator Child Border
+client.focused          $base02 $base02 $base06 $base0C $base02
+client.focused_inactive $base01 $base01 $base04 $base03 $base01
+client.unfocused        $base01 $base00 $base04 $base01 $base01
+client.urgent           $base08 $base08 $base00 $base08 $base08
+client.placeholder      $base00 $base00 $base06 $base00 $base00
+client.background       $base07
+
 
 #set $i3blocks SCRIPT_DIR=$HOME/.config/i3blocks/scripts i3blocks
-#
+
+# Basic bar configuration using the Base16 variables.
 #bar {
 #    font pango:Sans 10
 #    tray_output primary
 #    position bottom
 #    status_command $i3blocks
+#
 #    colors {
-#        # bar background color
-#        background $bg
-#        # text color used for blocks that do not have a color specified.
-#        statusline $yellow
-#        # workspaces section
-#        #                    border  backgr. text
-#        focused_workspace    $aqua $aqua $darkgray
-#        inactive_workspace   $darkgray $darkgray $yellow
-#        active_workspace     $darkgray $darkgray $yellow
-#        urgent_workspace     $purple $purple $bg
+#        background $base00
+#        separator  $base00
+#        statusline $base02
+#
+#        # State             Border  BG      Text
+#        focused_workspace   $base05 $base0D $base00
+#        active_workspace    $base05 $base03 $base00
+#        inactive_workspace  $base03 $base01 $base05
+#        urgent_workspace    $base08 $base08 $base00
+#        binding_mode        $base00 $base0A $base00
 #    }
 #}
+
 
 # window/class specific options
 for_window [title=".* - Zeal"] mark "zeal", move scratchpad
@@ -401,11 +407,10 @@ for_window [class="^Joplin"] floating enable
 for_window [title="^pinentry$"] floating enable
 for_window [class="Qalculate-gtk"] floating enable
 
-exec --no-startup-id systemctl --user start geoclue-agent.service
 exec --no-startup-id picom -b --experimental-backends
 exec --no-startup-id dunst
 exec --no-startup-id udiskie -s -a -n
-exec --no-startup-id redshift-gtk
+exec --no-startup-id redshift-gtk -l $(get_ip_location.sh)
 exec --no-startup-id nm-applet
 exec --no-startup-id hp-systray
 exec --no-startup-id solaar -w hide --battery-icons solaar

@@ -1,6 +1,6 @@
 [Appearance]
 BoldIntense=true
-ColorScheme=Gruvbox_dark
+ColorScheme=nord
 DimmValue=37
 Font=JetBrainsMono Nerd Font,10,-1,5,57,0,0,0,0,0,Medium
 
