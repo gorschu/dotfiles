@@ -31,4 +31,13 @@ checkout = git clone --depth 1 https://github.com/Mayccoll/Gogh.git 'gogh'
 [doom-emacs]
 checkout = git clone --depth 1 https://github.com/hlissner/doom-emacs 'doom-emacs'
 
+[nord-konsole]
+checkout = git clone --depth 1 https://github.com/arcticicestudio/nord-konsole.git 'nord-konsole'
+
+[nord-dircolors]
+checkout = git clone --depth 1 https://github.com/arcticicestudio/nord-dircolors.git 'nord-dircolors'
+
+[nord-xresources]
+checkout = git clone --depth 1 https://github.com/arcticicestudio/nord-xresources 'nord-xresources'
+
 # vim: ft=dosini
