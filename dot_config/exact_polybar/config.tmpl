@@ -15,7 +15,7 @@ screenchange-reload = true
 [bar/base]
 dpi = ${xrdb:Xft.dpi:96}
 width = 100%
-height = 1.5%
+height = 2%
 offset-x = 0
 offset-y = 0
 radius = 0.0
@@ -148,7 +148,7 @@ format = <ramp> <label> <bar>
 label = %percentage:3%%
 label-foreground = ${colors.foreground}
 
-ramp-foreground = ${colors.primary}
+ramp-foreground = ${colors.foreground}
 ramp-0=" "
 ramp-1="ﯧ "
 ramp-2="ﯧ "
@@ -157,14 +157,14 @@ ramp-4="ﯦ "
 
 bar-width = 10
 bar-indicator = ""
-bar-indicator-foreground = ${colors.primary}
+bar-indicator-foreground = ${colors.foreground}
 bar-indicator-font = 2
 bar-fill = ―
 bar-fill-font = 2
-bar-fill-foreground = ${colors.gruvbox-yellow}
+bar-fill-foreground = ${colors.nord13}
 bar-empty = ―
 bar-empty-font = 2
-bar-empty-foreground = ${colors.gruvbox-magenta}
+bar-empty-foreground = ${colors.nord14}
 
 [module/volume]
 type = internal/pulseaudio
@@ -326,7 +326,7 @@ label-disconnected-foreground = ${colors.foreground}
 
 [module/eth-internal]
 type = internal/network
-interface = {{ if eq .chezmoi.hostname "hephaestus" }}enp03s31f6{{ else if eq .chezmoi.hostname "artemis" }}enp1s0{{ end }}
+interface = {{ if eq .chezmoi.hostname "hephaestus" }}enp0s31f6{{ else if eq .chezmoi.hostname "artemis" }}enp1s0{{ end }}
 interval = 5
 
 format-packetloss = <animation-packetloss> <label-connected>
