@@ -95,7 +95,7 @@ label-focused-padding = 2
 
 ; unfocused = Inactive workspace on any monitor
 label-unfocused = %index% %icon%
-label-unfocused-foreground = ${colors.nord9}
+label-unfocused-foreground = ${colors.nord10}
 label-unfocused-padding = 2
 
 ; visible = Active workspace on unfocused monitor
@@ -175,7 +175,7 @@ label-volume = %percentage:3%%
 label-volume-foreground = ${colors.foreground}
 
 format-muted-prefix = "婢 "
-format-muted-foreground = ${colors.urgent}
+format-muted-foreground = ${colors.warning}
 label-muted = muted
 
 ramp-foreground = ${colors.foreground}
@@ -332,13 +332,13 @@ interval = 5
 format-packetloss = <animation-packetloss> <label-connected>
 format-connected =   <label-connected>
 format-connected-foreground = ${colors.foreground}
-#format-connected-underline = ${colors.DraculaGreen}
+format-connected-underline = ${colors.nord14}
 label-connected = %linkspeed% ﯴ%upspeed:9% ﯲ%downspeed:9%
 label-connected-foreground = ${colors.foreground}
 
 format-disconnected =   <label-disconnected>
-format-disconnected-foreground = ${colors.urgent}
-#format-disconnected-underline = ${colors.DraculaRed}
+format-disconnected-foreground = ${colors.foreground}
+format-disconnected-underline = ${colors.warning}
 label-disconnected = %ifname%
 label-disconnected-foreground = ${colors.foreground}
 
@@ -351,13 +351,13 @@ interval = 5
 format-packetloss = <animation-packetloss> <label-connected>
 format-connected =   <label-connected>
 format-connected-foreground = ${colors.foreground}
-#format-connected-underline = ${colors.DraculaGreen}
+format-connected-underline = ${colors.nord14}
 label-connected = %linkspeed% ﯴ%upspeed:9% ﯲ%downspeed:9%
 label-connected-foreground = ${colors.foreground}
 
 format-disconnected =   <label-disconnected>
-format-disconnected-foreground = ${colors.alert}
-#format-disconnected-underline = ${colors.DraculaRed}
+format-disconnected-foreground = ${colors.foreground}
+format-disconnected-underline = ${colors.warning}
 label-disconnected = %ifname%
 label-disconnected-foreground = ${colors.foreground}
 {{ end }}
