@@ -470,7 +470,7 @@ autocmd BufReadPost *
             \ endif
 
 " Auto-Apply when editing chezmoi-managed files
-autocmd BufWritePost ~/.local/share/chezmoi/* ! chezmoi apply --source-path %
+autocmd BufWritePost ~/.local/share/chezmoi/* ! chezmoi apply --no-tty --source-path %
 
 " set options for mutt mail-editing
 augroup fileype_mail
