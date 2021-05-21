@@ -19,7 +19,7 @@ let g:poetv_executables = ['poetry']
 
 " 'Self'-Vim plugins
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'arcticicestudio/nord-vim''
+Plug 'arcticicestudio/nord-vim'
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
