@@ -104,16 +104,16 @@ window:
 # Font configuration
 font:
   normal:
-    family: JetBrains Mono Nerd Font
+    family: Iosevka Term
     style: Regular
   bold:
-    family: JetBrains Mono Nerd Font
+    family: Iosevka Term
     style: Bold
   italic:
-    family: JetBrains Mono Nerd Font
+    family: Iosevka Term
     style: Italic
   bold_italic:
-    family: JetBrains Mono Nerd Font
+    family: Iosevka Term
     style: Bold Italic
   size: 10.0
 
