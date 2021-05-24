@@ -2,7 +2,7 @@
 BoldIntense=true
 ColorScheme=nord
 DimmValue=37
-Font=Iosevka Term,10,-1,5,50,0,0,0,0,0
+Font=Iosevka Term,10,-1,5,57,0,0,0,0,0,Medium
 
 [General]
 DimWhenInactive=true
