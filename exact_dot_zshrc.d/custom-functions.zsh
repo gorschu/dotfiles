@@ -3,34 +3,6 @@ function fn_exists() {
         type $1 | grep -q 'shell function'
 }
 
-ssh() {
-  # change tmux window color when SSH'd into box
-  # grep -w: match command names such as "tmux-2.1" or "tmux: server"
-  if ps -p $$ -o ppid= \
-    | xargs -i ps -p {} -o comm= \
-    | grep -qw tmux; then
-    # Note: Options without parameter were hardcoded,
-    # in order to distinguish an option's parameter from the destination.
-    #
-    #                   s/[[:space:]]*\(\( | spaces before options
-    #     \(-[46AaCfGgKkMNnqsTtVvXxYy]\)\| | option without parameter
-    #                     \(-[^[:space:]]* | option
-    # \([[:space:]]\+[^[:space:]]*\)\?\)\) | parameter
-    #                      [[:space:]]*\)* | spaces between options
-    #                        [[:space:]]\+ | spaces before destination
-    #                \([^-][^[:space:]]*\) | destination
-    #                                   .* | command
-    #                                 /\6/ | replace with destination
-    tmux set-window-option -t $(tmux display-message -p '#I') \
-        window-status-current-style "bg=#d65d0e,fg=#3C3836"
-    command ssh "$@"
-    tmux set-window-option -t $(tmux display-message -p '#I') \
-        window-status-current-style bg="#FE8019",fg="#3C3836"
-  else
-    command ssh "$@"
-  fi
-}
-
 function latex_compile() {
     local optimize
 
@@ -95,3 +67,6 @@ function mkcd () {
     mkdir -p "$*" && cd "$*"
 }
 
+function ops() {
+    OP_SESSION_my=$(1password-signin) op "$@"
+}
