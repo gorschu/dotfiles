@@ -1,0 +1,3 @@
+#!/bin/bash
+
+systemctl --user unset-environment OP_SESSION_my
