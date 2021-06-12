@@ -1,0 +1,20 @@
+#!/bin/bash
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
+PASSWORD_REALM="my"
+KEY_TIMEOUT="3600"
+KEY_OPTIONS="-c"
+
+_old_display="$DISPLAY"
+_old_askpass="$SSH_ASKPASS"
+export DISPLAY=foobar SSH_ASKPASS="${SCRIPT_DIR}/_ssh-1password-get-passphrase.sh"
+
+export OP_SESSION_${PASSWORD_REALM}="$(${SCRIPT_DIR}/1password-signin.sh)"
+
+export wantedkey="$1 SSH Key"
+op get document $(op get item "${wantedkey}"  | jq -r '.details.sections[] | select(.name=="linked items") | .fields[] | select(.t=="'"${wantedkey}"' Private") | .v') | ssh-add -t "${KEY_TIMEOUT}" "${KEY_OPTIONS}" -
+
+export DISPLAY="$_old_display" SSH_ASKPASS="$_old_askpass"
+unset _old_display _old_askpass
+
