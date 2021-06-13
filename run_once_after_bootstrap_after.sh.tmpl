@@ -32,6 +32,9 @@ if [ ! -e $HOME/bin/starship ]; then
         $HOME/bin --yes
 fi
 
+echo "${green}Protect our fonts.conf (KDE likes to mess with it)"
+sudo chown root:root {{ .chezmoi.homedir }}/.config/fontconfig/fonts.conf
+
 echo "${green}Updating vendor dependencies${reset}"
 mr -c $HOME/.vendor/.mrconfig update
 
