@@ -2,7 +2,9 @@
 Description=Restic backup service (data pruning)
 [Service]
 Type=oneshot
-# Don't start on metered connections
-ExecStartPre=/home/azmo/bin/backup/nmcli-not-connection-metered.sh
-ExecStart=restic prune
 EnvironmentFile=%h/.config/restic/restic-backup.conf
+# Don't start on metered connections
+ExecStartPre=/home/azmo/bin/backup/nmcli-not-connection-metered
+ExecStartPre=/usr/bin/notify-send "Restic Prune started"
+ExecStart=restic prune
+ExecStartPost=/usr/bin/notify-send "Restic Backup finished"
