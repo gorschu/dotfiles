@@ -67,6 +67,10 @@ function mkcd () {
     mkdir -p "$*" && cd "$*"
 }
 
-function ops() {
-    OP_SESSION_my=$(1password-signin) op "$@"
+function op() {
+    OP_SESSION_my=$(onepassword-signin) command op "$@"
+}
+
+function chezmoi() {
+    OP_SESSION_my=$(onepassword-signin) command chezmoi "$@"
 }
