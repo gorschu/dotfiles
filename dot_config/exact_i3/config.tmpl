@@ -125,7 +125,7 @@ bindsym $mod+shift+e exec sh -c 'i3-msg [class="Emacs"] focus || ec'
 bindsym $mod+shift+f exec sh -c 'i3-msg [instance="ranger"] focus || i3-sensible-terminal --class="ranger" -e "ranger"'
 bindsym $mod+shift+m exec sh -c 'i3-msg [instance="neomutt"] focus || i3-sensible-terminal --class="neomutt" -e "neomutt"'
 bindsym $mod+shift+n [con_mark="joplin"] scratchpad show; [con_mark="joplin"] move position center
-bindsym $mod+shift+p [con_mark="keepassxc"] scratchpad show; [con_mark="keepassxc"] move position center
+bindsym $mod+shift+p [con_mark="onepassword"] scratchpad show; [con_mark="onepassword"] move position center
 bindsym $mod+shift+z [con_mark="zeal"] scratchpad show; [con_mark="zeal"] move position center
 
 # change workspaces with $mod+tab
@@ -372,7 +372,7 @@ client.background       $base07
 
 # window/class specific options
 for_window [title=".* - Zeal"] mark "zeal", move scratchpad
-for_window [class="KeePassXC" window_type="normal"] mark "keepassxc", move scratchpad
+for_window [class="1Password" window_type="normal"] mark "onepassword", move scratchpad
 for_window [class="Joplin"] mark "joplin", move scratchpad
 # make Firefox's PiP windows sticky
 for_window [title="Picture-in-Picture"] sticky enable
@@ -402,7 +402,7 @@ for_window [class="^mpv$"] floating enable
 # float these
 for_window [class="^Pavucontrol$"] floating enable
 for_window [class="^Zeal$"] floating enable
-for_window [class="^keepassxc$"] floating enable
+for_window [class="^1Password"] floating enable
 for_window [class="^Joplin"] floating enable
 for_window [title="^pinentry$"] floating enable
 for_window [class="Qalculate-gtk"] floating enable
@@ -415,7 +415,7 @@ exec --no-startup-id nm-applet
 exec --no-startup-id hp-systray
 exec --no-startup-id solaar -w hide --battery-icons solaar
 exec --no-startup-id zeal
-exec --no-startup-id keepassxc
+exec --no-startup-id 1password
 exec --no-startup-id $HOME/.joplin/Joplin.AppImage
 
 # Session Manager startups sometimes suck and disallow preprocessing.
