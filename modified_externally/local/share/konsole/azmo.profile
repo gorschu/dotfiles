@@ -8,6 +8,8 @@ Font=Iosevka Term,10,-1,5,57,0,0,0,0,0,Medium
 DimWhenInactive=true
 Name=azmo
 Parent=FALLBACK/
+TerminalCenter=true
+TerminalMargin=3
 
 [Interaction Options]
 AutoCopySelectedText=true
