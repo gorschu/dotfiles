@@ -49,6 +49,11 @@ fi
 # initialize asdf
 . $HOME/.vendor/asdf/asdf.sh
 
+# add custom completions
+FPATH={{ .chezmoi.homeDir}}/.zsh_completions.d:$FPATH
+autoload -Uz compinit
+compinit
+
 # source in fzf last
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
