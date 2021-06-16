@@ -2,7 +2,7 @@
 Description=Backup with restic every hour
 [Timer]
 OnStartupSec=5m
-OnUnitActiveSec=30m
+OnUnitActiveSec=1h
 Persistent=true
 [Install]
 WantedBy=timers.target
