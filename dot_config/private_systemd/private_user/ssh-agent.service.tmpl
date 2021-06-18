@@ -8,7 +8,7 @@ Type=simple
 Environment=SSH_AUTH_SOCK=%t/ssh-agent.socket
 {{ if eq .wm "kde" }}
 # Set QT_PLUGIN_PATH for ksshaskpass5
-{{ if eq .chezmoi.osRelease.id "fedora" }}
+{{ if has .chezmoi.osRelease.id (list "fedora" "opensuse-tumbleweed") }}
 Environment=QT_PLUGIN_PATH=/usr/lib64/qt5/plugins
 {{ else if eq .chezmoi.osRelease.id "arch" }}
 Environment=QT_PLUGIN_PATH=/usr/lib64/qt/plugins
