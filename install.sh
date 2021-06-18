@@ -2,6 +2,10 @@
 
 set -e # -e: exit on error
 
+op_latest=1.10.3
+op_email=gordon@gordonschulz.de
+
+
 if [ ! "$(command -v chezmoi)" ]; then
   bin_dir="$HOME/.local/bin"
   chezmoi="$bin_dir/chezmoi"
@@ -16,6 +20,11 @@ if [ ! "$(command -v chezmoi)" ]; then
 else
   chezmoi=chezmoi
 fi
+
+tmpdir=$(mktemp -d)
+curl -L -o ${tmpdir}/op.zip https://cache.agilebits.com/dist/1P/op/pkg/v${op_latest}/op_linux_amd64_v${op_latest}.zip
+unzip ${tmpdir}/op.zip -d ${tmpdir} && mv ${tmpdir}/op $HOME/bin
+eval $(op signin my.1password.com ${op_email})
 
 # import and trust our GPG Key
 GPGKEY=DEE550054AA972F6
