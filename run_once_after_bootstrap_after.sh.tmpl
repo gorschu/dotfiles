@@ -13,10 +13,6 @@ else
   chezmoi=chezmoi
 fi
 
-# this is hacky, but we try to link into a to-be-pulled git-repository
-rm -rf {{ .chezmoi.homedir }}/.cache/antibody
-${chezmoi} execute-template -o {{ .chezmoi.homedir }}/.zsh_plugins.txt < {{ .chezmoi.sourceDir }}/dot_zsh_plugins.txt.tmpl
-
 if [ ! -e $HOME/bin/antibody ]; then
     echo "${green}Installing antibody and creating static plugin list${reset}"
     curl -sfL git.io/antibody | sh -s - -b $HOME/bin &&
