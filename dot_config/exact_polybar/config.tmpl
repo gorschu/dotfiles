@@ -15,7 +15,7 @@ screenchange-reload = true
 [bar/base]
 dpi = ${xrdb:Xft.dpi:96}
 width = 100%
-height = 1.5%
+height={{ if eq .chezmoi.hostname "hephaestus" }}2%{{ else }}1.5%{{ end }}
 offset-x = 0
 offset-y = 0
 radius = 0.0
