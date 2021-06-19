@@ -2,6 +2,9 @@
 
 set -Eeuxo pipefail
 
+OP_SESSION_my="$(onepassword-signin)"
+export OP_SESSION_my
+
 vdirsyncer discover fastmail_contacts
 vdirsyncer discover fastmail_calendars
 vdirsyncer metasync
