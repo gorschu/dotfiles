@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e # -e: exit on error
 
@@ -21,10 +21,13 @@ else
   chezmoi=chezmoi
 fi
 
-tmpdir=$(mktemp -d)
-curl -L -o ${tmpdir}/op.zip https://cache.agilebits.com/dist/1P/op/pkg/v${op_latest}/op_linux_amd64_v${op_latest}.zip
-unzip ${tmpdir}/op.zip -d ${tmpdir} && mv ${tmpdir}/op $HOME/bin
-eval $(op signin my.1password.com ${op_email})
+if [[ ! -e $HOME/bin/op ]]; then
+  tmpdir=$(mktemp -d)
+  curl -L -o ${tmpdir}/op.zip https://cache.agilebits.com/dist/1P/op/pkg/v${op_latest}/op_linux_amd64_v${op_latest}.zip
+  [[ ! -d $HOME/bin ]] && mkdir $HOME/bin
+  unzip ${tmpdir}/op.zip -d ${tmpdir} && mv ${tmpdir}/op $HOME/bin
+  eval $(op signin my.1password.com ${op_email})
+fi
 
 # import and trust our GPG Key
 GPGKEY=DEE550054AA972F6
