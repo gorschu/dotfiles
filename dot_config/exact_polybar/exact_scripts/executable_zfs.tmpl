@@ -1,4 +1,6 @@
 #!/bin/bash
+# zpool executable location
+zpool="{{ if lookPath "/sbin/zpool" }}/sbin/zpool{{ else }}{{ lookPath "zpool" }}{{ end }}"
 # Show pool health (yes/no. Default: "no")
 show_health="no"
 
@@ -7,11 +9,11 @@ pool_name="dpool"
 
 # Get pool info. Do not edit.
 # Pool allocation
-pool_alloc=$(zpool list -o alloc $pool_name | tail -1 | sed -r 's/^[ ]+//g')
+pool_alloc=$("${zpool}" list -o alloc $pool_name | tail -1 | sed -r 's/^[ ]+//g')
 # Total pool size
-pool_size=$(zpool list -o size $pool_name | tail -1 | sed -r 's/^[ ]+//g')
+pool_size=$("${zpool}" list -o size $pool_name | tail -1 | sed -r 's/^[ ]+//g')
 # Pool health status
-pool_health=$(zpool list -o health $pool_name | sed -r 's/^[ ]+//g')
+pool_health=$("${zpool}" list -o health $pool_name | sed -r 's/^[ ]+//g')
 
 # Output pool info to module
 case $show_health in
