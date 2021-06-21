@@ -1,0 +1,5 @@
+[Unit]
+Description=Send mails from msmtp queue
+[Service]
+Type=oneshot
+ExecStart=%h/bin/mail/msmtp-runqueue.sh
