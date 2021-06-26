@@ -1,12 +1,12 @@
 x11-ssh-askpass*font:                   -*-terminus-medium-*-*-*-16-*-*-*-*-*-*-*
-x11-ssh-askpass*background:             #2E3440
-x11-ssh-askpass*foreground:             #D8DEE9
-x11-ssh-askpass.Button*foreground:      #434C53
-x11-ssh-askpass.Button*background:      #88C0D0
-x11-ssh-askpass.Indicator*foreground:   #D8DEE9
-x11-ssh-askpass.Indicator*background:   #A3BE8C
-x11-ssh-askpass*topShadowColor:         #2E3440
-x11-ssh-askpass*bottomShadowColor:      #2E3440
+x11-ssh-askpass*background:             #282828
+x11-ssh-askpass*foreground:             #ebdbb2
+x11-ssh-askpass.Button*foreground:      #ebdbb2
+x11-ssh-askpass.Button*background:      #458588
+x11-ssh-askpass.Indicator*foreground:   #ebdbb2
+x11-ssh-askpass.Indicator*background:   #689d6a
+x11-ssh-askpass*topShadowColor:         #282828
+x11-ssh-askpass*bottomShadowColor:      #282828
 x11-ssh-askpass.*borderWidth:           0
 
 ! vim: ft=xdefaults
