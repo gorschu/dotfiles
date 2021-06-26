@@ -1,3 +1,4 @@
+#include ".Xresources.d/gruvbox-dark.xresources"
 #include ".Xresources.d/xft"
 #include ".Xresources.d/xcursor"
 #include ".Xresources.d/x11-ssh-askpass"
