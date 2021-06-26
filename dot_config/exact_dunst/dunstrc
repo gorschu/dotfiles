@@ -239,25 +239,25 @@
 
 [urgency_low]
 timeout = 2
-background = "#212B30"
-foreground = "#C4C7C5"
-frame_color = "#4DD0E1"
+background = "#282828"
+foreground = "#ebdbb2"
+frame_color = "#282828"
 # Icon for notifications with low urgency, uncomment to enable
 #icon = /path/to/icon
 
 [urgency_normal]
 timeout = 5
-background = "#212B30"
-foreground = "#C4C7C5"
-frame_color = "#4DD0E1"
+background = "#282828"
+foreground = "#ebdbb2"
+frame_color = "#282828"
 # Icon for notifications with low urgency, uncomment to enable
 #icon = /path/to/icon
 
 [urgency_critical]
 timeout = 0
-background = "#212B30"
-foreground = "#EC407A"
-frame_color = "#EC407A"
+background = "#282828"
+foreground = "#b16286"
+frame_color = "#282828"
 # Icon for notifications with low urgency, uncomment to enable
 #icon = /path/to/icon
 
