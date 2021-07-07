@@ -43,7 +43,7 @@ return require('packer').startup(function()
     use { 'tpope/vim-fugitive' }
 
     -- show indentation levels
-    use { 'lukas-reineke/indent-blankline.nvim', branch = "lua"}
+    use { 'lukas-reineke/indent-blankline.nvim' }
 
     -- automatically change cwd to detected roots
     use { 'airblade/vim-rooter' }
