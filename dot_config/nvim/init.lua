@@ -17,6 +17,7 @@ vim.g.mapleader = ","
 
 require('globals')
 require('plugins')
+require('functions')
 require('keymappings')
 require('colorscheme')
 require('completeopts')
@@ -35,8 +36,10 @@ vim.g.gutentags_generate_on_write = 1
 vim.g.gutentags_generate_on_empty_buffer = 0
 vim.g.gutentags_file_list_command = 'rg --files'
 
-vim.api.nvim_set_keymap('n', '<F9>', '<cmd>TagbarToggle<cr>', { noremap = true } )
+vim.api.nvim_set_keymap('n', '<F9>', '<cmd>TagbarToggle<cr>', { noremap = true, silent = true } )
 vim.g.tagbar_autoclose = 0
+
+vim.api.nvim_set_keymap('n', '<F8>', '<cmd>UndotreeToggle<cr>', {noremap = true, silent= true})
 
 -- local saga = require 'lspsaga'
 -- saga.init_lsp_saga()
@@ -75,5 +78,19 @@ vim.api.nvim_set_keymap('n', '<A-k>', ':move-2<cr>==', { noremap = true, silent 
 vim.api.nvim_set_keymap('v', '<A-j>', ":move \'>+1<cr>==gv", {noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<A-k>', ":move \'<-2<CR>==gv", {noremap = true, silent = true })
 
-
 require('lualine').setup({options = { theme = 'gruvbox'}})
+
+vim.g.clever_f_across_no_line = 1
+vim.g.clever_f_timeout_ms = 3000
+
+vim.g.EasyMotion_samrtcase = 1
+vim.g.EasyMotion_use_smartsign_us = 1
+
+
+-- Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vim.api.nvim_set_keymap('x', 'ga', [[<Plug>(EasyAlign)]], { noremap = False})
+
+-- Start interactive EasyAlign for a motion/text object (e.g. <Leader>aip)
+vim.api.nvim_set_keymap('n', 'ga', [[<Plug>(EasyAlign)]], { noremap = False})
+
+vim.g.suda_smart_edit = 1
