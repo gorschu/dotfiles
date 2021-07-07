@@ -10,7 +10,7 @@ return require('packer').startup(function()
         {'nvim-lua/plenary.nvim'}} }
 
     -- statusline, tabline
-    use { 'hoob3rt/lualine.nvim', requires = {'kyazdani42/nvim-web-devicons', opt = true} }
+    use { 'hoob3rt/lualine.nvim', requires = {'kyazdani42/nvim-web-devicons'} }
     use { 'akinsho/nvim-bufferline.lua', requires = 'kyazdani42/nvim-web-devicons'}
 
     -- treesitter syntax highlighting
@@ -32,10 +32,11 @@ return require('packer').startup(function()
     -- file explorer
     use { 'kyazdani42/nvim-tree.lua', requires = { { 'kyazdani42/nvim-web-devicons' } } }
     -- tag management
-    use { 'ludovicchabant/vim-gutentags' } use { 'majutsushi/tagbar', opt = true }
+    use { 'ludovicchabant/vim-gutentags' }
+    use { 'majutsushi/tagbar', opt = true, cmd = "TagbarToggle" }
 
     -- Go
-    use { 'fatih/vim-go', opt = true }
+    use { 'fatih/vim-go', opt = true, ft = 'go' }
 
     -- git
     use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } }
@@ -53,13 +54,17 @@ return require('packer').startup(function()
     use { 'tpope/vim-surround'}
     use { 'tpope/vim-dispatch' }
     use { 'tpope/vim-vinegar'}
+    use { 'tpope/vim-speeddating '}
     use { 'ntpeters/vim-better-whitespace' }
     use { 'rhysd/clever-f.vim' }
     use { 'jamessan/vim-gnupg' }
+    use { 'norcalli/nvim-colorizer.lua '}
+    use { 'farmergreg/vim-lastplace' }
+
+    use {'mbbill/undotree', cmd = "UndotreeToggle", opt = true}
 
     -- linting
     use { 'dense-analysis/ale' }
-
 
     -- align stuff, move faster, comments
     use { 'junegunn/vim-easy-align' }
@@ -74,5 +79,12 @@ return require('packer').startup(function()
     use {'tmux-plugins/vim-tmux-focus-events'}
 
     -- detect python venvs
-    use { 'rafi/vim-venom' }
+    use { 'rafi/vim-venom', ft = 'python' }
+
+    use { 'mitsuhiko/vim-jinja', ft = {'jinja', 'jinja2'} }
+    use { 'chrisbra/csv.vim', ft = {'csv'} }
+    use { 'lervag/vimtex', ft = 'tex' }
+
+    -- edit files as sudo
+    use {'lambdalisue/suda.vim '}
 end)
