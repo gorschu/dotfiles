@@ -27,7 +27,7 @@ return require('packer').startup(function()
     -- automatic braces
     use { 'windwp/nvim-autopairs' }
     -- rainbow braces
-    use { 'p00f/nvim-ts-rainbow '}
+    use { 'p00f/nvim-ts-rainbow'}
 
     -- file explorer
     use { 'kyazdani42/nvim-tree.lua', requires = { { 'kyazdani42/nvim-web-devicons' } } }
@@ -54,11 +54,11 @@ return require('packer').startup(function()
     use { 'tpope/vim-surround'}
     use { 'tpope/vim-dispatch' }
     use { 'tpope/vim-vinegar'}
-    use { 'tpope/vim-speeddating '}
+    use { 'tpope/vim-speeddating'}
     use { 'ntpeters/vim-better-whitespace' }
     use { 'rhysd/clever-f.vim' }
     use { 'jamessan/vim-gnupg' }
-    use { 'norcalli/nvim-colorizer.lua '}
+    use { 'norcalli/nvim-colorizer.lua'}
     use { 'farmergreg/vim-lastplace' }
 
     use {'mbbill/undotree', cmd = "UndotreeToggle", opt = true}
@@ -86,5 +86,5 @@ return require('packer').startup(function()
     use { 'lervag/vimtex', ft = 'tex' }
 
     -- edit files as sudo
-    use {'lambdalisue/suda.vim '}
+    use {'lambdalisue/suda.vim'}
 end)
