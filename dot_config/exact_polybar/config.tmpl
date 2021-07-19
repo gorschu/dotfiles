@@ -87,9 +87,9 @@ label-mode-padding = 2
 
 ; focused = Active workspace on focused monitor
 label-focused = %index% %icon%
-label-focused-foreground = ${colors.gruvbox04}
+label-focused-foreground = ${colors.gruvbox13}
 label-focused-background = ${colors.background}
-label-focused-underline = ${colors.gruvbox04}
+label-focused-underline = ${colors.gruvbox13}
 label-focused-padding = 2
 
 ; unfocused = Inactive workspace on any monitor
@@ -156,7 +156,7 @@ ramp-4="ﯦ "
 
 bar-width = 10
 bar-indicator = ""
-bar-indicator-foreground = ${colors.gruvbox13}
+bar-indicator-foreground = ${colors.gruvboxorangelight}
 bar-indicator-font = 2
 bar-fill = -
 bar-fill-font = 2
@@ -194,7 +194,7 @@ bar-volume-foreground-7 = ${colors.gruvbox13}
 bar-volume-gradient = true
 bar-volume-indicator = 
 bar-volume-indicator-font = 2
-bar-volume-indicator-foreground = ${colors.gruvbox13}
+bar-volume-indicator-foreground = ${colors.gruvboxorangelight}
 bar-volume-fill = -
 bar-volume-fill-font = 2
 bar-volume-empty = -
@@ -272,9 +272,9 @@ format-charging-foreground = ${colors.gruvbox11}
 #format-charging-underline = ${colors.DraculaOrange}
 
 label-discharging = %percentage:2%% %time%
-label-discharging-foreground = ${colors.gruvbox09}
+label-discharging-foreground = ${colors.gruvboxorangelight}
 format-discharging = <ramp-capacity> <label-discharging>
-format-discharging-foreground = ${colors.gruvbox09}
+format-discharging-foreground = ${colors.gruvboxorangelight}
 #format-discharging-underline = ${colors.DraculaRed}
 
 label-full = "%percentage:2%%"
@@ -306,13 +306,13 @@ interval = 5
 format-packetloss = <animation-packetloss> <label-connected>
 format-connected = "   <label-connected>"
 format-connected-foreground = ${colors.foreground}
-#format-connected-underline = ${colors.DraculaGreen}
+format-connected-underline = ${colors.gruvbox12}
 label-connected = %essid% (%signal%%) ﯴ%upspeed:9% ﯲ%downspeed:9%
 label-connected-foreground = ${colors.foreground}
 
 format-disconnected = "睊  <label-disconnected>"
 format-disconnected-foreground = ${colors.urgent}
-#format-disconnected-underline = ${colors.DraculaRed}
+format-disconnected-underline = ${colors.urgent}
 label-disconnected = %ifname% disconnected
 label-disconnected-foreground = ${colors.foreground}
 
@@ -336,10 +336,10 @@ label-connected = %linkspeed% ﯴ%upspeed:9% ﯲ%downspeed:9%
 label-connected-foreground = ${colors.foreground}
 
 format-disconnected =   <label-disconnected>
-format-disconnected-foreground = ${colors.foreground}
+format-disconnected-foreground = ${colors.warning}
 format-disconnected-underline = ${colors.warning}
 label-disconnected = %ifname%
-label-disconnected-foreground = ${colors.foreground}
+label-disconnected-foreground = ${colors.warning}
 
 {{ if eq .chezmoi.hostname "hephaestus" }}
 [module/eth-docking]
@@ -355,10 +355,10 @@ label-connected = %linkspeed% ﯴ%upspeed:9% ﯲ%downspeed:9%
 label-connected-foreground = ${colors.foreground}
 
 format-disconnected =   <label-disconnected>
-format-disconnected-foreground = ${colors.foreground}
-format-disconnected-underline = ${colors.warning}
+format-disconnected-foreground = ${colors.urgent}
+format-disconnected-underline = ${colors.urgent}
 label-disconnected = %ifname%
-label-disconnected-foreground = ${colors.foreground}
+label-disconnected-foreground = ${colors.urgent}
 {{ end }}
 
 [module/cups]
