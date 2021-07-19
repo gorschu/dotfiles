@@ -26,3 +26,9 @@ vim.api.nvim_set_keymap('v', '<Down>', ']egv', {noremap = false})
 -- delete buffer, but keep current split by moving to previous buffer first
 vim.api.nvim_set_keymap('n','<leader>bd', [[<cmd>bp|bd #<cr>]], { noremap = false, silent = true})
 
+-- move lines with alt-motion
+vim.api.nvim_set_keymap('n', '<A-j>', ':move+<cr>==', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<A-k>', ':move-2<cr>==', { noremap = true, silent = true} )
+vim.api.nvim_set_keymap('v', '<A-j>', ":move \'>+1<cr>==gv", {noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<A-k>', ":move \'<-2<CR>==gv", {noremap = true, silent = true })
+
