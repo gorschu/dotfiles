@@ -169,3 +169,6 @@ source $XDG_CONFIG_HOME/neomutt/private/accounts/config
 macro index ,m "T ~O | ~N\n;N" "Mark all messages in folder as read"
 # open urls with urlscan
 macro pager ,u "<pipe-message> urlscan<Enter>" "call urlscan to extract URLs out of a message"
+
+# source in global private keybindings
+source $XDG_CONFIG_HOME/neomutt/private/keybindings
