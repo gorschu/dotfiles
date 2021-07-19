@@ -3,3 +3,8 @@ set editorcmd konsole --hide-menubar -p "tabtile=tridactyl" -e "nvim %f"
 set tabopencontaineraware true
 
 set searchengine google
+
+seturl plex.zeus.int.gordonschulz.de modeindicator false
+seturl www.youtube.com modeindicator false
+
+bind ZZ composite sanitise tridactyllocal; qall 
