@@ -71,3 +71,10 @@
 (setq deft-directory "~/wikijs")
 (setq deft-recursive t)
 (setq deft-use-filename-as-title t)
+
+(setq org-directory "~/org")
+(setq org-roam-directory "~/org/roam")
+
+;; add .asc to gpg filenames to be automatically decrypted
+(setq epa-file-name-regexp "\\.gpg\\(~\\|\\.~[0-9]+~\\)?\\'\\|\\.asc")
+(epa-file-name-regexp-update)
