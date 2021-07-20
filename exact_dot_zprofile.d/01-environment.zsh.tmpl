@@ -9,6 +9,9 @@ export XDG_CONFIG_HOME="${HOME}/.config"
 export XDG_DATA_HOME="${HOME}/.local/share"
 export XDG_CACHE_HOME="${HOME}/.cache"
 
+export TMPDIR="/tmp/${USER}"
+systemctl --user import-environment XDG_CONFIG_HOME XDG_DATA_HOME XDG_CACHE_HOME TMPDIR
+
 # requires qt5ct (and settings there)
 # Let KDE and GNOME handle themselves
 expr "$XDG_CURRENT_DESKTOP" : ".*\(KDE\|GNOME\).*" 1>/dev/null || export QT_QPA_PLATFORMTHEME="qt5ct"
@@ -43,8 +46,6 @@ systemctl --user import-environment SSH_AUTH_SOCK SSH_ASKPASS
 
 # use new freetype 2.7 default interpreter
 export FREETYPE_PROPERTIES="truetype:interpreter-version=40"
-
-export TMPDIR="/tmp/${USER}"
 
 # Editors
 export ALTERNATE_EDITOR=""
