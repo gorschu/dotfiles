@@ -68,7 +68,7 @@ function mkcd () {
 }
 
 function op() {
-    OP_SESSION_my=$(onepassword-signin) command op "$@"
+    OP_SESSION_my=$(onepassword-signin) command op --cache "$@"
 }
 
 function chezmoi() {
