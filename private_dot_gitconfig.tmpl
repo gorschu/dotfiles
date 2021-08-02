@@ -8,7 +8,7 @@
     pager = delta
 
 [init]
-    {{- if stat (joinPath .chezmoi.homedir ".git-template") }}
+    {{- if stat (joinPath .chezmoi.homeDir ".git-template") }}
     templatedir = ~/.git-template
     {{- end }}
     defaultBranch = main
