@@ -17,8 +17,8 @@ if [ ! -e $HOME/bin/antibody ]; then
     echo "${green}Installing antibody and creating static plugin list${reset}"
     curl -sfL git.io/antibody | sh -s - -b $HOME/bin &&
         chmod +x $HOME/bin/antibody &&
-        $HOME/bin/antibody bundle <{{ .chezmoi.homedir }}/.zsh_plugins.txt > \
-            {{ .chezmoi.homedir }}/.zsh_plugins.sh
+        $HOME/bin/antibody bundle <{{ .chezmoi.homeDir }}/.zsh_plugins.txt > \
+            {{ .chezmoi.homeDir }}/.zsh_plugins.sh
 fi
 
 if [ ! -e $HOME/bin/starship ]; then
@@ -29,7 +29,7 @@ if [ ! -e $HOME/bin/starship ]; then
 fi
 
 echo "${green}Protect our fonts.conf (KDE likes to mess with it)${reset}"
-sudo chown root:root {{ .chezmoi.homedir }}/.config/fontconfig/fonts.conf
+sudo chown root:root {{ .chezmoi.homeDir }}/.config/fontconfig/fonts.conf
 
 echo "${green}Updating vendor dependencies${reset}"
 mr -c $HOME/.vendor/.mrconfig update
