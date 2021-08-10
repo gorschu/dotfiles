@@ -15,6 +15,13 @@ for m in $(polybar --list-monitors | cut -d":" -f1); do
         DP1-1)
             MONITOR=$m polybar --reload azmo-primary &
             ;;
+        {{ else if eq .chezmoi.hostname "apollo" }}
+        eDP)
+            MONITOR=$m polybar --reload azmo-primary &
+            ;;
+        DP1-1)
+            MONITOR=$m polybar --reload azmo-primary &
+            ;;
         {{ else if eq .chezmoi.hostname "artemis" }}
         DP-0.1)
             MONITOR=$m polybar --reload azmo-primary &
