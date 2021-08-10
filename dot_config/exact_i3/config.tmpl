@@ -472,4 +472,12 @@ exec --no-startup-id xinput set-prop "TPPS/2 ALPS TrackPoint" 'libinput Accel Sp
 exec --no-startup-id xinput set-prop "Synaptics TM3289-002" "libinput Natural Scrolling Enabled" "1"
 # enable tap-to-click
 exec --no-startup-id xinput set-prop "Synaptics TM3289-002" "libinput Tapping Enabled" "1"
+{{ else if eq .chezmoi.hostname "apollo" }}
+{{/* apollo, P14s Gen2 AMD*/}}
+# speed up trackpoint
+exec --no-startup-id xinput set-prop "TPPS/2 Elan TrackPoint" 'libinput Accel Speed' 0.1
+# enable natural scrolling
+exec --no-startup-id xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Natural Scrolling Enabled" "1"
+# enable tap-to-click
+exec --no-startup-id xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" "1"
 {{ end }}
