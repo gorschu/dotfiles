@@ -1,5 +1,6 @@
 [Unit]
 Description=Send mails from msmtp queue
+ConditionPathExists=%h/.local/share/msmtpqueue
 [Service]
 Type=oneshot
 ExecStart=%h/bin/mail/msmtp-runqueue.sh
