@@ -1,6 +1,6 @@
 #!/bin/bash
 # zpool executable location
-zpool="{{ if lookPath "/sbin/zpool" }}/sbin/zpool{{ else }}{{ lookPath "zpool" }}{{ end }}"
+zpool="{{ if lookPath "zpool" }}zpool{{ else }}n/a{{ end }}"
 # Show pool health (yes/no. Default: "no")
 show_health="no"
 
