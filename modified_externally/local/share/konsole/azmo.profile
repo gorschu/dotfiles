@@ -2,7 +2,7 @@
 BoldIntense=true
 ColorScheme=Gruvbox_dark
 DimmValue=37
-Font=Iosevka Fixed,10,-1,5,57,0,0,0,0,0,Medium
+Font=Iosevka Term,10,-1,5,57,0,0,0,0,0,Medium
 
 [General]
 DimWhenInactive=true
