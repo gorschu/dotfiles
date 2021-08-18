@@ -14,3 +14,6 @@ eDP-1 Window-Maximized 1920x1080=true
 [TabBar]
 ExpandTabWidth=true
 TabBarPosition=Top
+
+[ThumbnailsSettings]
+ThumbnailAlt=true
