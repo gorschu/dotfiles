@@ -13,4 +13,3 @@ require("bufferline").setup{
 	}
 }
 vim.api.nvim_set_keymap('n', "<leader>bp", "<cmd>BufferLinePick<cr>", { noremap = true, silent = true })
-
