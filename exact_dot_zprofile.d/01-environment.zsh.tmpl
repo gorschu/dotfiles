@@ -86,11 +86,6 @@ export BLOCK_SIZE="'1"
 
 export NOTMUCH_CONFIG=${XDG_CONFIG_HOME}/mail/notmuch-config
 
-# Firefox (maybe only temporarily needed?)
-# https://wiki.archlinux.org/index.php/Firefox#Hardware_video_acceleration
-export MOZ_WEBRENDER=1
-export MOZ_X11_EGL=1
-
 # set DOCKER_HOST to podman
 export DOCKER_HOST=unix:///run/user/$(id -u)/podman/podman.sock
 
