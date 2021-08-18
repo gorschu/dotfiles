@@ -39,13 +39,13 @@ vim.o.tabstop = 4
 -- Make vim use 4 spaces for indents
 vim.o.softtabstop = 4
 -- Number of spaces to use for each step of (auto)indent
-vim.o.shiftwidth = 4 
+vim.o.shiftwidth = 4
 -- Use the appropriate number of spaces to insert a <Tab>.
 -- Spaces are used in indents with the '>' and '<' commands
 -- and when 'autoindent' is on. To insert a real tab when
 -- 'expandtab' is on, use CTRL-V <Tab>.
 vim.o.expandtab = true
--- When on, a <Tab> in front of a line inserts blanks according to 'shiftwidth'. 
+-- When on, a <Tab> in front of a line inserts blanks according to 'shiftwidth'.
 -- 'tabstop' is used in other places. A <BS> will delete a 'shiftwidth' worth of space
 -- at the start of the line.
 vim.o.smarttab = true
@@ -60,16 +60,15 @@ vim.o.ignorecase = true
 -- When doing keyword completion in insert mode, and 'ignorecase' is
 -- also on, the case of the match is adjusted depending on the typed text.
 vim.o.infercase = true
--- Override the 'ignorecase' option if the search pattern                        
+-- Override the 'ignorecase' option if the search pattern
 -- contains upper case characters.
 vim.o.smartcase = true
-                         
 
 -- keep at least 5 lines above/below on screen
-vim.o.scrolloff = 5          
+vim.o.scrolloff = 5
 -- keep at least 5 columns left/right on screen
-vim.o.sidescrolloff = 5 
-vim.o.sidescroll = 5         
+vim.o.sidescrolloff = 5
+vim.o.sidescroll = 5
 
 -- formatting options
 vim.o.formatoptions = "tcqjrn"
@@ -105,11 +104,11 @@ vim.o.colorcolumn = "+1"
 
 -- don't have commands like G,CTRL-D et al. go to the first non blank character in the line
 -- but stay in current column (if possible).
-vim.o.startofline = false       
+vim.o.startofline = false
 
 -- highlight current cursor line (cursorcolumn also exists, but it's kinda... disturbing)
 -- but turn it off straight away to only have the linenumber (CursorLineNr) highlighted
-vim.o.cursorline = true          
+vim.o.cursorline = true
 vim.cmd("highlight CursorLine ctermbg=none guibg=none")
 
 -- folds
@@ -120,3 +119,5 @@ vim.o.foldcolumn = "4"
 vim.o.foldnestmax = 5
 
 vim.o.virtualedit = "block"
+
+vim.o.mouse = "a"
