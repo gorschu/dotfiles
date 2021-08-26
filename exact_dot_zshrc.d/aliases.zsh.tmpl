@@ -21,7 +21,7 @@ alias -g nd='*(/om[1])' # newest directory
 alias -g nf='*(.om[1])' # newest file
 
 # fixes to autocorrection
-alias cp='nocorrect cp -i --reflink=auto'
+alias cp='nocorrect cp -i --reflink=auto --sparse=auto'
 alias mv='nocorrect mv -i '
 alias rm='nocorrect rm -i '
 alias mkdir='nocorrect mkdir '
