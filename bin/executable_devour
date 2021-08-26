@@ -1,6 +1,12 @@
 #!/usr/bin/env sh
 
-id=$(xdotool getwindowfocus)
-xdotool windowunmap --sync "${id}"
-$("$@") > /dev/null 2>&1
-xdotool windowmap --sync "${id}"
+# do nothing when under Gnome or KDE
+if ! expr "$XDG_CURRENT_DESKTOP" : ".*\(KDE\|GNOME\).*" 1>/dev/null; then
+    id=$(xdotool getwindowfocus)
+    xdotool windowunmap --sync "${id}"
+    eval $("$@") > /dev/null 2>&1
+    xdotool windowmap --sync "${id}"
+else
+    eval $("$@") > /dev/null 2>&1
+fi
+
