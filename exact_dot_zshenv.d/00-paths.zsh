@@ -27,3 +27,6 @@ fi
 
 # pyenv
 [[ -d $HOME/.pyenv ]] && PATH="$HOME/.pyenv/bin:$PATH"
+
+# inject path into systemctl user session so things like emacs have it available
+systemctl --user import-environment PATH
