@@ -46,7 +46,7 @@ modules-left = i3 xwindow
 modules-center =
 
 {{ if or (eq .chezmoi.hostname "hephaestus") (eq .chezmoi.hostname "apollo") }}
-modules-right = keyboard backlight volume filesystem cpu memory temperature battery wlan eth-internal eth-docking cups vpncheck date
+modules-right = keyboard backlight volume filesystem zfs cpu memory temperature battery wlan eth-internal eth-docking cups vpncheck date
 {{ else if eq .chezmoi.hostname "artemis" }}
 modules-right = keyboard volume filesystem zfs cpu memory eth-internal cups vpncheck date
 {{ end }}
