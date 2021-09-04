@@ -1,1 +1,2 @@
 player=mpv
+default-stream=best,1080p,720p
