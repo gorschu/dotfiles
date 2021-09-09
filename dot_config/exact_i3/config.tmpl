@@ -437,6 +437,13 @@ exec --no-startup-id xrdb -merge ~/.Xresources
         exec --no-startup-id /usr/lib64/libexec/polkit-gnome-authentication-agent-1
     {{ end }}
 {{ end }}
+{{ if eq .chezmoi.osRelease.id "arch" }}
+    {{ if stat "/usr/lib/polkit-kde-authentication-agent-1" }}
+        exec --no-startup-id /usr/lib/polkit-kde-authentication-agent-1
+    {{ else if stat "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1" }}
+        exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+    {{ end }}
+{{ end }}
 
 # make sure we do have an authentication agent and gnome-keyring-daemon started
 exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=secrets
