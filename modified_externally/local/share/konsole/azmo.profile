@@ -9,6 +9,7 @@ DimWhenInactive=true
 Name=azmo
 Parent=FALLBACK/
 TerminalCenter=true
+TerminalColumns=110
 TerminalMargin=3
 
 [Interaction Options]
