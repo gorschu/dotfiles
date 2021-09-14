@@ -1,6 +1,7 @@
 [Unit]
 Description=Prune data from the restic repository weekly
 [Timer]
+OnActiveSec=10m
 OnStartupSec=30m
 OnCalendar=weekly
 Persistent=true
