@@ -2,7 +2,7 @@
 
 set -e # -e: exit on error
 
-op_latest=1.10.3
+op_latest=1.11.4
 op_email=gordon@gordonschulz.de
 
 
@@ -26,7 +26,7 @@ if [[ ! -e $HOME/bin/op ]]; then
   curl -L -o ${tmpdir}/op.zip https://cache.agilebits.com/dist/1P/op/pkg/v${op_latest}/op_linux_amd64_v${op_latest}.zip
   [[ ! -d $HOME/bin ]] && mkdir $HOME/bin
   unzip ${tmpdir}/op.zip -d ${tmpdir} && mv ${tmpdir}/op $HOME/bin
-  eval $(op signin my.1password.com ${op_email})
+  eval $($HOME/bin/op signin my.1password.com ${op_email})
 fi
 
 # import and trust our GPG Key
@@ -40,4 +40,6 @@ gpg --card-status
 # POSIX way to get script's dir: https://stackoverflow.com/a/29834779/12156188
 script_dir="$(cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P)"
 # exec: replace current process with chezmoi init
-exec "$chezmoi" init --apply "--source=$script_dir"
+PATH=${PATH}:$HOME/bin exec "$chezmoi" init --apply "--source=$script_dir"
+
+# vim: set ft=sh:
