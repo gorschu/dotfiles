@@ -11,3 +11,9 @@ no-grab
 no-allow-external-cache
 # don't user cache when signing shit
 #ignore-cache-for-signing
+
+{{- if eq .wm "kde" }}
+pinentry-program /usr/bin/pinentry-qt
+{{- else if eq .chezmoi.wm "gnome" }}pinentry-program /usr/bin/pinentry-gnome3
+{{- else }}pinentry-program /usr/bin/pinentry-qt
+{{- end }}
