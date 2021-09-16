@@ -26,7 +26,11 @@ if [[ ! -e $HOME/bin/op ]]; then
   curl -L -o ${tmpdir}/op.zip https://cache.agilebits.com/dist/1P/op/pkg/v${op_latest}/op_linux_amd64_v${op_latest}.zip
   [[ ! -d $HOME/bin ]] && mkdir $HOME/bin
   unzip ${tmpdir}/op.zip -d ${tmpdir} && mv ${tmpdir}/op $HOME/bin
-  eval $($HOME/bin/op signin my.1password.com ${op_email})
+  if [ ! -e $HOME/.config/op/config ]; then
+    eval $($HOME/bin/op signin my.1password.com ${op_email})
+  else
+    eval $($HOME/bin/op signin)
+  fi
 fi
 
 # import and trust our GPG Key
