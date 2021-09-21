@@ -119,7 +119,11 @@ bindsym $mod+shift+s exec --no-startup-id rofi -display-ssh "ssh " -show ssh
 bindsym $mod+shift+v exec pavucontrol
 bindsym $mod+shift+c exec python3 $HOME/.vendor/clipster/clipster -s -c
 # run autorandr when pressing FN+F7 (XF86Display)
+{{ if lookPath "autorandr" }}
+bindsym XF86Display exec --no-startup-id autorandr --change --default mobile
+{{ else }}
 bindsym XF86Display exec --no-startup-id $HOME/.local/bin/autorandr --change --default mobile
+{{ end }}
 bindsym $mod+c exec kcalc
 bindsym $mod+shift+e exec sh -c 'i3-msg [class="Emacs"] focus || ec'
 bindsym $mod+shift+f exec sh -c 'i3-msg [instance="ranger"] focus || i3-sensible-terminal --class="ranger" -e "ranger"'
@@ -448,7 +452,11 @@ exec --no-startup-id xrdb -merge ~/.Xresources
 # make sure we do have an authentication agent and gnome-keyring-daemon started
 exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=secrets
 
+{{ if lookPath "autorandr" }}
+exec --no-startup-id autorandr --change --default mobile
+{{ else }}
 exec --no-startup-id $HOME/.local/bin/autorandr --change --default mobile
+{{ end }}
 
 # dpms standby and suspend after 10, off after 15 minutes
 exec_always --no-startup-id xset dpms 600 600 900
