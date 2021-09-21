@@ -3,7 +3,7 @@ LICENSE
 modified_externally
 install.sh
 
-{{- $wants_ssh_keys := list "hephaestus" "artemis" }}
+{{- $wants_ssh_keys := list "hephaestus" "artemis" "apollo" }}
 {{- if not (has .chezmoi.hostname $wants_ssh_keys) }}
 .ssh/private
 .ssh/public
