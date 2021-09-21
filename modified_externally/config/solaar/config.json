@@ -1,5 +1,5 @@
 {
-  "4069:0CAB0BCC": {
+  "4071:0CAB0BCC": {
     "_modelId": "B01E40710000",
     "_name": "Wireless Mouse MX Master 2S",
     "_sensitive": {
@@ -39,7 +39,7 @@
   },
   "4088:207FB516": {
     "_modelId": "B35940880000",
-    "_name": "ERGO K860",
+    "_name": "Wireless Keyboard ERGO K860",
     "_serial": "207FB516",
     "_unitId": "207FB516",
     "disable-keyboard-keys": {
