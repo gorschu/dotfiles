@@ -5,6 +5,6 @@ Type=oneshot
 EnvironmentFile=%h/.config/restic/restic-backup.conf
 # Don't start on metered connections
 ExecStartPre=/home/azmo/bin/backup/nmcli-not-connection-metered
-ExecStartPre=/usr/bin/notify-send "Restic Prune started"
+#ExecStartPre=/usr/bin/notify-send "Restic Prune started"
 ExecStart=restic prune
-ExecStartPost=/usr/bin/notify-send "Restic Backup finished"
+#ExecStartPost=/usr/bin/notify-send "Restic Backup finished"
