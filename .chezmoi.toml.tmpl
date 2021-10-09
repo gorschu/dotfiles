@@ -9,7 +9,11 @@ encryption = "gpg"
     args = "-d"
 
 [data]
+{{- if eq .chezmoi.hostname "apollo" }}
+    wm = "kde"
+{{- else }}
     wm = "gnome"
+{{- end}}
     loginmanager = "true"
     email = "gordon@gordonschulz.de"
     gpgkey = "0xDEE550054AA972F6"
