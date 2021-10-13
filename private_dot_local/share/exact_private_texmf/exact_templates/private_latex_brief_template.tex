@@ -1,0 +1,36 @@
+\documentclass[%
+    azmo,
+    % DIV=14
+    % Satzspiegel verändern, default 12.
+    % 14 == mehr Platz auf der Seite
+    version=last,
+    fromlogo=false,
+    enlargefirstpage]
+{scrlttr2}
+
+% attach source tex to pdf file
+\usepackage{attachfile}
+% Required until attachfile is updated for TexLive 2016
+\RequirePackage{luatex85}
+
+%\setkomavar{subject}{Widerspruch Rechnung 1/10676/1}
+%\setkomavar{yourref}{1/10676/1}
+%\setkomavar{yourmail}{28.12.2012}
+%\setkomavar{myref}[Mein Schreiben vom]{28.05.2013}
+
+%\setkomavar{specialmail}{}
+
+\begin{document}
+\begin{letter}{}
+\opening{Sehr geehrte Damen und Herren,}
+
+
+\closing{Mit freundlichen Grü{\ss}en}
+
+%\encl{}
+
+\textattachfile[print=false, icon=Paperclip,
+    mimetype=text/x-tex,color=0.5 0.5 0.5]{\jobname.tex}{\jobname.tex: source}
+
+\end{letter}
+\end{document}

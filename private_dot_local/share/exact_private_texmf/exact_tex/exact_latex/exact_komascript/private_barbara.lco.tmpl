@@ -1,0 +1,16 @@
+\ProvidesFile{barbara.lco}[%
+  2010/11/13 v0.1a LaTeX2e unsupported letter-class-option]
+
+{{ joinPath (.chezmoi.sourceFile | dir) "top.lco.include" | include }}
+
+\setkomavar{fromname}{ {{ .personal.barbara.name }} }
+\setkomafont{fromname}{\bfseries\color{mygray}\LARGE}
+\setkomavar{fromaddress}{ {{ .personal.barbara.street }} {{ .personal.barbara.houseno }}\\{{ .personal.barbara.postal }} {{ .personal.barbara.city }} }
+\setkomavar{fromphone}[\Mobilefone~]{ {{ .personal.barbara.mobile | replace "-" "--" }} }
+\setkomavar{fromlandline}{ {{ .personal.barbara.landline | replace "-" "--" }} }
+\setkomavar{fromfax}{ {{ .personal.barbara.fax | replace "-" "--" }} }
+\setkomavar{fromemail}[\Letter~]{ {{ .personal.barbara.email }} }
+\setkomavar{signature}{\usekomavar{fromname}}
+\setkomavar{place}{ {{ .personal.barbara.city }} }
+
+{{ joinPath (.chezmoi.sourceFile | dir) "bottom.lco.include" | include }}
