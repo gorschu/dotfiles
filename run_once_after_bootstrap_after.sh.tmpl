@@ -31,9 +31,6 @@ fi
 echo "${green}Protect our fonts.conf (KDE likes to mess with it)${reset}"
 sudo chown root:root {{ .chezmoi.homeDir }}/.config/fontconfig/fonts.conf
 
-echo "${green}Updating vendor dependencies${reset}"
-mr -c $HOME/.vendor/.mrconfig update
-
 echo "${green}Install fzf${reset}"
 $HOME/.vendor/fzf/install --all
 
