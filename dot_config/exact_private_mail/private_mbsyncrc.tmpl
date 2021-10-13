@@ -35,7 +35,7 @@ IMAPAccount yahoo-{{ .mail.mfatyahoodotde.email }}
     Host imap.mail.yahoo.com
     AuthMechs Plain
     User {{ .mail.mfatyahoodotde.email }}
-    PassCmd "$HOME/bin/mail/get_mail_password.sh 'Yahoo meierfred33'"
+    PassCmd "$HOME/bin/mail/get_mail_password.sh 'Yahoo {{ .mail.mfatyahoodotde.email }}'"
     SSLType IMAPS
     {{- if eq .chezmoi.osRelease.id "arch" }}
     CertificateFile /etc/ssl/certs/ca-certificates.crt
