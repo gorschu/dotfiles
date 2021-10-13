@@ -1,0 +1,59 @@
+% absenderergänzung (oben)
+%\setkomavar{location}{My house in provence}
+
+% farbe für linie unter absender
+\setkomafont{fromrule}{\color{mygray}}
+
+% falls Adresse in anderer Farbe o.ä.
+%\setkomafont{fromaddress}{\small\rmfamily\mdseries\slshape\color{myblue}}
+
+% falls andere Rückadresse
+%\setkomavar{backaddress}{Heinz Mustermann, Stresemannstr. 18, 21112 Hamburg}
+
+% Empfänger-Adresse Font-Größe
+%\setkomafont{addressee}{\large}
+
+% Unterschrift rechtsbündig
+\let\raggedsignature=\raggedright
+
+% specialmail vermerk linksbündig formatieren -> normal rechts 1em weg von couvert fenster
+\@setplength{specialmailrightindent}{\fill}
+\@setplength{specialmailindent}{0em}
+% specialmail kleiner setzen
+\setkomafont{specialmail}{\small}
+% und die Unterstreichung weg
+\renewcommand{\specialmail@format}{}
+
+% space for signature
+\@setplength{sigbeforevskip}{2cm}
+% fußzeile 1cm nach oben -> sonst probleme beim ausdrucken auf manchen druckern
+\@addtoplength{firstfootvpos}{-1cm}
+
+\setkomavar{firstfoot}{%
+    \parbox[t]{\textwidth}{\footnotesize{\color{mygray}
+        \rule{\textwidth}{0.4pt}
+        \begin{tabular}[t]{l}%
+        \usekomavar{fromname} \\ \usekomavar{fromaddress}\\Germany
+        \end{tabular}
+        \hfill
+        \begin{tabular}[t]{ll}%
+            \Telefon~ & \usekomavar{fromlandline} \\
+            \Mobilefone~ & \usekomavar{fromphone}
+            % \Faxmachine~ & \usekomavar{fromfax}
+        \end{tabular}
+        \hfill
+        \begin{tabular}[t]{ll}%
+            \Letter~ & \usekomavar{fromemail} \\
+        \end{tabular}
+
+        %\begin{tabular}
+            %\multicolumn{2}{l}{\textbf{Bankverbindung:}}\\
+            %Konto-Nr: & 1234567\\
+            %BLZ: & 100200300\\
+            %Bank: & ACME Bank
+        %\end{tabular}
+
+    }}
+}
+
+\endinput

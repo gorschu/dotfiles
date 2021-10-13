@@ -1,0 +1,17 @@
+\ProvidesFile{azmoundbarbara.lco}[%
+  2010/11/13 v0.1a LaTeX2e unsupported letter-class-option]
+
+{{ joinPath (.chezmoi.sourceFile | dir) "top.lco.include" | include }}
+
+{{ $a := split " " .personal.barbara.name }}
+\setkomavar{fromname}{ {{ $a._0 }} {{ $a._1 }} und {{ .personal.azmo.name }} }
+\setkomafont{fromname}{\bfseries\color{mygray}\LARGE}
+\setkomavar{fromaddress}{ {{ .personal.azmo.street }} {{ .personal.azmo.houseno }}\\{{ .personal.azmo.postal }} {{ .personal.azmo.city }} }
+\setkomavar{fromphone}[\Mobilefone~]{ {{ .personal.azmo.mobile | replace "-" "--" }} }
+\setkomavar{fromlandline}{ {{ .personal.azmo.landline | replace "-" "--" }} }
+\setkomavar{fromfax}{ {{ .personal.azmo.fax | replace "-" "--" }} }
+\setkomavar{fromemail}[\Letter~]{ {{ .mail.gatgordonschulzdotde.email }} }
+\setkomavar{signature}{\usekomavar{fromname}}
+\setkomavar{place}{ {{ .personal.azmo.city }} }
+
+{{ joinPath (.chezmoi.sourceFile | dir) "bottom.lco.include" | include }}
