@@ -1,0 +1,104 @@
+IMAPAccount fastmail-{{ .mail.gatgordonschulzdotde.email }}
+    Host imap.fastmail.com
+    User {{ .mail.gatgordonschulzdotde.email }}
+    PassCmd "$HOME/bin/mail/get_mail_password.sh 'Fastmail'"
+    SSLType IMAPS
+    {{- if eq .chezmoi.osRelease.id "arch" }}
+    CertificateFile /etc/ssl/certs/ca-certificates.crt
+    {{- else if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
+    CertificateFile /etc/ssl/ca-bundle.pem
+    {{- else if eq .chezmoi.osRelease.id "fedora" }}
+    CertificateFile /etc/ssl/cert.pem
+    {{- end }}
+
+IMAPStore fastmail-{{ .mail.gatgordonschulzdotde.email }}-remote
+    Account fastmail-{{ .mail.gatgordonschulzdotde.email }}
+
+MaildirStore fastmail-{{ .mail.gatgordonschulzdotde.email }}-local
+    Subfolders Verbatim
+    # The trailing "/" is important
+    Path ~/mail/{{ .mail.gatgordonschulzdotde.email }}/
+    Inbox ~/mail/{{ .mail.gatgordonschulzdotde.email }}/Inbox
+
+Channel fastmail-{{ .mail.gatgordonschulzdotde.email }}
+    Far :fastmail-{{ .mail.gatgordonschulzdotde.email }}-remote:
+    Near :fastmail-{{ .mail.gatgordonschulzdotde.email }}-local:
+    Patterns *
+    Create Both
+    Expunge Both
+    SyncState *
+    Sync All
+    # keep date and time intact when moving mails around
+    CopyArrivalDate yes
+
+IMAPAccount yahoo-{{ .mail.mfatyahoodotde.email }}
+    Host imap.mail.yahoo.com
+    AuthMechs Plain
+    User {{ .mail.mfatyahoodotde.email }}
+    PassCmd "$HOME/bin/mail/get_mail_password.sh 'Yahoo meierfred33'"
+    SSLType IMAPS
+    {{- if eq .chezmoi.osRelease.id "arch" }}
+    CertificateFile /etc/ssl/certs/ca-certificates.crt
+    {{- else if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
+    CertificateFile /etc/ssl/ca-bundle.pem
+    {{- else if eq .chezmoi.osRelease.id "fedora" }}
+    CertificateFile /etc/ssl/cert.pem
+    {{- end }}
+
+IMAPStore yahoo-{{ .mail.mfatyahoodotde.email }}-remote
+    Account yahoo-{{ .mail.mfatyahoodotde.email }}
+
+MaildirStore yahoo-{{ .mail.mfatyahoodotde.email }}-local
+    Subfolders Verbatim
+    # The trailing "/" is important
+    Path ~/mail/{{ .mail.mfatyahoodotde.email }}/
+    Inbox ~/mail/{{ .mail.mfatyahoodotde.email }}/INBOX
+
+Channel yahoo-{{ .mail.mfatyahoodotde.email }}
+    Far :yahoo-{{ .mail.mfatyahoodotde.email }}-remote:
+    Near :yahoo-{{ .mail.mfatyahoodotde.email }}-local:
+    Patterns *
+    Create Both
+    Expunge Both
+    SyncState *
+    Sync All
+    # keep date and time intact when moving mails around
+    CopyArrivalDate yes
+
+IMAPAccount gmail-{{ .mail.gsatgmaildotcom.email }}
+    Host imap.gmail.com
+    AuthMechs PLAIN
+    User {{ .mail.gsatgmaildotcom.email }}
+    PassCmd "$HOME/bin/mail/get_mail_password.sh 'Google Main'"
+    SSLType IMAPS
+    {{- if eq .chezmoi.osRelease.id "arch" }}
+    CertificateFile /etc/ssl/certs/ca-certificates.crt
+    {{- else if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
+    CertificateFile /etc/ssl/ca-bundle.pem
+    {{- else if eq .chezmoi.osRelease.id "fedora" }}
+    CertificateFile /etc/ssl/cert.pem
+    {{- end }}
+
+IMAPStore gmail-{{ .mail.gsatgmaildotcom.email }}-remote
+    Account gmail-{{ .mail.gsatgmaildotcom.email }}
+
+MaildirStore gmail-{{ .mail.gsatgmaildotcom.email }}-local
+    SubFolders Verbatim
+    Path ~/mail/{{ .mail.gsatgmaildotcom.email }}/
+    Inbox ~/mail/{{ .mail.gsatgmaildotcom.email }}/Inbox
+
+Channel gmail-{{ .mail.gsatgmaildotcom.email }}
+    Far :gmail-{{ .mail.gsatgmaildotcom.email }}-remote:
+    Near :gmail-{{ .mail.gsatgmaildotcom.email }}-local:
+    # Exclude everything under the internal [Gmail] folder, except the interesting folders
+    Patterns * ![Gmail]* "[Gmail]/Trash" "[Gmail]/Sent Mail" "[Gmail]/Spam" "[Gmail]/Starred" "[Gmail]/All Mail"
+    # Or include everything
+    #Patterns *
+    # Automatically create missing mailboxes, both locally and on the server
+    Create Both
+    Expunge Both
+    # Save the synchronization state files in the relevant directory
+    SyncState *
+    Sync All
+    # keep date and time intact when moving mails around
+    CopyArrivalDate yes
