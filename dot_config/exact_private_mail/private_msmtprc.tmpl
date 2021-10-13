@@ -1,0 +1,36 @@
+# Set default values for all following accounts.
+defaults
+auth           on
+tls            on
+{{- if eq .chezmoi.osRelease.id "arch" }}
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+{{- else if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
+tls_trust_file /etc/ssl/ca-bundle.pem
+{{- else if eq .chezmoi.osRelease.id "fedora" }}
+tls_trust_file /etc/ssl/cert.pem
+{{- end }}
+logfile        ~/.local/share/msmtp.log
+
+# FastMail
+account         fastmail-{{ .mail.gatgordonschulzdotde.email }}
+host            smtp.fastmail.com
+port            587
+from            {{ .mail.gatgordonschulzdotde.email }}
+user            {{ .mail.gatgordonschulzdotde.email }}
+passwordeval    "$HOME/bin/mail/get_mail_password.sh Fastmail"
+
+account         yahoo-{{ .mail.mfatyahoodotde.email }}
+host            smtp.mail.yahoo.com
+port            587
+from            {{ .mail.mfatyahoodotde.email }}
+user            {{ .mail.mfatyahoodotde.email }}
+passwordeval    "$HOME/bin/mail/get_mail_password.sh 'Yahoo {{ .mail.mfatyahoodotde.email }}'"
+
+account         gmail-{{ .mail.gsatgmaildotcom.email }}
+host            smtp.gmail.com
+port            587
+from            {{ .mail.gsatgmaildotcom.email }}
+user            {{ .mail.gsatgmaildotcom.email }}
+passwordeval    "$HOME/bin/mail/get_mail_password.sh 'Google Main'"
+
+account default : fastmail
