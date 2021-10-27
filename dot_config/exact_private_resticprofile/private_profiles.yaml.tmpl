@@ -7,6 +7,8 @@ global:
 default:
   initialize: false
   status-file: "/tmp/{{ "-- .Profile.Name ++" | replace "-" "{" | replace "+" "}" }}-status.json"
+  password-file: "{{ "-- .ConfigDir ++" | replace "-" "{" | replace "+" "}" }}/restic-password-{{ "-- .Profile.Name ++" | replace "-" "{" | replace "+" "}" }}"
+  lock: "{{ "-- .Env.XDG_RUNTIME_DIR ++" | replace "-" "{" | replace "+" "}" }}/resticprofile/{{ "-- .Profile.Name ++" | replace "-" "{" | replace "+" "}" }}.lock"
 
   backup:
     one-file-system: true
@@ -15,8 +17,6 @@ default:
 workstations:
   inherit: "default"
   repository: "{{ (onepasswordItemFields "Restic/Workstations").RepositoryURL.v }}"
-  password-file: "{{ "-- .ConfigDir ++" | replace "-" "{" | replace "+" "}" }}/restic-password-workstations"
-  lock: "{{ "-- .Env.XDG_RUNTIME_DIR ++" | replace "-" "{" | replace "+" "}" }}/resticprofile/workstations.lock"
   force-inactive-lock: true
   verbose: true
   option:
