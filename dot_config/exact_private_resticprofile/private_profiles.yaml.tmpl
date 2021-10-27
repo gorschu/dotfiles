@@ -1,0 +1,63 @@
+# -*- mode: yaml -*-
+
+global:
+  restic-lock-retry-after: 1m
+  restic-stale-lock-age: 2h
+
+default:
+  initialize: false
+  status-file: "/tmp/{{ "-- .Profile.Name ++" | replace "-" "{" | replace "+" "}" }}-status.json"
+
+  backup:
+    one-file-system: true
+    schedule-lock-wait: "1h"
+
+workstations:
+  inherit: "default"
+  repository: "{{ (onepasswordItemFields "Restic/Workstations").RepositoryURL.v }}"
+  password-file: "{{ "-- .ConfigDir ++" | replace "-" "{" | replace "+" "}" }}/restic-password-workstations"
+  lock: "{{ "-- .Env.XDG_RUNTIME_DIR ++" | replace "-" "{" | replace "+" "}" }}/resticprofile/workstations.lock"
+  force-inactive-lock: true
+  verbose: true
+  option:
+    - "s3.region=fr-par"
+    - "limit-upload=3000"
+
+  env:
+    AWS_ACCESS_KEY_ID: "{{ (onepasswordItemFields "Scaleway").restic_Access_Key_ID.v }}"
+    AWS_SECRET_ACCESS_KEY: "{{ (onepasswordItemFields "Scaleway").restic_Access_Key_Secret.v }}"
+
+  backup:
+    source:
+      - "/home/azmo"
+    exclude-caches: true
+    exclude-if-present: ".exclude_from_backup"
+    exclude-file: "{{ "-- .ConfigDir ++" | replace "-" "{" | replace "+" "}" }}/restic-excludes-workstations"
+    check-before: false
+    tag:
+      - "{{ "--.Profile.Name ++" | replace "-" "{" | replace "+" "}" }}"
+      - "{{ "--.Hostname ++" | replace "-" "{" | replace "+" "}" }}"
+    host: true
+    schedule: "hourly"
+    schedule-permission: "user"
+
+  retention:
+    before-backup: false
+    after-backup: true
+    keep-last: 3
+    keep-hourly: 12
+    keep-daily: 14
+    keep-weekly: 4
+    keep-monthly: 12
+    keep-yearly: 0
+    keep-within: "6h"
+    tag: true
+
+  check:
+    read-data: false
+    schedule: "Sun,Wed 10:00"
+    schedule-permission: "user"
+
+  prune:
+    schedule: "Sun 14:00"
+    schedule-permission: "user"
