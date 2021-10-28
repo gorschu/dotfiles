@@ -2,16 +2,19 @@
     type = "archive"
     url = "https://github.com/junegunn/fzf/archive/master.tar.gz"
     stripComponents = 1
+    refreshPeriod = "168h"
 
 [".vendor/fasd"]
     type = "archive"
     url = "https://github.com/clvv/fasd/archive/master.tar.gz"
     stripComponents = 1
+    refreshPeriod = "168h"
 
 [".vendor/asdf"]
     type = "archive"
     url = "https://github.com/asdf-vm/asdf/archive/master.tar.gz"
     stripComponents = 1
+    refreshPeriod = "168h"
 
 [".vendor/tomb"]
     type = "archive"
@@ -22,18 +25,22 @@
     type = "archive"
     url = "https://github.com/mrichar1/clipster/archive/master.tar.gz"
     stripComponents = 1
+    refreshPeriod = "168h"
 
 [".vendor/gruvbox-contrib"]
     type = "archive"
     url = "https://github.com/gruvbox-community/gruvbox-contrib/archive/master.tar.gz"
     stripComponents = 1
+    refreshPeriod = "168h"
 
 [".vendor/gogh"]
     type = "archive"
     url = "https://github.com/Mayccoll/Gogh/archive/master.tar.gz"
     stripComponents = 1
+    refreshPeriod = "168h"
 
 [".vendor/doom-emacs"]
     type = "archive"
-    url = "https://github.com/hlissner/doom-emacs/archive/master.tar.gz"
+    url = "https://github.com/hlissner/doom-emacs/archive/develop.tar.gz"
     stripComponents = 1
+    refreshPeriod = "168h"
