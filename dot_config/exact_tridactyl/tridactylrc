@@ -4,7 +4,7 @@ set tabopencontaineraware true
 
 set searchengine google
 
-seturl plex.zeus.int.gordonschulz.de modeindicator false
-seturl www.youtube.com modeindicator false
+seturl plex.zeus.int.gordonschulz.de modeindicatormodes.fullscreen false
+seturl www.youtube.com modeindicatormodes.fullscreen false
 
 bind ZZ composite sanitise tridactyllocal; qall 
