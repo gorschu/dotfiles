@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# modify mc's ini to always set skin to dark
+# we don't care if we get an empty input, mc will write it's default ini on startup
+sed -r 's/^skin=.*/skin=dark/' <&0
