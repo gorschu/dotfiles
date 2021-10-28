@@ -21,11 +21,11 @@ if [ ! -e $HOME/bin/antibody ]; then
             {{ .chezmoi.homeDir }}/.zsh_plugins.sh
 fi
 
-if [ ! -e $HOME/bin/starship ]; then
+if [ ! -e $HOME/.local/bin/starship ]; then
     echo "${green}Installing starship${reset}"
     tmpfile=$(mktemp)
     curl -fsSL -o ${tmpfile} https://starship.rs/install.sh && bash ${tmpfile} --bin-dir \
-        $HOME/bin --yes
+        $HOME/.local/bin --yes
 fi
 
 echo "${green}Protect our fonts.conf (KDE likes to mess with it)${reset}"
