@@ -2,7 +2,7 @@
 
 set -e # -e: exit on error
 
-op_latest=1.12.2
+op_latest=1.12.3
 op_email=gordon@gordonschulz.de
 
 
