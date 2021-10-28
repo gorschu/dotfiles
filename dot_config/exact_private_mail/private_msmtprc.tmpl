@@ -33,4 +33,4 @@ from            {{ .mail.gsatgmaildotcom.email }}
 user            {{ .mail.gsatgmaildotcom.email }}
 passwordeval    "$HOME/bin/mail/get_mail_password.sh 'Google Main'"
 
-account default : fastmail
+account default : fastmail-{{ .mail.gatgordonschulzdotde.email }}
