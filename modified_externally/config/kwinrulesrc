@@ -48,3 +48,4 @@ wmclassmatch=1
 
 [General]
 count=5
+rules=1,2,3,4,5
