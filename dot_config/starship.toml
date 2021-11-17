@@ -3,6 +3,8 @@ symbol = " "
 
 [cmd_duration]
 style = "#EBCB8B"
+show_notifications = true
+min_time_to_notify = 60_000
 
 [directory]
 read_only = "  "
