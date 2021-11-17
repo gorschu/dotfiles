@@ -39,8 +39,3 @@
     stripComponents = 1
     refreshPeriod = "168h"
 
-[".vendor/doom-emacs"]
-    type = "archive"
-    url = "https://github.com/hlissner/doom-emacs/archive/develop.tar.gz"
-    stripComponents = 1
-    refreshPeriod = "168h"
