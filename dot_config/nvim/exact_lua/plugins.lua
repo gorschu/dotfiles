@@ -40,7 +40,8 @@ return require('packer').startup(function()
 
     -- git
     use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } }
-    use { 'tpope/vim-fugitive' }
+    use { 'TimUntersberger/neogit', 
+        requires = { 'nvim-lua/plenary.nvim', 'sindrets/diffview.nvim' }}
 
     -- show indentation levels
     use { 'lukas-reineke/indent-blankline.nvim' }
