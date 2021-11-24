@@ -31,5 +31,3 @@ vim.api.nvim_set_keymap('n', 'ga', [[<Plug>(EasyAlign)]], { noremap = False})
 
 vim.g.suda_smart_edit = 1
 
-vim.g.nvim_tree_disable_netrw = 0
-vim.g.nvim_tree_hijack_netrw = 0
