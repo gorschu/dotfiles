@@ -89,8 +89,24 @@ return require('packer').startup(function()
 
     -- edit files as sudo
     use {'lambdalisue/suda.vim'}
+
+    -- registers
+    -- preview registers
+    use { 'tversteeg/registers.nvim' }
     -- register clipboard manager
     use { 'AckslD/nvim-neoclip.lua', config = function()
         require('neoclip').setup()
     end}
+
+    -- less distractions
+    use { 'folke/twilight.nvim', config = function()
+        require("twilight").setup()
+    end,
+    opt = true, cmd = {'Twilight', 'TwilightEnable', 'TwilighDisable' }
+    }
+    use { 'folke/zen-mode.nvim', config = function()
+        require("zen-mode").setup()
+    end,
+    opt = true, cmd = { 'ZenMode' }
+    }
 end)
