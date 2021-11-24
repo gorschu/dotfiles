@@ -89,4 +89,8 @@ return require('packer').startup(function()
 
     -- edit files as sudo
     use {'lambdalisue/suda.vim'}
+    -- register clipboard manager
+    use { 'AckslD/nvim-neoclip.lua', config = function()
+        require('neoclip').setup()
+    end}
 end)
