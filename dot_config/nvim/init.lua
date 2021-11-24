@@ -29,6 +29,7 @@ require('plugins/airline')
 require('plugins/telescope')
 require('plugins/gutentags')
 require('plugins/nvimtree')
+require('plugins/neogit')
 require('plugins/bufferline')
 require('plugins/misc')
 
