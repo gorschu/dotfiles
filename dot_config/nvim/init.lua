@@ -28,6 +28,7 @@ require('plugins/autopairs')
 require('plugins/airline')
 require('plugins/telescope')
 require('plugins/gutentags')
+require('plugins/nvimtree')
 require('plugins/bufferline')
 require('plugins/misc')
 
