@@ -21,12 +21,16 @@ if [ ! -e $HOME/bin/antibody ]; then
             {{ .chezmoi.homeDir }}/.zsh_plugins.sh
 fi
 
+{{ if ne .chezmoi.osRelease.id "fedora" }}
 if [ ! -e $HOME/.local/bin/starship ]; then
     echo "${green}Installing starship${reset}"
     tmpfile=$(mktemp)
     curl -fsSL -o ${tmpfile} https://starship.rs/install.sh && bash ${tmpfile} --bin-dir \
         $HOME/.local/bin --yes
 fi
+{{ else }}
+sudo dnf install -y starship
+{{ end }}
 
 echo "${green}Protect our fonts.conf (KDE likes to mess with it)${reset}"
 sudo chown root:root {{ .chezmoi.homeDir }}/.config/fontconfig/fonts.conf
@@ -35,14 +39,16 @@ echo "${green}Install fzf${reset}"
 $HOME/.vendor/fzf/install --all
 
 echo "${green}Install asdf plugins${reset}"
+set +ux
 . $HOME/.vendor/asdf/asdf.sh
 asdf plugin list | grep -q "^golang$" || asdf plugin-add golang https://github.com/kennyp/asdf-golang.git
 asdf plugin list | grep -q "^java$" || asdf plugin-add java https://github.com/halcyon/asdf-java.git
 asdf plugin list | grep -q "^python$" || asdf plugin-add python https://github.com/danhper/asdf-python.git
 asdf plugin list | grep -q "^kotlin$" || asdf plugin-add kotlin https://github.com/asdf-community/asdf-kotlin.git
+set -ux
 
 echo "${green}Cloning doom-emacs${reset}"
-git clone --depth=1 https://github.com/hlissner/doom-emacs {{ .chezmoi.homeDir }}/.vendor/doom-emacs
+[[ ! -d {{ .chezmoi.homeDir }}/.vendor/doom-emacs ]] && git clone --depth=1 https://github.com/hlissner/doom-emacs {{ .chezmoi.homeDir }}/.vendor/doom-emacs
 
 echo "${green}Changing from (possible) https to ssh${reset}"
 ${chezmoi} git remote set-url origin git@github.com:azmodude/dotfiles
