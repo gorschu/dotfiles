@@ -9,7 +9,7 @@ encryption = "gpg"
     args = "-d"
 
 [data]
-{{- if eq .chezmoi.hostname "apollo" }}
+{{- if eq .chezmoi.hostname "apollo" "hephaestus" }}
     wm = "kde"
 {{- else }}
     wm = "gnome"
