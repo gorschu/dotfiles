@@ -39,6 +39,8 @@ GPGKEY_FINGERPRINT=0A47650A15E4F0F4003EC450DEE550054AA972F6
 
 # write initial .chezmoi.toml so encryption works
 [[ ! -d $HOME/.config/chezmoi ]] && mkdir -p $HOME/.config/chezmoi
+# .chezmo.toml in here is our source of truth, delete anything already present
+[[ -e $HOME/.config/chezmoi/chezmoi.toml ]] && rm -f $HOME/.config/chezmoi/chezmoi.toml
 cat << EOF >> $HOME/.config/chezmoi/chezmoi.toml
 encryption = "gpg"
 
@@ -55,6 +57,6 @@ gpg --card-status
 # POSIX way to get script's dir: https://stackoverflow.com/a/29834779/12156188
 script_dir="$(cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P)"
 # exec: replace current process with chezmoi init
-PATH=${PATH}:$HOME/.local/bin exec "$chezmoi" init --apply "--source=$script_dir"
+OP_SESSION_my=$(bash bin/exact_security/executable_onepassword-signin) PATH=${PATH}:$HOME/.local/bin exec "$chezmoi" init --apply "--source=$script_dir"
 
 # vim: set ft=sh:
