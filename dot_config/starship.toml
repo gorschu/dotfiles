@@ -21,6 +21,14 @@ diverged = "😰⇡${ahead_count}⇣${behind_count}"
 behind = "⇣${count}"
 style = "#81A1C1"
 
+[git_metrics]
+disabled = false
+
+[git_commit]
+disabled = false
+tag_disabled = false
+only_detached = false
+
 [golang]
 symbol = "ﳑ "
 
