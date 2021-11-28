@@ -8,8 +8,8 @@ set message_cachedir = $XDG_CACHE_HOME/mutt/bodies
 set mailcap_path = $XDG_CONFIG_HOME/neomutt/mailcap
 set tmpdir = $TMPDIR/mutt
 
-# don't ask to recall drafts
-set recall=no
+# ask to recall drafts
+set recall=yes
 
 # don't mark mails as old
 set mark_old=no
@@ -133,7 +133,7 @@ set wait_key=no
 mime_lookup application/octet-stream
 
 # GPG/PGP
-set pgp_sign_as = 0xDEE550054AA972F6
+set pgp_sign_as = 0A47650A15E4F0F4003EC450DEE550054AA972F6
 set pgp_use_gpg_agent = yes
 set pgp_self_encrypt = yes
 set postpone_encrypt = yes
