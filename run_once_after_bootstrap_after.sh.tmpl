@@ -47,8 +47,5 @@ asdf plugin list | grep -q "^python$" || asdf plugin-add python https://github.c
 asdf plugin list | grep -q "^kotlin$" || asdf plugin-add kotlin https://github.com/asdf-community/asdf-kotlin.git
 set -ux
 
-echo "${green}Cloning doom-emacs${reset}"
-[[ ! -d {{ .chezmoi.homeDir }}/.vendor/doom-emacs ]] && git clone --depth=1 https://github.com/hlissner/doom-emacs {{ .chezmoi.homeDir }}/.vendor/doom-emacs
-
 echo "${green}Changing from (possible) https to ssh${reset}"
 ${chezmoi} git remote set-url origin git@github.com:azmodude/dotfiles
