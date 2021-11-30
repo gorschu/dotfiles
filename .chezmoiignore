@@ -4,6 +4,7 @@ modified_externally
 install.sh
 */**/*.include
 */**/*.include.asc
+.gita.vendor.frozen
 
 {{- $wants_ssh_keys := list "hephaestus" "artemis" "apollo" }}
 {{- if not (has .chezmoi.hostname $wants_ssh_keys) }}
