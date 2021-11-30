@@ -57,6 +57,7 @@ gpg --card-status
 # POSIX way to get script's dir: https://stackoverflow.com/a/29834779/12156188
 script_dir="$(cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P)"
 # exec: replace current process with chezmoi init
-OP_SESSION_my=$(bash bin/exact_security/executable_onepassword-signin) PATH=${PATH}:$HOME/.local/bin exec "$chezmoi" init --apply "--source=$script_dir"
+export PATH=$PATH:$HOME/.local/bin
+OP_SESSION_my=$(bash bin/exact_security/executable_onepassword-signin) exec "$chezmoi" init --apply "--source=$script_dir"
 
 # vim: set ft=sh:
