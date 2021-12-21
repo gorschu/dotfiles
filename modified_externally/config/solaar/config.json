@@ -1,5 +1,5 @@
 {
-  "4071:0CAB0BCC": {
+  "4069:0CAB0BCC": {
     "_modelId": "B01E40710000",
     "_name": "Wireless Mouse MX Master 2S",
     "_sensitive": {
@@ -76,5 +76,5 @@
     "fn-swap": false,
     "multiplatform": 0
   },
-  "_version": "1.0.7"
+  "_version": "1.1.0"
 }
