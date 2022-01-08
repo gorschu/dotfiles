@@ -11,6 +11,7 @@ read_only = "  "
 read_only_style = "#BF616A"
 truncation_symbol = "…/"
 truncation_length = 3
+fish_style_pwd_dir_length = 1
 
 [git_branch]
 symbol = " "
@@ -49,6 +50,9 @@ symbol = "  "
 [shlvl]
 disabled = false
 symbol = "溜"
+
+[shell]
+disabled = false
 
 [status]
 disabled = false
