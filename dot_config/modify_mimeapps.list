@@ -1,0 +1,22 @@
+#!/bin/env python3
+
+# Add custom application types to mimeapps.list
+
+import configparser
+import os
+import sys
+
+config_home = os.environ.get("XDG_CONFIG_HOME")
+if config_home is None:
+    config_home = os.environ.get("HOME")
+
+config = configparser.ConfigParser()
+config.read(f"{config_home}/mimeapps.list")
+
+if not config.has_section("Default Applications"):
+    config.add_section("Default Applications")
+
+if not config.has_option("Default Applications", "application/x-ica"):
+    config.set("Default Applications", "application/x-ica", "citrix-toolbox.desktop")
+
+config.write(sys.stdout, space_around_delimiters=False)
