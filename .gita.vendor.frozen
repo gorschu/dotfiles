@@ -4,9 +4,9 @@ https://github.com/asdf-vm/asdf,asdf,/home/azmo/.vendor/asdf
 https://github.com/dyne/tomb,tomb,/home/azmo/.vendor/tomb
 https://github.com/mrichar1/clipster/,clipster,/home/azmo/.vendor/clipster
 https://github.com/Mayccoll/gogh,gogh,/home/azmo/.vendor/gogh
-https://github.com/hlissner/doom-emacs,doom-emacs,/home/azmo/.vendor/doom-emacs
 https://github.com/arcticicestudio/nord-dircolors.git,nord-dircolors,/home/azmo/.vendor/nord-dircolors
 https://github.com/arcticicestudio/nord-gnome-terminal,nord-gnome-terminal,/home/azmo/.vendor/nord-gnome-terminal
 https://github.com/arcticicestudio/nord-xresources.git,nord-xresources,/home/azmo/.vendor/nord-xresources
 https://github.com/connorholyday/nord-kitty.git,nord-kitty,/home/azmo/.vendor/nord-kitty
 https://github.com/arcticicestudio/nord-konsole.git,nord-konsole,/home/azmo/.vendor/nord-konsole
+https://github.com/syl20bnr/spacemacs,spacemacs,/home/azmo/.vendor/spacemacs
