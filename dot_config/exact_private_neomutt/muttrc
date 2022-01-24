@@ -146,9 +146,7 @@ set crypt_replysign = yes
 set crypt_replyencrypt = yes
 set crypt_replysignencrypted = yes
 
-source $XDG_CONFIG_HOME/neomutt/colors-gruvbox-shuber.muttrc
-source $XDG_CONFIG_HOME/neomutt/colors-gruvbox-shuber-extended.muttrc
-
+source $XDG_CONFIG_HOME/neomutt/okubax_nord.muttrc
 
 # view html mails as text
 set implicit_autoview
