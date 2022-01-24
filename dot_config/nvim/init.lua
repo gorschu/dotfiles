@@ -36,5 +36,5 @@ require('plugins/misc')
 require('telescope').load_extension('neoclip')
 require('kommentary.config').use_extended_mappings()
 require('gitsigns').setup()
-require('lualine').setup({options = { theme = 'gruvbox'}})
+require('lualine').setup({options = { theme = 'nord'}})
 

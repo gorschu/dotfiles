@@ -3,7 +3,7 @@ return require('packer').startup(function()
     use {'wbthomason/packer.nvim', opt = false}
 
     -- Color Scheme
-    use { "rktjmp/lush.nvim" , requires = {"npxbr/gruvbox.nvim" } }
+    use 'shaunsingh/nord.nvim'
 
     -- Fuzzy finder
     use { 'nvim-telescope/telescope.nvim', requires = {{'nvim-lua/popup.nvim'},
