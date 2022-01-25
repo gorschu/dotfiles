@@ -31,3 +31,7 @@ vim.api.nvim_set_keymap('n', 'ga', [[<Plug>(EasyAlign)]], { noremap = False})
 
 vim.g.suda_smart_edit = 1
 
+-- let lazygit use plenary
+vim.g.lazygit_floating_window_use_plenary = 1
+vim.g.lazygit_floating_window_winblend = 0
+
