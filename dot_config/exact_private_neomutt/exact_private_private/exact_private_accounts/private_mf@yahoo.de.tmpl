@@ -29,10 +29,7 @@ macro index S "<shell-escape>syncmail yahoo-{{ .mail.mfatyahoodotde.email }}<ent
 
 macro index,pager ,i "<change-folder>+{{ .mail.mfatyahoodotde.email }}/Inbox<enter>"
 #
-macro index,pager ,Z \
-  "<enter-command>set my_old_resolve=\$resolve noresolve<enter>\
-  <tag-prefix><clear-flag>n<enter-command>set resolve=\$my_old_resolve<enter>\
-  <save-message>+{{ .mail.mfatyahoodotde.email }}/Bulk Mail<enter>" \
+macro index,pager ,Z \ "<enter-command>set my_old_resolve=\$resolve noresolve<enter>\<tag-prefix><clear-flag>n<enter-command>set resolve=\$my_old_resolve<enter>\<save-message>+{{ .mail.mfatyahoodotde.email }}/Bulk Mail<enter>" \
   "mark as read and zap to Spam"
 
 macro index,pager ,A \

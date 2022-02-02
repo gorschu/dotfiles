@@ -30,9 +30,7 @@ macro index S "<shell-escape>$HOME/bin/mail/syncmail fastmail-{{ .mail.gatgordon
 macro index,pager ,i "<change-folder>+{{ .mail.gatgordonschulzdotde.email }}/Inbox<enter>"
 #
 macro index,pager ,Z \
-  "<enter-command>set my_old_resolve=\$resolve noresolve<enter>\
-  <tag-prefix><clear-flag>n<enter-command>set resolve=\$my_old_resolve<enter>\
-  <save-message>+{{ .mail.gatgordonschulzdotde.email }}/Spam Training<enter>" \
+  "<enter-command>set my_old_resolve=\$resolve noresolve<enter>\<tag-prefix><clear-flag>n<enter-command>set resolve=\$my_old_resolve<enter>\<save-message>+{{ .mail.gatgordonschulzdotde.email }}/Spam Training<enter>" \
   "mark as read and zap to Spam Training"
 
 macro index,pager ,A \
