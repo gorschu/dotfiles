@@ -91,9 +91,7 @@ Channel gmail-{{ .mail.gsatgmaildotcom.email }}
     Far :gmail-{{ .mail.gsatgmaildotcom.email }}-remote:
     Near :gmail-{{ .mail.gsatgmaildotcom.email }}-local:
     # Exclude everything under the internal [Gmail] folder, except the interesting folders
-    Patterns * ![Gmail]* "[Gmail]/Trash" "[Gmail]/Sent Mail" "[Gmail]/Spam" "[Gmail]/Starred" "[Gmail]/All Mail"
-    # Or include everything
-    #Patterns *
+    Patterns * ![Gmail]* !all-mail !sent-mail !trash !spam
     # Automatically create missing mailboxes, both locally and on the server
     Create Both
     Expunge Both
@@ -102,3 +100,59 @@ Channel gmail-{{ .mail.gsatgmaildotcom.email }}
     Sync All
     # keep date and time intact when moving mails around
     CopyArrivalDate yes
+
+Channel gmail-{{ .mail.gsatgmaildotcom.email }}-all-mail
+    Far :gmail-gordon.schulz@gmail.com-remote:"[Gmail]/All Mail"
+    Near :gmail-gordon.schulz@gmail.com-local:all-mail
+    # Automatically create missing mailboxes, both locally and on the server
+    Create Near
+    Expunge Both
+    # Save the synchronization state files in the relevant directory
+    SyncState *
+    Sync All
+    # keep date and time intact when moving mails around
+    CopyArrivalDate yes
+
+Channel gmail-{{ .mail.gsatgmaildotcom.email }}-sent-mail
+    Far :gmail-gordon.schulz@gmail.com-remote:"[Gmail]/Sent Mail"
+    Near :gmail-gordon.schulz@gmail.com-local:sent-mail
+    # Automatically create missing mailboxes, both locally and on the server
+    Create Near
+    Expunge Both
+    # Save the synchronization state files in the relevant directory
+    SyncState *
+    Sync All
+    # keep date and time intact when moving mails around
+    CopyArrivalDate yes
+
+Channel gmail-{{ .mail.gsatgmaildotcom.email }}-trash
+    Far :gmail-gordon.schulz@gmail.com-remote:"[Gmail]/Trash"
+    Near :gmail-gordon.schulz@gmail.com-local:trash
+    # Automatically create missing mailboxes, both locally and on the server
+    Create Near
+    Expunge Both
+    # Save the synchronization state files in the relevant directory
+    SyncState *
+    Sync All
+    # keep date and time intact when moving mails around
+    CopyArrivalDate yes
+
+Channel gmail-{{ .mail.gsatgmaildotcom.email }}-spam
+    Far :gmail-gordon.schulz@gmail.com-remote:"[Gmail]/Spam"
+    Near :gmail-gordon.schulz@gmail.com-local:spam
+    # Automatically create missing mailboxes, both locally and on the server
+    Create Near
+    Expunge Both
+    # Save the synchronization state files in the relevant directory
+    SyncState *
+    Sync All
+    # keep date and time intact when moving mails around
+    CopyArrivalDate yes
+
+Group gmail
+    Channel gmail-{{ .mail.gsatgmaildotcom.email }}
+    Channel gmail-{{ .mail.gsatgmaildotcom.email }}-all-mail
+    Channel gmail-{{ .mail.gsatgmaildotcom.email }}-sent-mail
+    Channel gmail-{{ .mail.gsatgmaildotcom.email }}-trash
+    Channel gmail-{{ .mail.gsatgmaildotcom.email }}-spam
+

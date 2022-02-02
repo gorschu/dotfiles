@@ -32,13 +32,11 @@ macro index S "<shell-escape>$HOME/bin/mail/syncmail gmail-{{ .mail.gsatgmaildot
 macro index,pager ,i "<change-folder>+{{ .mail.gsatgmaildotcom.email }}/Inbox<enter>"
 #
 macro index,pager ,Z \
-  "<enter-command>set my_old_resolve=\$resolve noresolve<enter>\
-  <tag-prefix><clear-flag>n<enter-command>set resolve=\$my_old_resolve<enter>\
-  <save-message>+{{ .mail.gsatgmaildotcom.email }}/[Gmail]/Spam<enter>" \
+  "<enter-command>set my_old_resolve=\$resolve noresolve<enter>\<tag-prefix><clear-flag>n<enter-command>set resolve=\$my_old_resolve<enter>\<save-message>+{{ .mail.gsatgmaildotcom.email }}/spam<enter>" \
   "mark as read and zap to Spam"
 
 macro index,pager ,A \
-  "<save-message>+{{ .mail.gsatgmaildotcom.email }}/[Gmail]/All Mail<enter>"  \
+  "<save-message>+{{ .mail.gsatgmaildotcom.email }}/all-mail<enter>"  \
   "move message to the archive"
 #
 macro index,pager ,I \
