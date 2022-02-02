@@ -26,6 +26,7 @@
 
 [commit]
     gpgsign = true
+    verbose = true
 
 [tag]
     forceSignAnnotated = true
@@ -98,8 +99,8 @@
 [gpg]
     program = gpg2
 
-[includeif "gitdir:~/work/"]
+[includeif "gitdir:~/work/**"]
     path = ~/work/.gitconfig
 
-[includeif "gitdir:~/sync/work"]
+[includeif "gitdir:~/sync/work/**"]
     path = ~/work/.gitconfig
