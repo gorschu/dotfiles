@@ -16,7 +16,7 @@ default:
 
 workstations:
   inherit: "default"
-  repository: "{{ (onepasswordItemFields "Restic/Workstations").RepositoryURL.v }}"
+  repository: "{{ (onepasswordItemFields "Backup Restic/Workstations").RepositoryURL.v }}"
   force-inactive-lock: true
   verbose: true
   option:
