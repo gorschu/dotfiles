@@ -8,7 +8,7 @@ configuration {
 	ssh-command: "{terminal} -e "{ssh-client} {host}"";
 	run-command: "{cmd}";
 	run-shell-command: "{terminal} -e "{cmd}"";
-	theme: "gruvbox-dark";
+	theme: "dracula1";
 	fake-transparency: true;
 	display-window: "window>";
 	display-run: "run>";

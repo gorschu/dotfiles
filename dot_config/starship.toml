@@ -1,12 +1,14 @@
 [aws]
 symbol = " "
+style = "bold #ffb86c"
 
 [cmd_duration]
-style = "#EBCB8B"
+style = "bold #f1fa8c"
 show_notifications = true
 min_time_to_notify = 60_000
 
 [directory]
+style = "bold #50fa7b"
 read_only = "  "
 read_only_style = "#BF616A"
 truncation_symbol = "…/"
@@ -14,13 +16,14 @@ truncation_length = 3
 fish_style_pwd_dir_length = 1
 
 [git_branch]
+style = "bold #ff79c6"
 symbol = " "
 
 [git_status]
+style = "bold #ff5555"
 ahead = "⇡${count}"
 diverged = "😰⇡${ahead_count}⇣${behind_count}"
 behind = "⇣${count}"
-style = "#81A1C1"
 
 [git_metrics]
 disabled = false
@@ -32,6 +35,9 @@ only_detached = false
 
 [golang]
 symbol = "ﳑ "
+
+[hostname]
+style = "bold #ff5555"
 
 [java]
 symbol = " "
@@ -56,3 +62,7 @@ disabled = false
 
 [status]
 disabled = false
+
+[username]
+format = "[$user]($style) on "
+style_user = "bold #bd93f9"
