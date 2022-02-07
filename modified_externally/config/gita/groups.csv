@@ -1,1 +1,1 @@
-dotfiles.vendor:asdf clipster fasd fzf gogh nord-alacritty nord-dircolors nord-gnome-terminal nord-kitty nord-konsole nord-xresources nord-zathura tomb:
+dotfiles.vendor:asdf clipster doom-emacs dracula-alacritty dracula-gnome-terminal dracula-kitty dracula-konsole dracula-midnight-commander dracula-mutt dracula-ranger dracula-rofi dracula-tig dracula-xresources dracula-zathura dracula-zsh-syntax-highlighting fasd fzf gogh tomb:

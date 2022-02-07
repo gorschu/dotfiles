@@ -1,6 +1,6 @@
 [Appearance]
 BoldIntense=true
-ColorScheme=nord
+ColorScheme=dracula
 DimmValue=37
 Font=Iosevka Term,10,-1,5,57,0,0,0,0,0,Medium
 
