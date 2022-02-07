@@ -66,3 +66,4 @@ disabled = false
 [username]
 format = "[$user]($style) on "
 style_user = "bold #bd93f9"
+show_always = true
