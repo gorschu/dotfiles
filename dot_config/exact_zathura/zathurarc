@@ -1,3 +1,2 @@
 # load color scheme
-# source: https://github.com/gdnand/zathura-nord
-include     nord-zathura
+include     dracula-zathura
