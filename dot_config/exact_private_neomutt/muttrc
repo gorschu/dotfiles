@@ -168,5 +168,17 @@ macro index ,m "T ~O | ~N\n;N" "Mark all messages in folder as read"
 # open urls with urlscan
 macro pager ,u "<pipe-message> urlscan<Enter>" "call urlscan to extract URLs out of a message"
 
+# source: https://tom.wemyss.net/posts/neomutt-markdown-email
+macro compose m \
+"<enter-command>set pipe_decode<enter>\
+<shell-escape>rm -rf ${TMPDIR}/neomutt-html && mkdir ${TMPDIR}/neomutt-html<enter></shell-escape> \
+<pipe-message>podman run -i -v ${TMPDIR}/neomutt-html:/tmp:Z --rm docker.io/pandoc/core -f gfm -t plain -o /tmp/msg.txt<enter>\
+<pipe-message>docker run -i -v ${TMPDIR}/neomutt-html:/tmp:Z -v ~/.config/neomutt/templates:/mutt/templates:Z --rm docker.io/pandoc/core -s -f gfm --self-contained --css=github-pandoc.css -o /tmp/msg.html --resource-path /mutt/templates/ --template pandoc-markdown-email<enter>\
+<enter-command>unset pipe_decode<enter>\
+<attach-file>${TMPDIR}/neomutt-html/msg.txt<enter>\
+<attach-file>${TMPDIR}/neomutt-html/msg.html<enter>\
+<tag-entry><previous-entry><tag-entry><group-alternatives>" \
+"Convert markdown to HTML5 and plaintext alternative content types"
+
 # source in global private keybindings
 source $XDG_CONFIG_HOME/neomutt/private/keybindings
