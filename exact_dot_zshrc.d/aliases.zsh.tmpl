@@ -28,7 +28,9 @@ alias mkdir='nocorrect mkdir '
 
 alias uda='udiskie-umount -a'
 
-if (( $+commands[nvim] )); then
+if (( $+commands[lvim] )); then
+    alias vim=lvim
+elif (( $+commands[nvim] )); then
     alias vim=nvim
 fi
 if (( $+commands[gpg2] )); then

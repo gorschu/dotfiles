@@ -45,7 +45,10 @@ export FREETYPE_PROPERTIES="truetype:interpreter-version=40"
 # Editors
 export ALTERNATE_EDITOR=""
 
-if command -v "nvim" >/dev/null; then
+if command -v "lvim" >/dev/null; then
+    export EDITOR="lvim"
+    export GIT_EDITOR="lvim"
+elif command -v "nvim" >/dev/null; then
     export EDITOR="nvim"
     export GIT_EDITOR="nvim"
 elif command -v "vim" >/dev/null; then
