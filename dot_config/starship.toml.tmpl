@@ -1,26 +1,26 @@
 [aws]
 symbol = " "
-style = "bold #ffb86c"
+{{ if eq .colorscheme "dracula" }}style = "bold #ffb86c"{{ end }}
 
 [cmd_duration]
-style = "bold #f1fa8c"
+{{ if eq .colorscheme "dracula" }}style = "bold #f1fa8c"{{ end }}
 show_notifications = true
 min_time_to_notify = 60_000
 
 [directory]
-style = "bold #50fa7b"
+{{ if eq .colorscheme "dracula" }}style = "bold #50fa7b"{{ end }}
 read_only = "  "
-read_only_style = "#BF616A"
+{{ if eq .colorscheme "nord" }}read_only_style = "#BF616A"{{ end }}
 truncation_symbol = "…/"
 truncation_length = 3
 fish_style_pwd_dir_length = 1
 
 [git_branch]
-style = "bold #ff79c6"
+{{ if eq .colorscheme "dracula" }}style = "bold #ff79c6"{{ end }}
 symbol = " "
 
 [git_status]
-style = "bold #ff5555"
+{{ if eq .colorscheme "dracula" }}style = "bold #ff5555"{{ end }}
 ahead = "⇡${count}"
 diverged = "😰⇡${ahead_count}⇣${behind_count}"
 behind = "⇣${count}"
@@ -37,7 +37,7 @@ only_detached = false
 symbol = "ﳑ "
 
 [hostname]
-style = "bold #ff5555"
+{{ if eq .colorscheme "dracula" }}style = "bold #ff5555"{{ end }}
 
 [java]
 symbol = " "
@@ -65,5 +65,5 @@ disabled = false
 
 [username]
 format = "[$user]($style) on "
-style_user = "bold #bd93f9"
+{{ if eq .colorscheme "dracula" }}style_user = "bold #bd93f9"{{ end }}
 show_always = true
