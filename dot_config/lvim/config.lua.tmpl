@@ -11,7 +11,7 @@ an executable
 -- general
 lvim.log.level = "warn"
 lvim.format_on_save = true
-lvim.colorscheme = "dracula"
+lvim.colorscheme = "{{ .colorscheme }}"
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
@@ -140,7 +140,7 @@ lvim.builtin.treesitter.highlight.enabled = true
 
 -- Additional Plugins
 lvim.plugins = {
-  {"Mofiqul/dracula.nvim"},
+{{ if eq .colorscheme "dracula" }}    {"mofiqul/dracula.nvim"},{{ end }}{{ if eq .colorscheme "nord" }}    {"shaunsingh/nord.nvim"},{{ end }}
     -- rainbows
     {"p00f/nvim-ts-rainbow"},
     {"lukas-reineke/indent-blankline.nvim", event = "BufRead",
@@ -221,7 +221,6 @@ lvim.plugins = {
   {"tpope/vim-repeat"},
   {"tpope/vim-surround", keys = {"c", "d", "y"}},
   {"fatih/vim-go"},
-  {"shaunsingh/nord.nvim"},
 }
 
 vim.opt.timeoutlen = 300 -- up from 100 which is the default for keysequences to happen
