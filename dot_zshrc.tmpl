@@ -9,7 +9,7 @@ fi
 
 # this seems to be needed for oh-my-zsh to function correctly with antibody
 # https://github.com/getantibody/antibody/issues/218
-ZSH="${HOME}/.cache/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh"
+ZSH="$HOME/.cache/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh"
 
 # disable ohmyzsh auto-updates; antibody update covers it
 DISABLE_AUTO_UPDATE="true"
@@ -31,10 +31,12 @@ COMPLETION_WAITING_DOTS=true
 
 # seems like oh-my-zsh isn't doing this by default anymore, its using the
 # default database
-eval $(dircolors ~/.dircolors)
+eval "$(dircolors ~/.dircolors)"
 
+{{ if eq .colorscheme "dracula" }}
 # source dracula zsh-syntax-highlighting theme
-source ${HOME}/.vendor/dracula-zsh-syntax-highlighting/zsh-syntax-highlighting.sh
+source "$HOME"/.vendor/dracula-zsh-syntax-highlighting/zsh-syntax-highlighting.sh
+{{ end }}
 
 # load antibody plugins
 # antibody bundle < ~/.zsh_plugins.txt >! .zsh_plugins.sh
@@ -42,7 +44,7 @@ source ~/.zsh_plugins.sh
 
 # this should usually be set, but I guess some theming or w/e stomps over the pre_cmd
 # functions set early. So source that vte configuration again very late
-if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+if [ "$TILIX_ID" ] || [ "$VTE_VERSION" ]; then
 {{- if not (eq .chezmoi.osRelease.id "ubuntu" "debian") }}
     . /etc/profile.d/vte.sh
 {{- else }}
@@ -51,10 +53,10 @@ if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
 fi
 
 # initialize asdf
-. $HOME/.vendor/asdf/asdf.sh
+. "$HOME"/.vendor/asdf/asdf.sh
 
 # add custom completions
-FPATH={{ .chezmoi.homeDir}}/.zsh_completions.d:$FPATH
+FPATH={{ .chezmoi.homeDir }}/.zsh_completions.d:"$FPATH"
 autoload -Uz compinit
 compinit
 
