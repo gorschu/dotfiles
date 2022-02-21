@@ -1,0 +1,1 @@
+{{ if eq .chezmoi.homeDir "dracula" }}{{ .chezmoi.homeDir }}/.vendor/dracula-midnight-commander/skins/dracula256.ini{{ else if eq .colorscheme "nord" }}{{ .chezmoi.homeDir }}/.vendor/nord-midnight-commander/nord16M.ini{{ end }}
