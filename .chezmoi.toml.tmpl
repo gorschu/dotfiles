@@ -13,5 +13,6 @@ encryption = "gpg"
     loginmanager = "true"
     email = "gordon@gordonschulz.de"
     gpgkey = "0xDEE550054AA972F6"
+    colorscheme = "nord"
 
 {{ joinPath .chezmoi.sourceDir ".chezmoi.toml.tmpl.include.asc" | include | decrypt }}
