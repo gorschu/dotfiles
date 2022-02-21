@@ -1,2 +1,5 @@
 # load color scheme
-include     dracula-zathura
+include     colors-azmo
+
+# don't recolor everything and the kitchen sink, we are looking at PDFs after all
+set recolor false
