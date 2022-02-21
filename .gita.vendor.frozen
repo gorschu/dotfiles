@@ -16,3 +16,11 @@ https://github.com/dracula/rofi,dracula-rofi,/home/azmo/.vendor/dracula-rofi
 https://github.com/dracula/tig,dracula-tig,/home/azmo/.vendor/dracula-tig
 https://github.com/dracula/zsh-syntax-highlighting,dracula-zsh-syntax-highlighting,/home/azmo/.vendor/dracula-zsh-syntax-highlighting
 https://github.com/dracula/ranger,dracula-ranger,/home/azmo/.vendor/dracula-ranger
+https://github.com/arcticicestudio/nord-alacritty.git,nord-alacritty,/home/azmo/.vendor/nord-alacritty
+https://github.com/arcticicestudio/nord-gnome-terminal.git,nord-gnome-terminal,/home/azmo/.vendor/nord-gnome-terminal
+https://github.com/connorholyday/nord-kitty.git,nord-kitty,/home/azmo/.vendor/nord-kitty
+https://github.com/arcticicestudio/nord-konsole.git,nord-konsole,/home/azmo/.vendor/nord-konsole
+https://gist.github.com/laulicus/0ea52d87b529ad712794e8b5cd73b3cb,nord-midnight-commander,/home/azmo/.vendor/nord-midnight-commander
+https://github.com/undiabler/nord-rofi-theme.git,nord-rofi,/home/azmo/.vendor/nord-rofi
+https://github.com/arcticicestudio/nord-xresources.git,nord-xresources,/home/azmo/.vendor/nord-xresources
+https://github.com/gdnand/zathura-nord.git,nord-zathura,/home/azmo/.vendor/nord-zathura
