@@ -69,13 +69,17 @@ set -g @plugin 'tmux-plugins/tmux-logging'
 set -g @plugin 'tmux-plugins/tmux-urlview'
 set -g @plugin 'laktak/extrakto'
 set -g @plugin 'christoomey/vim-tmux-navigator'
-set -g @plugin 'dracula/tmux'
 
+{{ if eq .colorscheme "dracula" }}
+set -g @plugin 'dracula/tmux'
 # available plugins: battery, cpu-usage, git, gpu-usage, ram-usage, network, network-bandwidth, network-ping, weather, time
 set -g @dracula-plugins "battery cpu-usage ram-usage network network-bandwidth time"
 set -g @dracula-show-powerline true
 set -g @dracula-show-flags true
-
+{{ end }}
+{{ if eq .colorscheme "nord" }}
+set -g @plugin "articicestudio/nord-tmux"
+{{ end }}
 
 # order matters here
 set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
