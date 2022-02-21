@@ -1,0 +1,16 @@
+# always use tmux split panes
+FZF_TMUX=1
+
+{{ if eq .colorscheme "dracula" }}
+# dracula
+export FZF_DEFAULT_OPTS='--color=fg:#f8f8f2,bg:#282a36,hl:#bd93f9
+--color=fg+:#f8f8f2,bg+:#44475a,hl+:#bd93f9
+--color=info:#ffb86c,prompt:#50fa7b,pointer:#ff79c6
+--color=marker:#ff79c6,spinner:#ffb86c,header:#6272a4'
+{{ end }}
+{{ if eq .colorscheme "nord" }}
+# nord
+export FZF_DEFAULT_OPTS='--color fg:#D8DEE9,bg:#2E3440,hl:#A3BE8C,fg+:#D8DEE9,bg+:#434C5E,hl+:#A3BE8C
+--color pointer:#BF616A,info:#4C566A,spinner:#4C566A,header:#4C566A,prompt:#81A1C1,marker:#EBCB8B'
+{{ end }}
+
