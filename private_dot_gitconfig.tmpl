@@ -17,9 +17,9 @@
     prune = true
 
 [delta]
-    syntax-theme = Dracula
-    line-numbers = true
-    side-by-side = true
+  syntax-theme = {{ if eq .colorscheme "dracula" }}Dracula{{ else if eq .colorscheme "nord"}}Nord{{ end }}
+  line-numbers = true
+  side-by-side = true
 
 [interactive]
     diffFilter = delta --color-only
