@@ -1,16 +1,5 @@
 # -*- mode: sh -*-
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block, everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-# this seems to be needed for oh-my-zsh to function correctly with antibody
-# https://github.com/getantibody/antibody/issues/218
-ZSH="$HOME/.cache/antibody/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh"
-
 # disable ohmyzsh auto-updates; antibody update covers it
 DISABLE_AUTO_UPDATE="true"
 # disable ohmyzsh AUTOCORRECTION
@@ -38,19 +27,78 @@ eval "$(dircolors ~/.dircolors)"
 source "$HOME"/.vendor/dracula-zsh-syntax-highlighting/zsh-syntax-highlighting.sh
 {{ end }}
 
-# load antibody plugins
-# antibody bundle < ~/.zsh_plugins.txt >! .zsh_plugins.sh
-source ~/.zsh_plugins.sh
+source {{ .chezmoi.homeDir }}/.vendor/zgenom/zgenom.zsh
+zgenom autoupdate
 
-# this should usually be set, but I guess some theming or w/e stomps over the pre_cmd
-# functions set early. So source that vte configuration again very late
-if [ "$TILIX_ID" ] || [ "$VTE_VERSION" ]; then
-{{- if not (eq .chezmoi.osRelease.id "ubuntu" "debian") }}
-    . /etc/profile.d/vte.sh
-{{- else }}
-    . /etc/profile.d/vte-2.91.sh
-{{- end }}
+if ! zgenom saved; then
+    echo "Creating a zgenom save"
+
+    # load oh-my-zsh
+    zgenom ohmyzsh
+    # plugins
+    # distribution specific
+    {{ if eq .chezmoi.osRelease.id "ubuntu" }}
+    zgenom ohmyzsh plugins/ubuntu
+    {{ else if eq .chezmoi.osRelease.id "debian" }}
+    zgneom ohmyzsh plugins/debian
+    {{ else if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
+    zgenom ohmyzsh plugins/suse
+    {{ else if eq .chezmoi.osRelease.id "fedora" }}
+    zgenom ohmyzsh plugins/dnf
+    {{ else if eq .chezmoi.osRelease.id "arch" }}
+    zgenom ohmyzsh plugins/archlinux
+    {{ end }}
+    # zsh specific
+    zgenom ohmyzsh plugins/vi-mode
+    zgenom ohmyzsh plugins/per-directory-history
+    zgenom ohmyzsh plugins/fancy-ctrl-z
+    zgenom ohmyzsh plugins/sudo
+    # utility specific
+    zgenom ohmyzsh plugins/direnv
+    zgenom ohmyzsh plugins/git
+    zgenom ohmyzsh plugins/github
+    zgenom ohmyzsh plugins/git-extras
+    zgenom ohmyzsh plugins/git-flow-avh
+    zgenom ohmyzsh plugins/git-auto-fetch
+    zgenom ohmyzsh plugins/gnu-utils
+    zgenom ohmyzsh plugins/pass
+    zgenom ohmyzsh plugins/extract
+    zgenom ohmyzsh plugins/rsync
+    zgenom ohmyzsh plugins/tmux
+    zgenom ohmyzsh plugins/vscode
+    zgenom ohmyzsh plugins/vagrant
+    zgenom ohmyzsh plugins/fasd
+    zgenom ohmyzsh plugins/docker
+    zgenom ohmyzsh plugins/docker-compose
+    zgenom ohmyzsh plugins/docker-machine
+    zgenom ohmyzsh plugins/lxd
+    # development
+    zgenom ohmyzsh plugins/python
+    zgenom ohmyzsh plugins/pyenv
+    zgenom ohmyzsh plugins/pip
+    zgenom ohmyzsh plugins/pylint
+    zgenom ohmyzsh plugins/systemd
+    zgenom ohmyzsh plugins/ansible
+    zgenom ohmyzsh plugins/golang
+    # misc stuff
+    zgenom load hlissner/zsh-autopair
+    zgenom load zsh-users/zsh-completions
+    zgenom load zdharma/fast-syntax-highlighting
+    # this needs to be last in plugins
+    zgenom ohmyzsh plugins/history-substring-search
+    # load our specific stuff
+    zgenom load {{ .chezmoi.homeDir }}/.zshrc.d
+
+    zgenom save
+
+    zgenom compile {{ .chezmoi.homeDir }}/.zshrc
+    zgenom compile {{ .chezmoi.homeDir }}/.zshrc.d
 fi
+
+
+
+
+
 
 # initialize asdf
 . "$HOME"/.vendor/asdf/asdf.sh
