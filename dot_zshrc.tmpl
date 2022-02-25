@@ -8,10 +8,10 @@ ENABLE_CORRECTION="false"
 # we are not running a SSH session
 # else we running into all sorts of problems on emacs/vim/tmux startup
 if [[ -v TERM ]] && [[ ! -v SSH_CLIENT ]] && [[ ! -v SSH_TTY ]]; then
-    ZSH_TMUX_AUTOSTART="false"
+  ZSH_TMUX_AUTOSTART="false"
 else
-    ZSH_TMUX_AUTOSTART="false"
-    ZSH_TMUX_AUTOQUIT="false"
+  ZSH_TMUX_AUTOSTART="false"
+  ZSH_TMUX_AUTOQUIT="false"
 fi
 # let oh-my-zsh set the terminal title
 DISABLE_AUTO_TITLE=false
@@ -31,74 +31,83 @@ source {{ .chezmoi.homeDir }}/.vendor/zgenom/zgenom.zsh
 zgenom autoupdate
 
 if ! zgenom saved; then
-    echo "Creating a zgenom save"
+  echo "Creating a zgenom save"
 
-    # load oh-my-zsh
-    zgenom ohmyzsh
-    # plugins
-    # distribution specific
-    {{ if eq .chezmoi.osRelease.id "ubuntu" }}
-    zgenom ohmyzsh plugins/ubuntu
-    {{ else if eq .chezmoi.osRelease.id "debian" }}
-    zgneom ohmyzsh plugins/debian
-    {{ else if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
-    zgenom ohmyzsh plugins/suse
-    {{ else if eq .chezmoi.osRelease.id "fedora" }}
-    zgenom ohmyzsh plugins/dnf
-    {{ else if eq .chezmoi.osRelease.id "arch" }}
-    zgenom ohmyzsh plugins/archlinux
-    {{ end }}
-    # zsh specific
-    zgenom ohmyzsh plugins/vi-mode
-    zgenom ohmyzsh plugins/per-directory-history
-    zgenom ohmyzsh plugins/fancy-ctrl-z
-    zgenom ohmyzsh plugins/sudo
-    # utility specific
-    zgenom ohmyzsh plugins/direnv
-    zgenom ohmyzsh plugins/git
-    zgenom ohmyzsh plugins/github
-    zgenom ohmyzsh plugins/git-extras
-    zgenom ohmyzsh plugins/git-flow-avh
-    zgenom ohmyzsh plugins/git-auto-fetch
-    zgenom ohmyzsh plugins/gnu-utils
-    zgenom ohmyzsh plugins/pass
-    zgenom ohmyzsh plugins/extract
-    zgenom ohmyzsh plugins/rsync
-    zgenom ohmyzsh plugins/tmux
-    zgenom ohmyzsh plugins/vscode
-    zgenom ohmyzsh plugins/vagrant
-    zgenom ohmyzsh plugins/fasd
-    zgenom ohmyzsh plugins/docker
-    zgenom ohmyzsh plugins/docker-compose
-    zgenom ohmyzsh plugins/docker-machine
-    zgenom ohmyzsh plugins/lxd
-    # development
-    zgenom ohmyzsh plugins/python
-    zgenom ohmyzsh plugins/pyenv
-    zgenom ohmyzsh plugins/pip
-    zgenom ohmyzsh plugins/pylint
-    zgenom ohmyzsh plugins/systemd
-    zgenom ohmyzsh plugins/ansible
-    zgenom ohmyzsh plugins/golang
-    # misc stuff
-    zgenom load hlissner/zsh-autopair
-    zgenom load zsh-users/zsh-completions
-    zgenom load zdharma/fast-syntax-highlighting
-    # this needs to be last in plugins
-    zgenom ohmyzsh plugins/history-substring-search
-    # load our specific stuff
-    zgenom load {{ .chezmoi.homeDir }}/.zshrc.d
+  # load oh-my-zsh
+  zgenom ohmyzsh
+  # plugins
+  # distribution specific
+  {{ if eq .chezmoi.osRelease.id "ubuntu" }}
+  zgenom ohmyzsh plugins/ubuntu
+  {{ else if eq .chezmoi.osRelease.id "debian" }}
+  zgneom ohmyzsh plugins/debian
+  {{ else if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
+  zgenom ohmyzsh plugins/suse
+  {{ else if eq .chezmoi.osRelease.id "fedora" }}
+  zgenom ohmyzsh plugins/dnf
+  {{ else if eq .chezmoi.osRelease.id "arch" }}
+  zgenom ohmyzsh plugins/archlinux
+  {{ end }}
+  # zsh specific
+  zgenom ohmyzsh plugins/vi-mode
+  zgenom ohmyzsh plugins/per-directory-history
+  zgenom ohmyzsh plugins/fancy-ctrl-z
+  zgenom ohmyzsh plugins/sudo
+  # utility specific
+  zgenom ohmyzsh plugins/1password
+  zgenom ohmyzsh plugins/direnv
+  zgenom ohmyzsh plugins/emacs
+  zgenom ohmyzsh plugins/git
+  zgenom ohmyzsh plugins/github
+  zgenom ohmyzsh plugins/git-auto-fetch
+  zgenom ohmyzsh plugins/git-escape-magic
+  zgenom ohmyzsh plugins/git-extras
+  zgenom ohmyzsh plugins/git-flow-avh
+  zgenom ohmyzsh plugins/git-lfs
+  zgenom ohmyzsh plugins/gnu-utils
+  zgenom ohmyzsh plugins/pass
+  zgenom ohmyzsh plugins/extract
+  zgenom ohmyzsh plugins/httpie
+  zgenom ohmyzsh plugins/rsync
+  zgenom ohmyzsh plugins/tmux
+  zgenom ohmyzsh plugins/ripgrep
+  zgenom ohmyzsh plugins/vscode
+  zgenom ohmyzsh plugins/vagrant
+  zgenom ohmyzsh plugins/fasd
+  zgenom ohmyzsh plugins/docker
+  zgenom ohmyzsh plugins/docker-compose
+  zgenom ohmyzsh plugins/docker-machine
+  zgenom ohmyzsh plugins/lxd
+  zgenom ohmyzsh plugins/universalarchive
+  # development
+  zgenom ohmyzsh plugins/python
+  zgenom ohmyzsh plugins/pyenv
+  zgenom ohmyzsh plugins/pip
+  zgenom ohmyzsh plugins/poetry
+  zgenom ohmyzsh plugins/pylint
+  zgenom ohmyzsh plugins/systemd
+  zgenom ohmyzsh plugins/ansible
+  zgenom ohmyzsh plugins/golang
+  zgenom ohmyzsh plugins/npm
+  # k8s
+  zgenom ohmyzsh plugins/helm
+  zgenom ohmyzsh plugins/kubectl
+  zgenom ohmyzsh plugins/istioctl
+  # misc stuff
+  zgenom load hlissner/zsh-autopair
+  zgenom load zsh-users/zsh-completions
+  zgenom load zdharma/fast-syntax-highlighting
+  # this needs to be last in plugins
+  zgenom ohmyzsh plugins/history-substring-search
+  # load our specific stuff
+  zgenom load {{ .chezmoi.homeDir }}/.zshrc.d
 
-    zgenom save
+  zgenom save
 
-    zgenom compile {{ .chezmoi.homeDir }}/.zshrc
-    zgenom compile {{ .chezmoi.homeDir }}/.zshrc.d
+  zgenom compile {{ .chezmoi.homeDir }}/.zshrc
+  zgenom compile {{ .chezmoi.homeDir }}/.zshrc.d
+
 fi
-
-
-
-
-
 
 # initialize asdf
 . "$HOME"/.vendor/asdf/asdf.sh
