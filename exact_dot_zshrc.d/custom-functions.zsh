@@ -66,3 +66,11 @@ function find_newest_file_universal() {
 function mkcd () {
     mkdir -p "$*" && cd "$*"
 }
+
+function op() {
+    OP_SESSION_my=$(onepassword-signin) command op --cache "$@"
+}
+
+function chezmoi() {
+    OP_SESSION_my=$(onepassword-signin) command chezmoi "$@"
+}
