@@ -15,4 +15,8 @@ encryption = "gpg"
     gpgkey = "0xDEE550054AA972F6"
     colorscheme = "nord"
 
+[keepassxc]
+  database = "~/sync/admin/azmo.kdbx"
+  args = "-y 2:{{ output "ykman" "list" "--serials" | trim }}"
+
 {{ joinPath .chezmoi.sourceDir ".chezmoi.toml.tmpl.include.asc" | include | decrypt }}
