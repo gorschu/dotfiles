@@ -5,7 +5,6 @@ set -e # -e: exit on error
 op_latest=1.12.3
 op_email=gordon@gordonschulz.de
 
-
 if [ ! "$(command -v chezmoi)" ]; then
   bin_dir="$HOME/.local/bin"
   chezmoi="$bin_dir/chezmoi"
@@ -23,25 +22,28 @@ fi
 
 if [[ ! -e $HOME/.local/bin/op ]]; then
   tmpdir=$(mktemp -d)
-  curl -L -o ${tmpdir}/op.zip https://cache.agilebits.com/dist/1P/op/pkg/v${op_latest}/op_linux_amd64_v${op_latest}.zip
-  [[ ! -d $HOME/bin ]] && mkdir $HOME/bin
-  unzip ${tmpdir}/op.zip -d ${tmpdir} && mv ${tmpdir}/op $HOME/.local/bin
-  if [ ! -e $HOME/.config/op/config ]; then
-    eval $($HOME/.local/bin/op signin my.1password.com ${op_email})
+  curl -L -o "$tmpdir"/op.zip https://cache.agilebits.com/dist/1P/op/pkg/v"$op_latest/op_linux_amd64_v$op_latest".zip
+  [[ ! -d $HOME/bin ]] && mkdir "$HOME"/bin
+  unzip "$tmpdir"/op.zip -d "$tmpdir" && mv "$tmpdir"/op "$HOME"/.local/bin
+  if [ ! -e "$HOME"/.config/op/config ]; then
+    eval "$("$HOME"/.local/bin/op signin my.1password.com "$op_email")"
   else
-    eval $($HOME/.local/bin/op signin)
+    eval "$("$HOME"/.local/bin/op signin)"
   fi
 fi
+
+# Install 1PW
+sudo dnf install -y https://downloads.1password.com/linux/rpm/stable/x86_64/1password-latest.rpm
 
 # import and trust our GPG Key
 GPGKEY=DEE550054AA972F6
 GPGKEY_FINGERPRINT=0A47650A15E4F0F4003EC450DEE550054AA972F6
 
 # write initial .chezmoi.toml so encryption works
-[[ ! -d $HOME/.config/chezmoi ]] && mkdir -p $HOME/.config/chezmoi
+[[ ! -d $HOME/.config/chezmoi ]] && mkdir -p "$HOME"/.config/chezmoi
 # .chezmo.toml in here is our source of truth, delete anything already present
-[[ -e $HOME/.config/chezmoi/chezmoi.toml ]] && rm -f $HOME/.config/chezmoi/chezmoi.toml
-cat << EOF >> $HOME/.config/chezmoi/chezmoi.toml
+[[ -e $HOME/.config/chezmoi/chezmoi.toml ]] && rm -f "$HOME"/.config/chezmoi/chezmoi.toml
+cat <<EOF >>"$HOME/.config/chezmoi/chezmoi.toml"
 encryption = "gpg"
 
 [gpg]
@@ -49,15 +51,15 @@ recipient = "0x${GPGKEY}"
 suffix = ".asc"
 EOF
 
-gpg --keyserver keyserver.ubuntu.com --receive-keys ${GPGKEY}
-echo -e "5\ny\n" | gpg --command-fd 0 --expert --edit-key ${GPGKEY_FINGERPRINT} trust
+gpg --keyserver keyserver.ubuntu.com --receive-keys "$GPGKEY"
+echo -e "5\ny\n" | gpg --command-fd 0 --expert --edit-key "$GPGKEY_FINGERPRINT" trust
 # power up yubikey
 gpg --card-status
 
 # POSIX way to get script's dir: https://stackoverflow.com/a/29834779/12156188
 script_dir="$(cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P)"
 # exec: replace current process with chezmoi init
-export PATH=$PATH:$HOME/.local/bin
+export PATH="$PATH:$HOME"/.local/bin
 OP_SESSION_my=$(bash bin/exact_security/executable_onepassword-signin) exec "$chezmoi" init --apply "--source=$script_dir"
 
 # vim: set ft=sh:
