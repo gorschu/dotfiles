@@ -2,7 +2,7 @@
 
 set -e # -e: exit on error
 
-op_latest=1.12.3
+op_latest=2.0.0
 op_email=gordon@gordonschulz.de
 
 if [ ! "$(command -v chezmoi)" ]; then
@@ -29,6 +29,7 @@ if [[ ! -e $HOME/.local/bin/op ]]; then
     eval "$("$HOME"/.local/bin/op signin my.1password.com "$op_email")"
   else
     eval "$("$HOME"/.local/bin/op signin)"
+    curl -L -o "$tmpdir"/op.zip https://cache.agilebits.com/dist/1P/op2/pkg/v"$op_latest/op_linux_amd64_v$op_latest".zip
   fi
 fi
 
