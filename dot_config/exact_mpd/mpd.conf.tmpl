@@ -12,7 +12,7 @@ database {
     plugin  "proxy"
     host    "zeus"
     port    "6600"
-    password "{{ (onepassword "mpd zeus" "Personal").details.password }}"
+    password "{{ (onepasswordDetailsFields "mpd zeus" "Personal").password.value }}"
 }
 
 audio_output {
