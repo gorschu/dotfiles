@@ -45,12 +45,8 @@ elif [[ $(grep "^ID" /etc/os-release) =~ opensuse ]]; then
   sudo zypper install -y "$op_url"
 fi
 
-# signin to op
-if [ ! -e "$HOME/.config/op/config" ]; then
-  eval "$(op signin my.1password.com "$op_email")"
-else
-  eval "$(op signin)"
-fi
+# signin to op initially if never done before
+[ ! -e "$HOME/.config/op/config" ] && eval "$(op signin my.1password.com "$op_email")"
 
 # import and trust our GPG Key
 GPGKEY=DEE550054AA972F6
