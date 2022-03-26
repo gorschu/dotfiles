@@ -13,14 +13,6 @@ else
   chezmoi=chezmoi
 fi
 
-if [ ! -e $HOME/bin/antibody ]; then
-    echo "${green}Installing antibody and creating static plugin list${reset}"
-    curl -sfL git.io/antibody | sh -s - -b $HOME/bin &&
-        chmod +x $HOME/bin/antibody &&
-        $HOME/bin/antibody bundle <{{ .chezmoi.homeDir }}/.zsh_plugins.txt > \
-            {{ .chezmoi.homeDir }}/.zsh_plugins.sh
-fi
-
 {{ if ne .chezmoi.osRelease.id "fedora" }}
 if [ ! -e $HOME/.local/bin/starship ]; then
     echo "${green}Installing starship${reset}"
