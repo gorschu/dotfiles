@@ -33,12 +33,16 @@ fi
 op_url="https://downloads.1password.com/linux/rpm/stable/x86_64/1password-latest.rpm"
 op_rpm_key="https://downloads.1password.com/linux/keys/1password.asc"
 if [[ $(grep "^ID" /etc/os-release) =~ fedora ]]; then
-  sudo rpm --import "$op_rpm_key"
-  sudo dnf install -y "$op_url"
-  sudo dnf install -y 1password-cli
+  # we are using the 1pw repository here, so never do this after initital install
+  if ! rpm -q 1password >/dev/null; then
+    sudo rpm --import "$op_rpm_key"
+    sudo dnf install -y "$op_url"
+    sudo dnf install -y 1password-cli
+  fi
 elif [[ $(grep "^ID" /etc/os-release) =~ opensuse ]]; then
+  # we cannot use the DNF repository on SUSE, therefore do this everytime
   sudo rpm --import "$op_rpm_key"
-  sudo zypper in -y "$op_url"
+  sudo zypper install -y "$op_url"
 fi
 
 # signin to op
