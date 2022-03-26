@@ -76,4 +76,3 @@ export PATH="$PATH:$HOME"/.local/bin
 OP_SESSION_my=$(bash bin/exact_security/executable_onepassword-signin) exec "$chezmoi" init --apply "--source=$script_dir"
 
 # vim: set ft=sh:
-[m
