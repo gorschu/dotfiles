@@ -20,21 +20,33 @@ else
   chezmoi=chezmoi
 fi
 
-if [[ ! -e $HOME/.local/bin/op ]]; then
-  tmpdir=$(mktemp -d)
-  curl -L -o "$tmpdir"/op.zip https://cache.agilebits.com/dist/1P/op/pkg/v"$op_latest/op_linux_amd64_v$op_latest".zip
-  [[ ! -d $HOME/bin ]] && mkdir "$HOME"/bin
-  unzip "$tmpdir"/op.zip -d "$tmpdir" && mv "$tmpdir"/op "$HOME"/.local/bin
-  if [ ! -e "$HOME"/.config/op/config ]; then
-    eval "$("$HOME"/.local/bin/op signin my.1password.com "$op_email")"
-  else
-    eval "$("$HOME"/.local/bin/op signin)"
+if [[ ! $(grep "^ID" /etc/os-release) =~ fedora ]]; then
+  if [[ ! -e $HOME/.local/bin/op ]]; then
+    tmpdir=$(mktemp -d)
     curl -L -o "$tmpdir"/op.zip https://cache.agilebits.com/dist/1P/op2/pkg/v"$op_latest/op_linux_amd64_v$op_latest".zip
+    [[ ! -d $HOME/bin ]] && mkdir "$HOME"/bin
+    unzip "$tmpdir"/op.zip -d "$tmpdir" && mv "$tmpdir"/op "$HOME"/.local/bin
   fi
 fi
 
 # Install 1PW
-sudo dnf install -y https://downloads.1password.com/linux/rpm/stable/x86_64/1password-latest.rpm
+op_url="https://downloads.1password.com/linux/rpm/stable/x86_64/1password-latest.rpm"
+op_rpm_key="https://downloads.1password.com/linux/keys/1password.asc"
+if [[ $(grep "^ID" /etc/os-release) =~ fedora ]]; then
+  sudo rpm --import "$op_rpm_key"
+  sudo dnf install -y "$op_url"
+  sudo dnf install -y 1password-cli
+elif [[ $(grep "^ID" /etc/os-release) =~ opensuse ]]; then
+  sudo rpm --import "$op_rpm_key"
+  sudo zypper in -y "$op_url"
+fi
+
+# signin to op
+if [ ! -e "$HOME/.config/op/config" ]; then
+  eval "$(op signin my.1password.com "$op_email")"
+else
+  eval "$(op signin)"
+fi
 
 # import and trust our GPG Key
 GPGKEY=DEE550054AA972F6
@@ -64,3 +76,4 @@ export PATH="$PATH:$HOME"/.local/bin
 OP_SESSION_my=$(bash bin/exact_security/executable_onepassword-signin) exec "$chezmoi" init --apply "--source=$script_dir"
 
 # vim: set ft=sh:
+[m
