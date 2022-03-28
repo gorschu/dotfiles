@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# touchpad
+
+{{ if eq .chezmoi.hostname "hephaestus" }}
+	# x1c gen5
+	kwriteconfig5 --file touchpadxlibinputrc --group "Synaptics TM3289-002" --key "naturalScroll" "true"
+	kwriteconfig5 --file touchpadxlibinputrc --group "Synaptics TM3289-002" --key "tapToClick" "true"
+{{ end }}
+
+cat $XDG_CONFIG_HOME/touchpadxlibinputrc

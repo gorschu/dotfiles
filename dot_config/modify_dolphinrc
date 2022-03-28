@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Dolphin
+kwriteconfig5 --file dolphinrc --group General --key "ShowToolTips" "true"
+
+cat $XDG_CONFIG_HOME/dolphinrc

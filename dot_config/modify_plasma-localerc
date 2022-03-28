@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Locale
+kwriteconfig5 --file plasma-localerc --group Formats --key "LANG" "en_US.UTF-8"
+kwriteconfig5 --file plasma-localerc --group Formats --key "LC_MEASUREMENT" "de_DE.UTF-8"
+kwriteconfig5 --file plasma-localerc --group Formats --key "LC_MONETARY" "de_DE.UTF-8"
+kwriteconfig5 --file plasma-localerc --group Formats --key "LC_NUMERIC" "de_DE.UTF-8"
+kwriteconfig5 --file plasma-localerc --group Formats --key "LC_TIME" "de_DE.UTF-8"
+
+cat $XDG_CONFIG_HOME/plasma-localerc

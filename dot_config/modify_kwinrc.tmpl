@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Effects
+kwriteconfig5 --file kwinrc --group Plugins --key "overviewEnabled" "true"
+kwriteconfig5 --file kwinrc --group Plugins --key "desktopchangeosdEnabled" "true"
+
+# Activate NightColor
+kwriteconfig5 --file kwinrc --group NightColor --key "Active" "true"
+
+# Switcher
+kwriteconfig5 --file kwinrc --group TabBox --key "LayoutName" "thumbnails"
+
+# open krunner with meta key
+kwriteconfig5 --file kwinrc --group ModifierOnlyShortcuts --key Meta "org.kde.krunner,/App,,toggleDisplay"
+
+
+{{ if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
+/usr/lib64/qt5/bin/qdbus org.kde.KWin /KWin reconfigure
+{{ else }}
+qdbus org.kde.KWin /KWin reconfigure
+{{ end }}
+
+cat $XDG_CONFIG_HOME/kwinrc

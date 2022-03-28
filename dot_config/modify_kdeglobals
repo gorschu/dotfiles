@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Global Settings
+kwriteconfig5 --file kdeglobals --group KDE --key "LookAndFeelPackage" "org.kde.breezetwilight.desktop"
+kwriteconfig5 --file kdeglobals --group KDE --key "SingleClick" "false"
+
+cat $XDG_CONFIG_HOME/kdeglobals
+

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Session
+kwriteconfig5 --file ksmserverrc --group General --key "loginMode" "emptySession"
+
+cat $XDG_CONFIG_HOME/ksmserverrc
+
