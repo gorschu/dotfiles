@@ -5,6 +5,18 @@ set -e # -e: exit on error
 op_latest=2.0.0
 op_email=gordon@gordonschulz.de
 
+echo "${green}Installing absolute requirements${reset}"
+if [[ $(grep "^ID" /etc/os-release) =~ ubuntu ]]; then
+  sudo apt-get update && \
+        sudo apt-get -y install git yubikey-manager
+elif [[ $(grep "^ID" /etc/os-release) =~ arch ]]; then
+    paru -S --noconfirm --needed git yubikey-manager
+elif [[ $(grep "^ID" /etc/os-release) =~ fedora ]]; then
+    sudo dnf install -y git yubikey-manager
+elif [[ $(grep "^ID" /etc/os-release) =~ opensuse ]]; then
+    sudo zypper install -y git yubikey-manager
+fi
+
 if [ ! "$(command -v chezmoi)" ]; then
   bin_dir="$HOME/.local/bin"
   chezmoi="$bin_dir/chezmoi"
@@ -37,6 +49,8 @@ if [[ $(grep "^ID" /etc/os-release) =~ fedora ]]; then
   if ! rpm -q 1password >/dev/null; then
     sudo rpm --import "$op_rpm_key"
     sudo dnf install -y "$op_url"
+  fi
+  if ! rpm -q 1password-cli >/dev/null; then
     sudo dnf install -y 1password-cli
   fi
 elif [[ $(grep "^ID" /etc/os-release) =~ opensuse ]]; then
@@ -68,6 +82,8 @@ gpg --keyserver keyserver.ubuntu.com --receive-keys "$GPGKEY"
 echo -e "5\ny\n" | gpg --command-fd 0 --expert --edit-key "$GPGKEY_FINGERPRINT" trust
 # power up yubikey
 gpg --card-status
+
+export GPG_TTY=$(tty)
 
 # POSIX way to get script's dir: https://stackoverflow.com/a/29834779/12156188
 script_dir="$(cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P)"
