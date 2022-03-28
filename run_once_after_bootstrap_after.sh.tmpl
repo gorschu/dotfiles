@@ -39,5 +39,13 @@ asdf plugin list | grep -q "^python$" || asdf plugin-add python https://github.c
 asdf plugin list | grep -q "^kotlin$" || asdf plugin-add kotlin https://github.com/asdf-community/asdf-kotlin.git
 set -ux
 
+echo "${green}Install lunarvim${reset}"
+{{ if eq .chezmoi.osRelease.id "fedora" }}
+sudo dnf -y install npm cargo go fd-find ripgrep
+{{ else if eq .chezmoi.osRelease.id "opensuse-tumbleweed" "opensuse-leap" }}
+sudo zypper in npm cargo go fd-find ripgrep
+{{ end }}
+bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) -y
+
 echo "${green}Changing from (possible) https to ssh${reset}"
 ${chezmoi} git remote set-url origin git@github.com:azmodude/dotfiles
