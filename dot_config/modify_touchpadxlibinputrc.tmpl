@@ -8,4 +8,9 @@
 	kwriteconfig5 --file touchpadxlibinputrc --group "Synaptics TM3289-002" --key "tapToClick" "true"
 {{ end }}
 
-cat $XDG_CONFIG_HOME/touchpadxlibinputrc
+# the file does not necessarily need to exist, only on laptops
+if [[ -e $XDG_CONFIG_HOME/touchpadxlibinputrc ]]; then
+    cat $XDG_CONFIG_HOME/touchpadxlibinputrc
+else
+    exit 0
+fi
