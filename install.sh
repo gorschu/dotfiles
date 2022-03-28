@@ -60,7 +60,7 @@ elif [[ $(grep "^ID" /etc/os-release) =~ opensuse ]]; then
 fi
 
 # signin to op initially if never done before
-[ ! -e "$HOME/.config/op/config" ] && eval "$(op signin my.1password.com "$op_email")"
+[ ! -e "$HOME/.config/op/config" ] && eval "$(op signin --account "$op_email")"
 
 # import and trust our GPG Key
 GPGKEY=DEE550054AA972F6
