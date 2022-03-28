@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# KRunner
+kwriteconfig5 --file krunnerrc --group Plugins --key "appstreamEnabled" "false"
+
+cat $XDG_CONFIG_HOME/krunnerrc

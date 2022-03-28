@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Baloo
+kwriteconfig5 --file baloofilerc --group General --key "only basic indexing" "true"
+if ! balooctl config list includeFolders | grep -q $HOME; then
+	balooctl config add includeFolders $HOME
+fi
+if ! balooctl config list excludeFolders | grep -q $HOME/mail; then
+	balooctl config add excludeFolders $HOME/mail
+fi
+
+cat $XDG_CONFIG_HOME/baloofilerc

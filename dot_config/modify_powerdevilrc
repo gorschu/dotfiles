@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# powermanagement
+kwriteconfig5 --file powerdevilrc --group BatteryManagement --key "BatteryCriticalAction" "1"
+kwriteconfig5 --file powerdevilrc --group General --key "pausePlayersOnSuspend" "true"
+
+cat $XDG_CONFIG_HOME/powerdevilrc

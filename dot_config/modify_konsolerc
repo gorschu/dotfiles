@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# write custom configuration options...
+kwriteconfig5 --file konsolerc --group "Desktop Entry" --key "DefaultProfile" "azmo.profile"
+kwriteconfig5 --file konsolerc --group "KonsoleWindow" --key "ShowWindowTitleOnTitleBar" "true"
+kwriteconfig5 --file konsolerc --group "KonsoleWindow" --key "RememberWindowSize" "false"
+kwriteconfig5 --file konsolerc --group "TabBar" --key "CloseTabButton" "None"
+kwriteconfig5 --file konsolerc --group "TabBar" --key "TabBarPosition" "Top"
+kwriteconfig5 --file konsolerc --group "TabBar" --key "ExpandTabWidth" "true"
+
+# ... then cat the file for chezmoi to replace
+cat $XDG_CONFIG_HOME/konsolerc

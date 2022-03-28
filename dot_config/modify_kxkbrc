@@ -1,0 +1,7 @@
+#!/bin/bash
+
+kwriteconfig5 --file kxkbrc --group Layout --key "Model" "pc105"
+kwriteconfig5 --file kxkbrc --group Layout --key "Options" "terminate:ctrl_alt_bksp,caps:escape"
+kwriteconfig5 --file kxkbrc --group Layout --key "ResetOldOptions" "true"
+
+cat $XDG_CONFIG_HOME/kxkbrc

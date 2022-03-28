@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Keyboard Shortcuts
+kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Overview" "Meta+W,Meta+W,Toggle Overview"
+kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Switch to Desktop 1" "Ctrl+F1\tMeta+!,Ctrl+F1,Switch to Desktop 1"
+kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Switch to Desktop 2" "Ctrl+F2\tMeta+\",Ctrl+F2,Switch to Desktop 2"
+kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Switch to Desktop 3" "Ctrl+F3\tMeta+§,Ctrl+F3,Switch to Desktop 3"
+kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Switch to Desktop 4" "Ctrl+F4\tMeta+$,Ctrl+F4,Switch to Desktop 4"
+kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Switch One Desktop Down" "Meta+Ctrl+J\tMeta+Ctrl+Down,Meta+Ctrl+Down,Switch One Desktop Down"
+kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Switch One Desktop Up" "Meta+Ctrl+K\tMeta+Ctrl+Up,Meta+Ctrl+Up,Switch One Desktop Up"
+kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Switch One Desktop to the Left" "Meta+Ctrl+Left\tMeta+Ctrl+H,Meta+Ctrl+Left,Switch One Desktop to the Left"
+kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Switch One Desktop to the Right" "Meta+Ctrl+L\tMeta+Ctrl+Right,Meta+Ctrl+Right,Switch One Desktop to the Right"
+kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Switch Window Down" "Meta+Alt+Down\tMeta+Alt+J,Meta+Alt+Down,Switch to Window Below"
+kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Switch Window Left" "Meta+Alt+Left\tMeta+Alt+H,Meta+Alt+Left,Switch to Window to the Left"
+kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Switch Window Right" "Meta+Alt+L\tMeta+Alt+Right,Meta+Alt+Right,Switch to Window to the Right"
+kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Switch Window Up" "Meta+Alt+Up\tMeta+Alt+K,Meta+Alt+Up,Switch to Window Above"
+
+kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Window Close" "Alt+F4\tMeta+Shift+Q,Alt+F4,Close Window"
+
+kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Walk Through Windows of Current Application" "Alt+^,Alt+\`,Walk Through Windows of Current Application"
+kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Walk Through Windows of Current Application (Reverse)" "Alt+°,Alt+~,Walk Through Windows of Current Application (Reverse)"
+
+# remove extra \t kwriteconfig5 seems to insert for no apparent reason at all
+sed -r 's/\\\\t/\\t/' $XDG_CONFIG_HOME/kglobalshortcutsrc
+
+{{ if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
+/usr/lib64/qt5/bin/qdbus org.kde.keyboard /modules/khotkeys reread_configuration
+{{ else }}
+qdbus org.kde.keyboard /modules/khotkeys reread_configuration
+{{ end }}
+
