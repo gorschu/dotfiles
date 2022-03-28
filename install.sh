@@ -89,6 +89,6 @@ export GPG_TTY=$(tty)
 script_dir="$(cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P)"
 # exec: replace current process with chezmoi init
 export PATH="$PATH:$HOME"/.local/bin
-OP_SESSION_my=$(bash bin/exact_security/executable_onepassword-signin) exec "$chezmoi" init --apply "--source=$script_dir"
+XDG_CONFIG_HOME=$HOME/.config OP_SESSION_my=$(bash bin/exact_security/executable_onepassword-signin) exec "$chezmoi" init --apply "--source=$script_dir"
 
 # vim: set ft=sh:
