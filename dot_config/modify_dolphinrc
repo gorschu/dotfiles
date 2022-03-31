@@ -2,5 +2,7 @@
 
 # Dolphin
 kwriteconfig5 --file dolphinrc --group General --key "ShowToolTips" "true"
+kwriteconfig5 --file dolphinrc --group General --key "UseTabForSwitchingSplitView" "true"
+kwriteconfig5 --file dolphinrc --group General --key "FilterBar" "true"
 
-cat $XDG_CONFIG_HOME/dolphinrc
+cat "$XDG_CONFIG_HOME/dolphinrc"
