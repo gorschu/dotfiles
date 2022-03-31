@@ -12,7 +12,7 @@ no-allow-external-cache
 # don't user cache when signing shit
 #ignore-cache-for-signing
 
-{{ if eq .wm "kde" -}}pinentry-program /usr/bin/pinentry-qt
-{{ else if eq .wm "gnome" -}}pinentry-program /usr/bin/pinentry-gnome3
+{{ if eq (lower (env "XDG_CURRENT_DESKTOP") ) "kde" -}}pinentry-program /usr/bin/pinentry-qt
+{{ else if eq (lower (env "XDG_CURRENT_DESKTOP") ) "gnome" -}}pinentry-program /usr/bin/pinentry-gnome3
 {{ else -}}pinentry-program /usr/bin/pinentry-gtk2
 {{ end -}}

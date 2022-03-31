@@ -6,7 +6,7 @@ IgnoreOnIsolate=true
 Type=simple
 # We need to set this here instead of inject it since it is needed for startup
 Environment=SSH_AUTH_SOCK=%t/ssh-agent.socket
-{{ if eq .wm "kde" }}
+{{ if eq (lower (env "XDG_CURRENT_DESKTOP") ) "kde" -}}
 # Set QT_PLUGIN_PATH for ksshaskpass5
 {{ if has .chezmoi.osRelease.id (list "fedora" "opensuse-tumbleweed") }}
 Environment=QT_PLUGIN_PATH=/usr/lib64/qt5/plugins
