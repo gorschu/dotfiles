@@ -2,6 +2,6 @@ hwdec=vaapi
 vo=gpu
 ytdl-format=bestvideo+bestaudio/best
 ytdl
-{{- if eq .wm "kde" }}
+{{- if eq (lower (env "XDG_CURRENT_DESKTOP") ) "kde" }}
 x11-bypass-compositor=no
 {{ end }}

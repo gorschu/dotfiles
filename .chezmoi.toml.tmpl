@@ -9,11 +9,6 @@ encryption = "gpg"
     args = "-d"
 
 [data]
-    {{ if eq .hostname "hephaestus" }}
-    wm = "kde"
-  {{ else }}
-    wm = "gnome"
-  {{ end }}
     email = "gordon@gordonschulz.de"
     gpgkey = "0xDEE550054AA972F6"
     colorscheme = "nord"
