@@ -1,0 +1,40 @@
+---
+version: 2
+
+locations:
+  home-snapshot:
+    from: /mnt/btrfs-root/btrbk-snapshots/{{ .chezmoi.hostname }}.home.latest
+    to: scaleway
+    options:
+      backup:
+        exclude-file: {{ .chezmoi.homeDir }}/.config/autorestic/restic-excludes-workstations
+    hooks:
+      before:
+        - mount -o bind $(/usr/local/bin/btrbk --format=raw list latest home | sed -r "s/^.*snapshot_subvolume='([0-9A-Za-z\/\.\-]+)'.*$/\1/") /mnt/btrfs-root/btrbk-snapshots/{{ .chezmoi.hostname }}.home.latest
+      after:
+        - umount /mnt/btrfs-root/btrbk-snapshots/{{ .chezmoi.hostname }}.home.latest
+      success:
+        - chown azmo:azmo {{ .chezmoi.homeDir }}/.config/.autorestic.lock.yml
+
+backends:
+  scaleway:
+    type: s3
+    path: "{{ (onepasswordItemFields "Backup Restic/Workstations").RepositoryURL.value }}"
+    key: {{ (onepasswordDetailsFields "Backup Restic/Workstations").password.value }}
+    env:
+      AWS_ACCESS_KEY_ID: "{{ (onepasswordItemFields "Scaleway").restic_Access_Key_ID.value }}"
+      AWS_SECRET_ACCESS_KEY: "{{ (onepasswordItemFields "Scaleway").restic_Access_Key_Secret.value }}"
+      AWS_DEFAULT_REGION: "fr-par"
+    options:
+      backup:
+        limit-upload: 3000
+    forget:
+      keep-last: 3
+      keep-hourly: 12
+      keep-daily: 14
+      keep-weekly: 4
+      keep-monthly: 12
+      keep-yearly: 0
+      keep-within: '6h'
+
+
