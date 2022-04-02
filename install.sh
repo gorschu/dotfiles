@@ -59,9 +59,6 @@ elif [[ $(grep "^ID" /etc/os-release) =~ opensuse ]]; then
   sudo zypper install -y "$op_url"
 fi
 
-# signin to op initially if never done before
-[ ! -e "$HOME/.config/op/config" ] && eval "$(op signin --account "$op_email")"
-
 # import and trust our GPG Key
 GPGKEY=DEE550054AA972F6
 GPGKEY_FINGERPRINT=0A47650A15E4F0F4003EC450DEE550054AA972F6
@@ -84,6 +81,9 @@ echo -e "5\ny\n" | gpg --command-fd 0 --expert --edit-key "$GPGKEY_FINGERPRINT" 
 gpg --card-status
 
 export GPG_TTY=$(tty)
+
+# signin to op initially if never done before
+[ ! -e "$HOME/.config/op/config" ] && eval "$(op signin --account "$op_email")"
 
 # POSIX way to get script's dir: https://stackoverflow.com/a/29834779/12156188
 script_dir="$(cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P)"
