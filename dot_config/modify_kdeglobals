@@ -12,5 +12,6 @@ kwriteconfig5 --file kdeglobals --group General --key "font" "IBM Plex Sans,10,-
 kwriteconfig5 --file kdeglobals --group General --key "menuFont" "IBM Plex Sans,10,-1,5,50,0,0,0,0,0"
 kwriteconfig5 --file kdeglobals --group General --key "smallestReadableFont" "IBM Plex Sans,9,-1,5,50,0,0,0,0,0"
 kwriteconfig5 --file kdeglobals --group General --key "toolBarFont" "IBM Plex Sans,10,-1,5,50,0,0,0,0,0"
+kwriteconfig5 --file kdeglobals --group General --key "WM" "activeFont" "IBM·Plex·Sans,10,-1,5,50,0,0,0,0,0"
 
 cat $XDG_CONFIG_HOME/kdeglobals
