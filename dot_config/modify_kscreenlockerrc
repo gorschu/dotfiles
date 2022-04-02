@@ -1,0 +1,6 @@
+#!/bin/bash
+
+kwriteconfig5 --file kscreenlockerrc --group "Daemon" --key "LockGrace" "10"
+kwriteconfig5 --file kscreenlockerrc --group "Daemon" --key "Timeout" "10"
+
+cat "$XDG_CONFIG_HOME/kscreenlockerrc"
