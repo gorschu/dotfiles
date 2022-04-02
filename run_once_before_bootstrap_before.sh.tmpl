@@ -21,5 +21,9 @@ echo "${green}Installing requirements${reset}"
 {{ end }}
 
 echo "${green}Installing gita and cloning .vendor requirements${reset}"
-[[ -e {{ .chezmoi.homeDir }}/.local/bin/gita ]] || pip3 install --user gita
-$HOME/.local/bin/gita clone {{ .chezmoi.sourceDir }}/.gita.vendor.frozen -p
+if [[ ! -e {{ .chezmoi.homeDir }}/.local/bin/gita ]]; then
+  pip3 install --user gita
+else
+  pip3 install --upgrade --user gita
+fi
+$HOME/.local/bin/gita clone -f {{ .chezmoi.sourceDir }}/.gita.vendor.frozen -p
