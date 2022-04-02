@@ -13,22 +13,6 @@ else
   chezmoi=chezmoi
 fi
 
-{{ if eq .chezmoi.osRelease.id "fedora" }}
-sudo dnf install -y starship
-{{ else if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}
-if ! zypper lr | grep -q shells; then
-  sudo zypper ar -cfp 90 https://download.opensuse.org/repositories/shells/openSUSE_Tumbleweed/ shells
-fi
-sudo zypper --gpg-auto-import-keys in -y starship
-{{ else }}
-if [ ! -e $HOME/.local/bin/starship ]; then
-  echo "${green}Installing starship${reset}"
-  tmpfile=$(mktemp)
-  curl -fsSL -o ${tmpfile} https://starship.rs/install.sh && bash ${tmpfile} --bin-dir \
-    $HOME/.local/bin --yes
-fi
-{{ end }}
-
 echo "${green}Protect our fonts.conf (KDE likes to mess with it)${reset}"
 sudo chown root:root {{ .chezmoi.homeDir }}/.config/fontconfig/fonts.conf
 
