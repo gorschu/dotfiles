@@ -8,7 +8,11 @@ global:
 
 locations:
   home-snapshot:
+    {{ if regexFind "/home btrfs" (output "/usr/bin/cat" "/proc/mounts") }}
     from: /mnt/btrfs-root/btrbk-snapshots/{{ .chezmoi.hostname }}.home.latest
+    {{ else if regexFind "/home zfs" (output "/usr/bin/cat" "/proc/mounts") }}
+    from: /mnt/autorestic
+    {{ end }}
     to: scaleway
     options:
       backup:
@@ -22,10 +26,19 @@ locations:
         keep-yearly: 0
         keep-within: '6h'
     hooks:
+      {{ if regexFind "/home btrfs" (output "/usr/bin/cat" "/proc/mounts") }}
       before:
         - mount -o bind $(/usr/local/bin/btrbk --format=raw list latest home | sed -r "s/^.*snapshot_subvolume='([0-9A-Za-z\/\.\-]+)'.*$/\1/") /mnt/btrfs-root/btrbk-snapshots/{{ .chezmoi.hostname }}.home.latest
       after:
         - umount /mnt/btrfs-root/btrbk-snapshots/{{ .chezmoi.hostname }}.home.latest
+      {{ else if regexFind "/home zfs" (output "/usr/bin/cat" "/proc/mounts") }}
+      before:
+        - zfs list -t snapshot -s creation -o name -H dpool/home/azmo | tail -1 > /tmp/ar-home-azmo-latest
+        - zfs clone $(cat /tmp/ar-home-azmo-latest) -o mountpoint=/mnt/autorestic/home/azmo -o readonly=on dpool/tmp-autorestic-$(zfs get -H -o value guid $(cat /tmp/ar-home-azmo-latest))
+        - zfs get all $(cat /tmp/ar-home-azmo-latest) > /mnt/autorestic/dpool.home.azmo-all
+      after:
+        - zfs destroy dpool/tmp-autorestic-$(zfs get -H -o value guid $(cat /tmp/ar-home-azmo-latest))
+      {{ end }}
       success:
         - chown azmo:azmo {{ .chezmoi.homeDir }}/.config/autorestic/.autorestic.lock.yml
 
