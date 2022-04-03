@@ -4,7 +4,8 @@
 .vagrant.d
 .ansible
 .cache
-go/pkg/mod/cache
+.mozilla
+go/pkg/mod
 .vscode
 .config/Code
 .config/emacs
