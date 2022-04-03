@@ -24,8 +24,8 @@ kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Walk Through Windows
 sed -r 's/\\\\t/\\t/' $XDG_CONFIG_HOME/kglobalshortcutsrc
 
 {{ if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
-/usr/lib64/qt5/bin/qdbus org.kde.keyboard /modules/khotkeys reread_configuration
+/usr/lib64/qt5/bin/qdbus org.kde.kded5 /modules/khotkeys reread_configuration
 {{ else }}
-qdbus org.kde.keyboard /modules/khotkeys reread_configuration
+qdbus org.kde.kded5 /modules/khotkeys reread_configuration
 {{ end }}
 
