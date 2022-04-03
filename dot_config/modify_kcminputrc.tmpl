@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Keyboard Config
+kwriteconfig5 --file kcminputrc --group Keyboard --key "NumLock" 0
+kwriteconfig5 --file kcminputrc --group Keyboard --key "RepeatDelay" 250
+kwriteconfig5 --file kcminputrc --group Keyboard --key "RepeatRate" 40
+
+{{ if eq .chezmoi.hostname "apollo" }}
+  kwriteconfig5 --file kcminputrc --group "Libinput" --group "2" --group "7" --group "SynPS/2 Synaptics TouchPad" --key "NaturalScroll" "true"
+  kwriteconfig5 --file kcminputrc --group "Libinput" --group "2" --group "7" --group "SynPS/2 Synaptics TouchPad" --key "TapToClick" "true"
+{{ end }}
+
+cat $XDG_CONFIG_HOME/kcminputrc
