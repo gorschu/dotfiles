@@ -4,15 +4,11 @@
 
 POOL=dpool
 
-if ! zypper lr | grep -q packman; then
-  sudo zypper ar -cfp 90 https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/ packman
-fi
 if ! zypper lr | grep -q filesystems; then
   sudo zypper ar https://download.opensuse.org/repositories/filesystems/openSUSE_Tumbleweed/filesystems.repo
 fi
 sudo zypper refresh && sudo zypper dup -y
 
-sudo zypper --gpg-auto-import-keys dup -y --allow-vendor-change --from packman
 sudo zypper --gpg-auto-import-keys in -y zfs
 sudo modprobe zfs
 
