@@ -9,6 +9,7 @@
 {{ else if eq .chezmoi.hostname "apollo" }}
 	kwriteconfig5 --file touchpadxlibinputrc --group "SynPS/2 Synaptics TouchPad" --key "naturalScroll" "true"
 	kwriteconfig5 --file touchpadxlibinputrc --group "SynPS/2 Synaptics TouchPad" --key "tapToClick" "true"
+	kwriteconfig5 --file touchpadxlibinputrc --group "SynPS/2 Synaptics TouchPad" --key "pointerAcceleration" "0.4"
 {{ end }}
 
 # the file does not necessarily need to exist, only on laptops
