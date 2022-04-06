@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
 MimeType=application/x-ica
-Name=Citrix in toolbox
+Name=Citrix in Container
 NoDisplay=true
-Exec=/home/azmo/bin/misc/toolbox-citrix.sh
+Exec=/home/azmo/bin/misc/citrix-run.sh
