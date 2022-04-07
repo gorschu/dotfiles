@@ -1,5 +1,27 @@
 {
   "4069:0CAB0BCC": {
+    "_absent": [
+      "hi-res-scroll",
+      "lowres-smooth-scroll",
+      "thumb-scroll-mode",
+      "thumb-scroll-invert",
+      "onboard_profiles",
+      "report_rate",
+      "pointer_speed",
+      "speed-change",
+      "backlight",
+      "backlight-timed",
+      "fn-swap",
+      "persistent-remappable-keys",
+      "disable-keyboard-keys",
+      "divert-crown",
+      "crown-smooth",
+      "divert-gkeys",
+      "m-key-leds",
+      "mr-key-led",
+      "multiplatform",
+      "gesture2-params"
+    ],
     "_modelId": "B01E40710000",
     "_name": "Wireless Mouse MX Master 2S",
     "_sensitive": {
@@ -19,6 +41,9 @@
     },
     "dpi": "1400",
     "dpi-sliding": 0,
+    "gesture2-divert": {
+      "46": false
+    },
     "gesture2-gestures": {
       "45": true,
       "46": true
@@ -38,6 +63,34 @@
     "smart-shift": 16
   },
   "4088:207FB516": {
+    "_absent": [
+      "hi-res-scroll",
+      "lowres-smooth-scroll",
+      "hires-smooth-invert",
+      "hires-smooth-resolution",
+      "smart-shift",
+      "thumb-scroll-mode",
+      "thumb-scroll-invert",
+      "onboard_profiles",
+      "report_rate",
+      "pointer_speed",
+      "dpi",
+      "dpi-sliding",
+      "speed-change",
+      "mouse-gestures",
+      "backlight",
+      "backlight-timed",
+      "reprogrammable-keys",
+      "persistent-remappable-keys",
+      "divert-crown",
+      "crown-smooth",
+      "divert-gkeys",
+      "m-key-leds",
+      "mr-key-led",
+      "gesture2-gestures",
+      "gesture2-divert",
+      "gesture2-params"
+    ],
     "_modelId": "B35940880000",
     "_name": "Wireless Keyboard ERGO K860",
     "_serial": "207FB516",
@@ -76,5 +129,5 @@
     "fn-swap": false,
     "multiplatform": 0
   },
-  "_version": "1.1.0"
+  "_version": "1.1.2"
 }
