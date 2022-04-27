@@ -17,6 +17,7 @@ locations:
     options:
       backup:
         exclude-file: {{ .chezmoi.homeDir }}/.config/autorestic/restic-excludes-workstations
+        exclude-if-present: .nobackup
       forget:
         keep-last: 3
         keep-hourly: 12
