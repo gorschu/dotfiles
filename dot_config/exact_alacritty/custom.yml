@@ -22,3 +22,4 @@ font:
 key_bindings:
   # use different ToggleViMode keybinding since default classhes with 1Password
   - { key: Space,  mods: Control|Alt, mode: ~Search,    action: ToggleViMode            }
+  - { key: Space,  mods: Control|Shift, action: ReceiveChar }
