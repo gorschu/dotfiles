@@ -27,3 +27,4 @@ else
   pip3 install --upgrade --user gita
 fi
 $HOME/.local/bin/gita clone -f {{ .chezmoi.sourceDir }}/.gita.vendor.frozen -p
+$HOME/.local/bin/gita pull dotfiles.vendor
