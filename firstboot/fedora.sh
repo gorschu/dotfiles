@@ -13,20 +13,24 @@ if ! rpm -q zfs > /dev/null; then
 fi
 sudo modprobe zfs
 
-sudo zpool export ${POOL} && sudo zpool import ${POOL}
+if ! sudo zpool list -o name,health -H | grep -i "^${POOL}.*ONLINE; then
+	sudo zpool export ${POOL} && sudo zpool import ${POOL}
+fi
 sudo zpool set cachefile=/etc/zfs/zpool.cache ${POOL}
 sudo systemctl enable zfs-import-cache.service zfs-import.target
 sudo mkdir -p /etc/zfs/zfs-list.cache
 sudo systemctl enable --now zfs.target zfs-zed.service zfs-scrub-monthly@${POOL}.timer
-[[ ! -e /etc/zfs/zfs-list.cache/${POOL} ]] && touch /etc/zfs/zfs-list.cache/${POOL}
+[[ ! -e /etc/zfs/zfs-list.cache/${POOL} ]] && sudo touch /etc/zfs/zfs-list.cache/${POOL}
 
 sudo zfs set canmount=off ${zedtrigger}
 sudo zfs set canmount=on ${zedtrigger}
 
-sudo zfs load-key -L $(zfs get -o value -H keylocation ${POOL}) ${POOL}
+if ! sudo zfs get -o value -H keystatus ${POOL} | grep "^available"; then
+	sudo zfs load-key -L $(zfs get -o value -H keylocation ${POOL}) ${POOL}
+fi
 sudo zfs mount -a
 
-for path in "${restorecon[@]}"; do restorecon -R "${path}"; done
+for path in "${restorecon[@]}"; do sudo restorecon -R "${path}"; done
 
 
 
