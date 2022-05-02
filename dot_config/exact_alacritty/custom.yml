@@ -20,6 +20,9 @@ font:
   size: 10
 
 key_bindings:
-  # use different ToggleViMode keybinding since default classhes with 1Password
-  - { key: Space,  mods: Control|Alt, mode: ~Search,    action: ToggleViMode            }
-  - { key: Space,  mods: Control|Shift, action: ReceiveChar }
+  # use different ToggleViMode keybinding since default clashes with 1Password
+  - { key: Space,     mods: Control|Alt,  mode: ~Search,    action: ToggleViMode }
+  - { key: Space,     mods: Control|Shift,                  action: ReceiveChar }
+  # Modify vim mode search keybindings
+  - { key: Slash,     mods: Shift,        mode: Vi|~Search, action: SearchForward }
+  - { key: Backslash, mode: Vi|~Search,                     action: SearchBackward }
