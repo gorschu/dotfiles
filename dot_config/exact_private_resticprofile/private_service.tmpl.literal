@@ -1,0 +1,10 @@
+[Unit]
+Description={{ .JobDescription }}
+
+[Service]
+Type=notify
+ExecStart={{ .CommandLine }}
+{{ if .Nice }}Nice={{ .Nice }}{{ end }}
+{{ range .Environment -}}
+Environment="{{ . }}"
+{{ end -}}
