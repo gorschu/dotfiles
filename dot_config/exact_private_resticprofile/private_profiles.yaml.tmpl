@@ -58,7 +58,7 @@ workstations:
       - zfs list -t snapshot -s creation -o name -H dpool/home/azmo | tail -1 > /tmp/ar-home-azmo-latest
       - zfs clone $(cat /tmp/ar-home-azmo-latest) -o mountpoint=/mnt/restic/home/azmo -o readonly=on dpool/tmp-restic-$(zfs get -H -o value guid $(cat /tmp/ar-home-azmo-latest))
       - zfs get all $(cat /tmp/ar-home-azmo-latest) > /mnt/restic/dpool.home.azmo-all
-    run-after:
+    run-finally:
       - zfs destroy dpool/tmp-restic-$(zfs get -H -o value guid $(cat /tmp/ar-home-azmo-latest))
    {{ end }}
 
