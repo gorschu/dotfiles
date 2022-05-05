@@ -2,7 +2,7 @@
     "input": {
         "blocklist": [],
         "gate": {
-            "attack": 18.0,
+            "attack": 7.5,
             "detection": "RMS",
             "input-gain": 0.0,
             "knee": 9.0,
