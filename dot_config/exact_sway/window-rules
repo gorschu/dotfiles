@@ -1,0 +1,6 @@
+for_window [class="1Password" window_type="normal" title="^(GoBa Greven.*)|(Lock Screen.*)"] mark "onepassword", floating enable, move scratchpad
+for_window [app_id="com.github.hluk.copyq"] floating enable, move position center, resize set height 75 ppt
+for_window [app_id="^pavucontrol$"] floating enable, move position center, resize set height 75 ppt
+for_window [app_id="firefox" title=".*Sharing Indicator"] floating enable, move position 0 0
+for_window [app_id="org.kde.polkit-kde-authentication-agent-1"] floating enable, move position center
+for_window [app_id="^pinentry-.*"] floating enable, move position center
