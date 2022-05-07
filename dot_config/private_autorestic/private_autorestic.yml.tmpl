@@ -42,9 +42,9 @@ locations:
       {{ end }}
       success:
         - chown azmo:azmo {{ .chezmoi.homeDir }}/.config/autorestic/.autorestic.lock.yml
-        - curl -s --form-string 'token={{ (onepasswordItemFields "Pushover").autorestic.value }}' --form-string 'user={{ (onepasswordItemFields "Pushover").UserKey.value }}' --form-string "message=autorestic Backup successful on host '{{ .chezmoi.fqdnHostname }}'. Added Size is ${AUTORESTIC_ADDED_SIZE_SCALEWAY}." https://api.pushover.net/1/messages.json
+        - curl -s --form-string 'token={{ (onepasswordItemFields "Pushover").restic.value }}' --form-string 'user={{ (onepasswordItemFields "Pushover").UserKey.value }}' --form-string "message=autorestic Backup successful on host '{{ .chezmoi.fqdnHostname }}'. Added Size is ${AUTORESTIC_ADDED_SIZE_SCALEWAY}." https://api.pushover.net/1/messages.json
       failure:
-        - curl -s --form-string 'token={{ (onepasswordItemFields "Pushover").autorestic.value }}' --form-string 'user={{ (onepasswordItemFields "Pushover").UserKey.value }}' --form-string "message=autorestic Backup failed on host '{{ .chezmoi.fqdnHostname }}'" https://api.pushover.net/1/messages.json
+        - curl -s --form-string 'token={{ (onepasswordItemFields "Pushover").restic.value }}' --form-string 'user={{ (onepasswordItemFields "Pushover").UserKey.value }}' --form-string "message=autorestic Backup failed on host '{{ .chezmoi.fqdnHostname }}'" https://api.pushover.net/1/messages.json
 
 backends:
   scaleway:
