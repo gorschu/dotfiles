@@ -256,6 +256,7 @@ formatters.setup {
   { command = "gofumpt", filetypes = { "go"} },
   { command = "shfmt", filetypes = {"sh"} },
   { command = "shellharden", filetypes = { "sh" } },
+  { command = "prettier", filetypes = { "yaml" } },
 }
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
