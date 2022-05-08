@@ -1,0 +1,13 @@
+layer=overlay
+font=Sans 10
+# nord
+background-color=#4c566a
+[urgency=low]
+border-color=#81a1c1
+
+[urgency=normal]
+border-color=#88c0d0
+
+[urgency=high]
+border-color=#bf616a
+default-timeout=0
