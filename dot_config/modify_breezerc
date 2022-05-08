@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if ! command -v -p kwriteconfig5 > /dev/null; then
+    [[ -e $XDG_CONFIG_HOME/breezerc ]] && cat $XDG_CONFIG_HOME/breezerc
+    exit 0
+fi
+
+
 # Breeze
 kwriteconfig5 --file breezerc --group Style --key "ScrollBarAddLineButtons" 1
 kwriteconfig5 --file breezerc --group Style --key "ScrollBarSubLineButtons" 1

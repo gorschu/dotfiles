@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if ! command -v -p kwriteconfig5 > /dev/null; then
+    [[ -e $XDG_CONFIG_HOME/konsolerc ]] && cat $XDG_CONFIG_HOME/konsolerc
+    exit 0
+fi
+
 # write custom configuration options...
 kwriteconfig5 --file konsolerc --group "Desktop Entry" --key "DefaultProfile" "azmo.profile"
 kwriteconfig5 --file konsolerc --group "KonsoleWindow" --key "ShowWindowTitleOnTitleBar" "true"

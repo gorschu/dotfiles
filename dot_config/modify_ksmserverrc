@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if ! command -v -p kwriteconfig5 > /dev/null; then
+    [[ -e $XDG_CONFIG_HOME/ksmserverrc ]] && cat $XDG_CONFIG_HOME/ksmserverrc
+    exit 0
+fi
+
+
 # Session
 kwriteconfig5 --file ksmserverrc --group General --key "loginMode" "emptySession"
 

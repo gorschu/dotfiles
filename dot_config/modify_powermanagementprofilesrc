@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if ! command -v -p kwriteconfig5 > /dev/null; then
+    [[ -e $XDG_CONFIG_HOME/powermanagementprofilesrc ]] && cat $XDG_CONFIG_HOME/powermanagementprofilesrc
+    exit 0
+fi
+
+
 kwriteconfig5 --file powermanagementprofilesrc --group "AC" --group "BrightnessControl" --key "value" "50"
 kwriteconfig5 --file powermanagementprofilesrc --group "AC" --group "DPMSControl" --key "idleTime" "900"
 kwriteconfig5 --file powermanagementprofilesrc --group "AC" --group "DPMSControl" --key "lockBeforeTurnOff" "0"
