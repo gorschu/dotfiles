@@ -10,3 +10,6 @@ bindsym $mod+shift+v exec pavucontrol
 bindsym $mod+shift+p [con_mark="onepassword"] scratchpad show; [con_mark="onepassword"] move position center
 
 bindsym $mod+shift+c exec copyq -e toggle
+
+bindsym $mod+shift+d exec makoctl dismiss
+bindsym ctrl+shift+space exec 1password --quick-access
