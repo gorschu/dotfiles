@@ -2,7 +2,7 @@
 
 set -e # -e: exit on error
 
-op_latest=2.0.0
+op_latest=2.1.0
 op_email=gordon@gordonschulz.de
 
 echo "${green}Installing absolute requirements${reset}"
