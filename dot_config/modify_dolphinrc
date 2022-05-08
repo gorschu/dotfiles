@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if ! command -v -p kwriteconfig5 > /dev/null; then
+    [[ -e $XDG_CONFIG_HOME/dolphinrc ]] && cat $XDG_CONFIG_HOME/dolphinrc
+    exit 0
+fi
+
+
 # Dolphin
 kwriteconfig5 --file dolphinrc --group General --key "ShowToolTips" "true"
 kwriteconfig5 --file dolphinrc --group General --key "UseTabForSwitchingSplitView" "true"

@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if ! command -v -p kwriteconfig5 > /dev/null; then
+    [[ -e $XDG_CONFIG_HOME/kxkbrc ]] && cat $XDG_CONFIG_HOME/kxkbrc
+    exit 0
+fi
+
+
 kwriteconfig5 --file kxkbrc --group Layout --key "Model" "pc105"
 kwriteconfig5 --file kxkbrc --group Layout --key "Options" "terminate:ctrl_alt_bksp,caps:escape"
 kwriteconfig5 --file kxkbrc --group Layout --key "ResetOldOptions" "true"

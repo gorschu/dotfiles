@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if ! command -v -p kwriteconfig5 > /dev/null; then
+    [[ -e $XDG_CONFIG_HOME/kglobalshortcutsrc ]] && cat $XDG_CONFIG_HOME/kglobalshortcutsrc
+    exit 0
+fi
+
 # Keyboard Shortcuts
 kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Overview" "Meta+W,Meta+W,Toggle Overview"
 kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Switch to Desktop 1" "Ctrl+F1\tMeta+!,Ctrl+F1,Switch to Desktop 1"

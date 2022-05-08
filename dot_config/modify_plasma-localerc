@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if ! command -v -p kwriteconfig5 > /dev/null; then
+    [[ -e $XDG_CONFIG_HOME/plasma-localerc ]] && cat $XDG_CONFIG_HOME/plasma-localerc
+    exit 0
+fi
+
+
 # Locale
 kwriteconfig5 --file plasma-localerc --group Formats --key "LANG" "en_US.UTF-8"
 kwriteconfig5 --file plasma-localerc --group Formats --key "LC_MEASUREMENT" "de_DE.UTF-8"

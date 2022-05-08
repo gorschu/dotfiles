@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if ! command -v -p kwriteconfig5 > /dev/null; then
+    [[ -e $XDG_CONFIG_HOME/kwinrc ]] && cat $XDG_CONFIG_HOME/kwinrc
+    exit 0
+fi
+
+
 # Effects
 kwriteconfig5 --file kwinrc --group Plugins --key "overviewEnabled" "true"
 kwriteconfig5 --file kwinrc --group Plugins --key "desktopchangeosdEnabled" "true"
