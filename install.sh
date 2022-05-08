@@ -59,6 +59,13 @@ elif [[ $(grep "^ID" /etc/os-release) =~ opensuse ]]; then
   sudo zypper install -y "$op_url"
 fi
 
+# stop pcscd for first use - it conflicts with gnupg when the latter is not configured to use it
+sudo systemctl stop pcscd || true
+
+# nuke .gnupg directory for clean install
+rm -rf ${HOME}/.gnupg 
+pkill gpg-agent || true
+
 # import and trust our GPG Key
 GPGKEY=DEE550054AA972F6
 GPGKEY_FINGERPRINT=0A47650A15E4F0F4003EC450DEE550054AA972F6
