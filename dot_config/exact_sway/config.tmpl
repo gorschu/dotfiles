@@ -5,6 +5,7 @@
 # Read `man 5 sway` for a complete reference.
 
 ### Variables
+include {{ env "XDG_CONFIG_HOME" }}/sway/colors.nord
 #
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
@@ -18,7 +19,7 @@ set $term alacritty
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu bemenu-run --no-overlap --fn "Monospace 10" --margin 10 --ignorecase --prompt "> run" | xargs swaymsg exec --
+set $menu bemenu-run --no-overlap --fn "Monospace 10" --margin 10 --ignorecase --prompt "> run" --nb "#2e3440" --fb "#2e3440" --tb "#2e3440" --hb "#2e3440" --tf "#81a1c1" --hf "#b48ead" --prompt run | xargs swaymsg exec --
 
 xwayland enable
 
@@ -257,9 +258,6 @@ workspace $workspace10 output DP-0.8
 # }
 
 bar swaybar_command waybar
-
-
-
 
 include {{ env "XDG_CONFIG_HOME" }}/sway/modes
 include {{ env "XDG_CONFIG_HOME" }}/sway/keybinds

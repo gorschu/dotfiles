@@ -1,0 +1,26 @@
+set $base00 #2E3440
+set $base01 #3B4252
+set $base02 #434C5E
+set $base03 #4C566A
+set $base04 #D8DEE9
+set $base05 #E5E9F0
+set $base06 #ECEFF4
+set $base07 #8FBCBB
+set $base08 #88C0D0
+set $base09 #81A1C1
+set $base0A #5E81AC
+set $base0B #BF616A
+set $base0C #D08770
+set $base0D #EBCB8B
+set $base0E #A3BE8C
+set $base0F #B48EAD
+
+# Basic color configuration using the Base16 variables for windows and borders.
+# Property Name         Border  BG      Text    Indicator Child Border
+client.focused          $base08 $base02 $base06 $base0F $base08
+client.focused_inactive $base01 $base01 $base04 $base03 $base01
+client.unfocused        $base01 $base00 $base04 $base01 $base01
+client.urgent           $base0B $base08 $base00 $base08 $base0B
+client.placeholder      $base00 $base00 $base06 $base00 $base00
+client.background       $base07
+
