@@ -16,7 +16,6 @@ config.read(f"{config_home}/mimeapps.list")
 if not config.has_section("Default Applications"):
     config.add_section("Default Applications")
 
-if not config.has_option("Default Applications", "application/x-ica"):
-    config.set("Default Applications", "application/x-ica", "citrix-toolbox.desktop")
+config.set("Default Applications", "application/x-ica", "citrix-container.desktop")
 
 config.write(sys.stdout, space_around_delimiters=False)
