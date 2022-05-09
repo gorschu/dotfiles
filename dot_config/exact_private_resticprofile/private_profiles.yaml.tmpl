@@ -11,8 +11,8 @@ default:
   status-file: "/tmp/resticprofile/{{ "-- .Profile.Name ++" | replace "-" "{" | replace "+" "}" }}-status.json"
   password-file: "{{ "-- .ConfigDir ++" | replace "-" "{" | replace "+" "}" }}/restic-password-{{ "-- .Profile.Name ++" | replace "-" "{" | replace "+" "}" }}"
   lock: "{{ "-- if .Env.XDG_RUNTIME_DIR ++-- .Env.XDG_RUNTIME_DIR ++-- else ++/tmp-- end ++" | replace "-" "{" | replace "+" "}" }}/resticprofile/{{ "-- .Profile.Name ++" | replace "-" "{" | replace "+" "}" }}.lock"
-  run-after: "curl -s --form-string 'token={{ (onepasswordItemFields "Pushover").restic.value }}' --form-string 'user={{ (onepasswordItemFields "Pushover").UserKey.value }}' --form-string \"message=Restic $PROFILE_COMMAND successful on host '{{ .chezmoi.fqdnHostname }}' for profile '$PROFILE_NAME'.\" https://api.pushover.net/1/messages.json"
-  run-after-fail: "curl -s --form-string 'token={{ (onepasswordItemFields "Pushover").restic.value }}' --form-string 'user={{ (onepasswordItemFields "Pushover").UserKey.value }}'  --form-string \"message=Restic $PROFILE_COMMAND failed on host '{{ .chezmoi.hostname }}' for profile '$PROFILE_NAME' with error: $ERROR.\" https://api.pushover.net/1/messages.json"
+  run-after: "curl -s --output /dev/null --form-string 'token={{ (onepasswordItemFields "Pushover").restic.value }}' --form-string 'user={{ (onepasswordItemFields "Pushover").UserKey.value }}' --form-string \"message=Restic $PROFILE_COMMAND successful on host '{{ .chezmoi.fqdnHostname }}' for profile '$PROFILE_NAME'.\" https://api.pushover.net/1/messages.json"
+  run-after-fail: "curl -s --output /dev/null --form-string 'token={{ (onepasswordItemFields "Pushover").restic.value }}' --form-string 'user={{ (onepasswordItemFields "Pushover").UserKey.value }}'  --form-string \"message=Restic $PROFILE_COMMAND failed on host '{{ .chezmoi.hostname }}' for profile '$PROFILE_NAME' with error: $ERROR.\" https://api.pushover.net/1/messages.json"
 
   backup:
     one-file-system: true
