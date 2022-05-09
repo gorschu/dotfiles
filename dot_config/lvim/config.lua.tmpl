@@ -224,7 +224,12 @@ lvim.plugins = {
   -- tmux
   {'christoomey/vim-tmux-navigator'},
   {'tmux-plugins/vim-tmux-focus-events'},
-  {'editorconfig/editorconfig-vim'}
+  {'editorconfig/editorconfig-vim'},
+  {"norcalli/nvim-colorizer.lua",
+    config = function()
+      require("colorizer").setup()
+    end,
+  },
 }
 
 vim.opt.timeoutlen = 300 -- up from 100 which is the default for keysequences to happen
