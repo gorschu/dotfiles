@@ -1,6 +1,7 @@
 *.iso
 *.qcow2
 **/.venv
+*home/azmo/.var
 *home/azmo/.vagrant.d
 *home/azmo/.ansible
 *home/azmo/.cache
@@ -14,6 +15,9 @@
 *home/azmo/.local/share/libvirt/images
 *home/azmo/.local/share/flatpak
 *home/azmo/.local/share/JetBrains
+*home/azmo/.local/share/nvim
+*home/azmo/.local/share/lunarvim
+*home/azmo/.local/share/baloo
 *home/azmo/.local/pipx
 *home/azmo/.npm
 *home/azmo/.vendor
