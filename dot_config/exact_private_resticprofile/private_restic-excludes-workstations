@@ -4,9 +4,6 @@
 .vagrant.d
 .ansible
 .cache
-.mozilla
-.config/vivaldi*
-.config/google-chrome*
 go/pkg/mod
 .vscode
 .config/Code
