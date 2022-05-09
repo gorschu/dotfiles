@@ -1,10 +1,11 @@
-set editorcmd konsole --hide-menubar -p "tabtile=tridactyl" -e "nvim %f"
+set editorcmd kitty --single-instance --title "Tridactyl External Editor" -- lvim %f
 
 set tabopencontaineraware true
 
 set searchengine google
 
 seturl plex.zeus.int.gordonschulz.de modeindicatormodes.fullscreen false
+seturl jellyfin.zeus.int.gordonschulz.de modeindicatormodes.fullscreen false
 seturl www.youtube.com modeindicatormodes.fullscreen false
 
-bind ZZ composite sanitise tridactyllocal; qall 
+bind ZZ composite sanitise tridactyllocal; qall
