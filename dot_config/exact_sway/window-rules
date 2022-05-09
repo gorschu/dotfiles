@@ -4,3 +4,5 @@ for_window [app_id="^pavucontrol$"] floating enable, move position center, resiz
 for_window [app_id="firefox" title=".*Sharing Indicator"] floating enable, move position 0 0
 for_window [app_id="org.kde.polkit-kde-authentication-agent-1"] floating enable, move position center
 for_window [app_id="^pinentry-.*"] floating enable, move position center
+for_window [app_id="^jetbrains-toolbox"] floating enable, move position center
+assign [class="Wfica"] -> $workspace6
