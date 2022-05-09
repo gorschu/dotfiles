@@ -1,0 +1,4 @@
+#!/bin/zsh -l
+
+export XDG_CURRENT_DESKTOP="sway"
+/usr/bin/sway
