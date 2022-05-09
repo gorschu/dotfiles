@@ -1,6 +1,12 @@
 #!/bin/bash
 
-if ! command -v -p kwriteconfig5 > /dev/null; then
+{{ if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
+  qdbus="/usr/lib64/qt5/bin/qdbus"
+{{ else }}
+  qdbus="qdbus"
+{{ end }}
+
+if ! command -v -p kwriteconfig5 > /dev/null || ! command -v -p ${qdbus}; then
     [[ -e $XDG_CONFIG_HOME/kglobalshortcutsrc ]] && cat $XDG_CONFIG_HOME/kglobalshortcutsrc
     exit 0
 fi
@@ -28,9 +34,5 @@ kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Walk Through Windows
 # remove extra \t kwriteconfig5 seems to insert for no apparent reason at all
 sed -r 's/\\\\t/\\t/' $XDG_CONFIG_HOME/kglobalshortcutsrc
 
-{{ if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
-/usr/lib64/qt5/bin/qdbus org.kde.kded5 /modules/khotkeys reread_configuration
-{{ else }}
-qdbus org.kde.kded5 /modules/khotkeys reread_configuration
-{{ end }}
+${qdbus} org.kde.kded5 /modules/khotkeys reread_configuration
 

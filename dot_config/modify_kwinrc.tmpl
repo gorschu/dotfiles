@@ -1,6 +1,12 @@
 #!/bin/bash
 
-if ! command -v -p kwriteconfig5 > /dev/null; then
+{{ if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
+  qdbus="/usr/lib64/qt5/bin/qdbus"
+{{ else }}
+  qdbus="qdbus"
+{{ end }}
+
+if ! command -v -p kwriteconfig5 > /dev/null || ! command -v -p ${qdbus} > /dev/null; then
     [[ -e $XDG_CONFIG_HOME/kwinrc ]] && cat $XDG_CONFIG_HOME/kwinrc
     exit 0
 fi
@@ -28,10 +34,6 @@ kwriteconfig5 --file kwinrc --group ModifierOnlyShortcuts --key Meta "org.kde.kr
 # source: https://www.reddit.com/r/kde/comments/ppxrbg/assign_meta_key_to_overview_effect/hd8b5e7/
 # kwriteconfig5 --file kwinrc --group ModifierOnlyShortcuts --key Meta "org.kde.kglobalaccel,/component/kwin,,invokeShortcut,Overview"
 
-{{ if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
-/usr/lib64/qt5/bin/qdbus org.kde.KWin /KWin reconfigure
-{{ else }}
-qdbus org.kde.KWin /KWin reconfigure
-{{ end }}
+${qdbus} org.kde.KWin /KWin reconfigure
 
 cat $XDG_CONFIG_HOME/kwinrc
