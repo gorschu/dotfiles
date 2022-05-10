@@ -5,4 +5,4 @@ for_window [app_id="firefox" title=".*Sharing Indicator"] floating enable, move 
 for_window [app_id="org.kde.polkit-kde-authentication-agent-1"] floating enable, move position center
 for_window [app_id="^pinentry-.*"] floating enable, move position center
 for_window [app_id="^jetbrains-toolbox"] floating enable, move position center
-assign [class="Wfica"] -> $workspace6
+assign [class="Wfica"] $workspace6

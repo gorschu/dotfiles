@@ -22,3 +22,4 @@ client.focused_inactive $base01 $base01 $base04 $base03 $base01
 client.unfocused        $base01 $base00 $base04 $base01 $base01
 client.urgent           $base0B $base08 $base00 $base08 $base0B
 
+# vim: ft=config
