@@ -15,7 +15,7 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term alacritty
+set $term kitty --single-instance
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -35,14 +35,6 @@ output * bg $(find $wallpapers_path -type f | shuf -n 1) fill
 #
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
-### Idle configuration
-exec swayidle -w \
-         timeout 600 'swaylock -f -c 000000 --indicator-idle-visible' \
-         timeout 900 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-         timeout 3600 'systemctl suspend' \
-         lock 'swaylock -f -c 000000 --indicator-idle-visible' \
-         before-sleep 'swaylock -f -c 000000 --indicator-idle-visible'
-#
 ### Input configuration
 #
 # Example configuration:

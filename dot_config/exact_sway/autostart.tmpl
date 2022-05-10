@@ -1,3 +1,12 @@
+### Idle configuration
+exec swayidle -w \
+         timeout 300 'swaylock -f -c 000000 --indicator-idle-visible --ignore-empty-password --show-failed-attempts' \
+         timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+         timeout 3600 'systemctl suspend' \
+         lock 'swaylock -f -c 000000 --indicator-idle-visible --ignore-empty-password --show-failed-attempts' \
+         before-sleep 'swaylock -f -c 000000 --indicator-idle-visible --ignore-empty-password --show-failed-attempts' \
+         idlehint 300
+
 exec --no-startup-id 1password
 exec --no-startup-id kanshi
 exec --no-startup-id mako

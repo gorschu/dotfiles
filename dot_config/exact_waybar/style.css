@@ -47,7 +47,7 @@
 @define-color mode #B48EAD;
 @define-color workspaces #5e81ac;
 @define-color workspacesfocused #81a1c1;
-@define-color workspacesurgent #B48EAD;
+@define-color workspacesfocusedinactive #B48EAD;
 @define-color idle-inhibitor #a3be8c;
 @define-color sound #d8dee9;
 @define-color network #4c566a;
@@ -171,9 +171,14 @@
 	background: @workspacesfocused;
 }
 
-#workspaces button.urgent {
-  background: @workspacesurgent;
+#workspaces button.visible:not(.focused) {
+	background: @workspacesfocusedinactive;
 }
+
+#workspaces button.urgent {
+  background: @critical;
+}
+
 
 #window {
 	margin-right: 40px;
