@@ -44,7 +44,7 @@ workstations-scaleway:
     {{ else if regexFind "/home zfs" (output "/usr/bin/cat" "/proc/mounts") }}
     source: /mnt/restic/home/azmo
     {{ end }}
-    exclude-file: "{{ "-- .ConfigDir ++" | replace "-" "{" | replace "+" "}" }}/restic-excludes-workstations-scaleway"
+    exclude-file: "{{ "-- .ConfigDir ++" | replace "-" "{" | replace "+" "}" }}/restic-excludes-workstations-remote"
 
     schedule: "hourly"
     schedule-permission: "system"
