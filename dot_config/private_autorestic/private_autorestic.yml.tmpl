@@ -49,8 +49,8 @@ locations:
 backends:
   scaleway:
     type: s3
-    path: "{{ (onepasswordItemFields "Backup Restic/Workstations").RepositoryURL.value }}"
-    key: {{ (onepasswordDetailsFields "Backup Restic/Workstations").password.value }}
+    path: "{{ (onepasswordItemFields "Backup Restic/Workstations").RepositoryURL_scaleway.value }}"
+    key: {{ (onepasswordItemFields "Backup Restic/Workstations").password_scaleway.value }}
     env:
       AWS_ACCESS_KEY_ID: "{{ (onepasswordItemFields "Scaleway").restic_Access_Key_ID.value }}"
       AWS_SECRET_ACCESS_KEY: "{{ (onepasswordItemFields "Scaleway").restic_Access_Key_Secret.value }}"
