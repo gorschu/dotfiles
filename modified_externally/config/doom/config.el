@@ -110,3 +110,4 @@
 (setq epa-file-name-regexp "\\.gpg\\(~\\|\\.~[0-9]+~\\)?\\'\\|\\.asc")
 (epa-file-name-regexp-update)
 
+(setq treemacs-git-mode 'deferred)
