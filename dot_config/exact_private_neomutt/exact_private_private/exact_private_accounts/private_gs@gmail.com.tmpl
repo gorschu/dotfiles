@@ -4,10 +4,10 @@ set sendmail = "$HOME/bin/mail/msmtp-enqueue.sh"
 
 # Set folders
 set spoolfile = "+{{ .mail.gsatgmaildotcom.email }}/Inbox"
-set mbox = "+{{ .mail.gsatgmaildotcom.email }}/[Gmail]/All Mail"
-set postponed = "+{{ .mail.gsatgmaildotcom.email }}/[Gmail]/Drafts"
-set record = "+{{ .mail.gsatgmaildotcom.email }}/[Gmail]/Sent Mail"
-set trash = "+{{ .mail.gsatgmaildotcom.email }}/[Gmail]/Trash"
+set mbox = "+{{ .mail.gsatgmaildotcom.email }}/all-mail"
+set postponed = "+{{ .mail.gsatgmaildotcom.email }}/drafts"
+set record = "+{{ .mail.gsatgmaildotcom.email }}/sent-mail"
+set trash = "+{{ .mail.gsatgmaildotcom.email }}/trash"
 
 # first reset all mailboxes
 unmailboxes *
