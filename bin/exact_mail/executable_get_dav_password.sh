@@ -11,4 +11,4 @@ else
     vault="${3}"
 fi
 
-OP_SESSION_my=$(onepassword-signin) op get item "${1}" --vault "${vault}" | jq -r '.details.sections[] | select(.title=="Application Specific Passwords") | .fields[] | select(.t=="'"${2}"'") | .v'
+OP_SESSION_my=$(onepassword-signin) op --cache item get "${1}" --vault "${vault}" --format "json" --fields "${2}" | jq -r '.value'
