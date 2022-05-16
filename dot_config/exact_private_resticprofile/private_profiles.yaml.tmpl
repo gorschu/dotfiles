@@ -30,13 +30,11 @@ default:
 workstations-backblaze:
   inherit: "default"
   repository: "{{ (onepasswordItemFields "Backup Restic/Workstations").RepositoryURL_backblaze.value }}"
-  option:
-    - "b2-hard-delete"
-    - "limit-upload=3000"
+  limit-upload: 3000
 
   env:
-    AWS_ACCESS_KEY_ID: "{{ (onepasswordItemFields "Backblaze").azmo_B2_ACCOUNT_ID.value }}"
-    AWS_SECRET_ACCESS_KEY: "{{ (onepasswordItemFields "Backblaze").azmo_B2_ACCOUNT_KEY.value }}"
+    B2_ACCOUNT_ID: "{{ (onepasswordItemFields "Backblaze").azmo_B2_ACCOUNT_ID.value }}"
+    B2_ACCOUNT_KEY: "{{ (onepasswordItemFields "Backblaze").azmo_B2_ACCOUNT_KEY.value }}"
 
   backup:
     {{ if regexFind "/home btrfs" (output "/usr/bin/cat" "/proc/mounts") }}
@@ -99,9 +97,9 @@ workstations-backblaze:
 workstations-scaleway:
   inherit: "default"
   repository: "{{ (onepasswordItemFields "Backup Restic/Workstations").RepositoryURL_scaleway.value }}"
+  limit-upload: 3000
   option:
     - "s3.region=fr-par"
-    - "limit-upload=3000"
 
   env:
     AWS_ACCESS_KEY_ID: "{{ (onepasswordItemFields "Scaleway").restic_Access_Key_ID.value }}"
