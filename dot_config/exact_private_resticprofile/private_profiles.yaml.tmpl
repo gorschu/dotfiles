@@ -27,6 +27,75 @@ default:
       - "{{ "--.Hostname ++" | replace "-" "{" | replace "+" "}" }}"
     host: true
 
+workstations-backblaze:
+  inherit: "default"
+  repository: "{{ (onepasswordItemFields "Backup Restic/Workstations").RepositoryURL_backblaze.value }}"
+  option:
+    - "b2-hard-delete"
+    - "limit-upload=3000"
+
+  env:
+    AWS_ACCESS_KEY_ID: "{{ (onepasswordItemFields "Backblaze").azmo_B2_ACCOUNT_ID.value }}"
+    AWS_SECRET_ACCESS_KEY: "{{ (onepasswordItemFields "Backblaze").azmo_B2_ACCOUNT_KEY.value }}"
+
+  backup:
+    {{ if regexFind "/home btrfs" (output "/usr/bin/cat" "/proc/mounts") }}
+    source: /mnt/btrfs-root/btrbk-snapshots/{{ .chezmoi.hostname }}.home.latest
+    {{ else if regexFind "/home zfs" (output "/usr/bin/cat" "/proc/mounts") }}
+    source: /mnt/restic/home/azmo
+    {{ end }}
+    exclude-file: "{{ "-- .ConfigDir ++" | replace "-" "{" | replace "+" "}" }}/restic-excludes-workstations-remote"
+
+    schedule: "hourly"
+    schedule-permission: "system"
+
+    {{ if regexFind "/home btrfs" (output "/usr/bin/cat" "/proc/mounts") }}
+    run-before:
+      - mount -o bind $(/usr/local/bin/btrbk --format=raw list latest home | sed -r "s/^.*snapshot_subvolume='([0-9A-Za-z\/\.\-]+)'.*$/\1/") /mnt/btrfs-root/btrbk-snapshots/{{ .chezmoi.hostname }}.home.latest
+    run-after:
+      - umount /mnt/btrfs-root/btrbk-snapshots/{{ .chezmoi.hostname }}.home.latest
+    {{ else if regexFind "/home zfs" (output "/usr/bin/cat" "/proc/mounts") }}
+    run-before:
+      - mkdir -p /mnt/restic/home/azmo
+      - zfs list -t snapshot -s creation -o name -H dpool/home/azmo | tail -1 > /tmp/ar-home-azmo-latest
+      - zfs clone $(cat /tmp/ar-home-azmo-latest) -o mountpoint=/mnt/restic/home/azmo dpool/tmp-restic-$(zfs get -H -o value guid $(cat /tmp/ar-home-azmo-latest))
+      - zfs get all $(cat /tmp/ar-home-azmo-latest) > /mnt/restic/home/azmo/dpool.snapshot.home.azmo.txt
+      - zfs set readonly=on dpool/tmp-restic-$(zfs get -H -o value guid $(cat /tmp/ar-home-azmo-latest))
+    run-finally:
+      - zfs destroy dpool/tmp-restic-$(zfs get -H -o value guid $(cat /tmp/ar-home-azmo-latest))
+   {{ end }}
+
+  retention:
+    before-backup: false
+    after-backup: true
+    keep-last: 3
+    keep-hourly: 24
+    keep-daily: 14
+    keep-weekly: 4
+    keep-monthly: 12
+    keep-yearly: 0
+    keep-within: "6h"
+    tag: true
+
+  forget:
+    keep-last: 3
+    keep-hourly: 24
+    keep-daily: 14
+    keep-weekly: 4
+    keep-monthly: 12
+    keep-yearly: 0
+    keep-within: "6h"
+    tag: true
+
+  check:
+    read-data: false
+    schedule: "Sun,Wed 10:30"
+    schedule-permission: "system"
+
+  prune:
+    schedule: "Sun 14:30"
+    schedule-permission: "system"
+
 workstations-scaleway:
   inherit: "default"
   repository: "{{ (onepasswordItemFields "Backup Restic/Workstations").RepositoryURL_scaleway.value }}"
@@ -69,7 +138,7 @@ workstations-scaleway:
     before-backup: false
     after-backup: true
     keep-last: 3
-    keep-hourly: 12
+    keep-hourly: 24
     keep-daily: 14
     keep-weekly: 4
     keep-monthly: 12
@@ -79,7 +148,7 @@ workstations-scaleway:
 
   forget:
     keep-last: 3
-    keep-hourly: 12
+    keep-hourly: 24
     keep-daily: 14
     keep-weekly: 4
     keep-monthly: 12
