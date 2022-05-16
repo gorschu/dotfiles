@@ -20,7 +20,7 @@ default:
     one-file-system: true
     schedule-lock-wait: "1h"
     exclude-caches: true
-    exclude-if-present: ".exclude_from_backup"
+    exclude-if-present: ".nobackup"
     check-before: false
     tag:
       - "{{ "--.Profile.Name ++" | replace "-" "{" | replace "+" "}" }}"
