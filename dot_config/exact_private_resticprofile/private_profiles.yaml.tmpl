@@ -65,10 +65,19 @@ workstations-scaleway:
       - zfs destroy dpool/tmp-restic-$(zfs get -H -o value guid $(cat /tmp/ar-home-azmo-latest))
    {{ end }}
 
-  forget:
-    schedule-permission: "system"
+  retention:
     before-backup: false
     after-backup: true
+    keep-last: 3
+    keep-hourly: 12
+    keep-daily: 14
+    keep-weekly: 4
+    keep-monthly: 12
+    keep-yearly: 0
+    keep-within: "6h"
+    tag: true
+
+  forget:
     keep-last: 3
     keep-hourly: 12
     keep-daily: 14
@@ -119,8 +128,7 @@ workstations-zeus:
       - zfs destroy dpool/tmp-restic-$(zfs get -H -o value guid $(cat /tmp/ar-home-azmo-latest))
    {{ end }}
 
-  forget:
-    schedule-permission: "system"
+  retention:
     before-backup: false
     after-backup: true
     keep-last: 3
@@ -132,11 +140,21 @@ workstations-zeus:
     keep-within: "6h"
     tag: true
 
+  forget:
+    keep-last: 3
+    keep-hourly: 24
+    keep-daily: 31
+    keep-weekly: 4
+    keep-monthly: 12
+    keep-yearly: 1
+    keep-within: "6h"
+    tag: true
+
   check:
-    read-data: true
-    schedule: "Sun,Wed 08:00"
+    read-data-subset: 10%
+    schedule: "Fri 08:45"
     schedule-permission: "system"
 
   prune:
-    schedule: "Mon 12:00"
+    schedule: "Mon 08:45"
     schedule-permission: "system"
