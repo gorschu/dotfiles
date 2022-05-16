@@ -85,27 +85,6 @@
         (org-agenda-files :maxlevel . 1)))
 (setq org-attach-id-dir (concat (file-name-as-directory org-directory) "attachments"))
 
-(after! org-capture
-(load! "lisp/org-protocol-capture-html")
-(add-to-list 'org-capture-templates
-               '("w"
-                 "Web site"
-                 entry
-                 (file+headline +org-capture-notes-file "Website")  ; target
-                 "* %a :website:\n\n%U %?\n\n%:initial")
-               )
-  )
-
-
-;; (after! org
-;;   (add-to-list 'org-capture-templates
-;;                '(("w" "Web site" entry
-;;                   (file "")
-;;                   "* %a :website:\n\n%U %?\n\n%:initial")
-;;                  )
-;;                )
-;;   )
-
 ;; add .asc to gpg filenames to be automatically decrypted
 (setq epa-file-name-regexp "\\.gpg\\(~\\|\\.~[0-9]+~\\)?\\'\\|\\.asc")
 (epa-file-name-regexp-update)
