@@ -1,1 +1,1 @@
-{{ if eq .colorscheme "dracula"}}{{ .chezmoi.homeDir }}/.vendor/dracula-xresources/Xresources{{ else if eq .colorscheme "nord"}}{{ .chezmoi.homeDir }}/.vendor/nord-xresources/src/nord{{ end }}
+{{ if eq .colorscheme "dracula"}}{{ .chezmoi.homeDir }}/.vendor/dracula-xresources/Xresources{{ else if eq .colorscheme "nord"}}{{ .chezmoi.homeDir }}/.vendor/nord-xresources/src/nord{{ else if eq .colorscheme "gruvbox" }}{{ .chezmoi.homeDir }}/.vendor/gruvbox-contrib/xresources/gruvbox-dark.xresources{{ end }}

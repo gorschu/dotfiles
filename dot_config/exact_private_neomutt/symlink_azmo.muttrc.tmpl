@@ -1,1 +1,1 @@
-{{ if eq .colorscheme "dracula"}}{{ .chezmoi.homeDir }}/.vendor/dracula-mutt/dracula.muttrc{{ else }}./okubax.mutt{{ end }}
+{{ if eq .colorscheme "dracula"}}{{ .chezmoi.homeDir }}/.vendor/dracula-mutt/dracula.muttrc{{ else if eq .colorscheme "nord" }}./okubax.mutt{{ else if eq .colorscheme "gruvbox"}}./colors-gruvbox-shruber.muttrc{{ end }}
