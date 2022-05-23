@@ -21,7 +21,7 @@
 ;; font string. You generally only need these two:
 ;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
-(setq doom-font (font-spec :family "JetBrains Mono" :size 14 :weight 'regular)
+(setq doom-font (font-spec :family "Iosevka Curly" :size 14 :weight 'regular)
       doom-variable-pitch-font (font-spec :family "Sans" :size 13 :weight: 'regular)
       )
 
@@ -72,13 +72,12 @@
 (setq deft-recursive t)
 (setq deft-use-filename-as-title t)
 
-(setq org-directory "~/org")
-(setq org-roam-directory "~/org/roam")
 ;; use all files in ~/org to be used in agenda
-(setq org-agenda-files
-      (mapcar 'abbreviate-file-name
-              (split-string
-               (shell-command-to-string "find ~/org -name \"*.org\"") "\n")))
+;;(after! org
+  (setq org-directory "~/org")
+  (setq org-roam-directory "~/org/roam")
+;;  (setq org-agenda-files (directory-files-recursively "~/org/" "\\.org$"))
+;;)
 
 (setq org-refile-targets
       '((nil :maxlevel . 3)
