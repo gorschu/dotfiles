@@ -80,6 +80,9 @@ set -g @dracula-show-flags true
 {{ if eq .colorscheme "nord" }}
 set -g @plugin "arcticicestudio/nord-tmux"
 {{ end }}
+{{ if eq .colorscheme "gruvbox" }}
+set -g @plugin 'lawabidingcactus/tmux-gruvbox-truecolor'
+{{ end }}
 
 # order matters here
 set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
