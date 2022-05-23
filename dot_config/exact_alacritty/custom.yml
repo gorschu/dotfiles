@@ -6,16 +6,16 @@ window:
 
 font:
   normal:
-    family: JetBrains Mono
+    family: Iosevka Curly
     style: Regular
   bold:
-    family: JetBrains Mono
+    family: Iosevka Curly
     style: Bold
   italic:
-    family: JetBrains Mono
+    family: Iosevka Curly
     style: Italic
   bold_italic:
-    family: JetBrains Mono
+    family: Iosevka Curly
     style: Bold Italic
   size: 10
 
