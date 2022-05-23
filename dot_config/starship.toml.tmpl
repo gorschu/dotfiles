@@ -9,8 +9,9 @@ min_time_to_notify = 60000
 
 [directory]
 {{ if eq .colorscheme "dracula" }}style = "bold #50fa7b"{{ end }}
-read_only = "  "
+{{ if eq .colorscheme "gruvbox" }}read_only_style = "#D65D0E"{{ end }}
 {{ if eq .colorscheme "nord" }}read_only_style = "#BF616A"{{ end }}
+read_only = "  "
 truncation_symbol = "…/"
 truncation_length = 3
 fish_style_pwd_dir_length = 1
@@ -21,6 +22,7 @@ symbol = " "
 
 [git_status]
 {{ if eq .colorscheme "dracula" }}style = "bold #ff5555"{{ end }}
+{{ if eq .colorscheme "gruvbox" }}style = "bold #689d6a"{{ end }}
 ahead = "⇡${count}"
 diverged = "😰⇡${ahead_count}⇣${behind_count}"
 behind = "⇣${count}"
@@ -75,4 +77,5 @@ sigint_symbol = ""
 format = "[$user]($style) on "
 {{ if eq .colorscheme "dracula" }}style_user = "bold #bd93f9"{{ end }}
 {{ if eq .colorscheme "nord" }}style_user = "bold #b48ead"{{ end }}
+{{ if eq .colorscheme "gruvbox" }}style_user = "bold #b16286"{{ end }}
 show_always = true
