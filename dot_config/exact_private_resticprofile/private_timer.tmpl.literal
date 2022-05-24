@@ -1,0 +1,14 @@
+[Unit]
+Description={{ .TimerDescription }}
+
+[Timer]
+{{ range .OnCalendar -}}
+OnCalendar={{ . }}
+{{ end -}}
+Unit={{ .SystemdProfile }}
+Persistent=true
+RandomizedDelaySec=600
+
+[Install]
+WantedBy=timers.target
+
