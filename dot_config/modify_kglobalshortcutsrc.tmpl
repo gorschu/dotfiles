@@ -6,7 +6,7 @@
   qdbus="qdbus"
 {{ end }}
 
-if ! command -v -p kwriteconfig5 > /dev/null || ! command -v -p ${qdbus}; then
+if ! command -v -p kwriteconfig5 > /dev/null || ! command -v -p ${qdbus} > /dev/null; then
     [[ -e $XDG_CONFIG_HOME/kglobalshortcutsrc ]] && cat $XDG_CONFIG_HOME/kglobalshortcutsrc
     exit 0
 fi
