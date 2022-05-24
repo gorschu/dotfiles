@@ -40,6 +40,8 @@ symbol = "ﳑ "
 
 [hostname]
 {{ if eq .colorscheme "dracula" }}style = "bold #ff5555"{{ end }}
+ssh_only = true
+format = "on 歷[$hostname]($style) "
 
 [java]
 symbol = " "
@@ -74,7 +76,7 @@ success_symbol = " "
 sigint_symbol = ""
 
 [username]
-format = "[$user]($style) on "
+format = "[$user]($style) "
 {{ if eq .colorscheme "dracula" }}style_user = "bold #bd93f9"{{ end }}
 {{ if eq .colorscheme "nord" }}style_user = "bold #b48ead"{{ end }}
 {{ if eq .colorscheme "gruvbox" }}style_user = "bold #b16286"{{ end }}
