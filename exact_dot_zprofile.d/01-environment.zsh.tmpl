@@ -17,7 +17,6 @@ systemctl --user import-environment XDG_CONFIG_HOME XDG_DATA_HOME XDG_CACHE_HOME
 expr "$XDG_CURRENT_DESKTOP" : ".*\(KDE\|GNOME\).*" 1>/dev/null || export QT_QPA_PLATFORMTHEME="qt5ct"
 
 # set SSH Variables
-export SSH_AUTH_SOCK=${XDG_RUNTIME_DIR}/ssh-agent.socket
 {{ $ssh_askpass_base := "" }}
 {{ $kssh_askpass_base := "" }}
 {{ if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
@@ -36,8 +35,14 @@ export SSH_AUTH_SOCK=${XDG_RUNTIME_DIR}/ssh-agent.socket
 expr "$XDG_CURRENT_DESKTOP" : ".*GNOME.*" 1>/dev/null && export SSH_ASKPASS={{ $ssh_askpass_base }}/gnome-ssh-askpass
 expr "$XDG_CURRENT_DESKTOP" : ".*KDE.*" 1>/dev/null && export SSH_ASKPASS={{ $kssh_askpass_base }}/ksshaskpass
 [ -z "$SSH_ASKPASS" ] && export SSH_ASKPASS={{ $ssh_askpass_base }}/x11-ssh-askpass
-# import to systemctl user-environment
-systemctl --user import-environment SSH_AUTH_SOCK SSH_ASKPASS
+
+# only set SSH_AUTH_SOCK when we not connected via SSH
+# else we break SSH Agent Forwarding
+if [[ -z ${SSH_CLIENT} ]]; then
+  export SSH_AUTH_SOCK=${XDG_RUNTIME_DIR}/ssh-agent.socket
+  # import to systemctl user-environment
+  systemctl --user import-environment SSH_AUTH_SOCK SSH_ASKPASS
+fi
 
 # use new freetype 2.7 default interpreter
 export FREETYPE_PROPERTIES="truetype:interpreter-version=40"
