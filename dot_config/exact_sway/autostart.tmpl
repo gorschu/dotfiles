@@ -1,21 +1,12 @@
-### Idle configuration
-exec swayidle -w \
-         timeout 300 'swaylock -f -c 000000 --indicator-idle-visible --ignore-empty-password --show-failed-attempts' \
-         timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-         timeout 3600 'systemctl suspend' \
-         lock 'swaylock -f -c 000000 --indicator-idle-visible --ignore-empty-password --show-failed-attempts' \
-         before-sleep 'swaylock -f -c 000000 --indicator-idle-visible --ignore-empty-password --show-failed-attempts' \
-         idlehint 300
-
+exec --no-startup-id mylock -q safe
 exec --no-startup-id 1password
-exec --no-startup-id kanshi
+exec_always --no-startup-id pkill kanshi; exec kanshi
 exec --no-startup-id mako
 exec --no-startup-id copyq
 exec --no-startup-id udiskie --no-automount --tray
 exec --no-startup-id easyeffects --gapplication-service
 exec --no-startup-id solaar --window hide --battery-icons solaar
 exec --no-startup-id ~/.local/share/JetBrains/Toolbox/bin/jetbrains-toolbox --minimize
-
 
 # backlight to 30% by default
 exec light -S 40%
@@ -24,6 +15,7 @@ exec light -S 40%
 set $gnome-schema org.gnome.desktop.interface
 exec_always {
   gsettings set $gnome-schema gtk-theme "Adwaita-dark"
+  gsettings set $gnome-schema color-scheme "prefer-dark"
   gsettings set $gnome-schema icon-theme "Adwaita"
   gsettings set $gnome-schema cursor-theme "Adwaita"
   gsettings set $gnome-schema font-name "Sans 10"
