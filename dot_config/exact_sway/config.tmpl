@@ -5,7 +5,7 @@
 # Read `man 5 sway` for a complete reference.
 
 ### Variables
-include {{ env "XDG_CONFIG_HOME" }}/sway/colors.nord
+{{ if eq .colorscheme "nord" }}include {{ env "XDG_CONFIG_HOME" }}/sway/colors.nord{{ else }}include {{ env "XDG_CONFIG_HOME" }}/sway/colors.gruvbox{{ end }}
 #
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
