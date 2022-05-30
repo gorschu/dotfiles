@@ -39,6 +39,7 @@
 
 /* COLORS */
 
+{{ if eq .colorscheme "nord" }}
 /* Nord */
 @define-color light #eceff4;
 @define-color dark #3b4252;
@@ -57,22 +58,26 @@
 @define-color temp #d8dee9;
 @define-color language #5e81ac;
 @define-color battery #88c0d0;
-
+{{ else if eq .colorscheme "gruvbox"}}
 /* Gruvbox */
-/*@define-color light #ebdbb2;
+@define-color light #ebdbb2;
 @define-color dark #282828;
-@define-color warning #fabd2f;
+@define-color warning #d79921;
 @define-color critical #cc241d;
 @define-color mode #a89984;
 @define-color workspaces #458588;
 @define-color workspacesfocused #83a598;
+@define-color workspacesfocusedinactive #d3869b;
+@define-color idle-inhibitor #8ec07c;
 @define-color sound #d3869b;
 @define-color network #b16286;
+@define-color backlight #b16286;
 @define-color memory #8ec07c;
 @define-color cpu #98971a;
 @define-color temp #b8bb26;
 @define-color language #689d6a;
-@define-color battery #fabd2f;*/
+@define-color battery #d79921;
+{{ end }}
 
 /* Reset all styles */
 * {
@@ -207,7 +212,11 @@
 
 #cpu {
 	background: @cpu;
+  {{ if eq .colorscheme "nord" }}
 	color: @light;
+  {{ else if eq .colorscheme "gruvbox" }}
+	color: @dark;
+  {{ end }}
 }
 
 #temperature {
@@ -222,7 +231,11 @@
 
 #language {
 	background: @language;
+  {{ if eq .colorscheme "nord" }}
 	color: @light;
+  {{ else if eq .colorscheme "gruvbox" }}
+	color: @dark;
+  {{ end }}
 }
 
 #battery {
