@@ -87,6 +87,8 @@ workstations-backblaze:
     tag: true
 
   check:
+    cache-dir: {{ env "XDG_CACHE_HOME" }}/restic-check
+    with-cache: true
     read-data: false
     schedule: "Sun,Wed 10:30"
     schedule-permission: "system"
@@ -156,6 +158,8 @@ workstations-scaleway:
     tag: true
 
   check:
+    cache-dir: {{ env "XDG_CACHE_HOME" }}/restic-check
+    with-cache: true
     read-data: false
     schedule: "Sun,Wed 10:30"
     schedule-permission: "system"
@@ -219,6 +223,8 @@ workstations-zeus:
     tag: true
 
   check:
+    cache-dir: {{ env "XDG_CACHE_HOME" }}/restic-check
+    with-cache: true
     read-data-subset: 10%
     schedule: "Fri 08:45"
     schedule-permission: "system"
