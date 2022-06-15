@@ -35,7 +35,7 @@ sudo dnf -y install npm cargo go fd-find ripgrep neovim
 sudo zypper in -y npm cargo go fd ripgrep neovim make
 {{ end }}
 [[ -e $HOME/.local/share/lunarvim ]] && rm -rf $HOME/.local/share/lunarvim
-bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) -y
+LV_BRANCH=rolling bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/rolling/utils/installer/install.sh) -y
 
 echo "${green}Changing from (possible) https to ssh${reset}"
 ${chezmoi} git remote set-url origin git@github.com:azmodude/dotfiles
