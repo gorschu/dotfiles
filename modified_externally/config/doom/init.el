@@ -23,7 +23,8 @@
        company           ; the ultimate code completion backend
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
-       ivy               ; a search engine for love and life
+       ;;ivy               ; a search engine for love and life
+       (vertico +icons)
 
        :ui
        deft              ; notational velocity for Emacs
@@ -134,7 +135,7 @@
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ; a language you can depend on
        (json +lsp)             ; At least it ain't XML
-       (java +meghanada) ; the poster child for carpal tunnel syndrome
+       (java +lsp) ; the poster child for carpal tunnel syndrome
        (javascript +lsp)       ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia             ; a better, faster MATLAB
        (kotlin +lsp)           ; a better, slicker Java(Script)
