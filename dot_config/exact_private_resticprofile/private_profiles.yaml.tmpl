@@ -67,7 +67,7 @@ workstations-backblaze:
   retention:
     before-backup: false
     after-backup: true
-    keep-last: 3
+    keep-last: 30
     keep-hourly: 24
     keep-daily: 14
     keep-weekly: 4
@@ -77,7 +77,7 @@ workstations-backblaze:
     tag: true
 
   forget:
-    keep-last: 3
+    keep-last: 30
     keep-hourly: 24
     keep-daily: 14
     keep-weekly: 4
@@ -203,23 +203,23 @@ workstations-zeus:
   retention:
     before-backup: false
     after-backup: true
-    keep-last: 3
+    keep-last: 60
     keep-hourly: 24
-    keep-daily: 31
-    keep-weekly: 4
-    keep-monthly: 12
-    keep-yearly: 1
-    keep-within: "6h"
+    keep-daily: 90
+    keep-weekly: 12
+    keep-monthly: 24
+    keep-yearly: 2
+    keep-within: "24h"
     tag: true
 
   forget:
-    keep-last: 3
+    keep-last: 60
     keep-hourly: 24
-    keep-daily: 31
-    keep-weekly: 4
-    keep-monthly: 12
-    keep-yearly: 1
-    keep-within: "6h"
+    keep-daily: 90
+    keep-weekly: 12
+    keep-monthly: 24
+    keep-yearly: 2
+    keep-within: "24h"
     tag: true
 
   check:
