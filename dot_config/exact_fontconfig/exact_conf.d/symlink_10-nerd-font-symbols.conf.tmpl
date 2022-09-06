@@ -1,0 +1,5 @@
+{{ if eq .chezmoi.osRelease.id "arch" }}
+/usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf
+{{ else }}
+../conf.avail/10-nerd-font-symbols.conf
+{{ end }}
