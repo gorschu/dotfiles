@@ -8,10 +8,12 @@ ENABLE_CORRECTION="false"
 # we are not running a SSH session
 # else we running into all sorts of problems on emacs/vim/tmux startup
 if [[ -v TERM ]] && [[ ! -v SSH_CLIENT ]] && [[ ! -v SSH_TTY ]]; then
-  ZSH_TMUX_AUTOSTART="false"
+  ZSH_TMUX_AUTOSTART="true"
+  ZSH_TMUX_AUTOSTART_ONCE="true"
+  ZSH_TMUX_AUTOQUIT="false"
+  ZSH_TMUX_CONFIG="${HOME}/.config/tmux/tmux.conf"
 else
   ZSH_TMUX_AUTOSTART="false"
-  ZSH_TMUX_AUTOQUIT="false"
 fi
 # let oh-my-zsh set the terminal title
 DISABLE_AUTO_TITLE=false
@@ -69,7 +71,7 @@ if ! zgenom saved; then
   zgenom ohmyzsh plugins/httpie
   zgenom ohmyzsh plugins/rsync
   zgenom ohmyzsh plugins/taskwarrior
-  # zgenom ohmyzsh plugins/tmux
+  zgenom ohmyzsh plugins/tmux
   zgenom ohmyzsh plugins/ripgrep
   zgenom ohmyzsh plugins/vscode
   zgenom ohmyzsh plugins/vagrant
