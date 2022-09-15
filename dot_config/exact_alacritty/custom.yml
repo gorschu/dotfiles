@@ -4,6 +4,12 @@ window:
     x: 5
     y: 0
 
+cursor:
+  style:
+    blinking: Always
+  blink_timeout: 30
+  unfocused_hollow: true
+
 font:
   normal:
     family: JetBrains Mono
@@ -23,6 +29,8 @@ key_bindings:
   # use different ToggleViMode keybinding since default clashes with 1Password
   - { key: Space,     mods: Control|Alt,  mode: ~Search,    action: ToggleViMode }
   - { key: Space,     mods: Control|Shift,                  action: ReceiveChar }
-  # Modify vim mode search keybindings
+  # modify vim mode search keybindings
   - { key: Slash,     mods: Shift,        mode: Vi|~Search, action: SearchForward }
   - { key: Backslash, mode: Vi|~Search,                     action: SearchBackward }
+  # send CR on numpadenter to fix tmux
+  - { key: NumpadEnter, chars: "\r" }
