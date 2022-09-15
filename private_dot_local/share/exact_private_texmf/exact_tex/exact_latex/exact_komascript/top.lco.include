@@ -10,7 +10,7 @@
 \usepackage[ngerman]{babel}
 
 % load linux libertine fonts
-\usepackage[mono=true]{libertine}
+\usepackage{libertine}
 
 \usepackage{marvosym}
 \usepackage{color}
