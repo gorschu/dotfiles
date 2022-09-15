@@ -6,4 +6,4 @@ for nogerman in $(env | grep "LC_" | cut -d "=" -f 1); do
   unset -v "${nogerman}"
 done
 
-flatpak run dev.goats.xivlauncher
+flatpak run dev.goats.xivlauncher --parent-expose-pids --parent-share-pids --parent-pid=1
