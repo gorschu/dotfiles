@@ -78,6 +78,8 @@ export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 # for openkeychain on android, hardened gpg config throws them away
 export PASSWORD_STORE_GPG_OPTS='--no-throw-keyids'
 
+expr "$XDG_SESSION_TYPE" = "wayland" 1>/dev/null && export export MOZ_ENABLE_WAYLAND=1
+
 # virtualenv
 export WORKON_HOME=$HOME/.cache/virtualenvs
 export PROJECT_HOME=$HOME/projects
