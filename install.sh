@@ -2,7 +2,7 @@
 
 set -e # -e: exit on error
 
-op_latest=2.1.0
+op_latest=2.7.0
 op_email=gordon@gordonschulz.de
 
 echo "${green}Installing absolute requirements${reset}"
@@ -10,7 +10,9 @@ if [[ $(grep "^ID" /etc/os-release) =~ ubuntu ]]; then
   sudo apt-get update && \
         sudo apt-get -y install git yubikey-manager
 elif [[ $(grep "^ID" /etc/os-release) =~ arch ]]; then
-    paru -S --noconfirm --needed git yubikey-manager
+    # fetch agilebits gpg key
+    gpg --receive-keys 3FEF9748469ADBE15DA7CA80AC2D62742012EA22
+    paru -S --pgpfetch --noconfirm --needed git yubikey-manager chezmoi 1password-cli 1password
 elif [[ $(grep "^ID" /etc/os-release) =~ fedora ]]; then
     sudo dnf install -y git yubikey-manager
 elif [[ $(grep "^ID" /etc/os-release) =~ opensuse ]]; then
@@ -32,31 +34,33 @@ else
   chezmoi=chezmoi
 fi
 
-if [[ ! $(grep "^ID" /etc/os-release) =~ fedora ]]; then
+if [[ ! $(grep "^ID" /etc/os-release) =~ fedora ]] && [[ ! $(grep "^ID" /etc/os-release) =~ arch ]]; then
   if [[ ! -e $HOME/.local/bin/op ]]; then
     tmpdir=$(mktemp -d)
     curl -L -o "$tmpdir"/op.zip https://cache.agilebits.com/dist/1P/op2/pkg/v"$op_latest/op_linux_amd64_v$op_latest".zip
-    [[ ! -d $HOME/bin ]] && mkdir "$HOME"/bin
+    [[ ! -d $HOME/.local/bin ]] && mkdir "$HOME/.local/bin"
     unzip "$tmpdir"/op.zip -d "$tmpdir" && mv "$tmpdir"/op "$HOME"/.local/bin
   fi
 fi
 
 # Install 1PW
-op_url="https://downloads.1password.com/linux/rpm/stable/x86_64/1password-latest.rpm"
-op_rpm_key="https://downloads.1password.com/linux/keys/1password.asc"
-if [[ $(grep "^ID" /etc/os-release) =~ fedora ]]; then
-  # we are using the 1pw repository here, so never do this after initital install
-  if ! rpm -q 1password >/dev/null; then
+if [ ! "$(command -v 1password)" ]; then
+  op_url="https://downloads.1password.com/linux/rpm/stable/x86_64/1password-latest.rpm"
+  op_rpm_key="https://downloads.1password.com/linux/keys/1password.asc"
+  if [[ $(grep "^ID" /etc/os-release) =~ fedora ]]; then
+    # we are using the 1pw repository here, so never do this after initital install
+    if ! rpm -q 1password >/dev/null; then
+      sudo rpm --import "$op_rpm_key"
+      sudo dnf install -y "$op_url"
+    fi
+    if ! rpm -q 1password-cli >/dev/null; then
+      sudo dnf install -y 1password-cli
+    fi
+  elif [[ $(grep "^ID" /etc/os-release) =~ opensuse ]]; then
+    # we cannot use the DNF repository on SUSE, therefore do this everytime
     sudo rpm --import "$op_rpm_key"
-    sudo dnf install -y "$op_url"
+    sudo zypper install -y "$op_url"
   fi
-  if ! rpm -q 1password-cli >/dev/null; then
-    sudo dnf install -y 1password-cli
-  fi
-elif [[ $(grep "^ID" /etc/os-release) =~ opensuse ]]; then
-  # we cannot use the DNF repository on SUSE, therefore do this everytime
-  sudo rpm --import "$op_rpm_key"
-  sudo zypper install -y "$op_url"
 fi
 
 # stop pcscd for first use - it conflicts with gnupg when the latter is not configured to use it
@@ -95,7 +99,7 @@ export GPG_TTY=$(tty)
 # POSIX way to get script's dir: https://stackoverflow.com/a/29834779/12156188
 script_dir="$(cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P)"
 # exec: replace current process with chezmoi init
-export PATH="$PATH:$HOME"/.local/bin
+export PATH="$PATH:$HOME/.local/bin"
 XDG_CONFIG_HOME=$HOME/.config OP_SESSION_my=$(bash bin/exact_security/executable_onepassword-signin) exec "$chezmoi" init --apply "--source=$script_dir"
 
 # vim: set ft=sh:

@@ -13,11 +13,17 @@ else
   chezmoi=chezmoi
 fi
 
-echo "${green}Protect our fonts.conf (KDE likes to mess with it)${reset}"
-sudo chattr +i {{ .chezmoi.homeDir }}/.config/fontconfig/fonts.conf
+if [[ $XDG_CURRENT_DESKTOP == 'KDE' ]]; then
+  echo "${green}Protect our fonts.conf (KDE likes to mess with it)${reset}"
+  sudo chattr +i {{ .chezmoi.homeDir }}/.config/fontconfig/fonts.conf
+fi
 
 echo "${green}Install fzf${reset}"
+{{ if ne .chezmoi.osRelease.id "arch" }}
 $HOME/.vendor/fzf/install --all
+{{ else }}
+sudo pacman -S --noconfirm --needed fzf
+{{ end }}
 
 echo "${green}Install asdf plugins${reset}"
 set +ux
@@ -33,6 +39,8 @@ echo "${green}Install lunarvim${reset}"
 sudo dnf -y install npm cargo go fd-find ripgrep neovim
 {{ else if eq .chezmoi.osRelease.id "opensuse-tumbleweed" "opensuse-leap" }}
 sudo zypper in -y npm cargo go fd ripgrep neovim make
+{{ else if eq .chezmoi.osRelease.id "arch" }}
+sudo pacman -S --noconfirm --needed npm cargo go fd ripgrep neovim
 {{ end }}
 [[ -e $HOME/.local/share/lunarvim ]] && rm -rf $HOME/.local/share/lunarvim
 LV_BRANCH=rolling bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/rolling/utils/installer/install.sh) -y
