@@ -160,8 +160,7 @@ lvim.plugins = {
       })
     end,
     },
-    -- markdown preview
-    {
+    { -- markdown preview
       "iamcco/markdown-preview.nvim",
       run = "cd app && npm install",
       ft = "markdown",
@@ -169,8 +168,7 @@ lvim.plugins = {
         vim.g.mkdp_auto_start = 1
       end,
     },
-    -- start where we left off
-    {
+    { -- start where we left off
       "ethanholz/nvim-lastplace",
       event = "BufRead",
       config = function()
@@ -183,15 +181,15 @@ lvim.plugins = {
         })
       end,
     },
-    -- Show signatures while tying (for LSP)
-    {
+    { -- Show signatures while tying (for LSP)
       "ray-x/lsp_signature.nvim",
       config = function()
         require "lsp_signature".setup()
       end
     },
-    -- Show Tags in Outline (for LSP)
-    {"simrat39/symbols-outline.nvim", cmd = "SymbolsOutline"},
+    { -- Show Tags in Outline (for LSP)
+      "simrat39/symbols-outline.nvim", cmd = "SymbolsOutline"
+    },
     { "phaazon/hop.nvim",
       config = function()
         require("hop").setup()
@@ -199,8 +197,8 @@ lvim.plugins = {
         vim.api.nvim_set_keymap("n", "S", ":HopWord<cr>", { silent = true })
       end,
     },
-    -- show line for jumping
-    { "nacro90/numb.nvim",
+    { -- show line we're going to jump to
+      "nacro90/numb.nvim",
     config = function()
     require("numb").setup {
       show_numbers = true, -- Enable 'number' for the window while peeking
@@ -237,7 +235,7 @@ lvim.plugins = {
       require("colorizer").setup()
     end,
   },
-  {
+  { -- better increment/decrement
     "monaqa/dial.nvim",
     config = function()
       local augend = require("dial.augend")
@@ -270,7 +268,6 @@ lvim.plugins = {
           augend.constant.alias.Alpha,
         },
       }
-
     end,
   },
 }
