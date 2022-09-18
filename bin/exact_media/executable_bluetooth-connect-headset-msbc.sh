@@ -39,10 +39,12 @@ case $1 in
 65)
         pactl set-source-volume bluez_input."${btid_underscore}".headset-head-unit \
             "$source_volume_65"%
-        easyeffects --load-preset "Jabra_Evolve_65-Calls"
+        #easyeffects --load-preset "Jabra_Evolve_65-Calls"
+        easyeffects --load-preset "improved_microphone_male_voices_noise_reduction"
     ;;
 85t)
         pactl set-source-volume bluez_input."${btid_underscore}".headset-head-unit \
             "$source_volume_85t"%
-        easyeffects --load-preset "Jabra_Elite_85t-Calls"
+        #easyeffects --load-preset "Jabra_Elite_85t-Calls"
+        easyeffects --load-preset "improved_microphone_male_voices_noise_reduction"
 esac
