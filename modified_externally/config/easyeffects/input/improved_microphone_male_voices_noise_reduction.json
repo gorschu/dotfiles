@@ -6,6 +6,7 @@
             "boost-amount": 6.0,
             "boost-threshold": -72.0,
             "bypass": false,
+            "dry": -100.0,
             "hpf-frequency": 10.0,
             "hpf-mode": "off",
             "input-gain": 0.0,
@@ -17,7 +18,7 @@
             "output-gain": 0.0,
             "ratio": 4.0,
             "release": 100.0,
-            "release-threshold": -120.0,
+            "release-threshold": -100.0,
             "sidechain": {
                 "lookahead": 0.0,
                 "mode": "RMS",
@@ -26,7 +27,8 @@
                 "source": "Middle",
                 "type": "Feed-forward"
             },
-            "threshold": -12.0
+            "threshold": -12.0,
+            "wet": 0.0
         },
         "deesser": {
             "bypass": false,
@@ -46,6 +48,7 @@
             "threshold": -18.0
         },
         "filter": {
+            "bypass": false,
             "frequency": 80.0,
             "inertia": 20.0,
             "input-gain": 0.0,
@@ -58,6 +61,7 @@
             "bypass": false,
             "curve-threshold": -24.0,
             "curve-zone": -6.0,
+            "dry": -100.0,
             "hpf-frequency": 10.0,
             "hpf-mode": "off",
             "hysteresis": false,
@@ -77,7 +81,8 @@
                 "preamp": 0.0,
                 "reactivity": 10.0,
                 "source": "Middle"
-            }
+            },
+            "wet": 0.0
         },
         "limiter": {
             "alr": false,
@@ -99,13 +104,24 @@
             "stereo-link": 100.0,
             "threshold": -1.0
         },
+        "loudness": {
+            "bypass": false,
+            "clipping": false,
+            "clipping-range": 6.0,
+            "fft": "4096",
+            "input-gain": 8.0,
+            "output-gain": 0.0,
+            "std": "ISO226-2003",
+            "volume": 0.0
+        },
         "plugins_order": [
             "gate",
             "compressor",
             "filter",
             "deesser",
             "rnnoise",
-            "limiter"
+            "limiter",
+            "loudness"
         ],
         "rnnoise": {
             "bypass": false,
