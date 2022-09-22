@@ -235,6 +235,10 @@ lvim.plugins = {
       require("colorizer").setup()
     end,
   },
+  { --- Quickfix and Stuff
+    "folke/trouble.nvim",
+      cmd = "TroubleToggle",
+  },
   { -- better increment/decrement
     "monaqa/dial.nvim",
     config = function()
@@ -273,6 +277,17 @@ lvim.plugins = {
 }
 
 vim.opt.timeoutlen = 300 -- up from 100 which is the default for keysequences to happen
+
+-- trouble
+lvim.builtin.which_key.mappings["t"] = {
+  name = "Diagnostics",
+  t = { "<cmd>TroubleToggle<cr>", "trouble" },
+  w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "workspace" },
+  d = { "<cmd>TroubleToggle document_diagnostics<cr>", "document" },
+  q = { "<cmd>TroubleToggle quickfix<cr>", "quickfix" },
+  l = { "<cmd>TroubleToggle loclist<cr>", "loclist" },
+  r = { "<cmd>TroubleToggle lsp_references<cr>", "references" },
+}
 
 -- hop keys
 vim.api.nvim_set_keymap('n', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
@@ -318,6 +333,8 @@ formatters.setup {
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
   { command = "shellcheck", filetypes = { "sh" } },
+  { command = "pylint", filetypes = { "python" } },
+  { command = "mypy", filetypes = { "python" } },
 --   {
 --     -- each linter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
 --     command = "shellcheck",
