@@ -188,9 +188,16 @@ lvim.plugins = {
       end
     },
     { -- Show Tags in Outline (for LSP)
-      "simrat39/symbols-outline.nvim", cmd = "SymbolsOutline"
+      'stevearc/aerial.nvim',
+      config = function()
+        require('aerial').setup({
+        open_automatic = true,
+          close_automatic_events = {"unsupported"},
+      })
+      end,
     },
-    { "phaazon/hop.nvim",
+    { -- Jump around like crazy!
+      "phaazon/hop.nvim",
       config = function()
         require("hop").setup()
         vim.api.nvim_set_keymap("n", "s", ":HopChar2<cr>", { silent = true })
@@ -273,6 +280,32 @@ lvim.plugins = {
         },
       }
     end,
+  },
+  { -- better quickfix
+  "kevinhwang91/nvim-bqf",
+  event = { "BufRead", "BufNew" },
+  config = function()
+  require("bqf").setup({
+          auto_enable = true,
+          preview = {
+          win_height = 12,
+          win_vheight = 12,
+          delay_syntax = 80,
+          border_chars = { "┃", "┃", "━", "━", "┏", "┓", "┗", "┛", "█" },
+          },
+          func_map = {
+          vsplit = "",
+          ptogglemode = "z,",
+          stoggleup = "",
+          },
+          filter = {
+          fzf = {
+          action_for = { ["ctrl-s"] = "split" },
+          extra_opts = { "--bind", "ctrl-o:toggle-all", "--prompt", "> " },
+          },
+          },
+          })
+  end,
   },
 }
 
