@@ -25,9 +25,15 @@ symbol = " "
 [git_status]
 {{ if eq .colorscheme "dracula" }}style = "bold #ff5555"{{ end }}
 {{ if eq .colorscheme "gruvbox" }}style = "bold #689d6a"{{ end }}
-ahead = "⇡${count}"
-diverged = "😰⇡${ahead_count}⇣${behind_count}"
-behind = "⇣${count}"
+ahead = " $count"
+diverged = "  $ahead_count $behind_count"
+behind = " $count"
+deleted = "﯊ $count"
+modified = "署 $count"
+untracked = " $count"
+conflicted = " $count"
+stashed = "  $count"
+renamed = "  $count"
 
 [git_metrics]
 disabled = false
