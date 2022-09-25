@@ -12,18 +12,18 @@ cursor:
 
 font:
   normal:
-    family: JetBrains Mono
+    family: Iosevka SS14
     style: Regular
   bold:
-    family: JetBrains Mono
+    family: Iosevka SS14
     style: Bold
   italic:
-    family: JetBrains Mono
+    family: Iosevka SS14
     style: Italic
   bold_italic:
-    family: JetBrains Mono
+    family: Iosevka SS14
     style: Bold Italic
-  size: 10
+  size: 11
 
 key_bindings:
   # use different ToggleViMode keybinding since default clashes with 1Password
