@@ -1,10 +1,16 @@
 [Unit]
 Description={{ .JobDescription }}
+Wants=network-online.target
+After=network-online.target
 
 [Service]
-Type=notify
-ExecStart={{ .CommandLine }}
+Type=oneshot
+# Delay start to prevent backups running during boot. Note that systemd-inhibit requires dbus and
+# dbus-user-session to be installed.
+ExecStartPre=sleep 1m
+ExecStart=systemd-inhibit --who="resticprofile" --why="Prevent interrupting scheduled backup" {{ .CommandLine }}
 {{ if .Nice }}Nice={{ .Nice }}{{ end }}
 {{ range .Environment -}}
 Environment="{{ . }}"
 {{ end -}}
+
