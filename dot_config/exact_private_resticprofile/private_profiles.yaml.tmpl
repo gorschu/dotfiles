@@ -14,8 +14,12 @@ default:
   status-file: "/tmp/resticprofile/{{ "-- .Profile.Name ++" | replace "-" "{" | replace "+" "}" }}-status.json"
   password-file: "{{ "-- .ConfigDir ++" | replace "-" "{" | replace "+" "}" }}/restic-password-{{ "-- .Profile.Name ++" | replace "-" "{" | replace "+" "}" }}"
   lock: "{{ "-- if .Env.XDG_RUNTIME_DIR ++-- .Env.XDG_RUNTIME_DIR ++-- else ++/tmp-- end ++" | replace "-" "{" | replace "+" "}" }}/resticprofile/{{ "-- .Profile.Name ++" | replace "-" "{" | replace "+" "}" }}.lock"
-  run-after: "curl -s --output /dev/null --form-string 'token={{ (onepasswordItemFields "Pushover").restic.value }}' --form-string 'user={{ (onepasswordItemFields "Pushover").UserKey.value }}' --form-string \"message=Restic $PROFILE_COMMAND successful on host '{{ .chezmoi.fqdnHostname }}' for profile '$PROFILE_NAME'.\" https://api.pushover.net/1/messages.json"
-  run-after-fail: "curl -s --output /dev/null --form-string 'token={{ (onepasswordItemFields "Pushover").restic.value }}' --form-string 'user={{ (onepasswordItemFields "Pushover").UserKey.value }}'  --form-string \"message=Restic $PROFILE_COMMAND failed on host '{{ .chezmoi.hostname }}' for profile '$PROFILE_NAME' with error: $ERROR.\" https://api.pushover.net/1/messages.json"
+  run-after: "curl -s --output /dev/null --form-string 'token={{ (onepasswordItemFields "Pushover").restic.value }}' --form-string 'user={{ (onepasswordItemFields "Pushover").UserKey.value }}' --form-string \"message=Restic $PROFILE_COMMAND successful on host '{{ .chezmoi.hostname }}' for profile '$PROFILE_NAME'.\" https://api.pushover.net/1/messages.json"
+  run-after-fail:
+    - "curl -s --output /dev/null --form-string 'token={{ (onepasswordItemFields "Pushover").restic.value }}' --form-string 'user={{ (onepasswordItemFields "Pushover").UserKey.value }}'  --form-string \"message=Restic $PROFILE_COMMAND failed on host '{{ .chezmoi.hostname }}' for profile '$PROFILE_NAME' with error: $ERROR.\" https://api.pushover.net/1/messages.json"
+    {{ if eq .chezmoi.hostname "apollo" }}
+    - curl -fsS -m 10 --retry 5 -o /dev/null https://hc-ping.com/8dd8e851-e4a6-4e4c-832d-705ef1885499/fail
+    {{ end }}
 
   backup:
     one-file-system: true
@@ -50,16 +54,30 @@ workstations-backblaze:
 
     {{ if regexFind "/home btrfs" (output "/usr/bin/cat" "/proc/mounts") }}
     run-before:
+      {{ if eq .chezmoi.hostname "apollo" }}
+      - curl -fsS -m 10 --retry 5 -o /dev/null https://hc-ping.com/8dd8e851-e4a6-4e4c-832d-705ef1885499/start
+      {{ end }}
       - mount -o bind $(/usr/local/bin/btrbk --format=raw list latest home | sed -r "s/^.*snapshot_subvolume='([0-9A-Za-z\/\.\-]+)'.*$/\1/") /mnt/btrfs-root/btrbk-snapshots/{{ .chezmoi.hostname }}.home.latest
     run-after:
+      {{ if eq .chezmoi.hostname "apollo" }}
+      - curl -fsS -m 10 --retry 5 -o /dev/null https://hc-ping.com/8dd8e851-e4a6-4e4c-832d-705ef1885499
+      {{ end }}
+    run-finally:
       - umount /mnt/btrfs-root/btrbk-snapshots/{{ .chezmoi.hostname }}.home.latest
     {{ else if regexFind "/home zfs" (output "/usr/bin/cat" "/proc/mounts") }}
     run-before:
+      {{ if eq .chezmoi.hostname "apollo" }}
+      - curl -fsS -m 10 --retry 5 -o /dev/null https://hc-ping.com/8dd8e851-e4a6-4e4c-832d-705ef1885499/start
+      {{ end }}
       - mkdir -p /mnt/restic/home/azmo
       - zfs list -t snapshot -s creation -o name -H dpool/home/azmo | tail -1 > /tmp/ar-home-azmo-latest
       - zfs clone $(cat /tmp/ar-home-azmo-latest) -o mountpoint=/mnt/restic/home/azmo dpool/tmp-restic-$(zfs get -H -o value guid $(cat /tmp/ar-home-azmo-latest))
       - zfs get all $(cat /tmp/ar-home-azmo-latest) > /mnt/restic/home/azmo/dpool.snapshot.home.azmo.txt
       - zfs set readonly=on dpool/tmp-restic-$(zfs get -H -o value guid $(cat /tmp/ar-home-azmo-latest))
+    run-after:
+      {{ if eq .chezmoi.hostname "apollo" }}
+      - curl -fsS -m 10 --retry 5 -o /dev/null https://hc-ping.com/8dd8e851-e4a6-4e4c-832d-705ef1885499
+      {{ end }}
     run-finally:
       - zfs destroy dpool/tmp-restic-$(zfs get -H -o value guid $(cat /tmp/ar-home-azmo-latest))
    {{ end }}
@@ -69,7 +87,7 @@ workstations-backblaze:
     after-backup: true
     keep-last: 30
     keep-hourly: 24
-    keep-daily: 14
+    keep-daily: 30
     keep-weekly: 4
     keep-monthly: 12
     keep-yearly: 0
@@ -79,7 +97,7 @@ workstations-backblaze:
   forget:
     keep-last: 30
     keep-hourly: 24
-    keep-daily: 14
+    keep-daily: 30
     keep-weekly: 4
     keep-monthly: 12
     keep-yearly: 0
@@ -197,7 +215,7 @@ workstations-zeus:
       - zfs get all $(cat /tmp/ar-home-azmo-latest) > /mnt/restic/home/azmo/dpool.snapshot.home.azmo.txt
       - zfs set readonly=on dpool/tmp-restic-$(zfs get -H -o value guid $(cat /tmp/ar-home-azmo-latest))
     run-finally:
-      - zfs destroy dpool/tmp-restic-$(zfs get -H -o value guid $(cat /tmp/ar-home-azmo-latest))
+      - sleep 10 && zfs destroy dpool/tmp-restic-$(zfs get -H -o value guid $(cat /tmp/ar-home-azmo-latest))
    {{ end }}
 
   retention:
