@@ -2,8 +2,9 @@
 
 set -e # -e: exit on error
 
-op_latest=2.7.0
-op_email=gordon@gordonschulz.de
+red=$(tput setaf 1)
+green=$(tput setaf 2)
+reset=$(tput sgr0)
 
 echo "${green}Installing absolute requirements${reset}"
 if [[ $(grep "^ID" /etc/os-release) =~ ubuntu ]]; then
@@ -16,7 +17,7 @@ elif [[ $(grep "^ID" /etc/os-release) =~ arch ]]; then
 elif [[ $(grep "^ID" /etc/os-release) =~ fedora ]]; then
     sudo dnf install -y git yubikey-manager
 elif [[ $(grep "^ID" /etc/os-release) =~ opensuse ]]; then
-    sudo zypper install -y git yubikey-manager
+    sudo zypper install -y git yubikey-manager chezmoi
 fi
 
 if [ ! "$(command -v chezmoi)" ]; then
@@ -34,15 +35,6 @@ else
   chezmoi=chezmoi
 fi
 
-if [[ ! $(grep "^ID" /etc/os-release) =~ fedora ]] && [[ ! $(grep "^ID" /etc/os-release) =~ arch ]]; then
-  if [[ ! -e $HOME/.local/bin/op ]]; then
-    tmpdir=$(mktemp -d)
-    curl -L -o "$tmpdir"/op.zip https://cache.agilebits.com/dist/1P/op2/pkg/v"$op_latest/op_linux_amd64_v$op_latest".zip
-    [[ ! -d $HOME/.local/bin ]] && mkdir "$HOME/.local/bin"
-    unzip "$tmpdir"/op.zip -d "$tmpdir" && mv "$tmpdir"/op "$HOME"/.local/bin
-  fi
-fi
-
 # Install 1PW
 if [ ! "$(command -v 1password)" ]; then
   op_url="https://downloads.1password.com/linux/rpm/stable/x86_64/1password-latest.rpm"
@@ -52,14 +44,21 @@ if [ ! "$(command -v 1password)" ]; then
     if ! rpm -q 1password >/dev/null; then
       sudo rpm --import "$op_rpm_key"
       sudo dnf install -y "$op_url"
+      echo "Please configure 1password before continuing." && exit 1
     fi
     if ! rpm -q 1password-cli >/dev/null; then
       sudo dnf install -y 1password-cli
     fi
   elif [[ $(grep "^ID" /etc/os-release) =~ opensuse ]]; then
     # we cannot use the DNF repository on SUSE, therefore do this everytime
-    sudo rpm --import "$op_rpm_key"
-    sudo zypper install -y "$op_url"
+    if ! rpm -q 1password >/dev/null; then
+      sudo rpm --import "$op_rpm_key"
+      sudo zypper install -y "$op_url"
+      echo "Please configure 1password before continuing." && exit 1
+    fi
+    if ! rpm -q 1password-cli >/dev/null; then
+      sudo zypper install -y 1password-cli
+    fi
   fi
 fi
 
@@ -67,7 +66,7 @@ fi
 sudo systemctl stop pcscd || true
 
 # nuke .gnupg directory for clean install
-rm -rf ${HOME}/.gnupg 
+rm -rf "${HOME}/.gnupg"
 pkill gpg-agent || true
 
 # import and trust our GPG Key
@@ -91,10 +90,8 @@ echo -e "5\ny\n" | gpg --command-fd 0 --expert --edit-key "$GPGKEY_FINGERPRINT" 
 # power up yubikey
 gpg --card-status
 
-export GPG_TTY=$(tty)
-
-# signin to op initially if never done before
-[ ! -e "$HOME/.config/op/config" ] && eval "$(op signin --account "$op_email")"
+GPG_TTY=$(tty)
+export GPG_TTY
 
 # POSIX way to get script's dir: https://stackoverflow.com/a/29834779/12156188
 script_dir="$(cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P)"
