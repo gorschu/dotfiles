@@ -1,5 +1,5 @@
-{{ if output "zfs" "list" "-o" "mountpoint" | contains "/home/azmo" -}}
-{{/* if we do have out $HOME on zfs podman needs some extra massaging */ -}}
+{{ if and (lookPath "zfs") (output "zfs" "list" "-o" "mountpoint" | contains "/home/azmo" ) -}}
+{{/* if we do have $HOME on zfs podman needs some extra massaging */ -}}
 [storage]
   driver = "overlay"
 [storage.options]
