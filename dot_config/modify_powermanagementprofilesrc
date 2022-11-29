@@ -1,0 +1,57 @@
+#!/bin/bash
+
+if ! command -v -p kwriteconfig5 > /dev/null; then
+    [[ -e $XDG_CONFIG_HOME/powermanagementprofilesrc ]] && cat $XDG_CONFIG_HOME/powermanagementprofilesrc
+    exit 0
+fi
+
+
+kwriteconfig5 --file powermanagementprofilesrc --group "AC" --group "BrightnessControl" --key "value" "50"
+kwriteconfig5 --file powermanagementprofilesrc --group "AC" --group "DPMSControl" --key "idleTime" "900"
+kwriteconfig5 --file powermanagementprofilesrc --group "AC" --group "DPMSControl" --key "lockBeforeTurnOff" "0"
+kwriteconfig5 --file powermanagementprofilesrc --group "AC" --group "DimDisplay" --key "idleTime" "300000"
+kwriteconfig5 --file powermanagementprofilesrc --group "AC" --group "HandleButtonEvents" --key "lidAction" "1"
+kwriteconfig5 --file powermanagementprofilesrc --group "AC" --group "HandleButtonEvents" --key "powerButtonAction" "16"
+kwriteconfig5 --file powermanagementprofilesrc --group "AC" --group "HandleButtonEvents" --key "powerDownAction" "16"
+kwriteconfig5 --file powermanagementprofilesrc --group "AC" --group "HandleButtonEvents" --key "triggerLidActionWhenExternalMonitorPresent" "false"
+kwriteconfig5 --file powermanagementprofilesrc --group "AC" --group "PowerProfile" --key "profile" "performance"
+kwriteconfig5 --file powermanagementprofilesrc --group "AC" --group "SuspendSession" --key "idleTime" "3600000"
+kwriteconfig5 --file powermanagementprofilesrc --group "AC" --group "SuspendSession" --key "suspendThenHibernate" "false"
+kwriteconfig5 --file powermanagementprofilesrc --group "AC" --group "SuspendSession" --key "suspendType" "1"
+kwriteconfig5 --file powermanagementprofilesrc --group "AC" --group "WirelessPowerSaving" --key "btOption" "2"
+kwriteconfig5 --file powermanagementprofilesrc --group "AC" --group "WirelessPowerSaving" --key "wifiOption" "2"
+kwriteconfig5 --file powermanagementprofilesrc --group "AC" --group "WirelessPowerSaving" --key "wwanOption" "1"
+
+kwriteconfig5 --file powermanagementprofilesrc --group "Battery" --group "BrightnessControl" --key "value" "30"
+kwriteconfig5 --file powermanagementprofilesrc --group "Battery" --group "DPMSControl" --key "idleTime" "600"
+kwriteconfig5 --file powermanagementprofilesrc --group "Battery" --group "DPMSControl" --key "lockBeforeTurnOff" "0"
+kwriteconfig5 --file powermanagementprofilesrc --group "Battery" --group "DimDisplay" --key "idleTime" "300000"
+kwriteconfig5 --file powermanagementprofilesrc --group "Battery" --group "HandleButtonEvents" --key "lidAction" "1"
+kwriteconfig5 --file powermanagementprofilesrc --group "Battery" --group "HandleButtonEvents" --key "powerButtonAction" "16"
+kwriteconfig5 --file powermanagementprofilesrc --group "Battery" --group "HandleButtonEvents" --key "powerDownAction" "16"
+kwriteconfig5 --file powermanagementprofilesrc --group "Battery" --group "HandleButtonEvents" --key "triggerLidActionWhenExternalMonitorPresent" "false"
+kwriteconfig5 --file powermanagementprofilesrc --group "Battery" --group "PowerProfile" --key "profile" "balanced"
+kwriteconfig5 --file powermanagementprofilesrc --group "Battery" --group "SuspendSession" --key "idleTime" "900000"
+kwriteconfig5 --file powermanagementprofilesrc --group "Battery" --group "SuspendSession" --key "suspendThenHibernate" "true"
+kwriteconfig5 --file powermanagementprofilesrc --group "Battery" --group "SuspendSession" --key "suspendType" "1"
+kwriteconfig5 --file powermanagementprofilesrc --group "Battery" --group "WirelessPowerSaving" --key "btOption" "2"
+kwriteconfig5 --file powermanagementprofilesrc --group "Battery" --group "WirelessPowerSaving" --key "wifiOption" "2"
+kwriteconfig5 --file powermanagementprofilesrc --group "Battery" --group "WirelessPowerSaving" --key "wwanOption" "1"
+
+kwriteconfig5 --file powermanagementprofilesrc --group "LowBattery" --group "BrightnessControl" --key "value" "20"
+kwriteconfig5 --file powermanagementprofilesrc --group "LowBattery" --group "DPMSControl" --key "idleTime" "120"
+kwriteconfig5 --file powermanagementprofilesrc --group "LowBattery" --group "DPMSControl" --key "lockBeforeTurnOff" "0"
+kwriteconfig5 --file powermanagementprofilesrc --group "LowBattery" --group "DimDisplay" --key "idleTime" "60000"
+kwriteconfig5 --file powermanagementprofilesrc --group "LowBattery" --group "HandleButtonEvents" --key "lidAction" "1"
+kwriteconfig5 --file powermanagementprofilesrc --group "LowBattery" --group "HandleButtonEvents" --key "powerButtonAction" "16"
+kwriteconfig5 --file powermanagementprofilesrc --group "LowBattery" --group "HandleButtonEvents" --key "powerDownAction" "16"
+kwriteconfig5 --file powermanagementprofilesrc --group "LowBattery" --group "HandleButtonEvents" --key "triggerLidActionWhenExternalMonitorPresent" "false"
+kwriteconfig5 --file powermanagementprofilesrc --group "LowBattery" --group "PowerProfile" --key "profile" "power-saver"
+kwriteconfig5 --file powermanagementprofilesrc --group "LowBattery" --group "SuspendSession" --key "idleTime" "300000"
+kwriteconfig5 --file powermanagementprofilesrc --group "LowBattery" --group "SuspendSession" --key "suspendThenHibernate" "true"
+kwriteconfig5 --file powermanagementprofilesrc --group "LowBattery" --group "SuspendSession" --key "suspendType" "1"
+kwriteconfig5 --file powermanagementprofilesrc --group "LowBattery" --group "WirelessPowerSaving" --key "btOption" "1"
+kwriteconfig5 --file powermanagementprofilesrc --group "LowBattery" --group "WirelessPowerSaving" --key "wifiOption" "0"
+kwriteconfig5 --file powermanagementprofilesrc --group "LowBattery" --group "WirelessPowerSaving" --key "wwanOption" "1"
+
+cat $XDG_CONFIG_HOME/powermanagementprofilesrc

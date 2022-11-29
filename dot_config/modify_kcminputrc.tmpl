@@ -1,0 +1,27 @@
+#!/bin/bash
+
+if ! command -v -p kwriteconfig5 > /dev/null; then
+    [[ -e $XDG_CONFIG_HOME/kcminputrc ]] && cat $XDG_CONFIG_HOME/kcminputrc
+    exit 0
+fi
+
+
+# Keyboard Config
+kwriteconfig5 --file kcminputrc --group Keyboard --key "NumLock" 0
+kwriteconfig5 --file kcminputrc --group Keyboard --key "RepeatDelay" 250
+kwriteconfig5 --file kcminputrc --group Keyboard --key "RepeatRate" 40
+
+{{ if eq .chezmoi.hostname "apollo" }}
+  kwriteconfig5 --file kcminputrc --group "Libinput" --group "2" --group "7" --group "SynPS/2 Synaptics TouchPad" --key "NaturalScroll" "true"
+  kwriteconfig5 --file kcminputrc --group "Libinput" --group "2" --group "7" --group "SynPS/2 Synaptics TouchPad" --key "TapToClick" "true"
+  kwriteconfig5 --file kcminputrc --group "Libinput" --group "2" --group "7" --group "SynPS/2 Synaptics TouchPad" --key "PointerAcceleration" "0.400"
+{{ else if eq .chezmoi.hostname "hephaestus"}}
+  kwriteconfig5 --file kcminputrc --group "Libinput" --group "1739" --group "0" --group "Synaptics TM3289-002" --key "NaturalScroll" "true"
+  kwriteconfig5 --file kcminputrc --group "Libinput" --group "1739" --group "0" --group "Synaptics TM3289-002" --key "TapToClick" "true"
+  kwriteconfig5 --file kcminputrc --group "Libinput" --group "1739" --group "0" --group "Synaptics TM3289-002" --key "PointerAcceleration" "0.400"
+
+  kwriteconfig5 --file kcminputrc --group "Libinput" --group "2" --group "10" --group "TPPS/2 ALPS TrackPoint" --key "PointerAcceleration" "0.200"
+  kwriteconfig5 --file kcminputrc --group "Mouse" --key "XLbInptPointerAcceleration" "0.2"
+{{ end }}
+
+cat $XDG_CONFIG_HOME/kcminputrc
