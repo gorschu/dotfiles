@@ -46,9 +46,6 @@ if [ ! "$(command -v 1password)" ]; then
       sudo dnf install -y "$op_url"
       echo "Please configure 1password before continuing." && exit 1
     fi
-    if ! rpm -q 1password-cli >/dev/null; then
-      sudo dnf install -y 1password-cli
-    fi
   elif [[ $(grep "^ID" /etc/os-release) =~ opensuse ]]; then
     # we cannot use the DNF repository on SUSE, therefore do this everytime
     if ! rpm -q 1password >/dev/null; then
@@ -56,10 +53,16 @@ if [ ! "$(command -v 1password)" ]; then
       sudo zypper install -y "$op_url"
       echo "Please configure 1password before continuing." && exit 1
     fi
-    if ! rpm -q 1password-cli >/dev/null; then
-      sudo zypper install -y 1password-cli
-    fi
   fi
+fi
+if [ ! "$(command -v op)" ]; then
+    if ! rpm -q 1password-cli >/dev/null; then
+      if [[ $(grep "^ID" /etc/os-release) =~ fedora ]]; then
+        sudo dnf install -y 1password-cli
+      elif [[ $(grep "^ID" /etc/os-release) =~ opensuse ]]; then
+        sudo zypper install -y 1password-cli
+      fi
+    fi
 fi
 
 # stop pcscd for first use - it conflicts with gnupg when the latter is not configured to use it
