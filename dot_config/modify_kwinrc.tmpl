@@ -1,0 +1,40 @@
+#!/bin/bash
+
+{{ if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
+  qdbus="/usr/lib64/qt5/bin/qdbus"
+{{ else }}
+  qdbus="qdbus"
+{{ end }}
+
+if ! command -v -p kwriteconfig5 > /dev/null || ! command -v -p ${qdbus} > /dev/null; then
+    [[ -e $XDG_CONFIG_HOME/kwinrc ]] && cat $XDG_CONFIG_HOME/kwinrc
+    exit 0
+fi
+
+
+# Effects
+kwriteconfig5 --file kwinrc --group Plugins --key "overviewEnabled" "true"
+kwriteconfig5 --file kwinrc --group Plugins --key "desktopchangeosdEnabled" "true"
+kwriteconfig5 --file kwinrc --group Plugins --key "diminactiveEnabled" "true"
+kwriteconfig5 --file kwinrc --group Plugins --key "kwin4_effect_dimscreenEnabled" "true"
+kwriteconfig5 --file kwinrc --group Plugins --key "sheetEnabled" "true"
+
+# Effect Options
+kwriteconfig5 --file kwinrc --group "Effect-DimInactive" --key "Strength" "10"
+
+# Activate NightColor
+kwriteconfig5 --file kwinrc --group NightColor --key "Active" "true"
+kwriteconfig5 --file kwinrc --group NightColor --key "NightTemperature" "3600"
+
+# Switcher
+kwriteconfig5 --file kwinrc --group TabBox --key "LayoutName" "thumbnails"
+
+# open krunner with meta key
+kwriteconfig5 --file kwinrc --group ModifierOnlyShortcuts --key Meta "org.kde.krunner,/App,,toggleDisplay"
+# open overview with meta key
+# source: https://www.reddit.com/r/kde/comments/ppxrbg/assign_meta_key_to_overview_effect/hd8b5e7/
+# kwriteconfig5 --file kwinrc --group ModifierOnlyShortcuts --key Meta "org.kde.kglobalaccel,/component/kwin,,invokeShortcut,Overview"
+
+${qdbus} org.kde.KWin /KWin reconfigure
+
+cat $XDG_CONFIG_HOME/kwinrc

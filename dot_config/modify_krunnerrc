@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if ! command -v -p kwriteconfig5 > /dev/null; then
+    [[ -e $XDG_CONFIG_HOME/krunnerrc ]] && cat $XDG_CONFIG_HOME/krunnerrc
+    exit 0
+fi
+
+
+# KRunner
+kwriteconfig5 --file krunnerrc --group Plugins --key "appstreamEnabled" "false"
+
+cat $XDG_CONFIG_HOME/krunnerrc
