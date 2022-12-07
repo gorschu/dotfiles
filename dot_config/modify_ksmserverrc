@@ -5,7 +5,6 @@ if ! command -v -p kwriteconfig5 > /dev/null; then
     exit 0
 fi
 
-
 # Session
 kwriteconfig5 --file ksmserverrc --group General --key "loginMode" "emptySession"
 

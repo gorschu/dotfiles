@@ -5,7 +5,6 @@ if ! command -v -p kwriteconfig5 > /dev/null; then
     exit 0
 fi
 
-
 kwriteconfig5 --file kscreenlockerrc --group "Daemon" --key "LockGrace" "10"
 kwriteconfig5 --file kscreenlockerrc --group "Daemon" --key "Timeout" "10"
 

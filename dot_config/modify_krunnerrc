@@ -5,8 +5,10 @@ if ! command -v -p kwriteconfig5 > /dev/null; then
     exit 0
 fi
 
-
 # KRunner
+kwriteconfig5 --file krunnerrc --group General --key "FreeFloating" "true"
+
 kwriteconfig5 --file krunnerrc --group Plugins --key "appstreamEnabled" "false"
+kwriteconfig5 --file krunnerrc --group Plugins --key "baloosearchEnabled" "true"
 
 cat $XDG_CONFIG_HOME/krunnerrc

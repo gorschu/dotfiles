@@ -6,17 +6,17 @@ if ! command -v -p kwriteconfig5 > /dev/null; then
 fi
 
 # Global Settings
-kwriteconfig5 --file kdeglobals --group KDE --key "LookAndFeelPackage" "org.kde.breezetwilight.desktop"
+kwriteconfig5 --file kdeglobals --group KDE --key "LookAndFeelPackage" "org.kde.breezedark.desktop"
 kwriteconfig5 --file kdeglobals --group KDE --key "SingleClick" "false"
 
 # Fonts
 kwriteconfig5 --file kdeglobals --group General --key "XftHintStyle" "hintslight"
 kwriteconfig5 --file kdeglobals --group General --key "XftSubPixel" "rgb"
-kwriteconfig5 --file kdeglobals --group General --key "fixed" "Source Code Pro,10,-1,5,50,0,0,0,0,0"
-kwriteconfig5 --file kdeglobals --group General --key "font" "Source Sans 3,10,-1,5,50,0,0,0,0,0"
-kwriteconfig5 --file kdeglobals --group General --key "menuFont" "Source Sans 3,10,-1,5,50,0,0,0,0,0"
-kwriteconfig5 --file kdeglobals --group General --key "smallestReadableFont" "Source Sans 3,9,-1,5,50,0,0,0,0,0"
-kwriteconfig5 --file kdeglobals --group General --key "toolBarFont" "Source Sans 3,10,-1,5,50,0,0,0,0,0"
-kwriteconfig5 --file kdeglobals --group General --key "WM" "activeFont" "Source Sans 3,10,-1,5,50,0,0,0,0,0"
-
+kwriteconfig5 --file kdeglobals --group General --key "font" "Inter,10,-1,5,50,0,0,0,0,0"
+kwriteconfig5 --file kdeglobals --group General --key "menuFont" "Inter,10,-1,5,50,0,0,0,0,0"
+kwriteconfig5 --file kdeglobals --group General --key "smallestReadableFont" "Inter,9,-1,5,50,0,0,0,0,0"
+kwriteconfig5 --file kdeglobals --group General --key "toolBarFont" "Inter,10,-1,5,50,0,0,0,0,0"
+kwriteconfig5 --file kdeglobals --group General --key "fixed" "Iosevka Aile,10,-1,5,50,0,0,0,0,0"
+kwriteconfig5 --file kdeglobals --group WM --key "WM" --key "activeFont" "Inter,10,-1,5,57,0,0,0,0,0,Medium"
+ 
 cat $XDG_CONFIG_HOME/kdeglobals
