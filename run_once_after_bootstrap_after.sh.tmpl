@@ -18,16 +18,8 @@ if [[ $XDG_CURRENT_DESKTOP == 'KDE' ]] && [[ -e {{ .chezmoi.homeDir }}/.config/f
   sudo chattr +i {{ .chezmoi.homeDir }}/.config/fontconfig/fonts.conf
 fi
 
-echo "${green}Install fzf${reset}"
-{{ if eq .chezmoi.osRelease.id "fedora" }}
-sudo dnf install -y fzf
-{{ else if eq .chezmoi.osRelease.id "arch" }}
-sudo pacman -S --noconfirm --needed fzf
-{{ else if eq .chezmoi.osRelease.id "opensuse-tumbleweed" "opensuse-leap" }}
-sudo zypper install -y fzf
-{{ else }}
+echo "${green}Installing fzf${reset}"
 $HOME/.vendor/fzf/install --all
-{{ end }}
 
 echo "${green}Install asdf plugins${reset}"
 set +ux
