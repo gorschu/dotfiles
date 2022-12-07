@@ -12,19 +12,21 @@ if ! command -v -p kwriteconfig5 > /dev/null || ! command -v -p ${qdbus} > /dev/
 fi
 
 # Keyboard Shortcuts
-kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Overview" "Meta+W,Meta+W,Toggle Overview"
-kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Switch to Desktop 1" "Meta+!,Ctrl+F1!,Switch to Desktop 1"
+kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Switch to Desktop 1" "Ctrl+F1\tMeta+!,Ctrl+F1,Switch to Desktop 1"
 kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Switch to Desktop 2" "Meta+\",Ctrl+F2,Switch to Desktop 2"
 kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Switch to Desktop 3" "Meta+§,Ctrl+F3,Switch to Desktop 3"
 kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Switch to Desktop 4" "Meta+$,Ctrl+F4,Switch to Desktop 4"
+
 kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Switch One Desktop Down" "Meta+Ctrl+J\tMeta+Ctrl+Down,Meta+Ctrl+Down,Switch One Desktop Down"
-kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Switch One Desktop Up" "Meta+Ctrl+K\tMeta+Ctrl+Up,Meta+Ctrl+Up,Switch One Desktop Up"
+kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Switch One Desktop Up" "Meta+Ctrl+Up\tMeta+Ctrl+K,Meta+Ctrl+Up,Switch One Desktop Up"
 kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Switch One Desktop to the Left" "Meta+Ctrl+Left\tMeta+Ctrl+H,Meta+Ctrl+Left,Switch One Desktop to the Left"
-kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Switch One Desktop to the Right" "Meta+Ctrl+L\tMeta+Ctrl+Right,Meta+Ctrl+Right,Switch One Desktop to the Right"
+kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Switch One Desktop to the Right" "Meta+Ctrl+Right\tMeta+Ctrl+L,Meta+Ctrl+Right,Switch One Desktop to the Right"
+
 kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Switch Window Down" "Meta+Alt+Down\tMeta+Alt+J,Meta+Alt+Down,Switch to Window Below"
-kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Switch Window Left" "Meta+Alt+Left\tMeta+Alt+H,Meta+Alt+Left,Switch to Window to the Left"
-kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Switch Window Right" "Meta+Alt+L\tMeta+Alt+Right,Meta+Alt+Right,Switch to Window to the Right"
+kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Switch Window Left" "Meta+Alt+H\tMeta+Alt+Left,Meta+Alt+Left,Switch to Window to the Left"
+kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Switch Window Right" "Meta+Alt+Right\tMeta+Alt+L,Meta+Alt+Right,Switch to Window to the Right"
 kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Switch Window Up" "Meta+Alt+Up\tMeta+Alt+K,Meta+Alt+Up,Switch to Window Above"
+
 kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Window One Desktop Down" "Meta+Ctrl+Shift+Down\tMeta+Ctrl+Shift+J,Meta+Ctrl+Shift+Down,Window One Desktop Down"
 kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Window One Desktop Up" "Meta+Ctrl+Shift+Up\tMeta+Ctrl+Shift+K,Meta+Ctrl+Shift+Up,Window One Desktop Up"
 kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Window One Desktop to the Left" "Meta+Ctrl+Shift+Left\tMeta+Ctrl+Shift+H,Meta+Ctrl+Shift+Left,Window One Desktop to the Left"

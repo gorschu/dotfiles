@@ -9,11 +9,14 @@ fi
 # kwriteconfig5 is a bit picky if the file to be modified does not exist
 [[ ! -e $XDG_CONFIG_HOME/baloofilerc ]] && echo -e "[General]\nonly basic indexing=true" >$XDG_CONFIG_HOME/baloofilerc
 kwriteconfig5 --file baloofilerc --group General --key "only basic indexing" "true"
-if ! balooctl config list includeFolders | grep -q $HOME; then
-  balooctl config add includeFolders $HOME
+if ! balooctl config list excludeFolders | grep -q $HOME; then
+  balooctl config add excludeFolders $HOME
 fi
 if ! balooctl config list excludeFolders | grep -q $HOME/mail; then
-  [[ -d $HOME/mail ]] && balooctl config add excludeFolders $HOME/mail
+  balooctl config add includeFolders $HOME/Documents
+  balooctl config add includeFolders $HOME/Pictures
+  balooctl config add includeFolders $HOME/Videos
+  balooctl config add includeFolders $HOME/Calibre
 fi
 
 cat $XDG_CONFIG_HOME/baloofilerc

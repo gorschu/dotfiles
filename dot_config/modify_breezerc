@@ -9,6 +9,7 @@ fi
 # Breeze
 kwriteconfig5 --file breezerc --group Style --key "ScrollBarAddLineButtons" 1
 kwriteconfig5 --file breezerc --group Style --key "ScrollBarSubLineButtons" 1
-kwriteconfig5 --file breezerc --group Windeco --key "ButtonSize" "ButtonSmall"
+kwriteconfig5 --file breezerc --group Windeco --key "ButtonSize" "ButtonMedium"
+kwriteconfig5 --file breezerc --group Windeco --key "DrawBackgroundGradient" "true"
 
 cat $XDG_CONFIG_HOME/breezerc
