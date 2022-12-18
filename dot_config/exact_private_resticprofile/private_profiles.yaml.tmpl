@@ -49,7 +49,7 @@ workstations-backblaze:
     {{ end }}
     exclude-file: "{{ "-- .ConfigDir ++" | replace "-" "{" | replace "+" "}" }}/restic-excludes-workstations-remote"
 
-    schedule: "hourly"
+    schedule: "00/2:30"
     schedule-permission: "system"
 
     {{ if regexFind "/home btrfs" (output "/usr/bin/cat" "/proc/mounts") }}
@@ -134,7 +134,7 @@ workstations-scaleway:
     {{ end }}
     exclude-file: "{{ "-- .ConfigDir ++" | replace "-" "{" | replace "+" "}" }}/restic-excludes-workstations-remote"
 
-    schedule: "hourly"
+    schedule: "00/2:30"
     schedule-permission: "system"
 
     {{ if regexFind "/home btrfs" (output "/usr/bin/cat" "/proc/mounts") }}
@@ -199,7 +199,7 @@ workstations-zeus:
     {{ end }}
     exclude-file: "{{ "-- .ConfigDir ++" | replace "-" "{" | replace "+" "}" }}/restic-excludes-workstations-local"
 
-    schedule: "*:30"
+    schedule: "hourly"
     schedule-permission: "system"
 
     {{ if regexFind "/home btrfs" (output "/usr/bin/cat" "/proc/mounts") }}
