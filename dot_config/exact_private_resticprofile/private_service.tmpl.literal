@@ -9,6 +9,8 @@ Type=oneshot
 # dbus-user-session to be installed.
 ExecStartPre=sleep 1m
 ExecStart=systemd-inhibit --who="resticprofile" --why="Prevent interrupting scheduled backup" {{ .CommandLine }}
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
 {{ if .Nice }}Nice={{ .Nice }}{{ end }}
 {{ range .Environment -}}
 Environment="{{ . }}"
