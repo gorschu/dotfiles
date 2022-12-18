@@ -7,7 +7,7 @@ zedtrigger=dpool/libvirt
 restorecon=("/home" "/var/lib/libvirt")
 
 if ! rpm -q zfs >/dev/null; then
-  sudo dnf -y install "https://zfsonlinux.org/fedora/zfs-release$(rpm -E %dist).noarch.rpm"
+  sudo dnf install -y https://zfsonlinux.org/fedora/zfs-release-2-2$(rpm --eval "%{dist}").noarch.rpm
   sudo dnf -y install -y kernel-devel && sudo dnf swap -y zfs-fuse zfs
   echo "zfs" | sudo tee /etc/modules-load.d/zfs.conf >/dev/null
 fi
