@@ -1,3 +1,4 @@
 # be more lenient, this is (mostly) over a local link to local storage
 *.iso
 *.qcow2
+*home/azmo/.local/share/containers
