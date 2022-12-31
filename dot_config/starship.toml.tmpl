@@ -88,7 +88,8 @@ disabled = false
 {{ if eq .colorscheme "nord"}}style = "#4C566A"{{ end}}
 
 [sudo]
-disabled = false
+# disable sudo module for now - it spams the journal with sudo entries
+disabled = true
 
 [status]
 disabled = false
