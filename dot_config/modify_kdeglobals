@@ -6,7 +6,7 @@ if ! command -v -p kwriteconfig5 > /dev/null; then
 fi
 
 # Global Settings
-kwriteconfig5 --file kdeglobals --group KDE --key "LookAndFeelPackage" "org.kde.breezedark.desktop"
+kwriteconfig5 --file kdeglobals --group KDE --key "LookAndFeelPackage" "org.kde.breezetwilight.desktop"
 kwriteconfig5 --file kdeglobals --group KDE --key "SingleClick" "false"
 
 # Fonts
