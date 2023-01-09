@@ -13,10 +13,10 @@ if ! balooctl config list excludeFolders | grep -q $HOME; then
   balooctl config add excludeFolders $HOME
 fi
 if ! balooctl config list excludeFolders | grep -q $HOME/mail; then
-  balooctl config add includeFolders $HOME/Documents
-  balooctl config add includeFolders $HOME/Pictures
-  balooctl config add includeFolders $HOME/Videos
-  balooctl config add includeFolders $HOME/Calibre
+  balooctl config add includeFolders $HOME/Documents >/dev/null
+  balooctl config add includeFolders $HOME/Pictures >/dev/null
+  balooctl config add includeFolders $HOME/Videos >/dev/null
+  balooctl config add includeFolders $HOME/Calibre >/dev/null
 fi
 
 cat $XDG_CONFIG_HOME/baloofilerc
