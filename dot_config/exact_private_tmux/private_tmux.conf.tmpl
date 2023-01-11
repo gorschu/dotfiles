@@ -42,6 +42,9 @@ set -ga terminal-overrides ',*256col*:Tc,xterm-kitty,alacritty:Tc'
 # nvim guicursor override
 # :help tui-cursor-shape
 set -ga terminal-overrides '*:Ss=\E[%p1%d q:Se=\E[ q'
+# nvim tokyonight overrides
+set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'  # undercurl support
+set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'  # underscore colours - needs tmux-3.0
 
 # bind prefix-C-c to send literal C-l to the terminal.
 # C-l is taken by ... pretty much everything (including vim-tmux-navigator and
@@ -83,6 +86,9 @@ set -g @plugin "arcticicestudio/nord-tmux"
 {{ if eq .colorscheme "gruvbox" }}
 set -g @plugin 'egel/tmux-gruvbox'
 set -g @tmux-gruvbox 'dark' # or 'light'
+{{ end }}
+{{ if eq .colorscheme "tokyonight" }}
+set -g @plugin "marcocampos/tokyo-night-tmux"
 {{ end }}
 
 # order matters here
