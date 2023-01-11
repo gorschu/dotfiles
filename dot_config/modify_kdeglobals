@@ -6,8 +6,12 @@ if ! command -v -p kwriteconfig5 > /dev/null; then
 fi
 
 # Global Settings
-kwriteconfig5 --file kdeglobals --group KDE --key "LookAndFeelPackage" "org.kde.breezetwilight.desktop"
+kwriteconfig5 --file kdeglobals --group KDE --key "LookAndFeelPackage" "org.kde.breezedark.desktop"
 kwriteconfig5 --file kdeglobals --group KDE --key "SingleClick" "false"
+
+# Terminal
+kwriteconfig5 --file kdeglobals --group General --key "TerminalApplication" "kitty"
+kwriteconfig5 --file kdeglobals --group General --key "TerminalService" "kitty.desktop"
 
 # Fonts
 kwriteconfig5 --file kdeglobals --group General --key "XftHintStyle" "hintslight"
@@ -16,7 +20,7 @@ kwriteconfig5 --file kdeglobals --group General --key "font" "Inter,10,-1,5,50,0
 kwriteconfig5 --file kdeglobals --group General --key "menuFont" "Inter,10,-1,5,50,0,0,0,0,0"
 kwriteconfig5 --file kdeglobals --group General --key "smallestReadableFont" "Inter,9,-1,5,50,0,0,0,0,0"
 kwriteconfig5 --file kdeglobals --group General --key "toolBarFont" "Inter,10,-1,5,50,0,0,0,0,0"
-kwriteconfig5 --file kdeglobals --group General --key "fixed" "Iosevka Aile,10,-1,5,50,0,0,0,0,0"
+kwriteconfig5 --file kdeglobals --group General --key "fixed" "Monospace,10,-1,5,50,0,0,0,0,0"
 kwriteconfig5 --file kdeglobals --group WM --key "WM" --key "activeFont" "Inter,10,-1,5,57,0,0,0,0,0,Medium"
 
-cat $XDG_CONFIG_HOME/kdeglobals
+cat "${XDG_CONFIG_HOME}/kdeglobals"
