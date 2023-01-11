@@ -1,1 +1,11 @@
-{{ if eq .colorscheme "dracula"}}{{ .chezmoi.homeDir }}/.vendor/dracula-kitty/dracula.conf{{ else if eq .colorscheme "nord" }}{{ .chezmoi.homeDir }}/.vendor/nord-kitty/nord.conf{{else if eq .colorscheme "gruvbox" }}{{ .chezmoi.homeDir}}/.vendor/gruvbox-contrib/kitty/gruvbox-dark.conf{{ end }}
+{{ if eq .colorscheme "dracula"}}
+{{ .chezmoi.homeDir }}/.vendor/dracula-kitty/dracula.conf
+{{ else if eq .colorscheme "nord" }}
+{{ .chezmoi.homeDir }}/.vendor/nord-kitty/nord.conf
+{{else if eq .colorscheme "gruvbox" }}
+{{ .chezmoi.homeDir}}/.vendor/gruvbox-contrib/kitty/gruvbox-dark.conf
+{{ else if eq .colorscheme "tokyonight" }}
+{{ env "XDG_CONFIG_HOME" }}/kitty/kitty.d/tokyonight/tokyonight_night.conf
+{{else if eq .colorscheme "gruvbox" }}
+{{ .chezmoi.homeDir}}/.vendor/gruvbox-contrib/kitty/gruvbox-dark.conf
+{{ end }}
