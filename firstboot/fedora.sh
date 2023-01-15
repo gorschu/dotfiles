@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -eux
+set -eu
 
 POOL=dpool
 zedtrigger=dpool/libvirt
@@ -32,5 +32,6 @@ sudo chown root:root "$(zfs get -o value -H keylocation ${POOL} | sed -r 's/^fil
 sudo chmod 600 "$(zfs get -o value -H keylocation ${POOL} | sed -r 's/^file:\/\/(.*)$/\1/')"
 
 echo "While logged in as root, do: "
+echo "rm -rf /home"
 echo "sudo zfs mount -a"
 echo 'for path in "${restorecon[@]}"; do sudo restorecon -R "${path}"; done'
