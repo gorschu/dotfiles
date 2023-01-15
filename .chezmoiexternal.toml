@@ -1,4 +1,4 @@
-[".config/kitty/kitty.d/tokyonight"]
+[".config/kitty/config.d/tokyonight"]
   type = "archive"
   url = "https://github.com/folke/tokyonight.nvim/archive/main.tar.gz"
   exact = true
