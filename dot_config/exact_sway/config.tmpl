@@ -5,7 +5,7 @@
 # Read `man 5 sway` for a complete reference.
 
 ### Variables
-{{ if eq .colorscheme "nord" }}include {{ env "XDG_CONFIG_HOME" }}/sway/colors.nord{{ else }}include {{ env "XDG_CONFIG_HOME" }}/sway/colors.gruvbox{{ end }}
+{{ if eq .colorscheme "nord" }}include {{ env "XDG_CONFIG_HOME" }}/sway/config.d/colors/nord{{ else if eq .colorscheme "tokyonight"}}include {{ env "XDG_CONFIG_HOME"}}/sway/config.d/colors/tokyonight{{ else }}include {{ env "XDG_CONFIG_HOME" }}/sway/config.d/colors/gruvbox{{ end }}
 #
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
@@ -19,7 +19,8 @@ set $term kitty --single-instance
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu bemenu-run --no-overlap --fn "Monospace 10" --margin 10 --ignorecase --prompt "> run" --nb "#2e3440" --fb "#2e3440" --tb "#2e3440" --hb "#2e3440" --tf "#81a1c1" --hf "#b48ead" --prompt run | xargs swaymsg exec --
+#set $menu bemenu-run --no-overlap --fn "Monospace 10" --margin 10 --ignorecase --prompt "> run" --nb "#2e3440" --fb "#2e3440" --tb "#2e3440" --hb "#2e3440" --tf "#81a1c1" --hf "#b48ead" --prompt run | xargs swaymsg exec --
+set $menu wofi --show drun
 
 xwayland enable
 
@@ -252,9 +253,5 @@ workspace $workspace10 output DP-0.8
 
 bar swaybar_command waybar
 
-include {{ env "XDG_CONFIG_HOME" }}/sway/modes
-include {{ env "XDG_CONFIG_HOME" }}/sway/keybinds
-include {{ env "XDG_CONFIG_HOME" }}/sway/window-rules
-include {{ env "XDG_CONFIG_HOME" }}/sway/autostart
-
 include /etc/sway/config.d/*
+include {{ env "XDG_CONFIG_HOME" }}/sway/config.d/*
