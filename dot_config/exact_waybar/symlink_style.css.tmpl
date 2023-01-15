@@ -1,0 +1,5 @@
+{{if eq .colorscheme "gruvbox" }}
+{{ env "XDG_CONFIG_HOME" }}/waybar/style.css.gruvbox
+{{ else if eq .colorscheme "tokyonight" }}
+{{ env "XDG_CONFIG_HOME" }}/waybar/style.css.tokyonight
+{{ end }}

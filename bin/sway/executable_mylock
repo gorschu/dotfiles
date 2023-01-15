@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # https://gitlab.com/wef/dotfiles/-/blob/master/bin/mylock
-
-TIME_STAMP="20220521.124102"
+# shellcheck disable=SC2034
+TIME_STAMP="20221026.170156"
 
 # Copyright 2021 Bob Hepple < bob dot hepple at gmail dot com>
 
@@ -9,34 +9,43 @@ TIME_STAMP="20220521.124102"
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or (at
 # your option) any later version.
-#
+# 
 # This program is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 # General Public License for more details.
-#
+# 
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-PROG=$( basename $0 )
+PROG=$( basename "$0" )
 
-# CUSTOMIZE HERE: or put them in a config file:
+# config file:
 CFG_FILE=${XDG_CONFIG_DIR:-$HOME/.config}/$PROG/config
-GTKLOCK_CONFIG_DIR=${XDG_CONFIG_DIR:-$HOME/.config}/gtklock
 
-# customise this to wherever you have a nice collection of background images
-IMAGE_COLLECTION="${XDG_PICTURES_DIR:-$HOME/Pictures/wallpapers}"
+# shellcheck disable=SC2016
+DEFAULT_CONFIG='
 # time between events (secs)
 TIMEOUT=600
-# URL for random screensaver images, if desired:
-IMAGE_URL='https://unsplash.it/1920/1080/?random'
-# where the keybinds are kept (default is ~/.config/sway/config):
+# customise this to wherever you have a nice collection of background images:
+IMAGE_COLLECTION="${XDG_PICTURES_DIR:-$HOME/Pictures}"
+# if set, download a random image every time:
+DOWNLOAD_RANDOM_IMAGE=""
+# if set, delete the downloaded image (does not affect images in the $IMAGE_COLLECTION)
+DELETE_DOWNLOADED_IMAGE=""
+# URL for random screensaver images, if $DOWNLOAD_RANDOM_IMAGE is set:
+IMAGE_URL="https://unsplash.it/1920/1080/?random"
+# where the sway keybindings are kept (default is ~/.config/sway/config):
 BINDINGS_FILE=${XDG_CONFIG_DIR:-$HOME/.config}/sway/config
-# if you want to run nwg-wrapper at lock-time:
-# NWG_WRAPPER="nwg-wrapper -s timezones.sh -r 10000 -c timezones.css -p right -mr 50 -a start -mt 50 -j right --layer 3"
 # default is to use swaylock; gtklock is also supported
 LOCK_PROGRAM="swaylock"
-# end of customisation section
+# or LOCK_PROGRAM="gtklock"
+#    GTKLOCK_CONFIG_DIR=${XDG_CONFIG_DIR:-$HOME/.config}/gtklock
+# set this if you want to run nwg-wrapper at lock-time:
+NWG_WRAPPER=""
+'
+
+eval "$DEFAULT_CONFIG"
 
 MODES="\
 blank:       until <Enter> key; no change to auto-blanking/lock/suspend
@@ -84,7 +93,7 @@ OPTIONS:
 
 -r|--download-random-image:
                      download a random screensaver image from unsplash.it
-                     Images are stored in \$IMAGE_COLLECTION (usually ~/Pictures)
+                     Images are stored in \$IMAGE_COLLECTION (usually ~/Pictures) 
                      Or put DOWNLOAD_RANDOM_IMAGE=true in the config file.
 
 If neither -i|--image or -r|--download-random-image is given then a random image
@@ -114,7 +123,7 @@ Optional dependency is keepassxc.
 I suggest the following key bindings and startup for sway's config file:
 
 # this first one pops up the dialog to select the mode:
-bindsym  \$mod+l                exec $PROG
+bindsym  \$mod+l                exec $PROG  
 bindsym  Shift+\$mod+l          exec $PROG at-home-mode
 bindsym  Control+\$mod+l        exec $PROG safe-mode
 bindsym  Control+Shift+\$mod+l  exec $PROG lock-now
@@ -128,23 +137,7 @@ or
 exec $PROG desktop
 
 Sample config file:
-
-DOWNLOAD_RANDOM_IMAGE=
-DELETE_DOWNLOADED_IMAGE=
-IMAGE=
-# customise this to wherever you have a nice collection of background images
-IMAGE_COLLECTION=\"\${XDG_PICTURES_DIR:-\$HOME/Pictures}\"
-# URL for random screensaver images:
-IMAGE_URL='https://unsplash.it/1920/1080/?random'
-# for myself: from several WM's ago!:
-FBB=~/\".fluxbox/backgrounds\"
-[[ -d \$FBB ]] && IMAGE_COLLECTION=\$FBB
-# where the keybinds are kept (default is ~/.config/sway/config):
-BINDINGS_FILE=~/.config/sway/bindsym
-QUIET=
-TIMEOUT=600
-NOTIFY=true
-"
+$DEFAULT_CONFIG"
 }
 
 # defaults
@@ -155,7 +148,8 @@ SELF=$0
 QUIET=
 NOTIFY="set"
 
-[[ -r "$CFG_FILE" ]] && source $CFG_FILE
+# shellcheck disable=SC1090
+[[ -r "$CFG_FILE" ]] && source "$CFG_FILE"
 
 # process options:
 TEMP=$( getopt --options c:dhi:qnr --longoptions config:,delete-downloaded-image,help,image:,quiet,no-notify,random -- "$@" ) || exit 1
@@ -186,11 +180,12 @@ for i in "$@"; do
   esac
 done
 
-type $PROG &>/dev/null || PATH+=":$( dirname $0 )"
+type "$PROG" &>/dev/null || PATH+=":$( dirname "$0" )"
 
 get_current_idle() {
+    # shellcheck disable=SC2009
     IDLE=$( ps -ef | grep '[s]wayidle' )
-
+            
     IDLE=$( echo "$IDLE" | sed "s/^.*swayidle //; s/timeout/\n&/g; s/before-sleep/\n&/g; s/after-resume/\n&/g" )
     MASK=0
     if echo "$IDLE" | grep -q '^timeout .* lock-now'; then
@@ -233,12 +228,12 @@ $IDLE"
 # do we need a dialog?
 [[ -z "$1" ]] && {
     # add key bindings to MODES
-
+    
     # query key bindings from sway config file:
     get_binding_for() {
         TARGET=$1
 
-        awk "/^bindsym.* $PROG.* $TARGET/ "'{ print " ["$2"]"; exit 0 }' $BINDINGS_FILE
+        awk "/^bindsym.* $PROG.* $TARGET/ "'{ print " ["$2"]"; exit 0 }' "$BINDINGS_FILE"
     }
 
     BLANK_BINDING=$( get_binding_for "blank" )
@@ -262,6 +257,7 @@ $IDLE"
         grep -v '(resume):' |
         wofi --cache-file=/dev/null --dmenu --lines 8 -p "$PROG: presently $( get_current_idle | head -n 1 )" ) || exit 0
 
+    # shellcheck disable=SC2086
     set -- $VAL
 }
 
@@ -279,12 +275,12 @@ case "$MODE" in
         echo "Hit Enter or ESC to unblank" | wofi --dmenu
         swaymsg "output * dpms on"
         ;;
-
+    
     "lock"*) # includes lock-now!!
 
         # lock keepassxc:
-        qdbus-qt5 org.keepassxc.KeePassXC.MainWindow /keepassxc org.keepassxc.MainWindow.lockAllDatabases 2>/dev/null
-
+        qdbus org.keepassxc.KeePassXC.MainWindow /keepassxc org.keepassxc.MainWindow.lockAllDatabases
+        
         if [[ -z "$IMAGE" ]] && [[ "$DOWNLOAD_RANDOM_IMAGE" ]]; then
             # fetch a download random image from unsplash.it:
             IMAGE="$IMAGE_COLLECTION/unsplash.it-$( date +"%Y%m%dT%H%M%S" ).jpg"
@@ -292,8 +288,8 @@ case "$MODE" in
             #FIXME: allow user to cancel it
             echo "Downloading image from $IMAGE_URL ..." |
             wofi --cache-file=/dev/null --dmenu --lines 1 -p "$PROG" >/dev/null & WOFI_PID=$!
-
-            wget -q -O $IMAGE $IMAGE_URL || {
+            
+            wget -q -O "$IMAGE" "$IMAGE_URL" || {
                 echo "$PROG: download from '$IMAGE_URL' failed" >&2
                 # exit 1 # probably better to lock with a blank screen or an image from $XDG_PICTURES_DIR
                 IMAGE=""
@@ -301,18 +297,21 @@ case "$MODE" in
 
             kill $WOFI_PID
         fi
-
+        
         [[ "$IMAGE" ]] || {
             # get a random image from our collection:
-            IMAGE="$IMAGE_COLLECTION/$( ls $IMAGE_COLLECTION | shuf -n 1 )"
+            IMAGE="$( find "$IMAGE_COLLECTION" -type f | shuf -n 1 )"
         }
+        
+        pkill "$LOCK_PROGRAM"
 
-        pkill $LOCK_PROGRAM
-
-        NWG_WRAPPER_PID=""
-        if type nwg-wrapper  >/dev/null 2>/dev/null && [[ "$NWG-WRAPPER" ]]; then
-            $NWG_WRAPPER &
-            NWG_WRAPPER_PID=$!
+        NWG_WRAPPER_PIDS=""
+        if type nwg-wrapper && [[ "$NWG_WRAPPER" ]]; then
+            # shellcheck disable=SC2086
+            nwg-wrapper -s timezones.sh -r 10000 -c timezones.css -p right -mr 50 -a start -mt 50 -j right --layer 3 &
+            sleep 1.5
+            
+            NWG_WRAPPER_PIDS=$!
 
             IMAGE_TITLE=""
             if [[ "$DOWNLOAD_RANDOM_IMAGE" ]]; then
@@ -320,16 +319,16 @@ case "$MODE" in
             elif [[ "$IMAGE" ]]; then
                 IMAGE_TITLE=$( basename "$IMAGE" )
             fi
-            if [[ "IMAGE_TITLE" ]]; then
+            if [[ "$IMAGE_TITLE" ]]; then
                 echo "<span size='25000' foreground='#ffffff' weight='light'>$IMAGE_TITLE</span>" |
                 nwg-wrapper -t "/dev/stdin" -r 10000 -c timezones.css -a end -j center --layer 3 &
-                NWG_WRAPPER_PID+=" $!"
+                NWG_WRAPPER_PIDS+=" $!"
             fi
-            sleep 0.5
+            sleep 1.5
         fi
 
-        echo "$PROG: $IMAGE" >> $HOME/.cache/$PROG.log
-        case $LOCK_PROGRAM in
+        echo "$PROG: $IMAGE" >> "$HOME/.cache/$PROG.log"
+        case "$LOCK_PROGRAM" in
             swaylock)
                 swaylock --image "$IMAGE" &
                 ;;
@@ -348,33 +347,36 @@ window {
 }
 EOF
                 }
-
+                
                 [[ -w $GTKLOCK_CSS ]] && {
                     sed -i '/background-image/d' "$GTKLOCK_CSS"
+                    # shellcheck disable=SC1004
                     sed -i '/{/a \
    background-image: url("'"$IMAGE"'");' "$GTKLOCK_CSS"
                     CSS_OPT="-s $GTKLOCK_CSS"
                 }
+                # shellcheck disable=SC2086
                 gtklock -d $CSS_OPT &
                 ;;
             esac
-
-
-        # avoid double lock before-sleep - put swaylock into
+                
+        
+        # avoid double lock before-sleep - put $LOCK_PROGRAM into
         # background so that we can return for the -w option, then:
         sleep 1
 
-        if [[ "$NWG_WRAPPER_PID" ]]; then
+        if [[ "$NWG_WRAPPER_PIDS" ]]; then
             (
-                while pkill -0 $LOCK_PROGRAM; do
+                while pkill -0 "$LOCK_PROGRAM"; do
                     sleep 1
                 done
-                kill -9 $NWG_WRAPPER_PID
+                # shellcheck disable=SC2086
+                kill -9 $NWG_WRAPPER_PIDS
             ) &
         fi
 
         # clean up if necessary:
-        [[ "DOWNLOAD_RANDOM_IMAGE" ]] && [[ "$DELETE_DOWNLOADED_IMAGE" ]] && { sleep 10; rm "$IMAGE" & }
+        [[ "$DOWNLOAD_RANDOM_IMAGE" ]] && [[ "$DELETE_DOWNLOADED_IMAGE" ]] && { sleep 10; rm "$IMAGE" & }
         ;;
 
     "resume")
@@ -384,7 +386,7 @@ EOF
     "safe"*)
         pkill swayidle
         swayidle $WAIT \
-                 timeout $TIMEOUT                "swaymsg 'output * dpms off'" \
+                 timeout "$TIMEOUT"              "swaymsg 'output * dpms off'" \
                  resume                          "$SELF resume" \
                  timeout $(( TIMEOUT * 2 ))      "swaymsg 'output * dpms on'; $SELF lock-now" \
                  resume                          "$SELF resume" \
@@ -392,25 +394,25 @@ EOF
                  resume                          "$SELF resume" \
                  timeout $(( TIMEOUT * 4 ))      "sudo systemctl suspend" \
                  before-sleep                    "$SELF lock-now" &
-
+        
         WOFI_MSG="safe-mode: auto-lock and auto-suspend are enabled (timeout=$TIMEOUT secs)"
         ;;
-
+        
     "at-home"*)
         pkill swayidle
         swayidle $WAIT \
-                 timeout $TIMEOUT  "swaymsg 'output * dpms off'" \
-                 resume            "$SELF resume" \
-                 before-sleep      "$SELF lock-now" \
-                 after-resume      "$SELF safe-mode" &
-
+                 timeout "$TIMEOUT" "swaymsg 'output * dpms off'" \
+                 resume             "$SELF resume" \
+                 before-sleep       "$SELF lock-now" \
+                 after-resume       "$SELF safe-mode" &
+        
         WOFI_MSG="at-home-mode: auto-lock and auto-suspend are disabled (until manual suspend)"
         ;;
 
     "download"*|"desktop"*)
         pkill swayidle
         swayidle $WAIT \
-                 timeout $TIMEOUT                "swaymsg 'output * dpms off'" \
+                 timeout "$TIMEOUT"              "swaymsg 'output * dpms off'" \
                  resume                          "$SELF resume" \
                  timeout $(( TIMEOUT * 2 ))      "swaymsg 'output * dpms on'; $SELF lock-now" \
                  resume                          "$SELF resume" \
@@ -426,14 +428,14 @@ EOF
         swayidle $WAIT \
                  before-sleep      "$SELF lock-now" \
                  after-resume      "$SELF safe-mode" &
-
+        
 
         WOFI_MSG="movie-mode: blanking, auto-lock and auto-suspend are disabled (until manual suspend)"
         ;;
 
 esac
 
-[[ "NOTIFY" && "$WOFI_MSG" ]] && {
+[[ "$NOTIFY" && "$WOFI_MSG" ]] && {
     notify-send --expire-time=5000 "${WOFI_MSG%:*}"
 }
 

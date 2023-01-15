@@ -13,7 +13,7 @@
 
 	"layer": "top",
 	"position": "top",
-	//"height": 18,
+	"height": 20,
 
 	"modules-left": [
 		"sway/mode",
@@ -21,32 +21,18 @@
 		"sway/window",
 	],
 
-	/* "modules-center": [ */
-	/* 	"sway/window" */
-	/* ], */
-
 	"modules-right": [
-		"custom/arrow1",
     "idle_inhibitor",
-		"custom/arrow2",
 		"pulseaudio",
-		"custom/arrow3",
 		"network",
-		"custom/arrow4",
 		"memory",
-		"custom/arrow5",
 		"cpu",
-		"custom/arrow6",
 		"temperature",
-		"custom/arrow7",
     "backlight",
-		"custom/arrow8",
 		"sway/language",
-		"custom/arrow9",
 		"battery",
-    "custom/arrow10",
+		"clock",
 		"tray",
-		"clock"
 	],
 
 	// -------------------------------------------------------------------------
@@ -206,61 +192,4 @@
 		"icon-size": 20,
 		"spacing": 5
 	},
-
-	"custom/arrow1": {
-		"format": "",
-		"tooltip": false
-	},
-
-	"custom/arrow2": {
-		"format": "",
-		"tooltip": false
-	},
-
-	"custom/arrow3": {
-		"format": "",
-		"tooltip": false
-	},
-
-	"custom/arrow4": {
-		"format": "",
-		"tooltip": false
-	},
-
-	"custom/arrow5": {
-		"format": "",
-		"tooltip": false
-	},
-
-	"custom/arrow6": {
-		"format": "",
-		"tooltip": false
-	},
-
-	"custom/arrow7": {
-		"format": "",
-		"tooltip": false
-	},
-
-	"custom/arrow8": {
-		"format": "",
-		"tooltip": false
-	},
-
-	"custom/arrow9": {
-		"format": "",
-		"tooltip": false
-	},
-	"custom/arrow10": {
-		"format": "",
-		"tooltip": false
-	},
-	"custom/arrow11": {
-		"format": "",
-		"tooltip": false
-	},
-	"custom/arrow12": {
-		"format": "",
-		"tooltip": false
-	}
 }
