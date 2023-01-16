@@ -9,8 +9,8 @@
 # All imports must either be absolute paths starting with `/`, or paths relative
 # to the user's home directory starting with `~/`.
 import:
-  - {{ env "XDG_CONFIG_HOME" }}/alacritty/custom.yml
-  - {{ env "XDG_CONFIG_HOME" }}/alacritty/colors.yml
+  - {{ env "XDG_CONFIG_HOME" }}/alacritty/config.d/custom.yml
+  - {{ env "XDG_CONFIG_HOME" }}/alacritty/config.d/colors.yml
 
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
@@ -567,7 +567,7 @@ import:
 #    - Key0-Key9
 #
 #    A full list with available key codes can be found here:
-#    https://docs.rs/glutin/*/glutin/event/enum.VirtualKeyCode.html#variants
+#    https://docs.rs/winit/*/winit/event/enum.VirtualKeyCode.html#variants
 #
 #    Instead of using the name of the keys, the `key` field also supports using
 #    the scancode of the desired key. Scancodes have to be specified as a
@@ -888,6 +888,12 @@ import:
   #   - Debug
   #   - Trace
   #log_level: Warn
+
+  # Renderer override.
+  #   - glsl3
+  #   - gles2
+  #   - gles2_pure
+  #renderer: None
 
   # Print all received window events.
   #print_events: false
