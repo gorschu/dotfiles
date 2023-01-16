@@ -6,7 +6,10 @@ exec --no-startup-id copyq
 exec --no-startup-id udiskie --no-automount --tray
 exec --no-startup-id easyeffects --gapplication-service
 exec --no-startup-id solaar --window hide --battery-icons solaar
+exec --no-startup-ip gammastep -l $(get_ip_location.sh)
 exec --no-startup-id ~/.local/share/JetBrains/Toolbox/bin/jetbrains-toolbox --minimize
+
+exec always systemctl --user import-environment XDG_SESSION_ID
 
 # backlight to 30% by default
 exec light -S 40%

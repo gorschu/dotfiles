@@ -12,16 +12,16 @@ cursor:
 
 font:
   normal:
-    family: Iosevka SS14
-    style: Regular
+    family: Iosevka Nerd Font
+    style: Complete
   bold:
-    family: Iosevka SS14
+    family: Iosevka Nerd Font
     style: Bold
   italic:
-    family: Iosevka SS14
+    family: Iosevka Nerd Font
     style: Italic
   bold_italic:
-    family: Iosevka SS14
+    family: Iosevka Nerd Font
     style: Bold Italic
   size: 11
 

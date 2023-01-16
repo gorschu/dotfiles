@@ -1,0 +1,9 @@
+{{ if eq .colorscheme "dracula"}}
+{{ .chezmoi.homeDir }}/.vendor/dracula-alacritty/dracula.yml
+{{ else if eq .colorscheme "nord" }}
+{{ .chezmoi.homeDir }}/.vendor/nord-alacritty/src/nord.yml
+{{ else if eq .colorscheme "gruvbox" }}
+{{ env "XDG_CONFIG_HOME" }}/alacritty/config.d/colors/gruvbox.yml
+{{ else if eq .colorscheme "tokyonight" }}
+{{ env "XDG_CONFIG_HOME" }}/alacritty/config.d/colors/tokyonight/tokyonight_night.yml
+{{ end }}
