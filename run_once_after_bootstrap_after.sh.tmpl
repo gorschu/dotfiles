@@ -39,7 +39,7 @@ sudo zypper in -y npm cargo go fd ripgrep neovim make gcc-c++
 sudo pacman -S --noconfirm --needed npm cargo go fd ripgrep neovim
 {{ end }}
 [[ -e $HOME/.local/share/lunarvim ]] && rm -rf $HOME/.local/share/lunarvim
-LV_BRANCH=rolling bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/rolling/utils/installer/install.sh) -y
+LV_BRANCH='release-1.2/neovim-0.8' bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/fc6873809934917b470bff1b072171879899a36b/utils/installer/install.sh) --yes --install-dependencies
 
 echo "${green}Changing from (possible) https to ssh${reset}"
 ${chezmoi} git remote set-url origin git@github.com:azmodude/dotfiles
