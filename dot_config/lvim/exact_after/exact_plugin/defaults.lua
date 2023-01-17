@@ -1,4 +1,5 @@
--- enable builtins
+lvim.colorscheme = "tokyonight"
+---- enable builtins
 lvim.builtin.treesitter.rainbow.enable = true
 -- enable hybrid line numbers
 vim.o.relativenumber = true
