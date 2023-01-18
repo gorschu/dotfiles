@@ -5,23 +5,6 @@ lvim.builtin.treesitter.rainbow.enable = true
 vim.o.relativenumber = true
 vim.o.nu = "rnu"
 
--- null-ls
-local formatters = require "lvim.lsp.null-ls.formatters"
-formatters.setup {
-  { command = "black", filetypes = { "python" } },
-  { command = "isort", filetypes = { "python" } },
-  { command = "gofumpt", filetypes = { "go"} },
-  { command = "shfmt", filetypes = {"sh"} },
-  { command = "shellharden", filetypes = { "sh" } },
-  { command = "prettier", filetypes = { "yaml" } },
-}
-local linters = require "lvim.lsp.null-ls.linters"
-linters.setup {
-  { command = "shellcheck", filetypes = { "sh" } },
-  { command = "pylint", filetypes = { "python" } },
-  { command = "mypy", filetypes = { "python" } },
-}
-
 -- show extra characters for extra stuff
 vim.opt.list = true
 vim.opt.listchars:append "tab:⋅"
@@ -46,3 +29,34 @@ lvim.builtin.which_key.mappings["t"] = {
   l = { "<cmd>TroubleToggle loclist<cr>", "loclist" },
   r = { "<cmd>TroubleToggle lsp_references<cr>", "references" },
 }
+
+-- ensure installation of Mason utils
+require('mason-tool-installer').setup {
+  ensure_installed = {
+    'golangci-lint',
+    'bash-language-server',
+    'lua-language-server',
+    'vim-language-server',
+    'gopls',
+    'stylua',
+    'shellcheck',
+    'editorconfig-checker',
+    'gofumpt',
+    'golines',
+    'gomodifytags',
+    'gotests',
+    'impl',
+    'json-to-struct',
+    'luacheck',
+    'misspell',
+    'revive',
+    'shellcheck',
+    'shfmt',
+    'staticcheck',
+    'vint',
+  },
+  auto_update = false,
+  run_on_start = true,
+  start_delay = 3000, -- 3 second delay
+}
+

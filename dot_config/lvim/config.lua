@@ -185,4 +185,5 @@ lvim.builtin.treesitter.highlight.enable = true
 -- })
 
 -- azmo/customizations
+require("lvim")
 require("plugins")
