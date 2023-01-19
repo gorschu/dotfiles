@@ -10,7 +10,7 @@ an executable
 
 -- general
 lvim.log.level = "warn"
-lvim.format_on_save.enabled = false
+lvim.format_on_save.enabled = true -- set in config.lua because it triggers stuff we cannot do later on (for now)
 lvim.colorscheme = "lunar"
 -- to disable icons and use a minimalist setup, uncomment the following
 -- lvim.use_icons = false
