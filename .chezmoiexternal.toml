@@ -22,3 +22,7 @@
   refreshPeriod = "168h"
   include = ["*/extras/sublime/*"]
 
+[".config/nvim"]
+    type = "git-repo"
+    url = "https://github.com/astronvim/astronvim.git"
+    refreshPeriod = "24h"
