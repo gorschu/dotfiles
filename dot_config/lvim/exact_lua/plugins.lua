@@ -44,7 +44,11 @@ lvim.plugins = {
 			end, 100)
 		end,
 	},
-	{ "zbirenbaum/copilot-cmp", after = { "copilot.lua", "nvim-cmp" } },
+	{ "zbirenbaum/copilot-cmp", after = { "copilot.lua", "nvim-cmp" },
+    config = function ()
+      require("copilot_cmp").setup()
+    end
+  },
 	{
 		"ray-x/go.nvim",
 		config = function()
@@ -148,3 +152,4 @@ lvim.plugins = {
 	{ "tpope/vim-repeat" },
 	{ "WhoIsSethDaniel/mason-tool-installer.nvim", after = { "mason.nvim", "null-ls.nvim" } },
 }
+
