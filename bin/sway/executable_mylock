@@ -393,7 +393,9 @@ EOF
                  timeout $(( TIMEOUT * 3 ))      "swaymsg 'output * dpms off'" \
                  resume                          "$SELF resume" \
                  timeout $(( TIMEOUT * 4 ))      "sudo systemctl suspend" \
-                 before-sleep                    "$SELF lock-now" &
+                 lock                            "$SELF lock-now" \
+                 before-sleep                    "$SELF lock-now" \
+                 idlehint $(( TIMEOUT - 10 )) &
         
         WOFI_MSG="safe-mode: auto-lock and auto-suspend are enabled (timeout=$TIMEOUT secs)"
         ;;
@@ -403,6 +405,7 @@ EOF
         swayidle $WAIT \
                  timeout "$TIMEOUT" "swaymsg 'output * dpms off'" \
                  resume             "$SELF resume" \
+                 lock               "$SELF lock-now" \
                  before-sleep       "$SELF lock-now" \
                  after-resume       "$SELF safe-mode" &
         
@@ -418,6 +421,7 @@ EOF
                  resume                          "$SELF resume" \
                  timeout $(( TIMEOUT * 3 ))      "swaymsg 'output * dpms off'" \
                  resume                          "$SELF resume" \
+                 lock                            "$SELF lock-now" \
                  before-sleep                    "$SELF lock-now" &
 
         WOFI_MSG="download/desktop-mode: auto-lock is enabled (timeout=$TIMEOUT secs); auto-suspend is disabled"
@@ -426,6 +430,7 @@ EOF
     "movie"*)
         pkill swayidle
         swayidle $WAIT \
+                 lock              "$SELF lock-now" \
                  before-sleep      "$SELF lock-now" \
                  after-resume      "$SELF safe-mode" &
         
