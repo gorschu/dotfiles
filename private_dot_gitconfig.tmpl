@@ -59,6 +59,8 @@
     cmd = meld "$LOCAL" "$REMOTE"
 [difftool "bc3"]
     trustExitCode = true
+[difftool "nvimdiff"]
+    cmd = "lvim -d \"$LOCAL\" \"$REMOTE\""
 
 [merge]
     tool = bc3
