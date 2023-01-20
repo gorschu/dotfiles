@@ -1,4 +1,4 @@
-set editorcmd kitty --single-instance --title "Tridactyl External Editor" -- lvim %f
+set editorcmd kitty --single-instance --title "Tridactyl External Editor" -- vim %f
 
 set tabopencontaineraware true
 
