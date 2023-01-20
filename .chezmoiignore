@@ -6,6 +6,7 @@ install.sh
 */**/*.include.asc
 .gita.vendor.frozen
 firstboot
+.zshrc.d/*.zwc
 
 {{- $wants_ssh_keys := list "hephaestus" "artemis" "apollo" }}
 {{- if not (has .chezmoi.hostname $wants_ssh_keys) }}
