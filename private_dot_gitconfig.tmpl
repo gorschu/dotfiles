@@ -17,7 +17,7 @@
     prune = true
 
 [delta]
-  syntax-theme = {{ if eq .colorscheme "dracula" }}Dracula{{ else if eq .colorscheme "nord"}}Nord{{ else if eq .colorscheme "gruvbox"}}gruvbox-dark{{ else if eq .colorscheme "tokyonight"}}tokyonight_night{{ end }}
+  syntax-theme = {{ if eq .colorscheme "dracula" }}Dracula{{ else if eq .colorscheme "nord"}}Nord{{ else if eq .colorscheme "gruvbox"}}gruvbox-dark{{ else if eq .colorscheme "tokyonight"}}tokyonight_storm{{ end }}
   line-numbers = true
   side-by-side = true
   navigate = true
@@ -60,7 +60,7 @@
 [difftool "bc3"]
     trustExitCode = true
 [difftool "nvimdiff"]
-    cmd = "lvim -d \"$LOCAL\" \"$REMOTE\""
+    cmd = "vim -d \"$LOCAL\" \"$REMOTE\""
 
 [merge]
     tool = bc3
