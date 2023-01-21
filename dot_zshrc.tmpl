@@ -26,8 +26,12 @@ export LS_COLORS="$(vivid generate {{ .colorscheme }})"
 # source dracula zsh-syntax-highlighting theme
 source "$HOME"/.vendor/dracula-zsh-syntax-highlighting/zsh-syntax-highlighting.sh
 {{ end }}
+{{ if hasPrefix "catppuccin" .colorscheme }}
+{{ $flavor := trimPrefix "catppuccin-" .colorscheme }}
+source {{ .chezmoi.homeDir }}/.externals/zsh-syntax-highlighting/catppuccin/catppuccin_{{ $flavor }}-zsh-syntax-highlighting.zsh
+{{ end }}
 
-source {{ .chezmoi.homeDir }}/.vendor/zgenom/zgenom.zsh
+source "{{ .chezmoi.homeDir }}/.vendor/zgenom/zgenom.zsh"
 zgenom autoupdate
 
 if ! zgenom saved; then

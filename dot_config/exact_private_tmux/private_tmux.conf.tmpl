@@ -90,6 +90,10 @@ set -g @tmux-gruvbox 'dark' # or 'light'
 {{ if eq .colorscheme "tokyonight" }}
 set -g @plugin "marcocampos/tokyo-night-tmux"
 {{ end }}
+{{ if hasPrefix "catppuccin" .colorscheme}}
+set -g @plugin 'catppuccin/tmux'
+set -g @catppuccin_flavour '{{ trimPrefix "catppuccin-" .colorscheme }}'
+{{ end }}
 
 # order matters here
 set -g @plugin 'tmux-plugins/tmux-prefix-highlight'

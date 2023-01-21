@@ -5,5 +5,8 @@
 {{ else if eq .colorscheme "gruvbox" }}
 {{ env "XDG_CONFIG_HOME" }}/alacritty/config.d/colors/gruvbox.yml
 {{ else if eq .colorscheme "tokyonight" }}
-{{ env "XDG_CONFIG_HOME" }}/alacritty/config.d/colors/tokyonight/tokyonight_storm.yml
+{{ .chezmoi.homeDir }}/.externals/alacritty/tokyonight/tokyonight_storm.yml
+{{ else if hasPrefix "catppuccin-" .colorscheme }}
+{{ $flavor := trimPrefix "catppuccin-" .colorscheme }}
+{{ .chezmoi.homeDir }}/.externals/alacritty/catppuccin/catppuccin-{{ $flavor }}.yml
 {{ end }}
