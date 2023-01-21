@@ -2,7 +2,6 @@ https://github.com/junegunn/fzf.git,fzf,/home/azmo/.vendor/fzf
 https://github.com/clvv/fasd.git,fasd,/home/azmo/.vendor/fasd
 https://github.com/asdf-vm/asdf,asdf,/home/azmo/.vendor/asdf
 https://github.com/dyne/tomb,tomb,/home/azmo/.vendor/tomb
-https://github.com/mrichar1/clipster/,clipster,/home/azmo/.vendor/clipster
 https://github.com/hlissner/doom-emacs,doom-emacs,/home/azmo/.vendor/doom-emacs
 https://github.com/dracula/gnome-terminal,dracula-gnome-terminal,/home/azmo/.vendor/dracula-gnome-terminal
 https://github.com/dracula/konsole,dracula-konsole,/home/azmo/.vendor/dracula-konsole

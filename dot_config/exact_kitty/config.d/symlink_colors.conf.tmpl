@@ -2,10 +2,11 @@
 {{ .chezmoi.homeDir }}/.vendor/dracula-config.dracula.conf
 {{ else if eq .colorscheme "nord" }}
 {{ .chezmoi.homeDir }}/.vendor/nord-kitty/nord.conf
-{{else if eq .colorscheme "gruvbox" }}
+{{ else if eq .colorscheme "gruvbox" }}
 {{ .chezmoi.homeDir}}/.vendor/gruvbox-contrib/kitty/gruvbox-dark.conf
 {{ else if eq .colorscheme "tokyonight" }}
-{{ env "XDG_CONFIG_HOME" }}/kitty/config.d/tokyonight/tokyonight_storm.conf
-{{else if eq .colorscheme "gruvbox" }}
-{{ .chezmoi.homeDir}}/.vendor/gruvbox-contrib/kitty/gruvbox-dark.conf
+{{ .chezmoi.homeDir }}/.externals/kitty/tokyonight/tokyonight_storm.conf
+{{ else if hasPrefix "catppuccin-" .colorscheme }}
+{{ $flavor := trimPrefix "catppuccin-" .colorscheme }}
+{{ .chezmoi.homeDir }}/.externals/kitty/catppuccin/{{ $flavor }}.conf
 {{ end }}

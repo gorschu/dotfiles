@@ -1,28 +1,63 @@
-[".config/kitty/config.d/tokyonight"]
+[".externals/kitty/tokyonight"]
   type = "archive"
   url = "https://github.com/folke/tokyonight.nvim/archive/main.tar.gz"
   exact = true
   stripComponents = 3
   refreshPeriod = "168h"
   include = ["*/extras/kitty/*"]
+[".externals/kitty/catppuccin"]
+  type = "archive"
+  url = "https://github.com/catppuccin/kitty/archive/main.tar.gz"
+  exact = true
+  stripComponents = 1
+  refreshPeriod = "168h"
+  include = ["*/*.conf"]
 
-[".config/alacritty/config.d/colors/tokyonight"]
+[".externals/alacritty/tokyonight"]
   type = "archive"
   url = "https://github.com/folke/tokyonight.nvim/archive/main.tar.gz"
   exact = true
   stripComponents = 3
   refreshPeriod = "168h"
   include = ["*/extras/alacritty/*"]
+[".externals/alacritty/catppuccin"]
+  type = "archive"
+  url = "https://github.com/catppuccin/alacritty/archive/main.tar.gz"
+  exact = true
+  stripComponents = 1
+  refreshPeriod = "168h"
+  include = ["*/catppuccin-*.yml"]
 
-[".config/bat/themes"]
+[".externals/bat/themes/tokyonight"]
   type = "archive"
   url = "https://github.com/folke/tokyonight.nvim/archive/main.tar.gz"
   exact = true
   stripComponents = 3
   refreshPeriod = "168h"
   include = ["*/extras/sublime/*"]
+#
+[".externals/bat/themes/catppuccin"]
+  type = "archive"
+  url = "https://github.com/catppuccin/bat/archive/main.tar.gz"
+  exact = true
+  stripComponents = 1
+  refreshPeriod = "168h"
+  include = ["*/Catppuccin-*.tmTheme"]
 
 [".config/nvim"]
     type = "git-repo"
     url = "https://github.com/astronvim/astronvim.git"
     refreshPeriod = "24h"
+
+[".externals/midnightcommander/catppuccin.ini"]
+  type = "file"
+  url = "https://raw.githubusercontent.com/catppuccin/mc/main/catppuccin.ini"
+  refreshPeriod = "168h"
+
+[".externals/zsh-syntax-highlighting/catppuccin"]
+  type = "archive"
+  url = "https://github.com/catppuccin/zsh-syntax-highlighting/archive/main.tar.gz"
+  exact = true
+  stripComponents = 2
+  refreshPeriod = "168h"
+  include = ["*/themes/*"]

@@ -4,7 +4,17 @@
 
 # Specify desired highlighting theme (e.g. "TwoDark"). Run `bat --list-themes`
 # for a list of all available themes
-{{ if eq .colorscheme "dracula" }}--theme="Dracula"{{ else if eq .colorscheme "nord" }}--theme="Nord"{{ else if eq .colorscheme "gruvbox" }}--theme "gruvbox-dark"{{else if eq .colorscheme "tokyonight"}}--theme "tokyonight_storm"{{ end }}
+{{ if eq .colorscheme "dracula" -}}
+--theme="Dracula"
+{{ else if eq .colorscheme "nord" -}}
+--theme="Nord"
+{{ else if eq .colorscheme "gruvbox" -}}
+--theme "gruvbox-dark"
+{{ else if eq .colorscheme "tokyonight" -}}--theme "tokyonight_storm"
+{{ else if hasPrefix "catppuccin-" .colorscheme -}}
+{{ $flavor := trimPrefix "catppuccin-" .colorscheme }}
+--theme "catppuccin-{{ $flavor }}"
+{{ end }}
 --style="auto"
 
 # Enable this to use italic text on the terminal. This is not supported on all
