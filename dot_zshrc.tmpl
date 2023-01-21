@@ -20,9 +20,7 @@ DISABLE_AUTO_TITLE=false
 # disabled dots while waiting for completion
 COMPLETION_WAITING_DOTS=true
 
-# seems like oh-my-zsh isn't doing this by default anymore, its using the
-# default database
-eval "$(dircolors ~/.dircolors)"
+export LS_COLORS="$(vivid generate {{ .colorscheme }})"
 
 {{ if eq .colorscheme "dracula" }}
 # source dracula zsh-syntax-highlighting theme
