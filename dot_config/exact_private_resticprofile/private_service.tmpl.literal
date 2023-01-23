@@ -11,6 +11,8 @@ ExecStartPre=sleep 1m
 ExecStart=systemd-inhibit --who="resticprofile" --why="Prevent interrupting scheduled backup" {{ .CommandLine }}
 IOSchedulingClass=best-effort
 IOSchedulingPriority=7
+# Only run on AC-Power
+ConditionACPower=true
 {{ if .Nice }}Nice={{ .Nice }}{{ end }}
 {{ range .Environment -}}
 Environment="{{ . }}"
