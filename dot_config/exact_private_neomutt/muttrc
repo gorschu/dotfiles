@@ -36,7 +36,7 @@ set attribution_locale="en_US"
 # set nvim to last empty line (before signature)
 # -c'noh' turns off search highlighting (hlsearch) as triggered by the
 # search for last line
-set editor="vim '+:silent+?^$' %s -c'noh'"
+set editor="lvim '+:silent+?^$' %s -c'noh'"
 
 # setup address book query and completion
 set query_command = "khard email --parsable %s"
