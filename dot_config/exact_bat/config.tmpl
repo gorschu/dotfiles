@@ -13,7 +13,7 @@
 {{ else if eq .colorscheme "tokyonight" -}}--theme "tokyonight_storm"
 {{ else if hasPrefix "catppuccin-" .colorscheme -}}
 {{ $flavor := trimPrefix "catppuccin-" .colorscheme }}
---theme "catppuccin-{{ $flavor }}"
+--theme "Catppuccin-{{ $flavor }}"
 {{ end }}
 --style="auto"
 
