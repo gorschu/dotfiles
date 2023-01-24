@@ -12,8 +12,8 @@ if ! command -v -p kwriteconfig5 > /dev/null || ! command -v -p ${qdbus} > /dev/
 fi
 
 # Custom Applications
-kwriteconfig5 --file kglobalshortcutsrc --group "kitty.desktop" --key "_k_friendly_name" "kitty"
-kwriteconfig5 --file kglobalshortcutsrc --group "kitty.desktop" --key "_launch" "Meta+Return,none,kitty"
+kwriteconfig5 --file kglobalshortcutsrc --group "{{ .terminal }}.desktop" --key "_k_friendly_name" "{{ .terminal }}"
+kwriteconfig5 --file kglobalshortcutsrc --group "{{ .terminal }}.desktop" --key "_launch" "Meta+Return,none,{{ .terminal }}"
 
 # Keyboard Shortcuts
 kwriteconfig5 --file kglobalshortcutsrc --group kwin --key "Switch to Desktop 1" "Ctrl+F1\tMeta+!,Ctrl+F1,Switch to Desktop 1"
