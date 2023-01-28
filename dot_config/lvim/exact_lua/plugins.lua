@@ -1,5 +1,6 @@
 -- plugins
 lvim.plugins = {
+	{ "catppuccin/nvim", as = "catppuccin" },
 	{ "gpanders/editorconfig.nvim" }, -- no longer needed in nvim 0.9.0
 	{ "christoomey/vim-tmux-navigator" }, -- better tmux navigation
 	{
@@ -45,10 +46,10 @@ lvim.plugins = {
 		end,
 	},
 	{ "zbirenbaum/copilot-cmp", after = { "copilot.lua", "nvim-cmp" },
-    config = function ()
-      require("copilot_cmp").setup()
-    end
-  },
+		config = function()
+			require("copilot_cmp").setup()
+		end
+	},
 	{
 		"ray-x/go.nvim",
 		config = function()
@@ -152,4 +153,3 @@ lvim.plugins = {
 	{ "tpope/vim-repeat" },
 	{ "WhoIsSethDaniel/mason-tool-installer.nvim", after = { "mason.nvim", "null-ls.nvim" } },
 }
-
