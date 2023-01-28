@@ -42,6 +42,7 @@ linters.setup({
 	{ command = "staticcheck", filetypes = { "go" } },
 	{ command = "golangci_lint", filetypes = { "go" } },
 	{ command = "revive", filetypes = { "go" } },
+	{ command = "hadolint", filetypes = { "dockerfile" } },
 })
 
 lvim.builtin.treesitter.ensure_installed = {
