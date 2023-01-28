@@ -1,6 +1,6 @@
 -- everything that can't be done in after/... lives here
 lvim.format_on_save.enabled = true
-lvim.colorscheme = "tokyonight-night"
+lvim.colorscheme = "catppuccin-macchiato"
 
 ---- enable builtins
 lvim.builtin.treesitter.rainbow.enable = true
