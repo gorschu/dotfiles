@@ -5,7 +5,7 @@
 
 [core]
     quotepath = false
-    pager = delta
+    pager = bat
 
 [init]
     {{- if stat (joinPath .chezmoi.homeDir ".git-template") }}
@@ -15,13 +15,6 @@
 
 [fetch]
     prune = true
-
-[delta]
-  syntax-theme = {{ if eq .colorscheme "dracula" }}Dracula{{ else if eq .colorscheme "nord"}}Nord{{ else if eq .colorscheme "gruvbox"}}gruvbox-dark{{ else if eq .colorscheme "tokyonight"}}tokyonight_storm{{ end }}
-  line-numbers = true
-  side-by-side = true
-  navigate = true
-  hyperlinks = true
 
 [interactive]
     diffFilter = delta --color-only
@@ -49,6 +42,7 @@
 [diff]
     tool = bc3
     colorMoved = default
+    external = difft
 [diff "gpg"]
     textconv = gpg --no-tty --decrypt
 [difftool]
