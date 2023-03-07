@@ -1,0 +1,7 @@
+---
+{{ if eq .colorscheme "dracula"}}theme "dracula";
+{{ else if eq .colorscheme "nord" }}theme "nord";
+{{ else if eq .colorscheme "gruvbox" }}theme "gruvbox";
+{{ else if eq .colorscheme "tokyonight" }}theme "tokyonight_storm";
+{{ else if hasPrefix "catppuccin-" .colorscheme }}{{ $flavor := trimPrefix "catppuccin-" .colorscheme }}theme "catppuccin-{{ $flavor }}";
+{{ end }}
