@@ -1,0 +1,26 @@
+# initialize asdf
+. "$HOME"/.vendor/asdf/asdf.sh
+
+# add custom completions
+FPATH={{ .chezmoi.homeDir }}/.zsh_completions.d:"$FPATH"
+autoload -Uz compinit
+compinit
+
+# source in fzf
+# fedora
+[ -f /usr/share/fzf/shell/key-bindings.zsh ] && source /usr/share/fzf/shell/key-bindings.zsh
+# custom install via install script
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# source in atuin
+if (($+commands[atuin])); then
+  bindkey -r "^r" # remove ctrl-r keybinding, atuin covers it
+  eval "$(atuin init zsh)"
+fi
+
+# source in zoxide
+(($+commands[zoxide])) && eval "$(zoxide init zsh)"
+
+# initialize starship
+(($+commands[starship])) && eval "$(starship init zsh)"
+
