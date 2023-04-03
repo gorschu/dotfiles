@@ -1,1 +1,1 @@
-encrypted_* diff=gpg filter=gpg
+encrypted_*.asc diff=gpg filter=gpg
