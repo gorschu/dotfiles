@@ -1,4 +1,9 @@
-encryption = "gpg"
+progress = true
+encryption = "age"
+
+[age]
+    recipient = "age1aph83gkdg83l6cf83nsdthp95dcd5natpa7527sd3p8rtlcj3dgstl502c"
+    identity = "{{ joinPath (env "XDG_CONFIG_HOME") "sops/age/keys.txt" }}"
 
 [gpg]
     recipient = "0xDEE550054AA972F6"
@@ -18,4 +23,4 @@ encryption = "gpg"
   database = "~/sync/admin/azmo.kdbx"
   args = "-y 2:{{ output "ykman" "list" "--serials" | trim }}"
 
-{{ joinPath .chezmoi.sourceDir ".chezmoi.toml.tmpl.include.asc" | include | decrypt }}
+{{ joinPath .chezmoi.sourceDir ".chezmoi.toml.tmpl.include.age" | include | decrypt }}
