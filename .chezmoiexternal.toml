@@ -85,3 +85,12 @@
   stripComponents = 2
   refreshPeriod = "168h"
   include = ["*/themes/*"]
+
+[".externals/zellij/themes"]
+  type = "archive"
+  url = "https://github.com/zellij-org/zellij/archive/main.tar.gz"
+  exact = true
+  stripComponents = 3
+  refreshPeriod = "168h"
+  include = ["*/example/themes/*"]
+
