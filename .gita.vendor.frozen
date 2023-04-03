@@ -1,8 +1,7 @@
 https://github.com/junegunn/fzf.git,fzf,/home/azmo/.vendor/fzf
-https://github.com/clvv/fasd.git,fasd,/home/azmo/.vendor/fasd
 https://github.com/asdf-vm/asdf,asdf,/home/azmo/.vendor/asdf
 https://github.com/dyne/tomb,tomb,/home/azmo/.vendor/tomb
-https://github.com/hlissner/doom-emacs,doom-emacs,/home/azmo/.vendor/doom-emacs
+https://github.com/mrichar1/clipster/,clipster,/home/azmo/.vendor/clipster
 https://github.com/dracula/gnome-terminal,dracula-gnome-terminal,/home/azmo/.vendor/dracula-gnome-terminal
 https://github.com/dracula/konsole,dracula-konsole,/home/azmo/.vendor/dracula-konsole
 https://github.com/dracula/kitty,dracula-kitty,/home/azmo/.vendor/dracula-kitty
@@ -18,7 +17,6 @@ https://github.com/arcticicestudio/nord-alacritty.git,nord-alacritty,/home/azmo/
 https://github.com/arcticicestudio/nord-gnome-terminal.git,nord-gnome-terminal,/home/azmo/.vendor/nord-gnome-terminal
 https://github.com/connorholyday/nord-kitty.git,nord-kitty,/home/azmo/.vendor/nord-kitty
 https://github.com/arcticicestudio/nord-konsole.git,nord-konsole,/home/azmo/.vendor/nord-konsole
-https://gist.github.com/laulicus/0ea52d87b529ad712794e8b5cd73b3cb,nord-midnight-commander,/home/azmo/.vendor/nord-midnight-commander
 https://github.com/arcticicestudio/nord-xresources.git,nord-xresources,/home/azmo/.vendor/nord-xresources
 https://github.com/gdnand/zathura-nord.git,nord-zathura,/home/azmo/.vendor/nord-zathura
 https://github.com/jandamm/zgenom.git,zgenom,/home/azmo/.vendor/zgenom
