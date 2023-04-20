@@ -50,11 +50,11 @@ GPGKEY_FINGERPRINT=0A47650A15E4F0F4003EC450DEE550054AA972F6
 # .chezmoi.toml in here is our source of truth, delete anything already present
 [[ -e $HOME/.config/chezmoi/chezmoi.toml ]] && rm -f "$HOME"/.config/chezmoi/chezmoi.toml
 cat <<EOF >>"$HOME/.config/chezmoi/chezmoi.toml"
-encryption = "age"
+encryption = "gpg"
 
-[age]
-recipient = "age1aph83gkdg83l6cf83nsdthp95dcd5natpa7527sd3p8rtlcj3dgstl502c"
-identity = "~/.config/sops/age/keys.txt"
+[gpg]
+recipient = "0x${GPGKEY}"
+suffix = ".asc"
 EOF
 
 gpg --keyserver keyserver.ubuntu.com --receive-keys "$GPGKEY"
