@@ -7,18 +7,7 @@ green=$(tput setaf 2)
 reset=$(tput sgr0)
 
 echo "${green}Installing absolute requirements${reset}"
-if [[ $(grep "^ID" /etc/os-release) =~ ubuntu ]]; then
-  sudo apt-get update &&
-    sudo apt-get -y install git yubikey-manager
-elif [[ $(grep "^ID" /etc/os-release) =~ arch ]]; then
-  # fetch agilebits gpg key
-  gpg --receive-keys 3FEF9748469ADBE15DA7CA80AC2D62742012EA22
-  paru -S --pgpfetch --noconfirm --needed git yubikey-manager chezmoi 1password-cli 1password
-elif [[ $(grep "^ID" /etc/os-release) =~ fedora ]]; then
-  sudo dnf install -y git yubikey-manager
-elif [[ $(grep "^ID" /etc/os-release) =~ opensuse ]]; then
-  sudo zypper install -y git yubikey-manager chezmoi
-fi
+sudo dnf install -y git yubikey-manager
 
 if [ ! "$(command -v chezmoi)" ]; then
   bin_dir="/usr/local/bin"
@@ -27,7 +16,7 @@ if [ ! "$(command -v chezmoi)" ]; then
   # chezmoi needs to be root:root owned for 1password to allow it for binary permission verification
   # which does make a lot of sense from a security perspective - therefore move it to /usr/local/bin
   sh -c "$(curl -fsSL https://git.io/chezmoi)" -- -b "$bin_dir_tmp" &&
-    sudo install --owner root --group root --mode 755 --compare ${bin_dir_tmp}/chezmoi ${chezmoi}
+    sudo install --owner root --group root --mode 755 --compare "${bin_dir_tmp}/chezmoi" "${chezmoi}"
 else
   chezmoi=chezmoi
 fi
@@ -36,31 +25,14 @@ fi
 if [ ! "$(command -v 1password)" ]; then
   op_url="https://downloads.1password.com/linux/rpm/stable/x86_64/1password-latest.rpm"
   op_rpm_key="https://downloads.1password.com/linux/keys/1password.asc"
-  if [[ $(grep "^ID" /etc/os-release) =~ fedora ]]; then
-    # we are using the 1pw repository here, so never do this after initital install
-    if ! rpm -q 1password >/dev/null; then
-      sudo rpm --import "$op_rpm_key"
-      sudo dnf install -y "$op_url"
-      echo "Please configure 1password before continuing." && exit 1
-    fi
-  elif [[ $(grep "^ID" /etc/os-release) =~ opensuse ]]; then
-    # we cannot use the DNF repository on SUSE, therefore do this everytime
-    if ! rpm -q 1password >/dev/null; then
-      sudo rpm --import "$op_rpm_key"
-      sudo zypper install -y "$op_url"
-      echo "Please configure 1password before continuing." && exit 1
-    fi
+  if ! rpm -q 1password >/dev/null; then
+    sudo rpm --import "${op_rpm_key}"
+    sudo dnf install -y "${op_url}"
+    echo "Please configure 1password before continuing." && exit 1
   fi
 fi
-if [ ! "$(command -v op)" ]; then
-  if ! rpm -q 1password-cli >/dev/null; then
-    if [[ $(grep "^ID" /etc/os-release) =~ fedora ]]; then
-      sudo dnf install -y 1password-cli
-    elif [[ $(grep "^ID" /etc/os-release) =~ opensuse ]]; then
-      sudo zypper install -y 1password-cli
-    fi
-  fi
-fi
+
+[ ! "$(command -v op)" ] && ! rpm -q 1password-cli >/dev/null && sudo dnf install -y 1password-cli
 
 # stop pcscd for first use - it conflicts with gnupg when the latter is not configured to use it
 sudo systemctl stop pcscd || true
@@ -96,7 +68,7 @@ export GPG_TTY
 # POSIX way to get script's dir: https://stackoverflow.com/a/29834779/12156188
 script_dir="$(cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P)"
 # exec: replace current process with chezmoi init
-export PATH="$PATH:$HOME/.local/bin"
+# TODO: OP_SESSION_my is probably no longer supported.
 XDG_CONFIG_HOME=$HOME/.config OP_SESSION_my=$(bash bin/exact_security/executable_onepassword-signin) exec "$chezmoi" init --apply "--source=$script_dir"
 
 # vim: set ft=sh:
