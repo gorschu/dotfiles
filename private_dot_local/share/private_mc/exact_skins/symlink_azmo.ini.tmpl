@@ -1,9 +1,0 @@
-{{ if eq .chezmoi.homeDir "dracula" }}
-{{ .chezmoi.homeDir }}/.vendor/dracula-midnight-commander/skins/dracula256.ini
-{{ else if eq .colorscheme "nord" }}
-{{ .chezmoi.homeDir }}/.vendor/nord-midnight-commander/nord16M.ini
-{{ else if eq .colorscheme "gruvbox" }}
-{{ .chezmoi.homeDir }}/.vendor/gruvbox-contrib/midnightcommander/gruvbox256.ini
-{{ else if hasPrefix "catppuccin" .colorscheme }}
-{{ .chezmoi.homeDir }}/.externals/midnightcommander/catppuccin.ini
-{{ end }}
