@@ -1,8 +1,0 @@
-#!/bin/bash
-
-outdir="${XDG_RUNTIME_DIR}/i3"
-[[ -d "${outdir}" ]] || mkdir -p "${outdir}"
-
-LC_NUMERIC="en_US.UTF-8" printf "%2d%%\n" \
-    "$(bc -lq <<<"$(brightnessctl -m g)/$(brightnessctl -m m)*100")" > \
-    "${outdir}/brightness"
