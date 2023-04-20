@@ -1,8 +1,0 @@
-#!/bin/bash
-
-# wait for network to come up
-while ! ping -c 1 -q 1.1.1.1; do
-    sleep 3
-done
-
-redshift-gtk -l $(get_ip_location.sh)
