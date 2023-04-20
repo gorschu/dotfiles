@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
 MimeType=application/x-ica
-Name=Citrix in Container
+Name=Distrobox ICAClient
 NoDisplay=true
-Exec=/home/azmo/bin/misc/citrix-run.sh
+Exec=/home/azmo/bin/misc/wfica.sh
