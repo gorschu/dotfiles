@@ -14,9 +14,9 @@ default:
   status-file: "/tmp/resticprofile/{{ "-- .Profile.Name ++" | replace "-" "{" | replace "+" "}" }}-status.json"
   password-file: "{{ "-- .ConfigDir ++" | replace "-" "{" | replace "+" "}" }}/restic-password-{{ "-- .Profile.Name ++" | replace "-" "{" | replace "+" "}" }}"
   lock: "{{ "-- if .Env.XDG_RUNTIME_DIR ++-- .Env.XDG_RUNTIME_DIR ++-- else ++/tmp-- end ++" | replace "-" "{" | replace "+" "}" }}/resticprofile/{{ "-- .Profile.Name ++" | replace "-" "{" | replace "+" "}" }}.lock"
-  run-after: "curl -s --output /dev/null --form-string 'token={{ (onepasswordItemFields "Pushover").restic.value }}' --form-string 'user={{ (onepasswordItemFields "Pushover").UserKey.value }}' --form-string \"message=Restic $PROFILE_COMMAND successful on host '{{ .chezmoi.hostname }}' for profile '$PROFILE_NAME'.\" https://api.pushover.net/1/messages.json"
+  run-after: "curl -s --output /dev/null --form-string 'token={{ .backup.pushover.token }}' --form-string 'user={{ .backup.pushover.userKey }}' --form-string \"message=Restic $PROFILE_COMMAND successful on host '{{ .chezmoi.hostname }}' for profile '$PROFILE_NAME'.\" https://api.pushover.net/1/messages.json"
   run-after-fail:
-    - "curl -s --output /dev/null --form-string 'token={{ (onepasswordItemFields "Pushover").restic.value }}' --form-string 'user={{ (onepasswordItemFields "Pushover").UserKey.value }}'  --form-string \"message=Restic $PROFILE_COMMAND failed on host '{{ .chezmoi.hostname }}' for profile '$PROFILE_NAME' with error: $ERROR.\" https://api.pushover.net/1/messages.json"
+    - "curl -s --output /dev/null --form-string 'token={{ .backup.pushover.token }}' --form-string 'user={{ .backup.pushover.userKey }}'  --form-string \"message=Restic $PROFILE_COMMAND failed on host '{{ .chezmoi.hostname }}' for profile '$PROFILE_NAME' with error: $ERROR.\" https://api.pushover.net/1/messages.json"
     {{ if eq .chezmoi.hostname "apollo" }}
     - curl -fsS -m 10 --retry 5 -o /dev/null https://hc-ping.com/8dd8e851-e4a6-4e4c-832d-705ef1885499/fail
     {{ end }}
@@ -34,12 +34,12 @@ default:
 
 workstations-backblaze:
   inherit: "default"
-  repository: "{{ (onepasswordItemFields "Backup Restic/Workstations").RepositoryURL_backblaze.value }}"
+  repository: "{{ .backup.restic.backblaze.repositoryUrl }}"
   limit-upload: 3000
 
   env:
-    B2_ACCOUNT_ID: "{{ (onepasswordItemFields "Backblaze").azmo_B2_ACCOUNT_ID.value }}"
-    B2_ACCOUNT_KEY: "{{ (onepasswordItemFields "Backblaze").azmo_B2_ACCOUNT_KEY.value }}"
+    B2_ACCOUNT_ID: "{{ .backup.restic.backblaze.accountId }}"
+    B2_ACCOUNT_KEY: "{{ .backup.restic.backblaze.accountKey }}"
 
   backup:
     {{ if regexFind "/home btrfs" (output "/usr/bin/cat" "/proc/mounts") }}
@@ -117,14 +117,14 @@ workstations-backblaze:
 
 workstations-scaleway:
   inherit: "default"
-  repository: "{{ (onepasswordItemFields "Backup Restic/Workstations").RepositoryURL_scaleway.value }}"
+  repository: "{{ .backup.restic.scaleway.repositoryUrl }}"
   limit-upload: 3000
   option:
     - "s3.region=fr-par"
 
   env:
-    AWS_ACCESS_KEY_ID: "{{ (onepasswordItemFields "Scaleway").restic_Access_Key_ID.value }}"
-    AWS_SECRET_ACCESS_KEY: "{{ (onepasswordItemFields "Scaleway").restic_Access_Key_Secret.value }}"
+    AWS_ACCESS_KEY_ID: "{{ .backup.restic.scaleway.accessKeyId }}"
+    AWS_SECRET_ACCESS_KEY: "{{ .backup.restic.scaleway.accessKeySecret }}"
 
   backup:
     {{ if regexFind "/home btrfs" (output "/usr/bin/cat" "/proc/mounts") }}
@@ -189,7 +189,7 @@ workstations-scaleway:
 workstations-zeus:
   inherit: "default"
 
-  repository: "rest:http://{{ (onepasswordDetailsFields "restic-restserver zeus").username.value }}:{{ (onepasswordDetailsFields "restic-restserver zeus").password.value }}@{{ (onepasswordItemFields "Backup Restic/Workstations").RepositoryURL_zeus.value }}/workstations"
+  repository: "{{ .backup.restic.zeus.repositoryUrl }}"
 
   backup:
     {{ if regexFind "/home btrfs" (output "/usr/bin/cat" "/proc/mounts") }}
