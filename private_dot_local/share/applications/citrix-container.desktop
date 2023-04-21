@@ -1,6 +1,0 @@
-[Desktop Entry]
-Type=Application
-MimeType=application/x-ica
-Name=Citrix in Container
-NoDisplay=true
-Exec=/home/azmo/bin/misc/citrix-run.sh
