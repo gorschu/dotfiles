@@ -4,7 +4,7 @@
   exact = true
   stripComponents = 1
   refreshPeriod = "168h"
-  include = ["*/*.conf"]
+  include = ["*/themes", "*/themes/*.conf"]
 
 [".externals/alacritty/catppuccin"]
   type = "archive"
