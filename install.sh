@@ -59,8 +59,8 @@ EOF
 
 gpg --keyserver keyserver.ubuntu.com --receive-keys "$GPGKEY"
 echo -e "5\ny\n" | gpg --command-fd 0 --expert --edit-key "$GPGKEY_FINGERPRINT" trust
-# power up yubikey
-gpg --card-status
+# power up yubikey if present
+! ykman info 2>&1 | grep -q -i error && gpg --card-status
 
 GPG_TTY=$(tty)
 export GPG_TTY
