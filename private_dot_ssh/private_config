@@ -1,0 +1,15 @@
+# include personal configuration
+Include config.d/*
+# global configuration
+Host *
+  AddKeysToAgent 60m
+  ForwardAgent no
+  Compression no
+  ServerAliveInterval 15
+  ServerAliveCountMax 3
+  HashKnownHosts yes
+  UserKnownHostsFile ~/.ssh/known_hosts
+  ControlMaster auto
+  ControlPath ~/tmp/.ssh/master-%r@%n:%p
+  ControlPersist 60m
+
