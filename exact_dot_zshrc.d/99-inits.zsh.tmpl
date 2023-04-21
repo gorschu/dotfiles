@@ -22,5 +22,5 @@ fi
 (($+commands[zoxide])) && eval "$(zoxide init zsh)"
 
 # initialize starship
-(($+commands[starship])) && eval "$(starship init zsh)"
+(($+commands[starship])) && export STARSHIP_CONFIG=${XDG_CONFIG_HOME}/starship/config.toml && eval "$(starship init zsh)"
 
