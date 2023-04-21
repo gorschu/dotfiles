@@ -1,0 +1,100 @@
+[color]
+    ui = auto
+
+[commit]
+    gpgsign = true
+    verbose = true
+
+[credential]
+    helper = cache --timeout=3600
+
+[core]
+    quotepath = false
+    pager = bat
+
+[diff]
+    tool = bc3
+    colorMoved = "dimmed-zebra"
+    external = difft --color auto --background dark --display side-by-side
+[diff "gpg"]
+    textconv = gpg --no-tty --decrypt
+[difftool]
+    prompt = true
+    keepBackup = false
+[difftool "bc3"]
+    trustExitCode = true
+[difftool "meld"]
+    trustExitCode = true
+    cmd = meld "$LOCAL" "$REMOTE"
+[difftool "nvimdiff"]
+    cmd = "vim -d \"$LOCAL\" \"$REMOTE\""
+
+[feature]
+    manyFiles = true
+
+[fetch]
+    prune = true
+
+[filter "lfs"]
+	clean = "git-lfs clean -- %f"
+	process = "git-lfs filter-process"
+	required = true
+	smudge = "git-lfs smudge -- %f"
+
+[github]
+    user = azmodude
+
+[gui]
+    historybrowser = git-dag
+
+[help]
+    autocorrect = 20
+
+[includeif "gitdir:~/projects/work/**"]
+    path = ~/projects/work/.gitconfig
+[includeif "gitdir:~/sync/workstations/projects/work/**"]
+    path = ~/projects/work/.gitconfig
+
+[init]
+    {{- if stat (joinPath .chezmoi.homeDir ".git-template") }}
+    templatedir = ~/.git-template
+    {{- end }}
+    defaultBranch = main
+
+[merge]
+    tool = bc3
+[mergetool]
+    prompt = false
+    keepBackup = false
+    keepTemporaries = false
+[mergetool "meld"]
+    # ONLY use one of these, personal preference
+    cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
+    # cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
+    trustExitCode = true
+[mergetool "bc3"]
+    trustExitCode = true
+
+[pull]
+    rebase = true
+
+[push]
+    default = simple
+    autoSetupRemote = true
+
+[rebase]
+    autosquash = true
+
+[submodule]
+    fetchJobs = 4
+    recurse = true
+
+[tag]
+    forceSignAnnotated = true
+    gpgSign = true
+
+[user]
+    name = Gordon Schulz
+    email = {{ .email }}
+    signingkey = {{ .gpgkey }}
+
