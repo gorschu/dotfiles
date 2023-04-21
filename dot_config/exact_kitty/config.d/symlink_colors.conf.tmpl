@@ -8,5 +8,5 @@
 {{ .chezmoi.homeDir }}/.externals/kitty/tokyonight/tokyonight_storm.conf
 {{ else if hasPrefix "catppuccin-" .colorscheme }}
 {{ $flavor := trimPrefix "catppuccin-" .colorscheme }}
-{{ .chezmoi.homeDir }}/.externals/kitty/catppuccin/{{ $flavor }}.conf
+{{ .chezmoi.homeDir }}/.externals/kitty/catppuccin/themes/{{ $flavor }}.conf
 {{ end }}

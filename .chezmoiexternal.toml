@@ -1,25 +1,11 @@
-[".externals/kitty/tokyonight"]
-  type = "archive"
-  url = "https://github.com/folke/tokyonight.nvim/archive/main.tar.gz"
-  exact = true
-  stripComponents = 3
-  refreshPeriod = "168h"
-  include = ["*/extras/kitty/*"]
 [".externals/kitty/catppuccin"]
   type = "archive"
   url = "https://github.com/catppuccin/kitty/archive/main.tar.gz"
   exact = true
   stripComponents = 1
   refreshPeriod = "168h"
-  include = ["*/*.conf"]
+  include = ["*/themes", "*/themes/*.conf"]
 
-[".externals/alacritty/tokyonight"]
-  type = "archive"
-  url = "https://github.com/folke/tokyonight.nvim/archive/main.tar.gz"
-  exact = true
-  stripComponents = 3
-  refreshPeriod = "168h"
-  include = ["*/extras/alacritty/*"]
 [".externals/alacritty/catppuccin"]
   type = "archive"
   url = "https://github.com/catppuccin/alacritty/archive/main.tar.gz"
@@ -28,14 +14,6 @@
   refreshPeriod = "168h"
   include = ["*/catppuccin-*.yml"]
 
-[".externals/bat/themes/tokyonight"]
-  type = "archive"
-  url = "https://github.com/folke/tokyonight.nvim/archive/main.tar.gz"
-  exact = true
-  stripComponents = 3
-  refreshPeriod = "168h"
-  include = ["*/extras/sublime/*"]
-#
 [".externals/bat/themes/catppuccin"]
   type = "archive"
   url = "https://github.com/catppuccin/bat/archive/main.tar.gz"
@@ -48,11 +26,6 @@
     type = "git-repo"
     url = "https://github.com/astronvim/astronvim.git"
     refreshPeriod = "24h"
-
-[".externals/midnightcommander/catppuccin.ini"]
-  type = "file"
-  url = "https://raw.githubusercontent.com/catppuccin/mc/main/catppuccin.ini"
-  refreshPeriod = "168h"
 
 [".externals/zsh-syntax-highlighting/catppuccin"]
   type = "archive"
@@ -93,4 +66,21 @@
   stripComponents = 3
   refreshPeriod = "168h"
   include = ["*/example/themes/*"]
+
+{{ $tombVersion := "2.9" }}
+[".externals/bin/tomb"]
+  type = "file"
+  url = "https://github.com/dyne/Tomb/archive/refs/tags/v{{ $tombVersion }}.tar.gz"
+  executable = true
+  [".externals/bin/tomb".filter]
+    command = "tar"
+    args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "Tomb-{{ $tombVersion }}/tomb"]
+
+{{ $atuinVersion := "14.0.1" }}
+[".externals/atuin"]
+  type = "archive"
+  url = "https://github.com/ellie/atuin/releases/download/v{{ $atuinVersion }}/atuin-v{{ $atuinVersion }}-x86_64-unknown-{{ .chezmoi.os }}-gnu.tar.gz"
+  exact = true
+  stripComponents = 1
+  include = ["*/atuin", "*/completions", "*/completions/*"]
 

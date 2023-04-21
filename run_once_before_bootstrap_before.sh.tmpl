@@ -7,31 +7,5 @@ green=$(tput setaf 2)
 reset=$(tput sgr0)
 
 echo "${green}Installing requirements${reset}"
-{{ if eq .chezmoi.osRelease.id "ubuntu" "debian" }}
-  sudo apt-get update && \
-        sudo apt-get -y install git lsb-release curl zsh \
-            tomb python3-pip gnupg2 pcscd scdaemon pcsc-tools \
-            yubikey-manager
-{{ else if eq .chezmoi.osRelease.id "arch" }}
-    paru -S --noconfirm --needed git curl zsh run-parts unzip python-pip python-pipx
-{{ else if eq .chezmoi.osRelease.id "fedora" }}
-    sudo dnf install -y git zsh redhat-lsb-core yubikey-manager python3-pip pipx
-{{ else if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
-    sudo zypper install -y git zsh python3-pip python3-pipx
-{{ end }}
+sudo dnf install -y git zsh redhat-lsb-core yubikey-manager python3-pip pipx
 
-echo "${green}Installing gita and cloning .vendor requirements${reset}"
-if [[ ! -e {{ .chezmoi.homeDir }}/.local/bin/gita ]]; then
-  pipx install gita
-else
-  pipx upgrade gita
-fi
-if [[ ! -d $HOME/.vendor ]]; then
-  $HOME/.local/bin/gita clone -f {{ .chezmoi.sourceDir }}/.gita.vendor.frozen -p
-  $HOME/.local/bin/gita add -a ~/.vendor
-  if ! (~/.local/bin/gita group ls | grep -q dotfiles.vendor); then
-    $HOME/.local/bin/gita group rename .vendor dotfiles.vendor
-  fi
-else
-  $HOME/.local/bin/gita pull dotfiles.vendor
-fi

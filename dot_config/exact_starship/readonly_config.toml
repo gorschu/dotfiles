@@ -1,0 +1,143 @@
+[aws]
+disabled = false
+symbol = "  "
+
+[character]
+error_symbol = "[~~>](bold red) "
+success_symbol = "[->>](bold green) "
+vimcmd_replace_one_symbol = "[<<-](bold purple) "
+vimcmd_replace_symbol = "[<<-](bold purple) "
+vimcmd_symbol = "[<<-](bold yellow) "
+vimcmd_visual_symbol = "[<<-](bold cyan) "
+
+[cmd_duration]
+disabled = false
+format = "🕙 [$duration]($style) "
+min_time_to_notify = 180000
+show_notifications = true
+
+[conda]
+symbol = " "
+
+[dart]
+symbol = " "
+
+[directory]
+fish_style_pwd_dir_length = 1
+read_only = " "
+truncation_length = 3
+truncation_symbol = "…/"
+
+[docker_context]
+disabled = false
+symbol = " "
+
+[elixir]
+symbol = " "
+
+[elm]
+symbol = " "
+
+[fill]
+disabled = false
+symbol = " "
+
+[gcloud]
+disabled = false
+symbol = " "
+
+[git_branch]
+disabled = false
+symbol = " "
+
+[git_commit]
+disabled = false
+only_detached = false
+tag_disabled = false
+
+[git_metrics]
+disabled = false
+
+[git_status]
+disabled = false
+
+[golang]
+symbol = " "
+
+[hg_branch]
+symbol = " "
+
+[hostname]
+format = "[@$hostname]($style) in "
+ssh_only = false
+ssh_symbol = "旅"
+style = "#8aadf4"
+
+[java]
+symbol = " "
+
+[julia]
+symbol = " "
+
+[memory_usage]
+symbol = " "
+
+[nim]
+symbol = " "
+
+[nix_shell]
+disabled = false
+impure_msg = ""
+symbol = " "
+
+[nodejs]
+symbol = " "
+
+[os]
+disabled = false
+
+[package]
+symbol = " "
+
+[perl]
+symbol = " "
+
+[php]
+symbol = " "
+
+[python]
+symbol = " "
+
+[ruby]
+symbol = " "
+
+[rust]
+symbol = " "
+
+[scala]
+symbol = " "
+
+[shlvl]
+disabled = false
+repeat = false
+symbol = "溜"
+threshold = 2
+
+[status]
+disabled = false
+map_symbol = true
+
+[swift]
+symbol = "ﯣ "
+
+[terraform]
+symbol = "行"
+
+[time]
+disabled = true
+
+[username]
+format = "[$user]($style)"
+show_always = true
+style_root = "#ed8796"
+style_user = "#f4dbd6"
