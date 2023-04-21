@@ -21,19 +21,6 @@ else
   chezmoi=chezmoi
 fi
 
-# Install 1PW
-if [ ! "$(command -v 1password)" ]; then
-  op_url="https://downloads.1password.com/linux/rpm/stable/x86_64/1password-latest.rpm"
-  op_rpm_key="https://downloads.1password.com/linux/keys/1password.asc"
-  if ! rpm -q 1password >/dev/null; then
-    sudo rpm --import "${op_rpm_key}"
-    sudo dnf install -y "${op_url}"
-    echo "Please configure 1password before continuing." && exit 1
-  fi
-fi
-
-[ ! "$(command -v op)" ] && ! rpm -q 1password-cli >/dev/null && sudo dnf install -y 1password-cli
-
 # stop pcscd for first use - it conflicts with gnupg when the latter is not configured to use it
 sudo systemctl stop pcscd || true
 
