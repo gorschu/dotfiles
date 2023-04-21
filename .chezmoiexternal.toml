@@ -67,3 +67,20 @@
   refreshPeriod = "168h"
   include = ["*/example/themes/*"]
 
+{{ $tombVersion := "2.9" }}
+[".externals/bin/tomb"]
+  type = "file"
+  url = "https://github.com/dyne/Tomb/archive/refs/tags/v{{ $tombVersion }}.tar.gz"
+  executable = true
+  [".externals/bin/tomb".filter]
+    command = "tar"
+    args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "Tomb-{{ $tombVersion }}/tomb"]
+
+{{ $atuinVersion := "14.0.1" }}
+[".externals/atuin"]
+  type = "archive"
+  url = "https://github.com/ellie/atuin/releases/download/v{{ $atuinVersion }}/atuin-v{{ $atuinVersion }}-x86_64-unknown-{{ .chezmoi.os }}-gnu.tar.gz"
+  exact = true
+  stripComponents = 1
+  include = ["*/atuin", "*/completions", "*/completions/*"]
+
