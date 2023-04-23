@@ -26,6 +26,10 @@
     type = "git-repo"
     url = "https://github.com/astronvim/astronvim.git"
     refreshPeriod = "24h"
+[".config/nvim/lua/user"]
+    type = "git-repo"
+    url = "https://github.com/azmodude/astronvim.git"
+    refreshPeriod = "24h"
 
 [".externals/zsh-syntax-highlighting/catppuccin"]
   type = "archive"
