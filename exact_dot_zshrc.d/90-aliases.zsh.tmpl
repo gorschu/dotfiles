@@ -1,9 +1,4 @@
 # aliases
-if (( $+commands[urxvt256cc] )) ; then
-    alias urxvt=urxvt256cc
-else;
-    alias urxvt=urxvtc
-fi
 
 # define bash as shell for mc, it does not like zsh for its subshell support
 alias mc='SHELL=/bin/bash mc'
@@ -34,17 +29,17 @@ if (( $+commands[nvim] )); then
 fi
 (( $+commands[gpg2] )) && alias gpg=gpg2
 
-# git push all
-alias gpa='git remote | xargs -L1 -I R git push -v R master'
-
 alias mbsync="mbsync -c ${XDG_CONFIG_HOME}/mail/mbsyncrc"
 alias weechat="weechat -d ${XDG_CONFIG_HOME}/weechat"
 
-# we never want globbing for git commands (and yadm for that matter)
-alias git="noglob git"
-
-alias ls="exa"
-alias ll="exa -l"
-alias la="exa -la"
+if (( $+commands[exa] )); then
+  alias ls="exa"
+  alias ll="exa -l"
+  alias la="exa -la"
+  alias lg="exa -la --git"
+fi
 
 (( $+commands[batman] )) && alias man=batman
+
+# git root
+alias grt='cd "$(git rev-parse --show-toplevel || echo .)"'
