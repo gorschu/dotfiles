@@ -1,6 +1,3 @@
-# initialize asdf
-. "$HOME"/.vendor/asdf/asdf.sh
-
 # add custom completions
 FPATH={{ .chezmoi.homeDir }}/.zsh_completions.d:"$FPATH"
 autoload -Uz compinit
@@ -19,7 +16,7 @@ if (($+commands[atuin])); then
 fi
 
 # source in zoxide
-(($+commands[zoxide])) && eval "$(zoxide init zsh)"
+(($+commands[zoxide])) && eval "$(zoxide init --cmd j zsh)"
 
 # initialize starship
 (($+commands[starship])) && export STARSHIP_CONFIG=${XDG_CONFIG_HOME}/starship/config.toml && eval "$(starship init zsh)"
