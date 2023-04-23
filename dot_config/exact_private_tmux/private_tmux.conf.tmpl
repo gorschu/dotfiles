@@ -14,6 +14,9 @@ set-option -g mouse on
 # increase history limit
 set-option -g history-limit 10000
 
+# keep unattached sessions alive
+set-option -g destroy-unattached off
+
 # fixes pgup/pgdown issues. this might mess up tmux window title renaming!
 # update: finally fixed - but is it still needed?
 set -g terminal-overrides 'xterm*:smcup@:rmcup@'
