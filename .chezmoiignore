@@ -5,7 +5,7 @@ install.sh
 */**/*.include
 */**/*.include.asc
 .gita.vendor.frozen
-firstboot
+bootstrap
 .zshrc.d/*.zwc
 
 {{- $wants_ssh_keys := list "hephaestus" "artemis" "apollo" }}
