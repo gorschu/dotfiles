@@ -23,8 +23,9 @@ zi snippet PZTM::utility
 zi ice svn blockf wait lucid \
   atclone"git clone --recursive https://github.com/zsh-users/zsh-completions.git external"
 zi snippet PZTM::completion
+zi snippet PZTM::editor
 zi is-snippet wait lucid for \
-    PZTM::{directory,editor,history,rsync,spectrum,terminal,tmux}
+    PZTM::{directory,history,rsync,spectrum,terminal,tmux}
 
 zi ice svn wait lucid
 zi snippet PZTM::git
@@ -92,9 +93,8 @@ zi wait lucid for \
   atinit"ZI[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
      z-shell/F-Sy-H \
   blockf \
-     zsh-users/zsh-completions \
-  atload"!_zsh_autosuggest_start" \
-     zsh-users/zsh-autosuggestions
+     zsh-users/zsh-completions
+
 zi wait'1' lucid for \
   mdumitru/fancy-ctrl-z \
   hlissner/zsh-autopair
