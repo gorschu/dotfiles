@@ -1,5 +1,5 @@
 # environment variables relevant for whole X-Session, not just shells
-{{ if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
+{{ if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" "fedora" }}
 . /etc/zshenv
 {{ else if eq .chezmoi.osRelease.id "ubuntu" "debian" }}
 . /etc/zsh/zshenv
