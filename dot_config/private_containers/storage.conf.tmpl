@@ -1,7 +1,0 @@
-{{ if and (lookPath "zfs") (not (lookPath "zfs-fuse")) (output "zfs" "list" "-o" "mountpoint" | contains "/home/azmo" ) -}}
-{{/* if we do have $HOME on zfs and NOT zfs-fuse podman needs some extra massaging */ -}}
-[storage]
-  driver = "overlay"
-[storage.options]
-  mount_program = "/usr/bin/fuse-overlayfs"
-{{ end -}}
