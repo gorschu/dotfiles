@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=SSH Key Agent
+Comment=GNOME Keyring: SSH Agent
+Exec=/usr/bin/gnome-keyring-daemon --start --components=ssh
+OnlyShowIn=GNOME;Unity;MATE;
+Hidden=true
