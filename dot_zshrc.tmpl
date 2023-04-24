@@ -6,6 +6,8 @@ zstyle ':prezto:*:*' color 'yes'
 zstyle ':prezto:module:editor' dot-expansion 'yes'
 if [[ $CONTAINER_ID == boxkit* ]]; then
     zstyle ':prezto:module:tmux:auto-start' local 'yes'
+    zstyle ':prezto:module:tmux:session' name 'default-boxkit'
+else
     zstyle ':prezto:module:tmux:session' name 'default'
 fi
 
