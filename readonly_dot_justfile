@@ -1,0 +1,43 @@
+user := env_var('USER')
+host := `hostname`
+
+boxkit_key := "https://raw.githubusercontent.com/azmodude/boxkit/main/cosign.pub"
+boxkit_image := "ghcr.io/azmodude/boxkit"
+boxkit_browsers_image := "ghcr.io/azmodude/boxkit-browsers"
+
+[private]
+default:
+    @just --list
+
+# distroboxes
+distrobox-icaclient:
+    -mkdir -p /home/{{user}}/tmp/distrobox-icaclient
+    cp -r certs /home/{{user}}/tmp/distrobox-icaclient
+    cp ./ICAClient-rhel-23.3.0.32-0.x86_64.rpm ./install_icaclient.sh /home/{{user}}/tmp/distrobox-icaclient
+    -mkdir -p /home/{{user}}/tmp/distrobox-icaclient/.ICAClient/ && cp ./settings/wfclient.ini ./settings/All_Regions.ini /home/{{user}}/tmp/distrobox-icaclient/.ICAClient
+    SHELL=/bin/bash distrobox create --yes --no-entry --name icaclient --image registry.fedoraproject.org/fedora-toolbox:37 --home /home/{{user}}/tmp/distrobox-icaclient --init-hooks "~/install_icaclient.sh"
+    PWD=/home/{{user}}/tmp/distrobox distrobox enter icaclient -- distrobox-export --bin /opt/Citrix/ICAClient/wfica.sh --export-path /home/{{user}}/bin
+
+distrobox-workstations: distrobox-boxkit && distrobox-boxkit-browsers
+[private]
+distrobox-boxkit-create:
+    cosign verify --key {{ boxkit_key }} {{ boxkit_image }}
+    podman pull {{ boxkit_image }}
+    distrobox create --yes --no-entry --name boxkit --image {{ boxkit_image}}
+[private]
+distrobox-boxkit-destroy:
+    -distrobox rm -f boxkit
+distrobox-boxkit: distrobox-boxkit-destroy && distrobox-boxkit-create
+[private]
+distrobox-boxkit-browsers-create:
+    cosign verify --key {{ boxkit_key }} {{ boxkit_browsers_image }}
+    podman pull {{ boxkit_browsers_image }}
+    distrobox create --yes --no-entry --name boxkit-browsers --image {{ boxkit_browsers_image }}
+    distrobox enter boxkit-browsers -- distrobox-export --app google-chrome
+    distrobox enter boxkit-browsers -- distrobox-export --app vivaldi
+    distrobox enter boxkit-browsers -- distrobox-export --app brave-browser
+[private]
+distrobox-boxkit-browsers-destroy:
+    -distrobox rm -f boxkit-browsers
+distrobox-boxkit-browsers: distrobox-boxkit-browsers-destroy && distrobox-boxkit-browsers-create
+
