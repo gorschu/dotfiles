@@ -3,12 +3,12 @@ disabled = false
 symbol = "  "
 
 [character]
-error_symbol = "[~~>](bold red)"
-success_symbol = "[->>](bold green)"
-vimcmd_replace_one_symbol = "[<<-](bold purple)"
-vimcmd_replace_symbol = "[<<-](bold purple)"
-vimcmd_symbol = "[<<-](bold yellow)"
-vimcmd_visual_symbol = "[<<-](bold cyan)"
+error_symbol = "[~~>](bold red) "
+success_symbol = "[->>](bold green) "
+vimcmd_replace_one_symbol = "[<<-](bold purple) "
+vimcmd_replace_symbol = "[<<-](bold purple) "
+vimcmd_symbol = "[<<-](bold yellow) "
+vimcmd_visual_symbol = "[<<-](bold cyan) "
 
 [cmd_duration]
 disabled = false
@@ -121,14 +121,15 @@ symbol = " "
 symbol = " "
 
 [shlvl]
-disabled = false
+disabled = true
 repeat = false
-symbol = "溜"
 threshold = 2
 
 [status]
 disabled = false
 map_symbol = true
+sigint_symbol = "‼️"
+format = '[\[$symbol$common_meaning$signal_name$maybe_int\]]($style) '
 
 [swift]
 symbol = "ﯣ "
