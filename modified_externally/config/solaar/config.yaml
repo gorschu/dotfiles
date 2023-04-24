@@ -5,7 +5,7 @@
     gesture2-params, lowres-scroll-mode, sidetone, equalizer]
   _battery: 4096
   _modelId: B01E40710000
-  _sensitive: {change-host: false, dpi: true, dpi-sliding: false}
+  _sensitive: {change-host: false, dpi: false, dpi-sliding: false}
   _serial: 0CAB0BCC
   _unitId: 012C7FDD
   _wpid: '4069'
