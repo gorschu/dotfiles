@@ -9,7 +9,7 @@ max-cache-ttl 7200
 no-grab
 # work around gnome-keyring issues
 no-allow-external-cache
-# don't user cache when signing shit
+# don't user cache when signing stuff
 #ignore-cache-for-signing
 
 {{ if eq (lower (env "XDG_CURRENT_DESKTOP") ) "kde" -}}pinentry-program /usr/bin/pinentry-qt
