@@ -98,3 +98,8 @@
     command = "tar"
     args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "vivid-v{{ $vividVersion }}-x86_64-unknown-{{ .chezmoi.os }}-gnu/vivid"]
 
+{{ $cosignVersion := "2.0.1" }}
+[".externals/bin/cosign"]
+    type = "file"
+    url = "https://github.com/sigstore/cosign/releases/download/v{{ $cosignVersion }}/cosign-{{ .chezmoi.os }}-amd64"
+    executable = true
