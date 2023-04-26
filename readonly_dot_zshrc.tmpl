@@ -4,12 +4,12 @@ source <(curl -sL init.zshell.dev); zzinit
 zstyle ':prezto:*:*' case-sensitive 'no'
 zstyle ':prezto:*:*' color 'yes'
 zstyle ':prezto:module:editor' dot-expansion 'yes'
-if [[ $CONTAINER_ID == boxkit* ]]; then
-    zstyle ':prezto:module:tmux:auto-start' local 'yes'
-    zstyle ':prezto:module:tmux:session' name 'default-boxkit'
-else
-    zstyle ':prezto:module:tmux:session' name 'default'
-fi
+#if [[ $CONTAINER_ID == boxkit* ]]; then
+#    zstyle ':prezto:module:tmux:auto-start' local 'yes'
+#    zstyle ':prezto:module:tmux:session' name 'default-boxkit'
+#else
+#    zstyle ':prezto:module:tmux:session' name 'default'
+#fi
 
 # # vi mode - load options early, plugin later
 zi ice wait lucid
