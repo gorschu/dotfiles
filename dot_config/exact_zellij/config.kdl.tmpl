@@ -1,7 +1,14 @@
 ---
-{{ if eq .colorscheme "dracula"}}theme "dracula";
-{{ else if eq .colorscheme "nord" }}theme "nord";
-{{ else if eq .colorscheme "gruvbox" }}theme "gruvbox";
-{{ else if eq .colorscheme "tokyonight" }}theme "tokyonight_storm";
-{{ else if hasPrefix "catppuccin-" .colorscheme }}{{ $flavor := trimPrefix "catppuccin-" .colorscheme }}theme "catppuccin-{{ $flavor }}";
+{{ if hasPrefix "tokyonight-" .colorscheme -}}
+{{ $flavor := trimPrefix "tokyonight-" .colorscheme }}
+{{ if eq $flavor "moon" }}
+theme "tokyo-night"
+{{ else if eq $flavor "night" }}
+theme "tokyo-night-dark"
+{{ else }}
+theme "tokyo-night-{{ $flavor }}";
+{{ end }}
+{{ else if hasPrefix "catppuccin-" .colorscheme -}}
+{{ $flavor := trimPrefix "catppuccin-" .colorscheme }}
+theme "catppuccin-{{ $flavor }}";
 {{ end }}

@@ -2,7 +2,9 @@
 
 #* Name of a btop++/bpytop/bashtop formatted ".theme" file, "Default" and "TTY" for builtin themes.
 #* Themes should be placed in "../share/btop/themes" relative to binary or "$HOME/.config/btop/themes"
+{{ if hasPrefix "tokyonight-" .colorscheme }}
 color_theme = "/usr/share/btop/themes/tokyo-night.theme"
+{{ end }}
 
 #* If the theme set background should be shown, set to False if you want terminal background transparency.
 theme_background = True
@@ -22,7 +24,7 @@ presets = "cpu:1:default,proc:0:default cpu:0:default,mem:0:default,net:0:defaul
 
 #* Set to True to enable "h,j,k,l,g,G" keys for directional control in lists.
 #* Conflicting keys for h:"help" and k:"kill" is accessible while holding shift.
-vim_keys = True
+vim_keys = False
 
 #* Rounded corners on boxes, is ignored if TTY mode is ON.
 rounded_corners = True
@@ -166,7 +168,7 @@ show_disks = True
 only_physical = True
 
 #* Read disks list from /etc/fstab. This also disables only_physical.
-use_fstab = False
+use_fstab = True
 
 #* Setting this to True will hide all datasets, and only show ZFS pools. (IO stats will be calculated per-pool)
 zfs_hide_datasets = False

@@ -40,12 +40,14 @@ bind-key -Tcopy-mode-vi 'V' send -X rectangle-toggle
 bind-key -Tcopy-mode-vi 'v' send -X begin-selection
 
 # enable true color support for 256color terminals
-set -g default-terminal "tmux-256color"
+# set -g default-terminal "tmux-256color"
 set -ga terminal-overrides ',*256col*:Tc,xterm-kitty,alacritty:Tc'
 # nvim guicursor override
 # :help tui-cursor-shape
 set -ga terminal-overrides '*:Ss=\E[%p1%d q:Se=\E[ q'
-# nvim tokyonight overrides
+# nvim tokyonight overrides - source: https://github.com/folke/tokyonight.nvim
+# Undercurl
+set -g default-terminal "${TERM}"
 set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'  # undercurl support
 set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'  # underscore colours - needs tmux-3.0
 
@@ -76,22 +78,9 @@ set -g @plugin 'tmux-plugins/tmux-urlview'
 set -g @plugin 'laktak/extrakto'
 set -g @plugin 'christoomey/vim-tmux-navigator'
 
-{{ if eq .colorscheme "dracula" }}
-set -g @plugin 'dracula/tmux'
-# available plugins: battery, cpu-usage, git, gpu-usage, ram-usage, network, network-bandwidth, network-ping, weather, time
-set -g @dracula-plugins "battery cpu-usage ram-usage network network-bandwidth time"
-set -g @dracula-show-powerline true
-set -g @dracula-show-flags true
-{{ end }}
-{{ if eq .colorscheme "nord" }}
-set -g @plugin "arcticicestudio/nord-tmux"
-{{ end }}
-{{ if eq .colorscheme "gruvbox" }}
-set -g @plugin 'egel/tmux-gruvbox'
-set -g @tmux-gruvbox 'dark' # or 'light'
-{{ end }}
-{{ if eq .colorscheme "tokyonight" }}
-set -g @plugin "marcocampos/tokyo-night-tmux"
+{{ if hasPrefix "tokyonight" .colorscheme}}
+{{ $flavor := trimPrefix "tokyonight-" .colorscheme }}
+source-file {{ .chezmoi.homeDir }}/.externals/tmux/tokyonight/tokyonight_{{ $flavor }}.tmux
 {{ end }}
 {{ if hasPrefix "catppuccin" .colorscheme}}
 set -g @plugin 'catppuccin/tmux'

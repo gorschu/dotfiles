@@ -1,3 +1,11 @@
+[".externals/kitty/tokyonight"]
+  type = "archive"
+  url = "https://github.com/folke/tokyonight.nvim/archive/main.tar.gz"
+  exact = true
+  stripComponents = 3
+  refreshPeriod = "168h"
+  include = ["*/extras/kitty/*.conf"]
+
 [".externals/kitty/catppuccin"]
   type = "archive"
   url = "https://github.com/catppuccin/kitty/archive/main.tar.gz"
@@ -14,6 +22,14 @@
   refreshPeriod = "168h"
   include = ["*/catppuccin-*.yml"]
 
+[".externals/bat/themes/tokyonight"]
+  type = "archive"
+  url = "https://github.com/folke/tokyonight.nvim/archive/main.tar.gz"
+  exact = true
+  stripComponents = 3
+  refreshPeriod = "168h"
+  include = ["*/extras/sublime/*"]
+
 [".externals/bat/themes/catppuccin"]
   type = "archive"
   url = "https://github.com/catppuccin/bat/archive/main.tar.gz"
@@ -22,13 +38,17 @@
   refreshPeriod = "168h"
   include = ["*/Catppuccin-*.tmTheme"]
 
+[".externals/tmux/tokyonight"]
+  type = "archive"
+  url = "https://github.com/folke/tokyonight.nvim/archive/main.tar.gz"
+  exact = true
+  stripComponents = 3
+  refreshPeriod = "168h"
+  include = ["*/extras/tmux/*"]
+
 [".config/nvim"]
     type = "git-repo"
-    url = "https://github.com/astronvim/astronvim.git"
-    refreshPeriod = "24h"
-[".config/nvim/lua/user"]
-    type = "git-repo"
-    url = "https://github.com/azmodude/astronvim.git"
+    url = "https://github.com/azmodude/lazyvim.git"
     refreshPeriod = "24h"
 
 [".externals/zsh-syntax-highlighting/catppuccin"]
