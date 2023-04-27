@@ -13,17 +13,19 @@ if ! zgenom saved; then
   zgenom prezto case-sensitive 'no'
   zgenom prezto color 'no'
 
+  zgenom ohmyzsh
   zgenom prezto
   zgenom prezto environment
   zgenom prezto utility
   zgenom prezto completion
   zgenom prezto editor
-  zgenom prezto git
   zgenom prezto directory
   zgenom prezto history
-  zgenom prezto rsync
   zgenom prezto spectrum
   zgenom prezto terminal
+
+  zgenom ohmyzsh plugins/git
+  zgenom ohmyzsh plugins/rsync
 
   {{ if eq .chezmoi.osRelease.id "ubuntu" "debian" }}
   zgenom prezto dpkg
