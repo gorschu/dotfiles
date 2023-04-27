@@ -1,123 +1,57 @@
-# -*- mode: sh -*-
-source <(curl -sL init.zshell.dev); zzinit
+# load zgenom
+source "{{ .chezmoi.homeDir }}/.externals/zgenom/zgenom.zsh"
 
-zstyle ':prezto:*:*' case-sensitive 'no'
-zstyle ':prezto:*:*' color 'yes'
-zstyle ':prezto:module:editor' dot-expansion 'yes'
-#if [[ $CONTAINER_ID == boxkit* ]]; then
-#    zstyle ':prezto:module:tmux:auto-start' local 'yes'
-#    zstyle ':prezto:module:tmux:session' name 'default-boxkit'
-#else
-#    zstyle ':prezto:module:tmux:session' name 'default'
-#fi
+# Check for plugin and zgenom updates every 7 days
+# This does not increase the startup time.
+zgenom autoupdate
 
-# # vi mode - load options early, plugin later
-zi ice wait lucid
-zi snippet "{{ .chezmoi.homeDir }}/.zshrc.d/00-zvm.zsh"
-zi ice wait'1' lucid
-zi load "jeffreytse/zsh-vi-mode"
+# if the init script doesn't exist
+if ! zgenom saved; then
+  echo "Creating a zgenom save"
 
-# environment needs to be first
-zi snippet PZTM::environment
-# utility before completion
-zi ice svn
-zi snippet PZTM::utility
-zi ice svn blockf wait lucid \
-  atclone"git clone --recursive https://github.com/zsh-users/zsh-completions.git external"
-zi snippet PZTM::completion
-zi snippet PZTM::editor
-zi is-snippet wait lucid for \
-    PZTM::{directory,history,rsync,spectrum,terminal,tmux}
+  zgenom prezto editor dot-expansion 'yes'
+  zgenom prezto case-sensitive 'no'
+  zgenom prezto color 'no'
 
-zi ice svn wait lucid
-zi snippet PZTM::git
+  zgenom prezto
+  zgenom prezto environment
+  zgenom prezto utility
+  zgenom prezto completion
+  zgenom prezto editor
+  zgenom prezto git
+  zgenom prezto directory
+  zgenom prezto history
+  zgenom prezto rsync
+  zgenom prezto spectrum
+  zgenom prezto terminal
 
-zi ice wait lucid
-# distribution specific
-{{ if eq .chezmoi.osRelease.id "ubuntu" "debian"}}
-zi snippet PZTM::dpkg
-{{ else if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
-zi snippet OMZP::suse
-{{ else if eq .chezmoi.osRelease.id "fedora" }}
-zi snippet PZTM::dnf
-{{ else if eq .chezmoi.osRelease.id "arch" }}
-zi snippet PZTM::pacman
-{{ end }}
+  {{ if eq .chezmoi.osRelease.id "ubuntu" "debian" }}
+  zgenom prezto dpkg
+  {{ else if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
+  zgenom ohmyzsh plugins/suse
+  {{ else if eq .chezmoi.osRelease.id "fedora" }}
+  zgenom prezto dnf
+  {{ else if eq .chezmoi.osRelease.id "arch" }}
+  zgenom prezto pacman
+  {{ end }}
 
-# TODO: old OMZ plugins
-# zi ice has'1password' wait lucid
-# zi snippet OMZP::1password
-#
-# zi ice has'direnv' wait lucid
-# zi snippet OMZP::direnv
-# zi ice has'emacs' wait lucid
-# zi snippet OMZP::emacs
-# zi ice has'gh' wait lucid
-# zi snippet OMZP::gh
-# zi ice has'lxd' wait lucid
-# zi snippet OMZP::lxd
-# zi ice has'task' wait lucid
-# zi snippet OMZP::taskwarrior
-# zi ice has'tmux' wait lucid
-# zi snippet OMZP::tmux
-# zi ice has'vagrant' wait lucid
-# zi snippet OMZP::vagrant
-# zi ice has'code' wait lucid
-# zi snippet OMZP::vscode
-#
-# zi ice has'helm' wait lucid
-# zi snippet OMZP::helm
-# zi ice has'istioctl' wait lucid
-# zi snippet OMZP::istioctl
-# zi ice has'kubectl' wait lucid
-# zi snippet OMZP::kubectl
-#
-# zi ice wait lucid
-# # distribution specific
-# {{ if eq .chezmoi.osRelease.id "ubuntu" }}
-# zi snippet OMZP::ubuntu
-# {{ else if eq .chezmoi.osRelease.id "debian" }}
-# zi snippet OMZP::debian
-# {{ else if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
-# zi snippet OMZP::suse
-# {{ else if eq .chezmoi.osRelease.id "fedora" }}
-# zi snippet OMZP::dnf
-# {{ else if eq .chezmoi.osRelease.id "arch" }}
-# zi snippet OMZP::archlinux
-# {{ end }}
-#
-# zi is-snippet wait lucid for \
-#     OMZP::{git,github,git-auto-fetch,git-extras,git-flow-avh,git-lfs,gnu-utils,extract,rsync,universalarchive,transfer}
-# zi is-snippet wait lucid for \
-#     OMZP::{python,pyenv,pip,pylint,systemd,ansible,golang,npm,sudo}
-#
-zi wait lucid for \
-  atinit"ZI[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
-     z-shell/F-Sy-H \
-  blockf \
-     zsh-users/zsh-completions
+  zgenom load {{ .chezmoi.homeDir }}/.zshrc.d/00-zvm.zsh
+  zgenom load jeffreytse/zsh-vi-mode
 
-zi wait'1' lucid for \
-  mdumitru/fancy-ctrl-z \
-  hlissner/zsh-autopair
+  zgenom load mdumitru/fancy-ctrl-z
+  zgenom load zsh-users/zsh-completions
+  zgenom load zdharma/fast-syntax-highlighting
+  zgenom load hlissner/zsh-autopair
 
-zi is-snippet wait lucid as'completion' for \
- "{{ .chezmoi.homeDir }}/.zsh_completions.d/_atuin" \
- "{{ .chezmoi.homeDir }}/.zsh_completions.d/_chezmoi"
+  # load our specific stuff
+  zgenom load {{ .chezmoi.homeDir }}/.zshrc.d
+  zgenom load {{ .chezmoi.homeDir }}/.zsh_completions.d
 
-zi is-snippet wait lucid for \
-    "{{ .chezmoi.homeDir }}/.zshrc.d/10-tmux-refreshvariables.zsh" \
-    "{{ .chezmoi.homeDir }}/.zshrc.d/80-custom-function.zsh" \
-    "{{ .chezmoi.homeDir }}/.zshrc.d/90-aliases.zsh" \
-    "{{ .chezmoi.homeDir }}/.zshrc.d/90-colors.zsh" \
-    "{{ .chezmoi.homeDir }}/.zshrc.d/90-fix-profile-overwrites.zsh" \
-    "{{ .chezmoi.homeDir }}/.zshrc.d/90-fzf.zsh" \
-    "{{ .chezmoi.homeDir }}/.zshrc.d/91-init-fzf.zsh" \
-    "{{ .chezmoi.homeDir }}/.zshrc.d/91-init-zoxide.zsh"
+  zgenom compile "{{ .chezmoi.homeDir}}/.zshrc"
+  zgenom compile "{{ .chezmoi.homeDir}}/.zshrc.d"
+  zgenom compile "{{ .chezmoi.homeDir }}/.zsh_completions.d"
 
-zi snippet "{{ .chezmoi.homeDir }}/.zshrc.d/91-init-starship.zsh"
-
-zi ice wait'1' lucid
-zi snippet "{{ .chezmoi.homeDir }}/.zshrc.d/99-init-atuin.zsh"
+  zgenom save
+fi
 
 # vim: ft=sh
