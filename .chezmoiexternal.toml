@@ -91,6 +91,11 @@
   refreshPeriod = "168h"
   include = ["*/example/themes/*"]
 
+[".externals/zgenom"]
+    type = "git-repo"
+    url = "https://github.com/jandamm/zgenom.git"
+    refreshPeriod = "168h"
+
 {{ $tombVersion := "2.9" }}
 [".externals/bin/tomb"]
   type = "file"
@@ -123,3 +128,4 @@
     type = "file"
     url = "https://github.com/sigstore/cosign/releases/download/v{{ $cosignVersion }}/cosign-{{ .chezmoi.os }}-amd64"
     executable = true
+
