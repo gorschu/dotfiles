@@ -5,6 +5,10 @@
 {{ if hasPrefix "tokyonight-" .colorscheme }}
 color_theme = "/usr/share/btop/themes/tokyo-night.theme"
 {{ end }}
+{{ if hasPrefix "catppuccin-" .colorscheme }}
+{{ $flavor := trimPrefix "catppuccin-" .colorscheme }}
+color_theme = "catppuccin_{{ $flavor }}"
+{{ end }}
 
 #* If the theme set background should be shown, set to False if you want terminal background transparency.
 theme_background = True
