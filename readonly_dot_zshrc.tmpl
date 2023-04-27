@@ -1,59 +1,78 @@
-# load zgenom
-source "{{ .chezmoi.homeDir }}/.externals/zgenom/zgenom.zsh"
+# -*- mode: sh -*-
 
-# Check for plugin and zgenom updates every 7 days
-# This does not increase the startup time.
+source "{{ .chezmoi.homeDir }}/.externals/zgenom/zgenom.zsh"
 zgenom autoupdate
 
-# if the init script doesn't exist
 if ! zgenom saved; then
   echo "Creating a zgenom save"
+  zgenom load {{ .chezmoi.homeDir }}/.zshrc.d/00-ohmyzsh.zsh
+  zgenom load {{ .chezmoi.homeDir }}/.zshrc.d/00-zvm.zsh
 
-  zgenom prezto editor dot-expansion 'yes'
-  zgenom prezto case-sensitive 'no'
-  zgenom prezto color 'no'
-
+  # load oh-my-zsh
   zgenom ohmyzsh
-  zgenom prezto
-  zgenom prezto environment
-  zgenom prezto utility
-  zgenom prezto completion
-  zgenom prezto editor
-  zgenom prezto directory
-  zgenom prezto history
-  zgenom prezto spectrum
-  zgenom prezto terminal
-
-  zgenom ohmyzsh plugins/git
-  zgenom ohmyzsh plugins/rsync
-
-  {{ if eq .chezmoi.osRelease.id "ubuntu" "debian" }}
-  zgenom prezto dpkg
+  # plugins
+  # distribution specific
+  {{ if eq .chezmoi.osRelease.id "ubuntu" }}
+  zgenom ohmyzsh plugins/ubuntu
+  {{ else if eq .chezmoi.osRelease.id "debian" }}
+  zgneom ohmyzsh plugins/debian
   {{ else if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
   zgenom ohmyzsh plugins/suse
   {{ else if eq .chezmoi.osRelease.id "fedora" }}
-  zgenom prezto dnf
+  zgenom ohmyzsh plugins/dnf
   {{ else if eq .chezmoi.osRelease.id "arch" }}
-  zgenom prezto pacman
+  zgenom ohmyzsh plugins/archlinux
   {{ end }}
-
-  zgenom load {{ .chezmoi.homeDir }}/.zshrc.d/00-zvm.zsh
+  # zsh specific
+  zgenom ohmyzsh plugins/sudo
+  # utility specific
+  zgenom ohmyzsh plugins/1password
+  zgenom ohmyzsh plugins/direnv
+  zgenom ohmyzsh plugins/git
+  zgenom ohmyzsh plugins/github
+  zgenom ohmyzsh plugins/git-auto-fetch
+  zgenom ohmyzsh plugins/git-escape-magic
+  zgenom ohmyzsh plugins/git-extras
+  zgenom ohmyzsh plugins/git-flow-avh
+  zgenom ohmyzsh plugins/git-lfs
+  zgenom ohmyzsh plugins/gnu-utils
+  zgenom ohmyzsh plugins/extract
+  zgenom ohmyzsh plugins/rsync
+  zgenom ohmyzsh plugins/taskwarrior
+  zgenom ohmyzsh plugins/ripgrep
+  zgenom ohmyzsh plugins/vscode
+  zgenom ohmyzsh plugins/vagrant
+  zgenom ohmyzsh plugins/lxd
+  zgenom ohmyzsh plugins/universalarchive
+  zgenom ohmyzsh plugins/transfer
+  # development
+  zgenom ohmyzsh plugins/python
+  zgenom ohmyzsh plugins/pyenv
+  zgenom ohmyzsh plugins/pip
+  zgenom ohmyzsh plugins/pylint
+  zgenom ohmyzsh plugins/systemd
+  zgenom ohmyzsh plugins/ansible
+  zgenom ohmyzsh plugins/golang
+  zgenom ohmyzsh plugins/npm
+  zgenom ohmyzsh plugins/gh
+  # k8s
+  zgenom ohmyzsh plugins/helm
+  zgenom ohmyzsh plugins/kubectl
+  zgenom ohmyzsh plugins/istioctl
+  # misc stuff
   zgenom load jeffreytse/zsh-vi-mode
-
   zgenom load mdumitru/fancy-ctrl-z
+
   zgenom load zsh-users/zsh-completions
   zgenom load zdharma/fast-syntax-highlighting
   zgenom load hlissner/zsh-autopair
 
   # load our specific stuff
   zgenom load {{ .chezmoi.homeDir }}/.zshrc.d
-  zgenom load {{ .chezmoi.homeDir }}/.zsh_completions.d
-
-  zgenom compile "{{ .chezmoi.homeDir}}/.zshrc"
-  zgenom compile "{{ .chezmoi.homeDir}}/.zshrc.d"
-  zgenom compile "{{ .chezmoi.homeDir }}/.zsh_completions.d"
 
   zgenom save
-fi
 
+  zgenom compile {{ .chezmoi.homeDir }}/.zshrc
+  zgenom compile {{ .chezmoi.homeDir }}/.zshrc.d
+fi
 # vim: ft=sh
