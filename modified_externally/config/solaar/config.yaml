@@ -1,14 +1,14 @@
-- 1.1.8
-- _NAME: Wireless Mouse MX Master 2S
-  _absent: [hi-res-scroll, lowres-smooth-scroll, thumb-scroll-mode, thumb-scroll-invert, onboard_profiles, report_rate, pointer_speed, speed-change, backlight,
-    backlight-timed, fn-swap, persistent-remappable-keys, disable-keyboard-keys, divert-crown, crown-smooth, divert-gkeys, m-key-leds, mr-key-led, multiplatform,
-    gesture2-params, lowres-scroll-mode, sidetone, equalizer]
+- 1.1.9
+- _NAME: Wireless Mouse MX Master
+  _absent: [hi-res-scroll, lowres-scroll-mode, thumb-scroll-invert, thumb-scroll-mode, onboard_profiles, report_rate, pointer_speed, speed-change, backlight,
+    backlight-timed, fn-swap, persistent-remappable-keys, disable-keyboard-keys, crown-smooth, divert-crown, divert-gkeys, m-key-leds, mr-key-led, multiplatform,
+    gesture2-params, sidetone, equalizer, adc_power_management]
   _battery: 4096
   _modelId: B01E40710000
   _sensitive: {change-host: false, dpi: false, dpi-sliding: false}
   _serial: 0CAB0BCC
   _unitId: 012C7FDD
-  _wpid: '4069'
+  _wpid: '4071'
   change-host: null
   divert-keys: {82: 0, 83: 0, 86: 0, 195: 0, 196: 0, 215: 0}
   dpi: '1400'
@@ -21,12 +21,12 @@
   scroll-ratchet: 2
   smart-shift: 16
 - _NAME: Wireless Keyboard ERGO K860
-  _absent: [hi-res-scroll, lowres-smooth-scroll, hires-smooth-invert, hires-smooth-resolution, smart-shift, thumb-scroll-mode, thumb-scroll-invert, onboard_profiles,
-    report_rate, pointer_speed, dpi, dpi-sliding, speed-change, mouse-gestures, backlight, backlight-timed, reprogrammable-keys, persistent-remappable-keys,
-    divert-crown, crown-smooth, divert-gkeys, m-key-leds, mr-key-led, gesture2-gestures, gesture2-divert, gesture2-params, lowres-scroll-mode, sidetone,
-    equalizer, scroll-ratchet]
+  _absent: [hi-res-scroll, lowres-scroll-mode, hires-smooth-invert, hires-smooth-resolution, scroll-ratchet, smart-shift, thumb-scroll-invert, thumb-scroll-mode,
+    onboard_profiles, report_rate, pointer_speed, dpi, speed-change, backlight, backlight-timed, reprogrammable-keys, persistent-remappable-keys, crown-smooth,
+    divert-crown, divert-gkeys, m-key-leds, mr-key-led, gesture2-gestures, gesture2-divert, gesture2-params, sidetone, equalizer, adc_power_management]
   _battery: 4096
   _modelId: B35940880000
+  _sensitive: {hires-scroll-mode: ignore, hires-smooth-invert: ignore, hires-smooth-resolution: ignore}
   _serial: 207FB516
   _unitId: 207FB516
   _wpid: '4088'
@@ -38,9 +38,6 @@
   hires-scroll-mode: true
   multiplatform: 0
 - _NAME: Wireless Mouse MX Master
-  _absent: [hi-res-scroll, lowres-scroll-mode, thumb-scroll-invert, thumb-scroll-mode, onboard_profiles, report_rate, pointer_speed, speed-change, backlight,
-    backlight-timed, fn-swap, persistent-remappable-keys, disable-keyboard-keys, crown-smooth, divert-crown, divert-gkeys, m-key-leds, mr-key-led, multiplatform,
-    gesture2-params, sidetone, equalizer]
   _sensitive: {dpi: false}
   _serial: 0CAB0BCC
   _wpid: '4071'
