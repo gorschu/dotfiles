@@ -7,18 +7,27 @@ green=$(tput setaf 2)
 reset=$(tput sgr0)
 
 echo "${green}Installing absolute requirements${reset}"
-sudo dnf install -y git yubikey-manager
-
-if [ ! "$(command -v chezmoi)" ]; then
-  bin_dir="/usr/local/bin"
-  bin_dir_tmp=$(mktemp -d)
-  chezmoi="$bin_dir/chezmoi"
-  # chezmoi needs to be root:root owned for 1password to allow it for binary permission verification
-  # which does make a lot of sense from a security perspective - therefore move it to /usr/local/bin
-  sh -c "$(curl -fsSL https://git.io/chezmoi)" -- -b "$bin_dir_tmp" &&
-    sudo install --owner root --group root --mode 755 --compare "${bin_dir_tmp}/chezmoi" "${chezmoi}"
+if [[ $(grep "^ID" /etc/os-release) =~ fedora ]]; then
+  sudo dnf install -y git yubikey-manager
+elif [[ $(grep "^ID" /etc/os-release) =~ opensuse ]]; then
+  sudo zypper install -y git yubikey-manager
 else
-  chezmoi=chezmoi
+  echo "Unsupport distribution." && exit 1
+fi
+
+chezmoi="chezmoi"
+if [ ! "$(command -v chezmoi)" ]; then
+  if [[ $(grep "^ID" /etc/os-release) =~ opensuse ]]; then
+    sudo zypper install -y chezmoi
+  else
+    bin_dir="/usr/local/bin"
+    bin_dir_tmp=$(mktemp -d)
+    chezmoi="$bin_dir/chezmoi"
+    # chezmoi needs to be root:root owned for 1password to allow it for binary permission verification
+    # which does make a lot of sense from a security perspective - therefore move it to /usr/local/bin
+    sh -c "$(curl -fsSL https://git.io/chezmoi)" -- -b "$bin_dir_tmp" &&
+      sudo install --owner root --group root --mode 755 --compare "${bin_dir_tmp}/chezmoi" "${chezmoi}"
+  fi
 fi
 
 # stop pcscd for first use - it conflicts with gnupg when the latter is not configured to use it
