@@ -85,6 +85,8 @@ source-file {{ .chezmoi.homeDir }}/.externals/tmux/tokyonight/tokyonight_{{ $fla
 {{ if hasPrefix "catppuccin" .colorscheme}}
 set -g @plugin 'catppuccin/tmux'
 set -g @catppuccin_flavour '{{ trimPrefix "catppuccin-" .colorscheme }}'
+set -g @catppuccin_host "on"
+set -g @catppuccin_user "on"
 {{ end }}
 
 # order matters here
