@@ -41,3 +41,13 @@ distrobox-boxkit-browsers-destroy:
     -distrobox rm -f boxkit-browsers
 distrobox-boxkit-browsers: distrobox-boxkit-browsers-destroy && distrobox-boxkit-browsers-create
 
+distro-update:
+  sudo dnf update
+chezmoi-update:
+  chezmoi update
+ansible-update:
+  cd  ~/projects/synced/ansible/ansible-box-workstations && \
+    git pull && \
+    ./run-playbook.sh
+update: distro-update chezmoi-update ansible-update
+
