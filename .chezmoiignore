@@ -12,3 +12,23 @@ bootstrap
 .ssh/private
 .ssh/public
 {{- end }}
+
+{{ if eq .chezmoi.hostname .workHostname }}
+bin
+.config/*
+!.config/atuin
+!.config/bat
+!.config/chezmoi
+.config/chezmoi/personal
+!.config/git
+!.config/latexmk
+!.config/lazygit
+!.config/tig
+!.config/tmux
+!.config/starship
+!.config/zellij
+.local
+.ssh
+.local/share/atuin
+.Xresources*
+{{ end }}
