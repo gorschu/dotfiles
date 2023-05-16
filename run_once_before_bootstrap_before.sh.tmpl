@@ -1,15 +1,5 @@
-#!/bin/bash
-
-set -Eeuxo pipefail
-
-red=$(tput setaf 1)
-green=$(tput setaf 2)
-reset=$(tput sgr0)
-
-echo "${green}Installing requirements${reset}"
-{{ if eq .chezmoi.osRelease.id "fedora "}}
-sudo dnf install -y zsh redhat-lsb-core python3-pip pipx
-{{ else if eq .chezmoi.osRelease.id "opensuse-tumbleweed"}}
-sudo zypper in -y zsh lsb-release python311-pip python311-pipx
+{{ if eq .chezmoi.os "darwin" }}
+{{   include "run_once_before_bootstrap_before_darwin.sh" }}
+{{ else if eq .chezmoi.os "linux" }}
+{{   include "run_once_before_bootstrap_before_linux.sh" }}
 {{ end }}
-

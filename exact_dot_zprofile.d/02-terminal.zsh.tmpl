@@ -1,2 +1,4 @@
+{{ if hasKey . "terminal" }}
 # set terminal environment variable
 export TERMINAL={{ .terminal }}
+{{ end }}
