@@ -14,5 +14,4 @@ no-allow-external-cache
 
 {{ if eq (lower (env "XDG_CURRENT_DESKTOP") ) "kde" -}}pinentry-program /usr/bin/pinentry-qt
 {{ else if eq (lower (env "XDG_CURRENT_DESKTOP") ) "gnome" -}}pinentry-program /usr/bin/pinentry-gnome3
-{{ else -}}pinentry-program /usr/bin/pinentry-gtk2
 {{ end -}}
