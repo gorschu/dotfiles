@@ -6,6 +6,10 @@ typeset -gU cdpath fpath mailpath path
 #   $cdpath
 # )
 
+{{ if eq .chezmoi.os "darwin" }}
+path+=("${HOME}/homebrew/bin" "${HOME}/homebrew/opt/coreutils/libexec/gnubin")
+{{ end }}
+
 # Set the list of directories that Zsh searches for programs.
 path=(
     ${HOME}/.local/bin
@@ -16,6 +20,7 @@ path=(
     ${path}
     /usr/local/{bin,sbin}
 )
+
 # ... then remove those that are either dead links (-/) or do not
 # exist at all (N) and apply that to all in array (^) source:
 # http://stackoverflow.com/a/9352979/1469693
@@ -30,4 +35,6 @@ fi
 [[ -d $HOME/.pyenv ]] && PATH="$HOME/.pyenv/bin:$PATH"
 
 # inject path into systemctl user session so things like emacs have it available
+{{ if eq .chezmoi.os "linux" }}
 systemctl --user import-environment PATH
+{{ end }}
