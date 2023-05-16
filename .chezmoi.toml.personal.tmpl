@@ -1,0 +1,21 @@
+encryption = "gpg"
+
+[gpg]
+    recipient = "0xDEE550054AA972F6"
+    suffix = ".asc"
+
+[merge]
+    command = "nvim"
+    args = "-d"
+
+[data]
+    email = "gordon@gordonschulz.de"
+    gpgkey = "0xDEE550054AA972F6"
+    colorscheme = "catppuccin-macchiato"
+    terminal = "kitty"
+
+[keepassxc]
+  database = "~/sync/admin/azmo.kdbx"
+  args = "-y 2:{{ output "ykman" "list" "--serials" | trim }}"
+
+{{ joinPath .chezmoi.sourceDir "dot_config/private_chezmoi/personal/encrypted_private_readonly_chezmoi-include.toml.tmpl.asc" | include | decrypt }}
