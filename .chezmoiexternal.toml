@@ -110,6 +110,7 @@
     url = "https://github.com/jandamm/zgenom.git"
     refreshPeriod = "168h"
 
+{{ if ne .chezmoi.os "darwin" }}
 {{ $tombVersion := "2.9" }}
 [".externals/bin/tomb"]
   type = "file"
@@ -142,4 +143,4 @@
     type = "file"
     url = "https://github.com/sigstore/cosign/releases/download/v{{ $cosignVersion }}/cosign-{{ .chezmoi.os }}-amd64"
     executable = true
-
+{{ end }}

@@ -1,14 +1,17 @@
 # environment variables relevant for whole X-Session, not just shells
-{{ if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" "fedora" }}
-. /etc/zshenv
-{{ else if eq .chezmoi.osRelease.id "ubuntu" "debian" }}
-. /etc/zsh/zshenv
-{{ end }}
 
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-${HOME}/.config}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}"
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-${HOME}/.cache}"
 export TMPDIR="${TMPDIR:-/tmp/${USER}}"
+
+{{ if and (hasKey .chezmoi.osRelease "id") (eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" "fedora") }}
+. /etc/zshenv
+{{ else if and (hasKey .chezmoi.osRelease "id") (eq .chezmoi.osRelease.id "ubuntu" "debian") }}
+. /etc/zsh/zshenv
+{{ end }}
+
+{{ if eq .chezmoi.os "linux" }}
 systemctl --user import-environment XDG_CONFIG_HOME XDG_DATA_HOME XDG_CACHE_HOME TMPDIR
 
 # requires qt5ct (and settings there)
@@ -50,6 +53,9 @@ fi
 # use new freetype 2.7 default interpreter
 export FREETYPE_PROPERTIES="truetype:interpreter-version=40"
 
+expr "$XDG_SESSION_TYPE" = "wayland" 1>/dev/null && export export MOZ_ENABLE_WAYLAND=1
+{{ end }}
+
 # Editors
 export ALTERNATE_EDITOR=""
 
@@ -78,8 +84,6 @@ export PASSWORD_STORE_CLIP_TIME="60"
 export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 # for openkeychain on android, hardened gpg config throws them away
 export PASSWORD_STORE_GPG_OPTS='--no-throw-keyids'
-
-expr "$XDG_SESSION_TYPE" = "wayland" 1>/dev/null && export export MOZ_ENABLE_WAYLAND=1
 
 # virtualenv
 export WORKON_HOME=$HOME/.cache/virtualenvs
