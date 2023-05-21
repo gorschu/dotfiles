@@ -13,7 +13,7 @@ bootstrap
 .ssh/public
 {{- end }}
 
-{{ if eq .chezmoi.hostname .workHostname }}
+{{ if and (hasKey . "workHostname") (eq .chezmoi.hostname .workHostname) }}
 bin
 .config/*
 !.config/atuin
@@ -31,4 +31,6 @@ bin
 .ssh
 .local/share/atuin
 .Xresources*
+{{ else }}
+.config/chezmoi/work
 {{ end }}

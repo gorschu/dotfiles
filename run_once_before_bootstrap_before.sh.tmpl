@@ -1,5 +1,5 @@
-{{ if eq .chezmoi.os "darwin" }}
-{{   include "run_once_before_bootstrap_before_darwin.sh" }}
-{{ else if eq .chezmoi.os "linux" }}
-{{   include "run_once_before_bootstrap_before_linux.sh" }}
+{{ if eq .chezmoi.os "darwin" -}}
+{{   includeTemplate "run_once_before_bootstrap_before_darwin.sh.tmpl" .chezmoi }}
+{{ else if eq .chezmoi.os "linux" -}}
+{{   includeTemplate "run_once_before_bootstrap_before_linux.sh.tmpl" .chezmoi }}
 {{ end }}

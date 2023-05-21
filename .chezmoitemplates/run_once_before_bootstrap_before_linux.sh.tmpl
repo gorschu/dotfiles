@@ -7,8 +7,8 @@ green=$(tput setaf 2)
 reset=$(tput sgr0)
 
 echo "${green}Installing requirements${reset}"
-{{ if and (hasKey .chezmoi.osRelease "id") (eq .chezmoi.osRelease.id "fedora" )}}
+{{ if and (hasKey .osRelease "id") (eq .osRelease.id "fedora" )}}
 sudo dnf install -y zsh redhat-lsb-core python3-pip pipx
-{{ else if and (hasKey .chezmoi.osRelease "id") (eq .chezmoi.osRelease.id "opensuse-tumbleweed") }}
+{{ else if and (hasKey .osRelease "id") (eq .osRelease.id "opensuse-tumbleweed") }}
 sudo zypper in -y zsh lsb-release python311-pip python311-pipx
 {{ end }}

@@ -7,7 +7,7 @@
 
 [credential]
     helper = cache --timeout=3600
-    {{ if eq .chezmoi.hostname .workHostname }}
+    {{ if and (hasKey . "workHostname") (eq .chezmoi.hostname .workHostname) }}
 	  helper = osxkeychain
 	  {{ end }}
 
@@ -98,7 +98,7 @@
     gpgSign = true
 
 [user]
-    {{ if eq .chezmoi.hostname .workHostname }}
+    {{ if and (hasKey . "workHostname") (eq .chezmoi.hostname .workHostname) }}
     name = {{ .workUser }}
     {{ else }}
     name = Gordon Schulz

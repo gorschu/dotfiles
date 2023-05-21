@@ -18,4 +18,4 @@ encryption = "gpg"
   database = "~/sync/admin/azmo.kdbx"
   args = "-y 2:{{ output "ykman" "list" "--serials" | trim }}"
 
-{{ joinPath .chezmoi.sourceDir "dot_config/private_chezmoi/personal/encrypted_private_readonly_chezmoi-include.toml.tmpl.asc" | include | decrypt }}
+{{ joinPath .sourceDir "dot_config/private_chezmoi/personal/encrypted_private_readonly_chezmoi-include.toml.tmpl.asc" | include | decrypt }}
