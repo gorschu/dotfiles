@@ -47,7 +47,7 @@ if ! zgenom saved; then
 	zgenom ohmyzsh plugins/lxd
 	zgenom ohmyzsh plugins/universalarchive
 	zgenom ohmyzsh plugins/transfer
-	{{ if eq .chezmoi.hostname .workHostname }}
+	{{ if and (hasKey . "workHostname") (eq .chezmoi.hostname .workHostname) }}
 	zgenom ohmyzsh plugins/gpg-agent
 	zgenom ohmyzsh plugins/ssh-agent
 	{{ end }}
