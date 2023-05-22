@@ -1,3 +1,5 @@
+[alias]
+    dft = difftool --tool difftastic
 [color]
     ui = auto
 
@@ -18,11 +20,10 @@
 [diff]
     tool = bc3
     colorMoved = "dimmed-zebra"
-    external = difft --color auto --background dark --display side-by-side
 [diff "gpg"]
     textconv = gpg --no-tty --decrypt
 [difftool]
-    prompt = true
+    prompt = false
     keepBackup = false
 [difftool "bc3"]
     trustExitCode = true
@@ -31,6 +32,8 @@
     cmd = meld "$LOCAL" "$REMOTE"
 [difftool "nvimdiff"]
     cmd = "vim -d \"$LOCAL\" \"$REMOTE\""
+[difftool "difftastic"]
+        cmd = difft --color auto --background dark --display side-by-side "$LOCAL" "$REMOTE"
 
 [feature]
     manyFiles = true
@@ -77,6 +80,9 @@
     trustExitCode = true
 [mergetool "bc3"]
     trustExitCode = true
+
+[pager]
+    difftool = bat
 
 [pull]
     rebase = true
