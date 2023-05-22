@@ -1,4 +1,5 @@
-if (($ + commands[pyenv])); then
+#!/bin/zsh
+if command -v pyenv; then
 	export PYENV_ROOT="${XDG_DATA_HOME:-$HOME/.local/share}/pyenv"
 	export PATH="${PYENV_ROOT}/bin:$PATH"
 	eval "$(pyenv init --path)"

@@ -1,0 +1,4 @@
+{{ if eq .chezmoi.hostname .workHostname }}
+export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
+export HOMEBREW_TEMP="${HOME}/tmp/.homebrew"
+{{ end }}
