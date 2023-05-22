@@ -2,5 +2,7 @@ inoremap    jk      <ESC>
 set surround
 set ideajoin
 set commentary
+set which-key
+set sneak
 map g; :action JumpToLastChange<CR>
 map g, :action JumpToNextChange<CR>
