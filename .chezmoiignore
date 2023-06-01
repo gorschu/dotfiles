@@ -28,9 +28,12 @@ bin
 !.config/starship
 !.config/zellij
 .local
-.ssh
+.ssh/keys.private
+.ssh/keys.public
+.ssh/config.d/personal
 .local/share/atuin
 .Xresources*
 {{ else }}
 .config/chezmoi/work
+.ssh/config.d/work
 {{ end }}
