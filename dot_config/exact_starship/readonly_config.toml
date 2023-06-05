@@ -131,11 +131,8 @@ map_symbol = true
 sigint_symbol = "‼️"
 format = '[\[$symbol$common_meaning$signal_name$maybe_int\]]($style) '
 
-[swift]
-symbol = "ﯣ "
-
 [terraform]
-symbol = "行"
+symbol = "󱁢 "
 
 [time]
 disabled = true
