@@ -21,6 +21,7 @@ bin
 !.config/chezmoi
 .config/chezmoi/personal
 !.config/git
+!.config/nvim
 !.config/latexmk
 !.config/lazygit
 !.config/tig
