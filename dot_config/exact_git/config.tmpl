@@ -47,6 +47,15 @@
 	required = true
 	smudge = "git-lfs smudge -- %f"
 
+{{ if eq .chezmoi.hostname .workHostname }}
+[lfs "https://github.intern/"]
+    locksverify = true
+[lfs "https://github-abnahme.intern/"]
+    locksverify = true
+[lfs "https://github-entwicklung.intern/"]
+    locksverify = true
+{{ end }}
+
 [github]
     user = azmodude
 
