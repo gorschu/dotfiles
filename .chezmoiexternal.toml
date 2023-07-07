@@ -55,15 +55,11 @@
   include = ["*/extras/tmux/*"]
 
 [".config/nvim"]
-    type = "git-repo"
-    url = "https://github.com/astronvim/astronvim.git"
-    refreshPeriod = "24h"
-    [".config/nvim".pull]
-        args = ["--depth", "1"]
-[".config/nvim/lua/user"]
-    type = "git-repo"
-    url = "https://github.com/azmodude/astronvim.git"
-    refreshPeriod = "24h"
+  type = "git-repo"
+  url = "https://github.com/azmodude/lazyvim"
+  refreshPeriod = "24h"
+  [".config/nvim".pull]
+    args = ["--depth", "1"]
 
 [".externals/zsh-syntax-highlighting/catppuccin"]
   type = "archive"
