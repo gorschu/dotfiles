@@ -40,7 +40,7 @@ bind-key -Tcopy-mode-vi 'V' send -X rectangle-toggle
 bind-key -Tcopy-mode-vi 'v' send -X begin-selection
 
 # enable true color support for 256color terminals
-# set -g default-terminal "tmux-256color"
+set -g default-terminal "tmux-256color"
 set -ga terminal-overrides ',*256col*:Tc,xterm-kitty,alacritty:Tc'
 # nvim guicursor override
 # :help tui-cursor-shape
