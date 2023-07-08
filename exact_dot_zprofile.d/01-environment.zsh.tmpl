@@ -96,8 +96,7 @@ export TIME_STYLE=long-iso
 export BLOCK_SIZE="'1"
 
 export NOTMUCH_CONFIG=${XDG_CONFIG_HOME}/mail/notmuch-config
-
-{{ if ne .chezmoi.hostname .workHostname }}
+{{ if and (hasKey . "workHostname") (ne .chezmoi.hostname .workHostname) }}
 # set DOCKER_HOST to podman
 export DOCKER_HOST=unix:///run/user/$(id -u)/podman/podman.sock
 {{ end }}
