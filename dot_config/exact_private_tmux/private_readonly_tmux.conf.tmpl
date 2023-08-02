@@ -39,9 +39,12 @@ set -g repeat-time 2000
 bind-key -Tcopy-mode-vi 'V' send -X rectangle-toggle
 bind-key -Tcopy-mode-vi 'v' send -X begin-selection
 
+# allow passthrough
+set -g allow-passthrough on
 # enable true color support for 256color terminals
 set -g default-terminal "tmux-256color"
-set -ga terminal-overrides ',*256col*:Tc,xterm-kitty,alacritty:Tc'
+#set -ga terminal-overrides ',*256col*:Tc,xterm-kitty,wezterm,alacritty:Tc'
+set -ga terminal-overrides ',*256col*:Tc,wezterm,alacritty:Tc'
 # nvim guicursor override
 # :help tui-cursor-shape
 set -ga terminal-overrides '*:Ss=\E[%p1%d q:Se=\E[ q'
