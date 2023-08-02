@@ -29,6 +29,7 @@ config = {
   },
   window_background_opacity = 1.0,
   text_background_opacity = 1.0,
+  term = "wezterm",
 }
 
 return config
