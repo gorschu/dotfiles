@@ -23,6 +23,7 @@ bin
 !.config/git
 !.config/latexmk
 !.config/lazygit
+!.config/nvim
 !.config/tig
 !.config/tmux
 !.config/starship
