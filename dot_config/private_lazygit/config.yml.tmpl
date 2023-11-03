@@ -1,4 +1,4 @@
 {{ if hasPrefix "catppuccin-" .colorscheme }}
 {{ $flavor := trimPrefix "catppuccin-" .colorscheme}}
-{{ include ( joinPath .chezmoi.homeDir ".externals/lazygit/catppuccin/" (print $flavor ".yml") ) }}
+{{ include ( joinPath .chezmoi.homeDir ".externals/lazygit/catppuccin/themes/" (print $flavor "/macchiato-peach.yml") ) }}
 {{ end }}
