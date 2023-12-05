@@ -46,7 +46,7 @@ distro-update:
 chezmoi-update:
   chezmoi update
 ansible-update:
-  cd  ~/projects/synced/ansible/ansible-box-workstations && \
+  cd  ~/projects/ansible/ansible-box-workstations && \
     git pull && \
     ./run-playbook.sh
 update: distro-update chezmoi-update ansible-update
