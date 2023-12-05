@@ -45,9 +45,11 @@ distro-update:
   sudo dnf update
 chezmoi-update:
   chezmoi update
+brew-update:
+  brew update
 ansible-update:
   cd  ~/projects/ansible/ansible-box-workstations && \
     git pull && \
     ./run-playbook.sh
-update: distro-update chezmoi-update ansible-update
+update: distro-update chezmoi-update brew-update ansible-update
 
