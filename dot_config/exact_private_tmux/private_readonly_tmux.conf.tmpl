@@ -88,8 +88,9 @@ source-file {{ .chezmoi.homeDir }}/.externals/tmux/tokyonight/tokyonight_{{ $fla
 {{ if hasPrefix "catppuccin" .colorscheme}}
 set -g @plugin 'catppuccin/tmux'
 set -g @catppuccin_flavour '{{ trimPrefix "catppuccin-" .colorscheme }}'
-set -g @catppuccin_host "on"
-set -g @catppuccin_user "on"
+set -g @catppuccin_status_modules_right "user host application directory session date_time"
+set -g @catppuccin_date_time_text "%Y-%m-%d %H:%M"
+set -g @catppuccin_date_time_icon "󰥔"
 {{ end }}
 
 # order matters here
