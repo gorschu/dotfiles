@@ -100,14 +100,6 @@
   refreshPeriod = "168h"
   include = ["*/themes/*"]
 
-[".externals/zellij/themes"]
-  type = "archive"
-  url = "https://github.com/zellij-org/zellij/archive/main.tar.gz"
-  exact = true
-  stripComponents = 3
-  refreshPeriod = "168h"
-  include = ["*/example/themes/*"]
-
 [".externals/zgenom"]
     type = "git-repo"
     url = "https://github.com/jandamm/zgenom.git"
@@ -122,28 +114,4 @@
   [".externals/bin/tomb".filter]
     command = "tar"
     args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "Tomb-{{ $tombVersion }}/tomb"]
-
-{{ $atuinVersion := "14.0.1" }}
-[".externals/atuin"]
-  type = "archive"
-  url = "https://github.com/ellie/atuin/releases/download/v{{ $atuinVersion }}/atuin-v{{ $atuinVersion }}-x86_64-unknown-{{ .chezmoi.os }}-gnu.tar.gz"
-  exact = true
-  stripComponents = 1
-  include = ["*/atuin", "*/completions", "*/completions/*"]
-
-{{ $vividVersion := "0.9.0" }}
-[".externals/bin/vivid"]
-  type = "file"
-  url = "https://github.com/sharkdp/vivid/releases/download/v{{ $vividVersion }}/vivid-v{{ $vividVersion }}-x86_64-unknown-{{ .chezmoi.os }}-gnu.tar.gz"
-  exact = true
-  executable = true
-  [".externals/bin/vivid".filter]
-    command = "tar"
-    args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "vivid-v{{ $vividVersion }}-x86_64-unknown-{{ .chezmoi.os }}-gnu/vivid"]
-
-{{ $cosignVersion := "2.0.1" }}
-[".externals/bin/cosign"]
-    type = "file"
-    url = "https://github.com/sigstore/cosign/releases/download/v{{ $cosignVersion }}/cosign-{{ .chezmoi.os }}-amd64"
-    executable = true
 {{ end }}
