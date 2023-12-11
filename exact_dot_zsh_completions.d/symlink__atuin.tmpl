@@ -1,5 +1,1 @@
-{{ if eq .chezmoi.os "linux" -}}
-{{ .chezmoi.homeDir }}/.externals/atuin/completions/_atuin
-{{ else if eq .chezmoi.os "darwin" }}
-{{ .chezmoi.homeDir }}/homebrew/opt/atuin/share/zsh/site-functions/_atuin
-{{ end -}}
+{{ output "brew" "--prefix" | trim }}/opt/atuin/share/zsh/site-functions/_atuin
