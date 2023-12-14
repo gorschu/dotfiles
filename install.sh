@@ -12,7 +12,7 @@ if [[ $(grep "^ID" /etc/os-release) =~ fedora ]]; then
 elif [[ $(grep "^ID" /etc/os-release) =~ opensuse ]]; then
   sudo zypper install -y git yubikey-manager
 else
-  echo "Unsupport distribution." && exit 1
+  echo "Unsupported distribution." && exit 1
 fi
 
 chezmoi="chezmoi"
@@ -66,9 +66,6 @@ export GPG_TTY
 
 # POSIX way to get script's dir: https://stackoverflow.com/a/29834779/12156188
 script_dir="$(cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P)"
-# exec: replace current process with chezmoi init
-# TODO: OP_SESSION_my is probably no longer supported.
-#XDG_CONFIG_HOME=$HOME/.config OP_SESSION_my=$(bash bin/exact_security/executable_onepassword-signin) exec "$chezmoi" init --apply "--source=$script_dir"
 # we are relying on externals to reach our target state
 # therefore we need three steps to reach it - init, apply our externals and then apply the rest
 XDG_CONFIG_HOME=$HOME/.config "${chezmoi}" init --source="${script_dir}"
