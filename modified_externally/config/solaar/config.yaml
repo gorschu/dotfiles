@@ -1,4 +1,4 @@
-- 1.1.9
+- 1.1.10
 - _NAME: Wireless Mouse MX Master
   _absent: [hi-res-scroll, lowres-scroll-mode, thumb-scroll-invert, thumb-scroll-mode, onboard_profiles, report_rate, pointer_speed, speed-change, backlight,
     backlight-timed, fn-swap, persistent-remappable-keys, disable-keyboard-keys, crown-smooth, divert-crown, divert-gkeys, m-key-leds, mr-key-led, multiplatform,
