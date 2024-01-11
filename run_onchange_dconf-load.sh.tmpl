@@ -1,3 +1,4 @@
+{{ if eq .chezmoi.os "linux" }}
 #!/bin/bash
 
 # dconf.ini hash: {{ include "dconf.ini.tmpl" | sha256sum }}
@@ -11,3 +12,4 @@ tmpfile=$(mktemp)
 echo "${dconf}" > ${tmpfile}
 dconf load / < ${tmpfile}
 rm -f ${tmpfile}
+{{ end }}
