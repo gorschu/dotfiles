@@ -135,7 +135,7 @@ format = '[\[$symbol$common_meaning$signal_name$maybe_int\]]($style) '
 symbol = "󱁢 "
 
 [time]
-disabled = true
+disabled = false
 
 [username]
 format = "[$user]($style)"
