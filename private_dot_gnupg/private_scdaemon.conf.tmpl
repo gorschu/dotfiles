@@ -1,3 +1,5 @@
+{{ if eq .chezmoi.osRelease.id "fedora" }}
 # make gnugpg play nicely with pcscd
 # it is still a complete mess
 disable-ccid
+{{ end }}
