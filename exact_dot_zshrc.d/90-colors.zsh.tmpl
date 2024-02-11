@@ -1,7 +1,9 @@
 {{ if hasPrefix "tokyonight-" .colorscheme }}
 export LS_COLORS="$(vivid generate one-dark)"
+export EZA_COLORS="${LS_COLORS}"
 {{ else }}
 export LS_COLORS="$(vivid generate {{ .colorscheme }})"
+export EZA_COLORS="${LS_COLORS}"
 {{ end }}
 
 {{ if hasPrefix "catppuccin" .colorscheme }}
