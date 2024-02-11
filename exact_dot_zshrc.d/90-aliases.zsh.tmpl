@@ -34,12 +34,13 @@ alias mbsync="mbsync -c ${XDG_CONFIG_HOME}/mail/mbsyncrc"
 alias weechat="weechat -d ${XDG_CONFIG_HOME}/weechat"
 
 if (( $+commands[eza] )); then
-  alias eza="eza --icons"
-  alias ls="eza"
-  alias ll="eza -l"
-  alias la="eza -la"
-  alias lg="eza -la --git"
-  alias lt="eza --tree"
+  eza="eza --color=auto"
+  alias eza="${eza} --icons"
+  alias ls="${eza}"
+  alias ll="${eza} -l"
+  alias la="${eza} -la"
+  alias lg="${eza} -la --git"
+  alias lt="${eza} --tree"
 fi
 
 (( $+commands[batman] )) && alias man=batman
