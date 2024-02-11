@@ -98,6 +98,7 @@ disabled = false
 style = "bold blue"
 [os.symbols]
 Fedora = "  "
+Arch = "󰣇 "
 
 [package]
 symbol = " "
