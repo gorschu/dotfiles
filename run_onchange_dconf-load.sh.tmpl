@@ -1,4 +1,4 @@
-{{ if eq .chezmoi.os "linux" }}
+{{ if eq .chezmoi.os "linux" -}}
 #!/bin/bash
 
 # dconf.ini hash: {{ include "dconf.ini.tmpl" | sha256sum }}
