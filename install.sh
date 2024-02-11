@@ -11,6 +11,8 @@ if [[ $(grep "^ID" /etc/os-release) =~ fedora ]]; then
   sudo dnf install -y git yubikey-manager
 elif [[ $(grep "^ID" /etc/os-release) =~ opensuse ]]; then
   sudo zypper install -y git yubikey-manager
+elif [[ $(grep "^ID" /etc/os-release) =~ arch ]]; then
+  sudo pacman -S --needed -y git yubikey-manager
 else
   echo "Unsupported distribution." && exit 1
 fi
