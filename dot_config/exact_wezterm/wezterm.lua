@@ -12,7 +12,6 @@ end
 
 config = {
   color_scheme = "Catppuccin Macchiato", -- or Macchiato, Frappe, Latte
-  font_size = 11,
   window_padding = {
     left = 5,
     right = 5,
@@ -22,6 +21,8 @@ config = {
   use_fancy_tab_bar = true,
   hide_tab_bar_if_only_one_tab = true,
   font = wezterm.font("Iosevka SS14"),
+  font_size = 11,
+  freetype_render_target = 'HorizontalLcd',
   cursor_blink_rate = 0,
   window_frame = {
     font = wezterm.font({ family = "Inter", weight = "Regular" }),
@@ -30,6 +31,14 @@ config = {
   window_background_opacity = 1.0,
   text_background_opacity = 1.0,
   term = "wezterm",
+
+  keys = {
+    {
+      key = 'w',
+      mods = 'CMD',
+      action = wezterm.action.CloseCurrentTab { confirm = true },
+    },
+  }
 }
 
 return config
