@@ -6,7 +6,7 @@ install.sh
 */**/*.include.asc
 bootstrap
 .zshrc.d/*.zwc
-dconf.ini
+.local/state/syncthing/artemis
 
 {{- $wants_ssh_keys := list "hephaestus" "artemis" "apollo" }}
 {{- if not (has .chezmoi.hostname $wants_ssh_keys) }}
