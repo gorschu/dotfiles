@@ -60,7 +60,9 @@ disabled = false
 
 [git_status]
 disabled = false
-deleted = "󱂥  "
+deleted = "󱂥 "
+ahead = "󰩍 "
+behind = "󰥥 "
 
 [golang]
 symbol = " "
