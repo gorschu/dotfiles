@@ -12,7 +12,7 @@ if [[ $(grep "^ID" /etc/os-release) =~ fedora ]]; then
 elif [[ $(grep "^ID" /etc/os-release) =~ opensuse ]]; then
   sudo zypper install -y git yubikey-manager
 elif [[ $(grep "^ID" /etc/os-release) =~ arch ]]; then
-  sudo pacman -S --needed -y git yubikey-manager
+  sudo pacman -S --needed -y git yubikey-manager chezmoi gnupg
 else
   echo "Unsupported distribution." && exit 1
 fi
@@ -40,6 +40,7 @@ sudo systemctl stop pcscd || true
 if ykman list | grep -qi yubikey; then
   rm -rf "${HOME}/.gnupg"
   pkill gpg-agent || true
+  pkill keyboxd || true
 fi
 
 # import and trust our GPG Key
