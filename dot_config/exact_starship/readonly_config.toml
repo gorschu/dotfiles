@@ -24,7 +24,7 @@ symbol = " "
 
 [directory]
 fish_style_pwd_dir_length = 1
-read_only = " "
+read_only = " "
 truncation_length = 3
 truncation_symbol = "…/"
 
@@ -60,6 +60,7 @@ disabled = false
 
 [git_status]
 disabled = false
+deleted = "󱂥  "
 
 [golang]
 symbol = " "
@@ -70,7 +71,7 @@ symbol = " "
 [hostname]
 format = "[@$hostname]($style) in "
 ssh_only = false
-ssh_symbol = "旅"
+ssh_symbol = "󰣀  "
 style = "#8aadf4"
 
 [java]
@@ -80,10 +81,7 @@ symbol = " "
 symbol = " "
 
 [memory_usage]
-symbol = " "
-
-[nim]
-symbol = " "
+symbol = "󰍛  "
 
 [nix_shell]
 disabled = false
@@ -101,7 +99,7 @@ Fedora = "  "
 Arch = "󰣇 "
 
 [package]
-symbol = " "
+symbol = "  "
 
 [perl]
 symbol = " "
