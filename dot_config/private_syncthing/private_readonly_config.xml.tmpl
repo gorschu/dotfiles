@@ -1,3 +1,0 @@
-{{ if stat (joinPath .chezmoi.sourceDir (print "dot_config/private_syncthing/" .chezmoi.hostname)) -}}
-{{ joinPath .chezmoi.sourceDir (print "dot_config/private_syncthing/" .chezmoi.hostname "/encrypted_readonly_private_config.xml.asc") | include | decrypt }}
-{{ end -}}
