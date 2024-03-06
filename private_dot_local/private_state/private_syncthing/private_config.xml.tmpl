@@ -1,3 +1,3 @@
-{{- if ((joinPath (.chezmoi.sourceFile | dir) .chezmoi.hostname "/encrypted_private_config.pem.asc") | lstat) -}}
+{{- if joinPath .chezmoi.sourceDir (.chezmoi.sourceFile | dir) .chezmoi.hostname "/encrypted_private_config.xml.asc" | lstat -}}
 {{- include (printf "%v/%v/%v" (joinPath (.chezmoi.sourceFile | dir)) .chezmoi.hostname "/encrypted_private_config.xml.asc") | decrypt -}}
 {{- end -}}
