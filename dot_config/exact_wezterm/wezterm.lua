@@ -11,6 +11,8 @@ if wezterm.config_builder then
 end
 
 config = {
+  initial_rows = 50,
+  initial_cols = 140,
   color_scheme = "Catppuccin Macchiato", -- or Macchiato, Frappe, Latte
   window_padding = {
     left = 5,
@@ -22,7 +24,7 @@ config = {
   hide_tab_bar_if_only_one_tab = true,
   font = wezterm.font("Iosevka SS14"),
   font_size = 11,
-  freetype_render_target = 'HorizontalLcd',
+  freetype_render_target = "HorizontalLcd",
   cursor_blink_rate = 0,
   window_frame = {
     font = wezterm.font({ family = "Inter", weight = "Regular" }),
@@ -34,11 +36,11 @@ config = {
 
   keys = {
     {
-      key = 'w',
-      mods = 'CMD',
-      action = wezterm.action.CloseCurrentTab { confirm = true },
+      key = "w",
+      mods = "CMD",
+      action = wezterm.action.CloseCurrentTab({ confirm = true }),
     },
-  }
+  },
 }
 
 return config
