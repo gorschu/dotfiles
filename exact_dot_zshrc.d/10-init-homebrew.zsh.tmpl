@@ -1,3 +1,4 @@
 {{ if (and (ne .chezmoi.os "darwin") (findExecutable "brew" (list "/home/linuxbrew/.linuxbrew/bin")) ) }}
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# pull in linuxbrew only for interactive terminals, else all hell breaks loose
+[[ -d /home/linuxbrew/.linuxbrew && $- == *i* ]] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 {{ end }}
