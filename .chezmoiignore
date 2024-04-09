@@ -36,6 +36,7 @@ bin
 .ssh/config.d/personal
 .local/share/atuin
 .Xresources*
+dconf.ini
 {{ else }}
 .config/chezmoi/work
 .ssh/config.d/work
