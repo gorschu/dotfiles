@@ -31,9 +31,6 @@ if which ruby >/dev/null && which gem >/dev/null; then
     PATH="$(ruby -e "puts Gem.user_dir")/bin:$PATH"
 fi
 
-# pyenv
-[[ -d $HOME/.pyenv ]] && PATH="$HOME/.pyenv/bin:$PATH"
-
 # inject path into systemctl user session so things like emacs have it available
 {{ if eq .chezmoi.os "linux" }}
 systemctl --user import-environment PATH
