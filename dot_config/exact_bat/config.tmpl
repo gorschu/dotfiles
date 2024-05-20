@@ -9,7 +9,7 @@
 --theme "tokyonight_{{ $flavor }}"
 {{ else if hasPrefix "catppuccin-" .colorscheme -}}
 {{ $flavor := trimPrefix "catppuccin-" .colorscheme }}
---theme "Catppuccin-{{ $flavor }}"
+--theme "Catppuccin {{ title $flavor }}"
 {{ end }}
 --style="auto"
 
