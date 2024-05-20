@@ -1,0 +1,4 @@
+{{ if hasPrefix "catppuccin" .colorscheme }}
+{{ $flavor := trimPrefix "catppuccin-" .colorscheme }}
+{{ .chezmoi.homeDir }}/.externals/yazi/catppuccin/{{ $flavor }}.toml
+{{ end }}
