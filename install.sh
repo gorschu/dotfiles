@@ -9,7 +9,7 @@ reset=$(tput sgr0)
 echo "${green}Installing absolute requirements${reset}"
 if [[ $(grep "^ID" /etc/os-release) =~ fedora ]]; then
   sudo dnf install -y git yubikey-manager
-  sudo dnf install -y $(curl -sL https://api.github.com/repos/twpayne/chezmoi/releases/latest | jq -r '.assets[] | select(.name? | match("chezmoi-.*-x86_64.rpm$")) | .browser_download_url')
+[ ! "$(command -v chezmoi)" ] && sudo dnf install -y $(curl -sL https://api.github.com/repos/twpayne/chezmoi/releases/latest | jq -r '.assets[] | select(.name? | match("chezmoi-.*-x86_64.rpm$")) | .browser_download_url')
 elif [[ $(grep "^ID" /etc/os-release) =~ opensuse ]]; then
   sudo zypper install -y git yubikey-manager chezmoi
 elif [[ $(grep "^ID" /etc/os-release) =~ arch ]]; then
