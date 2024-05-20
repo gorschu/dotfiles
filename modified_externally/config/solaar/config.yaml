@@ -1,5 +1,5 @@
 - 1.1.11
-- _NAME: Wireless Mouse MX Master
+- _NAME: Wireless Mouse MX Master 2S
   _absent: [hi-res-scroll, lowres-scroll-mode, thumb-scroll-invert, thumb-scroll-mode, onboard_profiles, report_rate, report_rate_extended, pointer_speed,
     speed-change, backlight, backlight_level, backlight_duration_hands_out, backlight_duration_hands_in, backlight_duration_powered, backlight-timed, led_control,
     led_zone_, fn-swap, persistent-remappable-keys, disable-keyboard-keys, crown-smooth, divert-crown, divert-gkeys, m-key-leds, mr-key-led, multiplatform,
@@ -9,7 +9,7 @@
   _sensitive: {change-host: false, dpi: false, dpi-sliding: false}
   _serial: 0CAB0BCC
   _unitId: 012C7FDD
-  _wpid: '4071'
+  _wpid: '4069'
   change-host: null
   divert-keys: {0x52: 0x0, 0x53: 0x0, 0x56: 0x0, 0xc3: 0x0, 0xc4: 0x0, 0xd7: 0x0}
   dpi: '1400'
