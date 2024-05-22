@@ -23,6 +23,9 @@ config = {
   use_fancy_tab_bar = true,
   hide_tab_bar_if_only_one_tab = true,
   font = wezterm.font("Iosevka SS14"),
+  -- harfbuzz_features = { "ss03", "ss04", "ss05" },
+  -- harfbuzz_features = { "zero", "ss02" },
+  -- harfbuzz_features = { "calt=0" },
   font_size = 11,
   freetype_render_target = "HorizontalLcd",
   cursor_blink_rate = 0,
@@ -33,6 +36,8 @@ config = {
   window_background_opacity = 1.0,
   text_background_opacity = 1.0,
   term = "wezterm",
+  -- wayland support is currently ... bad, so don't enable it until the rewrite is done
+  enable_wayland = false,
 
   keys = {
     {
