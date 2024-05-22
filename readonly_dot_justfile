@@ -46,7 +46,7 @@ distro-update:
 chezmoi-update:
   sudo systemctl restart pcscd && chezmoi update
 brew-update:
-  brew update
+  brew update && brew upgrade
 ansible-update:
   cd  ~/projects/synced/ansible/ansible-box-workstations && \
     git pull && \
