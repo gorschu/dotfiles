@@ -115,7 +115,7 @@
 
 [user]
     {{ if and (hasKey . "workHostname") (eq .chezmoi.hostname .workHostname) }}
-    name = {{ .workUser }}
+    name = {{ .workName }}
     {{ else }}
     name = Gordon Schulz
     {{ end }}
