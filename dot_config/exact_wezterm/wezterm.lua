@@ -22,11 +22,11 @@ config = {
   },
   use_fancy_tab_bar = true,
   hide_tab_bar_if_only_one_tab = true,
-  font = wezterm.font("Iosevka SS14"),
+  font = wezterm.font("JetBrainsMono NF"),
   -- harfbuzz_features = { "ss03", "ss04", "ss05" },
   -- harfbuzz_features = { "zero", "ss02" },
   -- harfbuzz_features = { "calt=0" },
-  font_size = 11,
+  font_size = 10,
   freetype_render_target = "HorizontalLcd",
   cursor_blink_rate = 0,
   window_frame = {
