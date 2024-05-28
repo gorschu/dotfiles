@@ -1,0 +1,2 @@
+export ZELLIJ_AUTO_ATTACH=false
+export ZELLIJ_AUTO_EXIT=true
