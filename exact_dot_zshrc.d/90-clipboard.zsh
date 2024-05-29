@@ -1,0 +1,1 @@
+export CLIPBOARD_THEME=darkhighcontrast
