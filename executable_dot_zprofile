@@ -1,3 +1,0 @@
-for profile in $HOME/.zprofile.d/*.zsh; do
-    . "${profile}"
-done

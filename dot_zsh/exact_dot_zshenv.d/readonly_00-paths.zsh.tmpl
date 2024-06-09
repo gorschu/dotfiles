@@ -12,12 +12,12 @@ path+=("${HOME}/homebrew/bin" "${HOME}/homebrew/opt/coreutils/libexec/gnubin")
 
 # Set the list of directories that Zsh searches for programs.
 path=(
-    ${HOME}/.local/bin
-    ${HOME}/.cargo/bin
-    ${HOME}/bin
-    ${HOME}/bin/**
-    ${HOME}/go/bin
-    ${path}
+    "$HOME"/.local/bin
+    "$HOME"/.cargo/bin
+    "$HOME"/bin
+    "$HOME"/bin/**
+    "$HOME"/go/bin
+    "$path"
     /usr/local/{bin,sbin}
 )
 
@@ -35,3 +35,5 @@ fi
 {{ if eq .chezmoi.os "linux" }}
 systemctl --user import-environment PATH
 {{ end }}
+
+# vim: ft=sh
