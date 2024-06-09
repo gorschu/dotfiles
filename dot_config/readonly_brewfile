@@ -1,0 +1,35 @@
+tap "homebrew/linux-fonts" if OS.linux?
+
+brew "lazygit"
+brew "starship"
+brew "lf"
+brew "bat"
+brew "bat-extras"
+brew "zellij"
+brew "atuin"
+brew "cosign"
+brew "vivid"
+brew "fd"
+brew "ripgrep"
+brew "zoxide"
+brew "eza"
+brew "btop"
+brew "just"
+brew "fzf"
+brew "mc"
+brew "ncdu"
+brew "renameutils"
+brew "direnv"
+brew "difftastic"
+brew "gh"
+brew "pre-commit"
+brew "golang"
+brew "rust"
+brew "neovim"
+brew "neovim-remote"
+brew "topgrade"
+brew "yazi"
+
+brew "homebrew/linux-fonts/font-jetbrains-mono-nerd-font" if OS.linux?
+brew "homebrew/linux-fonts/font-symbols-only-nerd-font" if OS.linux?
+brew "homebrew/linux-fonts/font-inter" if OS.linux?
