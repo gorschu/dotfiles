@@ -1,0 +1,76 @@
+mattmc3/zephyr path:plugins/completion
+jeffreytse/zsh-vi-mode
+# load .zsh files in $ZDOTDIR/.zshrc.d pretty early
+mattmc3/zephyr path:plugins/confd
+mattmc3/zephyr path:plugins/color
+mattmc3/zephyr path:plugins/homebrew
+mattmc3/zephyr path:plugins/utility
+mattmc3/zephyr path:plugins/zfunctions
+
+# distribution specific
+{{ if hasKey .chezmoi.osRelease "id" }}
+  {{ if eq .chezmoi.osRelease.id "ubuntu" }}
+  ohmyzsh/ohmyzsh path:plugins/ubuntu
+  {{ else if eq .chezmoi.osRelease.id "debian" }}
+  ohmyzsh/ohmyzsh path:plugins/debian
+  {{ else if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
+  ohmyzsh/ohmyzsh path:plugins/suse
+  {{ else if eq .chezmoi.osRelease.id "fedora" }}
+  ohmyzsh/ohmyzsh path:plugins/dnf
+  {{ else if eq .chezmoi.osRelease.id "arch" }}
+  ohmyzsh/ohmyzsh path:plugins/archlinux
+  {{ end }}
+{{ end }}
+
+# zsh specific
+ohmyzsh/ohmyzsh path:plugins/sudo
+
+# utility specific
+bigH/git-fuzzy path:bin kind:path
+
+ohmyzsh/ohmyzsh path:plugins/git
+ohmyzsh/ohmyzsh path:plugins/1password
+ohmyzsh/ohmyzsh path:plugins/direnv
+ohmyzsh/ohmyzsh path:plugins/github
+ohmyzsh/ohmyzsh path:plugins/git-auto-fetch
+ohmyzsh/ohmyzsh path:plugins/git-escape-magic
+ohmyzsh/ohmyzsh path:plugins/git-extras
+ohmyzsh/ohmyzsh path:plugins/git-flow-avh
+ohmyzsh/ohmyzsh path:plugins/git-lfs
+ohmyzsh/ohmyzsh path:plugins/gnu-utils
+ohmyzsh/ohmyzsh path:plugins/extract
+ohmyzsh/ohmyzsh path:plugins/rsync
+ohmyzsh/ohmyzsh path:plugins/taskwarrior
+ohmyzsh/ohmyzsh path:plugins/ripgrep kind:fpath
+ohmyzsh/ohmyzsh path:plugins/vscode
+ohmyzsh/ohmyzsh path:plugins/vagrant
+ohmyzsh/ohmyzsh path:plugins/universalarchive
+ohmyzsh/ohmyzsh path:plugins/transfer
+{{ if and (hasKey . "workHostname") (eq .chezmoi.hostname .workHostname) }}
+  ohmyzsh/ohmyzsh path:plugins/gpg-agent
+  ohmyzsh/ohmyzsh path:plugins/ssh-agent
+{{ end }}
+
+# development
+ohmyzsh/ohmyzsh path:plugins/python
+ohmyzsh/ohmyzsh path:plugins/pyenv
+ohmyzsh/ohmyzsh path:plugins/pip
+ohmyzsh/ohmyzsh path:plugins/pylint
+ohmyzsh/ohmyzsh path:plugins/systemd
+ohmyzsh/ohmyzsh path:plugins/ansible
+ohmyzsh/ohmyzsh path:plugins/golang
+ohmyzsh/ohmyzsh path:plugins/npm
+ohmyzsh/ohmyzsh path:plugins/gh kind:fpath
+# k8s
+ohmyzsh/ohmyzsh path:plugins/helm
+ohmyzsh/ohmyzsh path:plugins/kubectl
+ohmyzsh/ohmyzsh path:plugins/istioctl
+
+# misc stuff
+mdumitru/fancy-ctrl-z
+zsh-users/zsh-completions
+zdharma-continuum/fast-syntax-highlighting
+hlissner/zsh-autopair
+
+$ZDOTDIR/.zsh_completions.d kind:fpath
+
