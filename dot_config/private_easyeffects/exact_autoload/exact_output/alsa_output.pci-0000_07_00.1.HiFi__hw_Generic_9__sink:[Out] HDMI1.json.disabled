@@ -1,6 +1,0 @@
-{
-    "device": "alsa_output.pci-0000_07_00.1.HiFi__hw_Generic_9__sink",
-    "device-description": "Renoir Radeon High Definition Audio Controller HDMI / DisplayPort 4 Output",
-    "device-profile": "[Out] HDMI1",
-    "preset-name": "LoudnessEqualizer"
-}
