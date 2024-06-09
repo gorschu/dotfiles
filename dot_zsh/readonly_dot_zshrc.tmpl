@@ -1,4 +1,7 @@
-# -*- mode: sh -*-
+# fire up ZVM initializing directly after sourcing, prevents stomping over other plugins' (like atuin) keybindings
+# set very early early in .zsh so it knows what to do
+ZVM_INIT_MODE="sourcing"
+ZVM_VI_ESCAPE_BINDKEY=jk
 
 source "{{ .chezmoi.homeDir }}/.externals/zgenom/zgenom.zsh"
 zgenom autoupdate
