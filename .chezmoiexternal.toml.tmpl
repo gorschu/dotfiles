@@ -98,9 +98,9 @@
   refreshPeriod = "168h"
   include = ["*/src/*"]
 
-[".externals/zgenom"]
+["{{ base (env "ZDOTDIR") }}/.antidote"]
     type = "git-repo"
-    url = "https://github.com/jandamm/zgenom.git"
+    url = "https://github.com/mattmc3/antidote.git"
     refreshPeriod = "168h"
 
 {{ if ne .chezmoi.os "darwin" }}
