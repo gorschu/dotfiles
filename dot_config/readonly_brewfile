@@ -29,6 +29,7 @@ brew "neovim"
 brew "neovim-remote"
 brew "topgrade"
 brew "yazi"
+brew "nvtop" if OS.linux?
 
 brew "homebrew/linux-fonts/font-jetbrains-mono-nerd-font" if OS.linux?
 brew "homebrew/linux-fonts/font-symbols-only-nerd-font" if OS.linux?
