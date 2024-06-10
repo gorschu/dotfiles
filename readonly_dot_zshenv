@@ -2,7 +2,7 @@
 
 # pull in my zsh environmental stuff
 export ZDOTDIR=$HOME/.zsh
-for config_file ($CUSTOM/.zshenv.d/*.zsh(N)); do
+for config_file ($ZDOTDIR/.zshenv.d/*.zsh(N)); do
     # (N) is setting NULL_GLOB so we don't complain if there are no matches.
     source $config_file
 done
