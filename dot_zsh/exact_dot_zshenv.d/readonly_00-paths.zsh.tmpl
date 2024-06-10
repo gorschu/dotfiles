@@ -17,7 +17,7 @@ path=(
     "$HOME"/bin
     "$HOME"/bin/**
     "$HOME"/go/bin
-    "$path"
+    "${path[@]}"
     /usr/local/{bin,sbin}
 )
 
@@ -31,9 +31,10 @@ if which ruby >/dev/null && which gem >/dev/null; then
     PATH="$(ruby -e "puts Gem.user_dir")/bin:$PATH"
 fi
 
-# inject path into systemctl user session so things like emacs have it available
 {{ if eq .chezmoi.os "linux" }}
+# inject path into systemctl user session so things like emacs have it available
 systemctl --user import-environment PATH
 {{ end }}
 
 # vim: ft=sh
+
