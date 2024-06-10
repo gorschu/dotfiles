@@ -129,3 +129,6 @@ keymap_mode = "vim-insert"
 
 [sync]
 records = true
+
+[daemon]
+enabled = true
