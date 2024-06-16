@@ -24,7 +24,7 @@ set date_format="%y/%m/%d %I:%M%p"
 set folder_format="%2C %t %N %F %2l %-8.8u %-8.8g %8s %d %f"
 set index_format="%4C %-17.17D %Z %-25.25n (%?l?%4l&%4c?) %s"
 
-set alias_format="%4n %2d %t %-12a %r"
+#set alias_format="%4n %2d %t %-12a %r"
 set sort_alias=alias
 set reverse_alias=yes
 
@@ -36,7 +36,7 @@ set attribution_locale="en_US"
 # set nvim to last empty line (before signature)
 # -c'noh' turns off search highlighting (hlsearch) as triggered by the
 # search for last line
-set editor="lvim '+:silent+?^$' %s -c'noh'"
+set editor="nvim '+:silent+?^$' %s -c'noh'"
 
 # setup address book query and completion
 set query_command = "khard email --parsable %s"
@@ -146,7 +146,7 @@ set crypt_replysign = yes
 set crypt_replyencrypt = yes
 set crypt_replysignencrypted = yes
 
-source $XDG_CONFIG_HOME/neomutt/azmo.muttrc
+source $XDG_CONFIG_HOME/neomutt/colors.muttrc
 
 # view html mails as text
 set implicit_autoview

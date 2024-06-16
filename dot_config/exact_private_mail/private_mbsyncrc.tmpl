@@ -33,7 +33,7 @@ Channel fastmail-{{ .mail.gatgordonschulzdotde.email }}
 
 IMAPAccount yahoo-{{ .mail.mfatyahoodotde.email }}
     Host imap.mail.yahoo.com
-    AuthMechs Plain
+    AuthMechs *
     User {{ .mail.mfatyahoodotde.email }}
     PassCmd "$HOME/bin/mail/get_mail_password.sh 'Yahoo {{ .mail.mfatyahoodotde.email }}'"
     SSLType IMAPS
@@ -67,7 +67,7 @@ Channel yahoo-{{ .mail.mfatyahoodotde.email }}
 
 IMAPAccount gmail-{{ .mail.gsatgmaildotcom.email }}
     Host imap.gmail.com
-    AuthMechs PLAIN
+    AuthMechs *
     User {{ .mail.gsatgmaildotcom.email }}
     PassCmd "$HOME/bin/mail/get_mail_password.sh 'Google Main'"
     SSLType IMAPS

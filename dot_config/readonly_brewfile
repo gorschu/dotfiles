@@ -31,6 +31,13 @@ brew "topgrade"
 brew "yazi"
 brew "nvtop" if OS.linux?
 
+brew "neomutt" if OS.linux?
+brew "isync" if OS.linux?
+brew "notmuch" if OS.linux?
+brew "urlview" if OS.linux?
+brew "w3m" if OS.linux?
+brew "msmtp" if OS.linux?
+
 brew "homebrew/linux-fonts/font-jetbrains-mono-nerd-font" if OS.linux?
 brew "homebrew/linux-fonts/font-symbols-only-nerd-font" if OS.linux?
 brew "homebrew/linux-fonts/font-inter" if OS.linux?

@@ -13,4 +13,4 @@ else
   vault="${2}"
 fi
 
-OP_SESSION_my=$(onepassword-signin) op --cache item get "${1}" --vault "$vault" --format "json" --fields "MUA" | jq -r '.value'
+op --cache item get "${1}" --vault "$vault" --format "json" --fields "MUA" | jq -r '.value'
