@@ -38,7 +38,7 @@ createPartition() {
     chown root:root "/etc/zfs/zfskey_${pool}_${myHostname}" &&
     chmod 600 "/etc/zfs/zfskey_${pool}_${myHostname}"
 
-  sgdisk --new=9:0:0 -c 9:"zfs ${pool}" -t 3:bf01 "$disk"
+  sgdisk --new="$partno":0:0 -c "$partno:zfs ${pool}" -t "$partno":bf01 "$disk"
   partprobe
   sleep 2
   wipefs -a "$disk-part$partno"
