@@ -131,6 +131,6 @@ keymap_mode = "vim-insert"
 records = true
 
 [daemon]
-enabled = true
+enabled = false
 {{ $xdg := env "XDG_RUNTIME_DIR" }}
 socket_path = {{ with $xdg }}"{{ $xdg }}/atuin.sock"{{ end }}
