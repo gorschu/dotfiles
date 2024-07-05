@@ -5,7 +5,7 @@ set -eu
 [[ "$EUID" -ne 0 ]] && echo "Please run as root." && exit 2
 
 user=$(logname)
-pool=dpool
+pool=rpool
 zedtrigger=${pool}/home/${user}
 restorecon=("/home" "/var/lib/libvirt")
 
@@ -25,9 +25,7 @@ installZFS() {
 }
 
 createPartition() {
-  ! lsmod | grep -q zfs &&
-    installZFS &&
-    ! lsmod | grep -q zfs && echo "zfs module not loaded!" && exit 1
+  ! lsmod | grep -q zfs && echo "zfs module not loaded!" && exit 1
 
   [[ ! -L ${disk} ]] && echo "${disk} is not a valid disk device link!" && exit 1
   [[ -L ${disk}-part${partno} ]] && echo "${disk}-part${partno} already exists!" && exit 1
@@ -63,12 +61,13 @@ createPartition() {
 
   zfs create -p -o mountpoint=/home/"$user" "$pool/home/$user" &&
     sudo chown -R "$user:$user" /tmp/"$pool/home/$user"
+
+  echo "ZFS Partition ${disk}-part${partno} created."
+  echo "REMEMBER TO BACKUP /etc/zfs/zfskey_${pool}_$(hostname) somewhere very safe."
 }
 
 importPool() {
-  ! lsmod | grep -q zfs &&
-    installZFS &&
-    ! lsmod | grep -q zfs && echo "zfs module not loaded!" && exit 1
+  ! lsmod | grep -q zfs && echo "zfs module not loaded!" && exit 1
 
   if ! zpool list -o name,health -H | grep -i -q "^${pool}.*ONLINE"; then
     zpool import "$pool"
@@ -95,6 +94,7 @@ importPool() {
   echo "zpool export ${pool} && zpool import ${pool}"
   echo "zfs load-key -L file:///etc/zfs/zfskey_${pool}_$(hostname) ${pool}"
   echo "zfs mount -a"
+  echo "(for RHEL/Fedora based distributions):"
   echo "for path in ${restorecon[@]}; do restorecon -R ${path}; done"
 }
 
