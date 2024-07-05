@@ -12,6 +12,7 @@ restorecon=("/home" "/var/lib/libvirt")
 operation=${1:-none}
 disk=${2:-none}
 partno=9
+myHostname=$(hostnamectl hostname)
 
 installZFS() {
   if ! rpm -q zfs >/dev/null; then
@@ -26,15 +27,16 @@ installZFS() {
 
 createPartition() {
   ! lsmod | grep -q zfs && echo "zfs module not loaded!" && exit 1
+  ! command -v sgdisk &>/dev/null && echo "sgdisk needed, please install." && exit 1
 
   [[ ! -L ${disk} ]] && echo "${disk} is not a valid disk device link!" && exit 1
   [[ -L ${disk}-part${partno} ]] && echo "${disk}-part${partno} already exists!" && exit 1
 
   mkdir -p /etc/zfs
-  [[ ! -f "/etc/zfs/zfskey_${pool}_$(hostname)" ]] &&
-    openssl rand -hex -out "/etc/zfs/zfskey_${pool}_$(hostname)" 32 &&
-    chown root:root "/etc/zfs/zfskey_${pool}_$(hostname)" &&
-    chmod 600 "/etc/zfs/zfskey_${pool}_$(hostname)"
+  [[ ! -f "/etc/zfs/zfskey_${pool}_${myHostname}" ]] &&
+    openssl rand -hex -out "/etc/zfs/zfskey_${pool}_${myHostname}" 32 &&
+    chown root:root "/etc/zfs/zfskey_${pool}_${myHostname}" &&
+    chmod 600 "/etc/zfs/zfskey_${pool}_${myHostname}"
 
   sgdisk --new=9:0:0 -c 9:"zfs ${pool}" -t 3:bf01 "$disk"
   partprobe
@@ -45,7 +47,7 @@ createPartition() {
     -o ashift=12 \
     -o autotrim=on \
     -O encryption=aes-256-gcm \
-    -O keylocation="file:///etc/zfs/zfskey_${pool}_$(hostname)" \
+    -O keylocation="file:///etc/zfs/zfskey_${pool}_${myHostname}" \
     -O keyformat=hex \
     -O acltype=posixacl \
     -O compression=zstd \
@@ -63,7 +65,7 @@ createPartition() {
     sudo chown -R "$user:$user" /tmp/"$pool/home/$user"
 
   echo "ZFS Partition ${disk}-part${partno} created."
-  echo "REMEMBER TO BACKUP /etc/zfs/zfskey_${pool}_$(hostname) somewhere very safe."
+  echo "REMEMBER TO BACKUP /etc/zfs/zfskey_${pool}_${myHostname} somewhere very safe."
 }
 
 importPool() {
@@ -92,7 +94,7 @@ importPool() {
   echo "rsync -vau /home/${user}/ /tmp/${pool}/home/${user}/"
   echo "rm -rf /home"
   echo "zpool export ${pool} && zpool import ${pool}"
-  echo "zfs load-key -L file:///etc/zfs/zfskey_${pool}_$(hostname) ${pool}"
+  echo "zfs load-key -L file:///etc/zfs/zfskey_${pool}_${myHostname} ${pool}"
   echo "zfs mount -a"
   echo "(for RHEL/Fedora based distributions):"
   echo "for path in ${restorecon[@]}; do restorecon -R ${path}; done"
