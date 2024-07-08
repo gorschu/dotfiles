@@ -66,6 +66,25 @@ createPartition() {
 
   echo "ZFS Partition ${disk}-part${partno} created."
   echo "REMEMBER TO BACKUP /etc/zfs/zfskey_${pool}_${myHostname} somewhere very safe."
+
+  echo "If you need to move your existing $HOME over to the new ZFS pool..."
+  echo
+  echo "While logged in as root, do: "
+  echo "rsync -vau /home/${user}/ /tmp/${pool}/home/${user}/"
+  echo "rm -rf /home"
+  echo "zpool export ${pool} && zpool import ${pool}"
+  echo "zfs load-key -L file:///etc/zfs/zfskey_${pool}_${myHostname} ${pool}"
+  echo "zfs mount -a"
+  echo
+  echo "For RHEL/Fedora based distributions also needed:"
+  for path in "${restorecon[@]}"; do
+    echo "restorecon -R ${path}"
+  done
+  echo
+  echo "Afterwards execute..."
+  echo "zfs umount -a && zfs export ${pool}"
+  echo "$0 importpool"
+  echo "... and reboot"
 }
 
 importPool() {
@@ -89,15 +108,6 @@ importPool() {
 
   chown root:root "$(zfs get -o value -H keylocation "$pool" | sed -r 's/^file:\/\/(.*)$/\1/')"
   chmod 600 "$(zfs get -o value -H keylocation "$pool" | sed -r 's/^file:\/\/(.*)$/\1/')"
-
-  echo "While logged in as root, do: "
-  echo "rsync -vau /home/${user}/ /tmp/${pool}/home/${user}/"
-  echo "rm -rf /home"
-  echo "zpool export ${pool} && zpool import ${pool}"
-  echo "zfs load-key -L file:///etc/zfs/zfskey_${pool}_${myHostname} ${pool}"
-  echo "zfs mount -a"
-  echo "(for RHEL/Fedora based distributions):"
-  echo "for path in ${restorecon[@]}; do restorecon -R ${path}; done"
 }
 
 case ${operation} in
