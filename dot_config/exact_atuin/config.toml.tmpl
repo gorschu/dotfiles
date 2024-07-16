@@ -130,7 +130,9 @@ keymap_mode = "vim-insert"
 [sync]
 records = true
 
+{{ if ne .chezmoi.os "darwin" }}
 [daemon]
 enabled = false
 {{ $xdg := env "XDG_RUNTIME_DIR" }}
 socket_path = {{ with $xdg }}"{{ $xdg }}/atuin.sock"{{ end }}
+{{ end }}
