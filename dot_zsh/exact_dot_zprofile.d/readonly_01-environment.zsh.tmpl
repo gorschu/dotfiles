@@ -6,9 +6,9 @@ export XDG_CACHE_HOME="${XDG_CACHE_HOME:-${HOME}/.cache}"
 export TMPDIR="${TMPDIR:-/tmp/${USER}}"
 
 {{ if and (hasKey .chezmoi.osRelease "id") (eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" "fedora") }}
-. /etc/zshenv
+[[ -e /etc/zshenv ]] && . /etc/zshenv
 {{ else if and (hasKey .chezmoi.osRelease "id") (eq .chezmoi.osRelease.id "ubuntu" "debian") }}
-. /etc/zsh/zshenv
+[[ -e /etc/zsh/zshenv ]] && . /etc/zsh/zshenv
 {{ end }}
 
 {{ if eq .chezmoi.os "linux" }}
