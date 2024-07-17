@@ -15,19 +15,34 @@ partno=9
 myHostname=$(hostnamectl hostname)
 
 installZFS() {
-  if ! rpm -q zfs >/dev/null; then
-    rpm -e --nodeps zfs-fuse || true
-    dnf install -y https://zfsonlinux.org/fedora/zfs-release-2-5"$(rpm --eval "%{dist}")".noarch.rpm
-    dnf -y install -y kernel-devel && dnf -y install zfs
-    echo "zfs" | tee /etc/modules-load.d/zfs.conf >/dev/null
-    echo "zfs" >/etc/dnf/protected.d/zfs.conf
+  if grep -q "ID=arch" /etc/os-release; then
+    echo "Install not needed under Arch. Use cachyos kernel."
+    exit 1
+  elif grep -q "ID=fedora" /etc/os-release; then
+    if ! rpm -q zfs >/dev/null; then
+      rpm -e --nodeps zfs-fuse || true
+      dnf install -y https://zfsonlinux.org/fedora/zfs-release-2-5"$(rpm --eval "%{dist}")".noarch.rpm
+      dnf -y install -y kernel-devel && dnf -y install zfs
+      echo "zfs" | tee /etc/modules-load.d/zfs.conf >/dev/null
+      echo "zfs" >/etc/dnf/protected.d/zfs.conf
+      modprobe zfs
+    fi
+  else
+    echo "Unsupported distribution."
+    exit 1
   fi
-  modprobe zfs
 }
 
 createPartition() {
   ! lsmod | grep -q zfs && echo "zfs module not loaded!" && exit 1
-  ! command -v sgdisk &>/dev/null && echo "sgdisk needed, please install." && exit 1
+
+  if ! command -v sgdisk &>/dev/null; then
+    if grep -q "ID=arch" /etc/os-release; then
+      pacman -S --noconfirm --needed gptfdisk
+    elif grep -q "ID=fedora" /etc/os-release; then
+      dnf install -y gdisk
+    fi
+  fi
 
   [[ ! -L ${disk} ]] && echo "${disk} is not a valid disk device link!" && exit 1
   [[ -L ${disk}-part${partno} ]] && echo "${disk}-part${partno} already exists!" && exit 1
@@ -65,6 +80,7 @@ createPartition() {
     sudo chown -R "$user:$user" /tmp/"$pool/home/$user"
 
   echo "ZFS Partition ${disk}-part${partno} created."
+  echo
   echo "REMEMBER TO BACKUP /etc/zfs/zfskey_${pool}_${myHostname} somewhere very safe."
 
   echo "If you need to move your existing $HOME over to the new ZFS pool..."
