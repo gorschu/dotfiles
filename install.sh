@@ -9,11 +9,11 @@ reset=$(tput sgr0)
 echo "${green}Installing absolute requirements${reset}"
 if [[ $(grep "^ID" /etc/os-release) =~ fedora ]]; then
   sudo dnf install -y git yubikey-manager
-[ ! "$(command -v chezmoi)" ] && sudo dnf install -y $(curl -sL https://api.github.com/repos/twpayne/chezmoi/releases/latest | jq -r '.assets[] | select(.name? | match("chezmoi-.*-x86_64.rpm$")) | .browser_download_url')
+  [ ! "$(command -v chezmoi)" ] && sudo dnf install -y $(curl -sL https://api.github.com/repos/twpayne/chezmoi/releases/latest | jq -r '.assets[] | select(.name? | match("chezmoi-.*-x86_64.rpm$")) | .browser_download_url')
 elif [[ $(grep "^ID" /etc/os-release) =~ opensuse ]]; then
   sudo zypper install -y git yubikey-manager chezmoi
 elif [[ $(grep "^ID" /etc/os-release) =~ arch ]]; then
-  sudo pacman -S --needed -y git yubikey-manager chezmoi gnupg
+  sudo pacman -S --needed --noconfirm -y git yubikey-manager chezmoi gnupg
 else
   echo "Unsupported distribution." && exit 1
 fi
