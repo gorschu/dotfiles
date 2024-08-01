@@ -6,7 +6,7 @@ set -eu
 
 user=$(logname)
 pool=rpool
-zedtrigger=${pool}/home/${user}
+zedtrigger="${pool}/home"
 restorecon=("/home" "/var/lib/libvirt")
 
 operation=${1:-none}
