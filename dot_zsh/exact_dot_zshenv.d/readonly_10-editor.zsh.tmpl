@@ -1,0 +1,10 @@
+export ALTERNATE_EDITOR=""
+{{ if stat "/home/linuxbrew/.linuxbrew/bin/nvim" }}
+export EDITOR="nvim"
+export GIT_EDITOR="nvim"
+export VISUAL="nvim"
+{{ else }}
+export EDITOR="vim"
+export GIT_EDITOR="vim"
+export VISUAL="vim"
+{{ end }}

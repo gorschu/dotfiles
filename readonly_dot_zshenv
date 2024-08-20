@@ -1,4 +1,4 @@
-# always sourced first, stuff here is also available in X applications
+# always sourced first, stuff here is also available in graphical applications
 
 # pull in my zsh environmental stuff
 export ZDOTDIR=$HOME/.zsh

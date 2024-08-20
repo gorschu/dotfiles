@@ -5,7 +5,6 @@ alias mc='SHELL=/bin/bash mc'
 alias dmesg='dmesg --human'
 alias ND=find_newest_directory_universal
 alias NF=find_newest_file_universal
-alias lac="latex_compile -o"
 alias -g a2c='aria2c -x4 -j4 -c -i -'
 
 alias ssh-add='ssh-add -t 3600'
@@ -22,13 +21,10 @@ alias mv='nocorrect mv -i '
 alias rm='nocorrect rm -i '
 alias mkdir='nocorrect mkdir '
 
-alias uda='udiskie-umount -a'
-
 if (( $+commands[nvim] )); then
     alias vim=nvim
     alias vi=nvim
 fi
-(( $+commands[gpg2] )) && alias gpg=gpg2
 
 alias mbsync="mbsync -c ${XDG_CONFIG_HOME}/mail/mbsyncrc"
 alias weechat="weechat -d ${XDG_CONFIG_HOME}/weechat"
@@ -45,5 +41,7 @@ fi
 
 (( $+commands[batman] )) && alias man=batman
 
-# git root
-alias grt='cd "$(git rev-parse --show-toplevel || echo .)"'
+if (( $+commands[doas] )); then
+  alias sudo='doas'
+  alias sudoedit="doas $EDITOR"
+fi
