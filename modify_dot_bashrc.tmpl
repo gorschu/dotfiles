@@ -1,0 +1,22 @@
+#!/bin/bash
+
+bashrc=$(cat)
+
+echo "${bashrc}"
+
+if ! echo "${bashrc}" | grep -q "# Invoke zsh"; then
+cat << 'EOF'
+
+# Invoke zsh
+# source: https://tim.siosm.fr/blog/2023/12/22/dont-change-defaut-login-shell/
+# Only trigger if:
+# - 'zsh' is not the parent process of this shell
+# - We did not call: bash -c '...'
+# - The zsh binary exists and is executable
+if [[ $(ps --no-header --pid=$PPID --format=comm) != "zsh" && -z ${BASH_EXECUTION_STRING} && -x "/bin/zsh" ]]; then
+  shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=''
+  exec zsh $LOGIN_OPTION
+fi
+EOF
+fi
+
