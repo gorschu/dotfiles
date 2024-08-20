@@ -1,13 +1,13 @@
 #!/bin/bash
 
-set -eu
+set -e
 
 [[ "$EUID" -ne 0 ]] && echo "Please run as root." && exit 2
 
 user=$(logname)
 pool=rpool
 zedtrigger="${pool}/home"
-restorecon=("/home" "/var/lib/libvirt")
+restorecon=("/home")
 
 operation=${1:-none}
 disk=${2:-none}
