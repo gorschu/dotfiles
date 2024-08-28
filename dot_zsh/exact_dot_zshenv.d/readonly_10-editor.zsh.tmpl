@@ -1,5 +1,5 @@
 export ALTERNATE_EDITOR=""
-{{ if stat "/home/linuxbrew/.linuxbrew/bin/nvim" }}
+{{ if lookPath "nvim" }}
 export EDITOR="nvim"
 export GIT_EDITOR="nvim"
 export VISUAL="nvim"
