@@ -1,0 +1,8 @@
+{{- if eq .chezmoi.os "darwin" -}}
+  . {{ .chezmoi.homeDir }}/.profile
+{{ end }}
+
+for profile ($ZDOTDIR/.zprofile.d/*.zsh(N)); do
+  . "${profile}"
+done
+

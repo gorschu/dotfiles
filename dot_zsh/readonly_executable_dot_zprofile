@@ -1,3 +1,0 @@
-for profile ($ZDOTDIR/.zprofile.d/*.zsh(N); do
-  . "${profile}"
-done
