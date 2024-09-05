@@ -1,0 +1,12 @@
+[Unit]
+Description=Copy homebrew fonts into local user's $HOME
+ConditionPathExists=/home/linuxbrew/.linuxbrew/share/fonts
+
+[Service]
+# just use exec here, oneshot would create a dependency
+Type=exec
+ExecStartPre=mkdir -p %h/.local/share/fonts
+ExecStart=/bin/sh -c 'rsync -L -a --delete /home/linuxbrew/.linuxbrew/share/fonts/* %h/.local/share/fonts/'
+
+[Install]
+WantedBy=default.target
