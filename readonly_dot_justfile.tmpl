@@ -1,0 +1,4 @@
+{{ if (stat "/usr/share/ublue-os/justfile") -}}
+{{/*- If ublue-os' justfile is present, import that. -*/}}
+import "/usr/share/ublue-os/justfile"
+{{ end }}
