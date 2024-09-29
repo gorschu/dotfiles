@@ -1,6 +1,3 @@
-# Ensure path arrays do not contain duplicates.
-typeset -gU cdpath fpath mailpath path
-
 # Set the the list of directories that cd searches.
 # cdpath=(
 #   $cdpath
@@ -26,10 +23,8 @@ path=(
 # http://stackoverflow.com/a/9352979/1469693
 path=($^path(-/N))
 
-# ruby is ... kind of annoying
-if which ruby >/dev/null && which gem >/dev/null; then
-    PATH="$(ruby -e "puts Gem.user_dir")/bin:$PATH"
-fi
+# Ensure path arrays do not contain duplicates.
+typeset -gU cdpath fpath mailpath path
 
 {{ if eq .chezmoi.os "linux" }}
 # inject path into systemctl user session so things like emacs have it available
