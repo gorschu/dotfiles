@@ -6,6 +6,8 @@
 [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
 # linuxbrew
 [ -f /home/linuxbrew/.linuxbrew/opt/fzf/shell/key-bindings.zsh ] && source /home/linuxbrew/.linuxbrew/opt/fzf/shell/key-bindings.zsh
+# nix home-manager
+[ -f {{ .chezmoi.homeDir }}/.nix-profile/share/fzf/key-bindings.zsh ] && source {{ .chezmoi.homeDir}}/.nix-profile/share/fzf/key-bindings.zsh
 # custom install via install script
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 {{ else if eq .chezmoi.os "darwin" }}
