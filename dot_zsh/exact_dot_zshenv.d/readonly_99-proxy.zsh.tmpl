@@ -1,0 +1,8 @@
+{{ if and (hasKey . "workHostname") (eq .chezmoi.hostname .workHostname) }}
+  {{ if and (hasKey . "workUser") (hasKey . "workPassword") }}
+    export https_proxy='{{ .workProxyProtocol }}://{{ .workUser }}:{{ .workPassword }}@{{ .workProxyHost }}:{{ .workProxyPort }}'
+  {{ else }}
+    export https_proxy={{ .workProxyProtocol }}://{{ .workProxyHost }}:{{ .workProxyPort }}
+  {{ end }}
+export no_proxy='{{ .workProxyExclusion }}'
+{{ end }}
