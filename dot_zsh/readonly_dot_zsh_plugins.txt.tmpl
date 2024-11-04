@@ -1,5 +1,16 @@
-mattmc3/zephyr path:plugins/completion
+# oh-my-zsh specific
+# Load early so we can override stuff later on
+getantidote/use-omz        # handle OMZ dependencies
+ohmyzsh/ohmyzsh path:lib   # load OMZ's library
+
+# we need this really early on
 jeffreytse/zsh-vi-mode
+
+# completions
+mattmc3/ez-compinit
+mattmc3/zephyr path:plugins/completion
+zsh-users/zsh-completions kind:fpath path:src
+
 # load .zsh files in $ZDOTDIR/.zshrc.d pretty early
 # this replaces zephyr's confd system
 mattmc3/zshrc.d
@@ -73,7 +84,8 @@ ohmyzsh/ohmyzsh path:plugins/istioctl
 
 # misc stuff
 mdumitru/fancy-ctrl-z
-zsh-users/zsh-completions
+
+# load these last
 zdharma-continuum/fast-syntax-highlighting
 hlissner/zsh-autopair
 
