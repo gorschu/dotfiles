@@ -3,8 +3,15 @@
 ZVM_INIT_MODE="sourcing"
 ZVM_VI_ESCAPE_BINDKEY=jk
 
+# Lazy-load (autoload) Zsh function files from a directory.
+ZFUNCDIR=${ZDOTDIR:-$HOME}/.zfunctions
+fpath=($ZFUNCDIR $fpath)
+autoload -Uz $ZFUNCDIR/*(.:t)
+
+# Set any zstyles you might use for configuration.
+[[ ! -f ${ZDOTDIR:-$HOME}/.zstyles ]] || source ${ZDOTDIR:-$HOME}/.zstyles
+
 source "$ZDOTDIR"/.antidote/antidote.zsh
-zstyle ':antidote:bundle' use-friendly-names 'yes'
 antidote load
 
 # vim: ft=zsh
