@@ -1,0 +1,11 @@
+# antidote
+zstyle ':antidote:bundle' use-friendly-names 'yes'
+zstyle ':antidote:bundle' file ${ZDOTDIR:-$HOME}/.zplugins.txt
+
+# zephyr
+# brew sudo detection is broken for ublue-os/bluefin-cli containers
+zstyle ':zephyr:plugin:homebrew:alias' 'skip'
+
+# omz ssh-agent
+zstyle :omz:plugins:ssh-agent lazy yes
+zstyle :omz:plugins:ssh-agent lifetime 3h
