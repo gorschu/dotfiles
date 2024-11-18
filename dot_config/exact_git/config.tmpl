@@ -1,6 +1,8 @@
 {{- $secrets := (joinPath .chezmoi.sourceDir "secrets" "work.toml.asc" | include | decrypt | fromToml) -}}
 [alias]
     dft = difftool --tool difftastic
+    fixup = "!git log -n 50 --pretty=format:'%h %s' --no-merges | fzf | cut -c -7 | xargs -o git commit --fixup"
+
 [color]
     ui = auto
 
