@@ -118,6 +118,7 @@
     email = {{ $secrets.work.email }}
     {{ else }}
     name = Gordon Schulz
+    email = {{ $secrets.personal.email }}
     {{ end }}
     signingkey = {{ .gpgkey }}
 
