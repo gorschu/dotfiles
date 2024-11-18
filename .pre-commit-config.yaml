@@ -4,10 +4,10 @@ repos:
     hooks:
       - id: ggshield
         language_version: python3
-        stages: [commit]
+        stages: [pre-commit]
   - repo: https://github.com/commitizen-tools/commitizen
     rev: v3.27.0
     hooks:
       - id: commitizen
       - id: commitizen-branch
-        stages: [push]
+        stages: [pre-push]
