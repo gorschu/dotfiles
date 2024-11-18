@@ -11,5 +11,3 @@ encryption = "gpg"
 [data]
     gpgkey = "0x862A1F586514E275"
     colorscheme = "catppuccin-macchiato"
-
-{{ joinPath .sourceDir "dot_config/private_chezmoi/work/encrypted_private_readonly_chezmoi-include.toml.tmpl.asc" | include | decrypt }}
