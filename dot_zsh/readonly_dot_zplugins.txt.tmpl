@@ -63,7 +63,6 @@ ohmyzsh/ohmyzsh path:plugins/universalarchive
 ohmyzsh/ohmyzsh path:plugins/transfer
 {{ if and (hasKey . "workHostname") (eq .chezmoi.hostname .workHostname) }}
   ohmyzsh/ohmyzsh path:plugins/gpg-agent
-  ohmyzsh/ohmyzsh path:plugins/ssh-agent
 {{ end }}
 
 # development
