@@ -4,7 +4,7 @@ zstyle ':antidote:bundle' file ${ZDOTDIR:-$HOME}/.zplugins.txt
 
 # zephyr
 # brew sudo detection is broken for ublue-os/bluefin-cli containers
-zstyle ':zephyr:plugin:homebrew:alias' 'skip'
+zstyle ':zephyr:plugin:homebrew:alias' 'skip' 'true'
 
 # omz ssh-agent
 zstyle :omz:plugins:ssh-agent lazy yes
