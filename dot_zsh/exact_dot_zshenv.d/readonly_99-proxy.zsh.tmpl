@@ -1,8 +1,9 @@
-{{ if and (hasKey . "workHostname") (eq .chezmoi.hostname .workHostname) }}
-  {{ if and (hasKey . "workUser") (hasKey . "workPassword") }}
-    export https_proxy='{{ .workProxyProtocol }}://{{ .workUser }}:{{ .workPassword }}@{{ .workProxyHost }}:{{ .workProxyPort }}'
-  {{ else }}
-    export https_proxy={{ .workProxyProtocol }}://{{ .workProxyHost }}:{{ .workProxyPort }}
+{{- $secrets := (joinPath .chezmoi.sourceDir "secrets" "work.toml.asc" | include | decrypt | fromToml) -}}
+{{ if and (hasKey $secrets.work "hostname") (eq .chezmoi.hostname $secrets.work.hostname) -}}
+  {{ if and (hasKey $secrets "user") (hasKey $secrets "password") -}}
+export https_proxy='{{ $secrets.work.proxyProtocol }}://{{ $secrets.work.user }}:{{ $secrets.work.password }}@{{ $secrets.work.proxyHost }}:{{ $secrets.work.proxyPort }}'
+  {{ else -}}
+export https_proxy={{ $secrets.work.proxyProtocol }}://{{ $secrets.work.proxyHost }}:{{ $secrets.work.proxyPort }}
   {{ end }}
-export no_proxy='{{ .workProxyExclusion }}'
+export no_proxy='{{ $secrets.work.proxyExclusion }}'
 {{ end }}

@@ -1,3 +1,4 @@
+{{- $secrets := (joinPath .chezmoi.sourceDir "secrets" "work.toml.asc" | include | decrypt | fromToml) -}}
 README.md
 LICENSE
 modified_externally
@@ -13,7 +14,7 @@ bootstrap
 .ssh/public
 {{- end }}
 
-{{ if and (hasKey . "workHostname") (eq .chezmoi.hostname .workHostname) }}
+{{ if and (hasKey $secrets.work "hostname") (eq .chezmoi.hostname $secrets.work.hostname) }}
 bin
 .config/*
 !.config/atuin
@@ -23,6 +24,7 @@ bin
 !.config/git
 !.config/latexmk
 !.config/lazygit
+!.config/lazydocker
 !.config/nvim
 !.config/tig
 !.config/tmux
