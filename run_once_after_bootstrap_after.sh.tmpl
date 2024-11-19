@@ -2,10 +2,6 @@
 
 set -Eeuxo pipefail
 
-red=$(tput setaf 1)
-green=$(tput setaf 2)
-reset=$(tput sgr0)
-
 if [ ! "$(command -v chezmoi)" ]; then
   bin_dir="$HOME/.local/bin"
   chezmoi="$bin_dir/chezmoi"
@@ -15,10 +11,10 @@ fi
 
 {{ if eq .chezmoi.os "linux" }}
 if [[ $XDG_CURRENT_DESKTOP == 'KDE' ]] && [[ -e {{ .chezmoi.homeDir }}/.config/fontconfig/fonts.conf ]]; then
-  echo "${green}Protect our fonts.conf (KDE likes to mess with it)${reset}"
+  echo "Protect our fonts.conf (KDE likes to mess with it)"
   sudo chattr +i {{ .chezmoi.homeDir }}/.config/fontconfig/fonts.conf
 fi
 {{ end }}
 
-echo "${green}Changing from (possible) https to ssh${reset}"
+echo "Changing from (possible) https to ssh"
 ${chezmoi} git remote set-url origin git@github.com:azmodude/dotfiles
