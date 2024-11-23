@@ -68,8 +68,8 @@ export GPG_TTY
 script_dir="$(cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P)"
 # we are relying on externals to reach our target state
 # therefore we need three steps to reach it - init, apply our externals and then apply the rest
-XDG_CONFIG_HOME=$HOME/.config "${chezmoi}" init --source="${script_dir}"
-XDG_CONFIG_HOME=$HOME/.config "${chezmoi}" apply --source="${script_dir}" "${HOME}/.externals"
-XDG_CONFIG_HOME=$HOME/.config "${chezmoi}" apply --source="${script_dir}"
+XDG_CONFIG_HOME=$HOME/.config "${chezmoi}" init --apply --source="${script_dir}"
+#XDG_CONFIG_HOME=$HOME/.config "${chezmoi}" apply --source="${script_dir}" "${HOME}/.externals"
+#XDG_CONFIG_HOME=$HOME/.config "${chezmoi}" apply --source="${script_dir}"
 
 # vim: set ft=sh:
