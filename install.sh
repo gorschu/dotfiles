@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e # -e: exit on error
+set -euo pipefail
 
 red=$(tput setaf 1)
 green=$(tput setaf 2)
@@ -40,36 +40,12 @@ if ykman list | grep -qi yubikey; then
   pkill keyboxd || true
 fi
 
-# import and trust our GPG Key
-GPGKEY=DEE550054AA972F6
-GPGKEY_FINGERPRINT=0A47650A15E4F0F4003EC450DEE550054AA972F6
-
-# write initial .chezmoi.toml so encryption works
-[[ ! -d $HOME/.config/chezmoi ]] && mkdir -p "$HOME"/.config/chezmoi
-# .chezmoi.toml in here is our source of truth, delete anything already present
-[[ -e $HOME/.config/chezmoi/chezmoi.toml ]] && rm -f "$HOME"/.config/chezmoi/chezmoi.toml
-cat <<EOF >>"$HOME/.config/chezmoi/chezmoi.toml"
-encryption = "gpg"
-
-[gpg]
-recipient = "0x${GPGKEY}"
-suffix = ".asc"
-EOF
-
-gpg --keyserver keyserver.ubuntu.com --receive-keys "$GPGKEY"
-echo -e "5\ny\n" | gpg --command-fd 0 --expert --edit-key "$GPGKEY_FINGERPRINT" trust
-# power up yubikey if present
-! ykman info 2>&1 | grep -q -i error && gpg --card-status
-
-GPG_TTY=$(tty)
-export GPG_TTY
-
 # POSIX way to get script's dir: https://stackoverflow.com/a/29834779/12156188
 script_dir="$(cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P)"
 # we are relying on externals to reach our target state
 # therefore we need three steps to reach it - init, apply our externals and then apply the rest
-XDG_CONFIG_HOME=$HOME/.config "${chezmoi}" init --apply --source="${script_dir}"
-#XDG_CONFIG_HOME=$HOME/.config "${chezmoi}" apply --source="${script_dir}" "${HOME}/.externals"
-#XDG_CONFIG_HOME=$HOME/.config "${chezmoi}" apply --source="${script_dir}"
+XDG_CONFIG_HOME=$HOME/.config "${chezmoi}" init --source="${script_dir}"
+XDG_CONFIG_HOME=$HOME/.config "${chezmoi}" apply --source="${script_dir}" "${HOME}/.externals"
+XDG_CONFIG_HOME=$HOME/.config "${chezmoi}" apply --source="${script_dir}"
 
 # vim: set ft=sh:

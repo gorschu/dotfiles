@@ -1,0 +1,32 @@
+#!/bin/bash
+
+set -euo pipefail
+
+function _escapeShortcut() {
+  local _tab=$'\t'
+  local _str=$1
+
+  echo "${_str//\\t/${_tab}}"
+}
+
+if [[ ${XDE_CURRENT_DESKTOP:-} != "KDE" ]]; then
+  exit 0
+fi
+
+{{ if eq .chezmoi.hostname "apollo" -}}
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kcminputrc --group "Libinput" --group "2" --group "7" --group "SynPS/2 Synaptics TouchPad" --key "NaturalScroll" "true"
+{{ end -}}
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kcminputrc --group "Keyboard" --key "NumLock" 0
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kcminputrc --group "Keyboard" --key "RepeatDelay" 300
+
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kdeglobals --group "KDE" --key "LookAndFeelPackage" "org.kde.breezedark.desktop"
+
+# KDE's configuration is weird sometimes, source: https://unix.stackexchange.com/a/777045
+_strCloseWindow="Meta+Shift+Q\tAlt+F4,Alt+F4,Close Window"
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kglobalshortcutsrc --group "kwin" --key "Window Close" "$(_escapeShortcut "${_strCloseWindow}")"
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kglobalshortcutsrc --group "services" --group "net.local.1password.desktop" --key "_launch" "Ctrl+Shift+Space"
+
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kscreenlockerrc --group "Daemon" --key "LockGrace" 30
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kscreenlockerrc --group "Daemon" --key "Timeout" 10
+
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kwinrc --group "Effect-overview" --key "GridBorderActivate" 1
