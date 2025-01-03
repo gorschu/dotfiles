@@ -43,8 +43,15 @@ FZF_FD_OPTIONS="--follow --exclude .git --exclude node_modules"
 export FZF_DEFAULT_COMMAND="fd --type f --type l --hidden $FZF_FD_OPTIONS"
 export FZF_CTRL_T_COMMAND="fd $FZF_FD_OPTIONS"
 export FZF_ALT_C_COMMAND="fd --type d --hidden $FZF_FD_OPTIONS"
+export FZF_ALT_C_OPTS="
+  --walker-skip .git,node_modules,target
+  --preview 'eza -T {}'"
+export FZF_CTRL_T_OPTS="
+  --walker-skip .git,node_modules,target
+  --preview 'bat -n --color=always {}'
+  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 
-if [[ -f ${ZDOTDIR:-$HOME}/fzf-git.sh ]]; then 
+if [[ -f ${ZDOTDIR:-$HOME}/fzf-git.sh ]]; then
   # unbind CTRL-G first. If not fzf-git keybind are not working because it's bound to list-expand by default
   bindkey -r '^G'
   source ${ZDOTDIR:-$HOME}/fzf-git.sh
