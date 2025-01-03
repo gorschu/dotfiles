@@ -1,18 +1,19 @@
-set realname = "{{ .mail.gatgordonschulzdotde.name }}"
-set from = "{{ .mail.gatgordonschulzdotde.email }}"
+{{- $secrets := (joinPath .chezmoi.sourceDir "secrets" "mail.toml.asc" | include | decrypt | fromToml) -}}
+set realname = "{{ $secrets.mail.gatgordonschulzdotde.name }}"
+set from = "{{ $secrets.mail.gatgordonschulzdotde.email }}"
 set sendmail = "$HOME/bin/mail/msmtp-enqueue.sh"
 
 # Set folders
-set spoolfile = "+{{ .mail.gatgordonschulzdotde.email }}/Inbox"
-set mbox = "+{{ .mail.gatgordonschulzdotde.email }}/Archive"
-set postponed = "+{{ .mail.gatgordonschulzdotde.email }}/Drafts"
-set record = "+{{ .mail.gatgordonschulzdotde.email }}/Sent"
-set trash = "+{{ .mail.gatgordonschulzdotde.email }}/Trash"
+set spoolfile = "+{{ $secrets.mail.gatgordonschulzdotde.email }}/Inbox"
+set mbox = "+{{ $secrets.mail.gatgordonschulzdotde.email }}/Archive"
+set postponed = "+{{ $secrets.mail.gatgordonschulzdotde.email }}/Drafts"
+set record = "+{{ $secrets.mail.gatgordonschulzdotde.email }}/Sent"
+set trash = "+{{ $secrets.mail.gatgordonschulzdotde.email }}/Trash"
 
 # first reset all mailboxes
 unmailboxes *
 # then create a list of for that account mailboxes dynamically
-mailboxes `find ~/mail/{{ .mail.gatgordonschulzdotde.email }}/* -type d | grep -v "tmp\|new\|cur" | sed 's|/home/azmo/mail/|=\"|g' | sed 's|$|\"|g' | tr '\n' ' '`
+mailboxes `find ~/mail/{{ $secrets.mail.gatgordonschulzdotde.email }}/* -type d | grep -v "tmp\|new\|cur" | sed 's|/home/azmo/mail/|=\"|g' | sed 's|$|\"|g' | tr '\n' ' '`
 # and finally add the inboxes of our other accounts to switch quickly
 mailboxes `find ~/mail/* -type d | grep -i Inbox | grep -v "tmp\|new\|cur" | sed 's|/home/azmo/mail/|=\"|g' | sed 's|$|\"|g' | tr '\n' ' '`
 
@@ -25,28 +26,28 @@ set signature = $XDG_CONFIG_HOME/neomutt/private/signatures/g@gordonschulz.de
 # set color status to make it easier to distinguish accounts
 color status cyan default
 
-macro index S "<shell-escape>$HOME/bin/mail/syncmail fastmail-{{ .mail.gatgordonschulzdotde.email }}<enter>" "run mbsync to sync mail for this account"
+macro index S "<shell-escape>$HOME/bin/mail/syncmail fastmail-{{ $secrets.mail.gatgordonschulzdotde.email }}<enter>" "run mbsync to sync mail for this account"
 
-macro index,pager ,i "<change-folder>+{{ .mail.gatgordonschulzdotde.email }}/Inbox<enter>"
+macro index,pager ,i "<change-folder>+{{ $secrets.mail.gatgordonschulzdotde.email }}/Inbox<enter>"
 #
 macro index,pager ,Z \
-  "<enter-command>set my_old_resolve=\$resolve noresolve<enter>\<tag-prefix><clear-flag>n<enter-command>set resolve=\$my_old_resolve<enter>\<save-message>+{{ .mail.gatgordonschulzdotde.email }}/Spam Training<enter>" \
+  "<enter-command>set my_old_resolve=\$resolve noresolve<enter>\<tag-prefix><clear-flag>n<enter-command>set resolve=\$my_old_resolve<enter>\<save-message>+{{ $secrets.mail.gatgordonschulzdotde.email }}/Spam Training<enter>" \
   "mark as read and zap to Spam Training"
 
 macro index,pager ,A \
-  "<save-message>+{{ .mail.gatgordonschulzdotde.email }}/Archive<enter>"  \
+  "<save-message>+{{ $secrets.mail.gatgordonschulzdotde.email }}/Archive<enter>"  \
   "move message to the archive"
 #
 macro index,pager ,I \
-  "<save-message>+{{ .mail.gatgordonschulzdotde.email }}/Inbox<enter>"  \
+  "<save-message>+{{ $secrets.mail.gatgordonschulzdotde.email }}/Inbox<enter>"  \
   "move message to the inbox"
 
 # remove save-hooks from other accounts
 unhook save-hook
 
-save-hook ~r01/01/2019-31/12/2019 ={{ .mail.gatgordonschulzdotde.email }}/Archive/2019
-save-hook ~r01/01/2020-31/12/2020 ={{ .mail.gatgordonschulzdotde.email }}/Archive/2020
-save-hook ~r01/01/2021-31/12/2021 ={{ .mail.gatgordonschulzdotde.email }}/Archive/2021
-save-hook ~r01/01/2022-31/12/2022 ={{ .mail.gatgordonschulzdotde.email }}/Archive/2022
+save-hook ~r01/01/2019-31/12/2019 ={{ $secrets.mail.gatgordonschulzdotde.email }}/Archive/2019
+save-hook ~r01/01/2020-31/12/2020 ={{ $secrets.mail.gatgordonschulzdotde.email }}/Archive/2020
+save-hook ~r01/01/2021-31/12/2021 ={{ $secrets.mail.gatgordonschulzdotde.email }}/Archive/2021
+save-hook ~r01/01/2022-31/12/2022 ={{ $secrets.mail.gatgordonschulzdotde.email }}/Archive/2022
 
 # vim: ft=muttrc

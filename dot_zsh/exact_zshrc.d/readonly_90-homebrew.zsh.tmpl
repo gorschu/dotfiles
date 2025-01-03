@@ -1,5 +1,4 @@
-{{- $secrets := (joinPath .chezmoi.sourceDir "secrets" "work.toml.asc" | include | decrypt | fromToml) -}}
-{{ if and (hasKey $secrets.work "hostname") (eq .chezmoi.hostname $secrets.work.hostname) }}
+{{ if and (hasKey . "hostname") (eq .chezmoi.hostname .hostname) }}
 export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
 export HOMEBREW_TEMP="${HOME}/tmp/.homebrew"
 {{ end }}

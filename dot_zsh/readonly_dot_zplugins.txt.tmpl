@@ -1,4 +1,3 @@
-{{- $secrets := (joinPath .chezmoi.sourceDir "secrets" "work.toml.asc" | include | decrypt | fromToml) -}}
 # oh-my-zsh specific
 # Load early so we can override stuff later on
 getantidote/use-omz        # handle OMZ dependencies
@@ -62,7 +61,7 @@ ohmyzsh/ohmyzsh path:plugins/vscode
 ohmyzsh/ohmyzsh path:plugins/vagrant
 ohmyzsh/ohmyzsh path:plugins/universalarchive
 ohmyzsh/ohmyzsh path:plugins/transfer
-{{ if and (hasKey $secrets.work "hostname") (eq .chezmoi.hostname $secrets.work.hostname) }}
+{{ if and (hasKey . "hostname") (eq .chezmoi.hostname .hostname) }}
   ohmyzsh/ohmyzsh path:plugins/gpg-agent
 {{ end }}
 

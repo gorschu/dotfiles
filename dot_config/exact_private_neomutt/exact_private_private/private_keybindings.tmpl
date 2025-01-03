@@ -1,3 +1,4 @@
-macro index,pager ,gf "<change-folder>+{{ .mail.gatgordonschulzdotde.email }}/Inbox<enter>"
-macro index,pager ,gm "<change-folder>+{{ .mail.gsatgmaildotcom.email }}/Inbox<enter>"
-macro index,pager ,gy "<change-folder>+{{ .mail.mfatyahoodotde.email }}/INBOX<enter>"
+{{- $secrets := (joinPath .chezmoi.sourceDir "secrets" "mail.toml.asc" | include | decrypt | fromToml) -}}
+macro index,pager ,gf "<change-folder>+{{ $secrets.mail.gatgordonschulzdotde.email }}/Inbox<enter>"
+macro index,pager ,gm "<change-folder>+{{ $secrets.mail.gsatgmaildotcom.email }}/Inbox<enter>"
+macro index,pager ,gy "<change-folder>+{{ $secrets.mail.mfatyahoodotde.email }}/INBOX<enter>"

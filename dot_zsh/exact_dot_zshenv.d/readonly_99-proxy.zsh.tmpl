@@ -1,5 +1,5 @@
-{{- $secrets := (joinPath .chezmoi.sourceDir "secrets" "work.toml.asc" | include | decrypt | fromToml) -}}
-{{ if and (hasKey $secrets.work "hostname") (eq .chezmoi.hostname $secrets.work.hostname) -}}
+{{ if and (hasKey . "hostname") (eq .chezmoi.hostname .hostname) -}}
+  {{- $secrets := (joinPath .chezmoi.sourceDir "secrets" "work.toml.asc" | include | decrypt | fromToml) -}}
   {{ if and (hasKey $secrets "user") (hasKey $secrets "password") -}}
 export https_proxy='{{ $secrets.work.proxyProtocol }}://{{ $secrets.work.user }}:{{ $secrets.work.password }}@{{ $secrets.work.proxyHost }}:{{ $secrets.work.proxyPort }}'
   {{ else -}}
