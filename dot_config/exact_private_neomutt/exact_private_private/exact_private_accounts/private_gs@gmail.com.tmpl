@@ -1,20 +1,21 @@
-set realname = "{{ .mail.gsatgmaildotcom.name }}"
-set from = "{{ .mail.gsatgmaildotcom.email }}"
+{{- $secrets := (joinPath .chezmoi.sourceDir "secrets" "mail.toml.asc" | include | decrypt | fromToml) -}}
+set realname = "{{ $secrets.mail.gsatgmaildotcom.name }}"
+set from = "{{ $secrets.mail.gsatgmaildotcom.email }}"
 set sendmail = "$HOME/bin/mail/msmtp-enqueue.sh"
 
 # Set folders
-set spoolfile = "+{{ .mail.gsatgmaildotcom.email }}/Inbox"
-set mbox = "+{{ .mail.gsatgmaildotcom.email }}/all-mail"
-set postponed = "+{{ .mail.gsatgmaildotcom.email }}/drafts"
-set record = "+{{ .mail.gsatgmaildotcom.email }}/sent-mail"
-set trash = "+{{ .mail.gsatgmaildotcom.email }}/trash"
+set spoolfile = "+{{ $secrets.mail.gsatgmaildotcom.email }}/Inbox"
+set mbox = "+{{ $secrets.mail.gsatgmaildotcom.email }}/all-mail"
+set postponed = "+{{ $secrets.mail.gsatgmaildotcom.email }}/drafts"
+set record = "+{{ $secrets.mail.gsatgmaildotcom.email }}/sent-mail"
+set trash = "+{{ $secrets.mail.gsatgmaildotcom.email }}/trash"
 
 # first reset all mailboxes
 unmailboxes *
 # then create a list of for that account mailboxes dynamically
 # We need to filter the top-level [Gmail] explicitely since Gmail being
 # Gmail it isn't a regular mailbox
-mailboxes `find ~/mail/{{ .mail.gsatgmaildotcom.email }}/* -type d | grep -v "gordon.schulz@gmail.com/\[Gmail\]$" | grep -v "tmp\|new\|cur" | sed 's|/home/azmo/mail/|=\"|g' | sed 's|$|\"|g' | tr '\n' ' '`
+mailboxes `find ~/mail/{{ $secrets.mail.gsatgmaildotcom.email }}/* -type d | grep -v "gordon.schulz@gmail.com/\[Gmail\]$" | grep -v "tmp\|new\|cur" | sed 's|/home/azmo/mail/|=\"|g' | sed 's|$|\"|g' | tr '\n' ' '`
 # and finally add the inboxes of our other accounts to switch quickly
 mailboxes `find ~/mail/* -type d | grep -i Inbox | grep -v "tmp\|new\|cur" | sed 's|/home/azmo/mail/|=\"|g' | sed 's|$|\"|g' | tr '\n' ' '`
 
@@ -27,20 +28,20 @@ set signature = $XDG_CONFIG_HOME/neomutt/private/signatures/gs@gmail.com
 # set color status to make it easier to distinguish accounts
 color status red default
 
-macro index S "<shell-escape>$HOME/bin/mail/syncmail gmail-{{ .mail.gsatgmaildotcom.email }}<enter>" "run mbsync to sync mail for this account"
+macro index S "<shell-escape>$HOME/bin/mail/syncmail gmail-{{ $secrets.mail.gsatgmaildotcom.email }}<enter>" "run mbsync to sync mail for this account"
 
-macro index,pager ,i "<change-folder>+{{ .mail.gsatgmaildotcom.email }}/Inbox<enter>"
+macro index,pager ,i "<change-folder>+{{ $secrets.mail.gsatgmaildotcom.email }}/Inbox<enter>"
 #
 macro index,pager ,Z \
-  "<enter-command>set my_old_resolve=\$resolve noresolve<enter>\<tag-prefix><clear-flag>n<enter-command>set resolve=\$my_old_resolve<enter>\<save-message>+{{ .mail.gsatgmaildotcom.email }}/spam<enter>" \
+  "<enter-command>set my_old_resolve=\$resolve noresolve<enter>\<tag-prefix><clear-flag>n<enter-command>set resolve=\$my_old_resolve<enter>\<save-message>+{{ $secrets.mail.gsatgmaildotcom.email }}/spam<enter>" \
   "mark as read and zap to Spam"
 
 macro index,pager ,A \
-  "<save-message>+{{ .mail.gsatgmaildotcom.email }}/all-mail<enter>"  \
+  "<save-message>+{{ $secrets.mail.gsatgmaildotcom.email }}/all-mail<enter>"  \
   "move message to the archive"
 #
 macro index,pager ,I \
-  "<save-message>+{{ .mail.gsatgmaildotcom.email }}/Inbox<enter>"  \
+  "<save-message>+{{ $secrets.mail.gsatgmaildotcom.email }}/Inbox<enter>"  \
   "move message to the inbox"
 
 # remove save-hooks from other accounts

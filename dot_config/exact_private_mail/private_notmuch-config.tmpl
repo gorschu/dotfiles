@@ -1,3 +1,4 @@
+{{- $secrets := (joinPath .chezmoi.sourceDir "secrets" "mail.toml.asc" | include | decrypt | fromToml) -}}
 # .notmuch-config - Configuration file for the notmuch mail system
 #
 # For more information about notmuch, see https://notmuchmail.org
@@ -29,9 +30,9 @@ path=/home/azmo/mail
 # address to which the original email was addressed.
 #
 [user]
-name={{ .mail.gatgordonschulzdotde.name }}
-primary_email={{ .mail.gatgordonschulzdotde.email }}
-other_email={{ .mail.gsatgmaildotcom.email }};{{ .mail.mfatyahoodotde.email }}
+name={{ $secrets.mail.gatgordonschulzdotde.name }}
+primary_email={{ $secrets.mail.gatgordonschulzdotde.email }}
+other_email={{ $secrets.mail.gsatgmaildotcom.email }};{{ $secrets.mail.mfatyahoodotde.email }}
 
 # Configuration for "notmuch new"
 #

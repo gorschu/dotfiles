@@ -1,3 +1,4 @@
+{{- $secrets := (joinPath .chezmoi.sourceDir "secrets" "mail.toml.asc" | include | decrypt | fromToml) -}}
 # Set default values for all following accounts.
 defaults
 auth           on
@@ -12,25 +13,25 @@ tls_trust_file /etc/ssl/cert.pem
 logfile        ~/.local/share/msmtp.log
 
 # FastMail
-account         fastmail-{{ .mail.gatgordonschulzdotde.email }}
+account         fastmail-{{ $secrets.mail.gatgordonschulzdotde.email }}
 host            smtp.fastmail.com
 port            587
-from            {{ .mail.gatgordonschulzdotde.email }}
-user            {{ .mail.gatgordonschulzdotde.email }}
+from            {{ $secrets.mail.gatgordonschulzdotde.email }}
+user            {{ $secrets.mail.gatgordonschulzdotde.email }}
 passwordeval    "$HOME/bin/mail/get_mail_password.sh Fastmail"
 
-account         yahoo-{{ .mail.mfatyahoodotde.email }}
-host            smtp.mail.yahoo.com
+account         yahoo-{{ $secrets.mail.mfatyahoodotde.email }}
+host            smtp$secrets.mail.yahoo.com
 port            587
-from            {{ .mail.mfatyahoodotde.email }}
-user            {{ .mail.mfatyahoodotde.email }}
-passwordeval    "$HOME/bin/mail/get_mail_password.sh 'Yahoo {{ .mail.mfatyahoodotde.email }}'"
+from            {{ $secrets.mail.mfatyahoodotde.email }}
+user            {{ $secrets.mail.mfatyahoodotde.email }}
+passwordeval    "$HOME/bin/mail/get_mail_password.sh 'Yahoo {{ $secrets.mail.mfatyahoodotde.email }}'"
 
-account         gmail-{{ .mail.gsatgmaildotcom.email }}
+account         gmail-{{ $secrets.mail.gsatgmaildotcom.email }}
 host            smtp.gmail.com
 port            587
-from            {{ .mail.gsatgmaildotcom.email }}
-user            {{ .mail.gsatgmaildotcom.email }}
+from            {{ $secrets.mail.gsatgmaildotcom.email }}
+user            {{ $secrets.mail.gsatgmaildotcom.email }}
 passwordeval    "$HOME/bin/mail/get_mail_password.sh 'Google Main'"
 
-account default : fastmail-{{ .mail.gatgordonschulzdotde.email }}
+account default : fastmail-{{ $secrets.mail.gatgordonschulzdotde.email }}
