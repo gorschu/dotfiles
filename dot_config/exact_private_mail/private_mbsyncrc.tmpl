@@ -3,7 +3,7 @@ IMAPAccount fastmail-{{ $secrets.mail.gatgordonschulzdotde.email }}
     Host imap.fastmail.com
     User {{ $secrets.mail.gatgordonschulzdotde.email }}
     PassCmd "$HOME/bin/mail/get_mail_password.sh 'Fastmail'"
-    SSLType IMAPS
+    TLSType IMAPS
     {{- if eq .chezmoi.osRelease.id "arch" }}
     CertificateFile /etc/ssl/certs/ca-certificates.crt
     {{- else if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
@@ -37,7 +37,7 @@ IMAPAccount yahoo-{{ $secrets.mail.mfatyahoodotde.email }}
     AuthMechs *
     User {{ $secrets.mail.mfatyahoodotde.email }}
     PassCmd "$HOME/bin/mail/get_mail_password.sh 'Yahoo {{ $secrets.mail.mfatyahoodotde.email }}'"
-    SSLType IMAPS
+    TLSType IMAPS
     {{- if eq .chezmoi.osRelease.id "arch" }}
     CertificateFile /etc/ssl/certs/ca-certificates.crt
     {{- else if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
@@ -71,7 +71,7 @@ IMAPAccount gmail-{{ $secrets.mail.gsatgmaildotcom.email }}
     AuthMechs *
     User {{ $secrets.mail.gsatgmaildotcom.email }}
     PassCmd "$HOME/bin/mail/get_mail_password.sh 'Google Main'"
-    SSLType IMAPS
+    TLSType IMAPS
     {{- if eq .chezmoi.osRelease.id "arch" }}
     CertificateFile /etc/ssl/certs/ca-certificates.crt
     {{- else if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
