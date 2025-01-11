@@ -108,6 +108,11 @@
   url = "https://raw.githubusercontent.com/junegunn/fzf-git.sh/refs/heads/main/fzf-git.sh"
   refreshPeriod = "168h"
 
+[".config/fontconfig/conf.avail/10-nerd-font-symbols.conf"]
+  type = "file"
+  url = "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/refs/heads/master/10-nerd-font-symbols.conf"
+  resfreshPeriod = "7d"
+
 {{ if ne .chezmoi.os "darwin" }}
 {{ $tombVersion := "2.11" }}
 [".externals/bin/tomb"]
