@@ -87,20 +87,23 @@ source-file {{ .chezmoi.homeDir }}/.externals/tmux/tokyonight/tokyonight_{{ $fla
 {{ if hasPrefix "catppuccin" .colorscheme}}
 set -g @plugin 'catppuccin/tmux'
 set -g @catppuccin_flavour '{{ trimPrefix "catppuccin-" .colorscheme }}'
+set -g @catppuccin_window_status_style "rounded"
 # Make the status line pretty and add some modules
 set -g status-right-length 100
 set -g status-left-length 100
 set -g status-left ""
-set -g status-right "#{E:@catppuccin_status_application}"
-set -ag status-right "#{E:@catppuccin_status_session}"
+set -g status-right "#{E:@catppuccin_status_session}"
+set -ag status-right "#{E:@catppuccin_status_application}"
 set -ag status-right "#{E:@catppuccin_status_date_time}"
 set -agF status-right "#{E:@catppuccin_status_cpu}"
 set -agF status-right "#{E:@catppuccin_status_battery}"
 set -ag status-right "#{E:@catppuccin_status_uptime}"
+set -ag status-left "#{E:@catppuccin_status_host}"
 {{ end }}
 
 # order matters here
 set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
+set -ag status-left '#{prefix_highlight}'
 
 set -g @continuum-restore 'off'
 set -g @continuum-save-interval '15'
