@@ -11,9 +11,6 @@ set-option -g set-titles-string '#h:#S.#I.#P • #W • #T'
 # turn on mouse support
 set-option -g mouse on
 
-# increase history limit
-set-option -g history-limit 10000
-
 # keep unattached sessions alive
 set-option -g destroy-unattached off
 
@@ -77,6 +74,8 @@ set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-continuum'
 set -g @plugin 'tmux-plugins/tmux-logging'
 set -g @plugin 'tmux-plugins/tmux-urlview'
+set -g @plugin 'tmux-plugins/tmux-battery'
+set -g @plugin 'tmux-plugins/tmux-cpu'
 set -g @plugin 'sainnhe/tmux-fzf'
 set -g @plugin 'laktak/extrakto'
 set -g @plugin 'christoomey/vim-tmux-navigator'
@@ -88,9 +87,16 @@ source-file {{ .chezmoi.homeDir }}/.externals/tmux/tokyonight/tokyonight_{{ $fla
 {{ if hasPrefix "catppuccin" .colorscheme}}
 set -g @plugin 'catppuccin/tmux'
 set -g @catppuccin_flavour '{{ trimPrefix "catppuccin-" .colorscheme }}'
-set -g @catppuccin_status_modules_right "user host application directory session date_time"
-set -g @catppuccin_date_time_text "%Y-%m-%d %H:%M"
-set -g @catppuccin_date_time_icon "󰥔"
+# Make the status line pretty and add some modules
+set -g status-right-length 100
+set -g status-left-length 100
+set -g status-left ""
+set -g status-right "#{E:@catppuccin_status_application}"
+set -ag status-right "#{E:@catppuccin_status_session}"
+set -ag status-right "#{E:@catppuccin_status_date_time}"
+set -agF status-right "#{E:@catppuccin_status_cpu}"
+set -agF status-right "#{E:@catppuccin_status_battery}"
+set -ag status-right "#{E:@catppuccin_status_uptime}"
 {{ end }}
 
 # order matters here
