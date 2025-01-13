@@ -23,7 +23,9 @@ kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kdeglobals --group "KDE" 
 
 # KDE's configuration is weird sometimes, source: https://unix.stackexchange.com/a/777045
 _strCloseWindow="Meta+Shift+Q\tAlt+F4,Alt+F4,Close Window"
+_strOverview="Meta+W\tMeta,Meta+W,Toggle Overview"
 kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kglobalshortcutsrc --group "kwin" --key "Window Close" "$(_escapeShortcut "${_strCloseWindow}")"
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kglobalshortcutsrc --group "kwin" --key "Overview" "$(_escapeShortcut "${_strOverview}")"
 kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kglobalshortcutsrc --group "services" --group "net.local.1password.desktop" --key "_launch" "Ctrl+Shift+Space"
 
 kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kscreenlockerrc --group "Daemon" --key "LockGrace" 30
