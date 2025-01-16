@@ -100,6 +100,7 @@ createPartition() {
   echo "Afterwards execute..."
   echo "zfs umount -a && zfs export ${pool}"
   echo "$0 importpool"
+  echo "If you are on arch and using aconfmgr, you might need to a 'aconfmgr apply' to apply existing ZFS configurations that might have been skipped beforehand"
   echo "... and reboot"
 }
 
@@ -124,6 +125,7 @@ importPool() {
 
   chown root:root "$(zfs get -o value -H keylocation "$pool" | sed -r 's/^file:\/\/(.*)$/\1/')"
   chmod 600 "$(zfs get -o value -H keylocation "$pool" | sed -r 's/^file:\/\/(.*)$/\1/')"
+  echo "If you are on arch and using aconfmgr, you might need to a 'aconfmgr apply' to apply existing ZFS configurations that might have been skipped beforehand"
 }
 
 case ${operation} in
