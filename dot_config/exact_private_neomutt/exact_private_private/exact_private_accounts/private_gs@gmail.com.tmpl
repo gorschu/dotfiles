@@ -5,19 +5,19 @@ set sendmail = "$HOME/bin/mail/msmtp-enqueue.sh"
 
 # Set folders
 set spoolfile = "+{{ $secrets.mail.gsatgmaildotcom.email }}/Inbox"
-set mbox = "+{{ $secrets.mail.gsatgmaildotcom.email }}/all-mail"
-set postponed = "+{{ $secrets.mail.gsatgmaildotcom.email }}/drafts"
-set record = "+{{ $secrets.mail.gsatgmaildotcom.email }}/sent-mail"
-set trash = "+{{ $secrets.mail.gsatgmaildotcom.email }}/trash"
+set mbox = "+{{ $secrets.mail.gsatgmaildotcom.email }}/Archive"
+set postponed = "+{{ $secrets.mail.gsatgmaildotcom.email }}/Drafts"
+set record = "+{{ $secrets.mail.gsatgmaildotcom.email }}/Sent"
+set trash = "+{{ $secrets.mail.gsatgmaildotcom.email }}/Trash"
 
 # first reset all mailboxes
 unmailboxes *
 # then create a list of for that account mailboxes dynamically
 # We need to filter the top-level [Gmail] explicitely since Gmail being
 # Gmail it isn't a regular mailbox
-mailboxes `find ~/mail/{{ $secrets.mail.gsatgmaildotcom.email }}/* -type d | grep -v "gordon.schulz@gmail.com/\[Gmail\]$" | grep -v "tmp\|new\|cur" | sed 's|/home/azmo/mail/|=\"|g' | sed 's|$|\"|g' | tr '\n' ' '`
+mailboxes `find ~/mail/{{ $secrets.mail.gsatgmaildotcom.email }}/* -type d | grep -v "{{ $secrets.mail.gsatgmaildotcom.email }}/\[Gmail\]$" | grep -v "tmp\|new\|cur" | sed 's|{{ .chezmoi.homeDir }}/mail/|=\"|g' | sed 's|$|\"|g' | tr '\n' ' '`
 # and finally add the inboxes of our other accounts to switch quickly
-mailboxes `find ~/mail/* -type d | grep -i Inbox | grep -v "tmp\|new\|cur" | sed 's|/home/azmo/mail/|=\"|g' | sed 's|$|\"|g' | tr '\n' ' '`
+mailboxes `find ~/mail/* -type d | grep -i Inbox | grep -v "tmp\|new\|cur" | sed 's|{{ .chezmoi.homeDir }}/mail/|=\"|g' | sed 's|$|\"|g' | tr '\n' ' '`
 
 # Alternate email addresses.
 #alternates ^kontakt@webgefrickel.de$ ^s.rademacker@mailbox.org$
@@ -37,7 +37,7 @@ macro index,pager ,Z \
   "mark as read and zap to Spam"
 
 macro index,pager ,A \
-  "<save-message>+{{ $secrets.mail.gsatgmaildotcom.email }}/all-mail<enter>"  \
+  "<save-message>+{{ $secrets.mail.gsatgmaildotcom.email }}/Archive<enter>"  \
   "move message to the archive"
 #
 macro index,pager ,I \

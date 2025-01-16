@@ -13,9 +13,9 @@ set trash = "+{{ $secrets.mail.gatgordonschulzdotde.email }}/Trash"
 # first reset all mailboxes
 unmailboxes *
 # then create a list of for that account mailboxes dynamically
-mailboxes `find ~/mail/{{ $secrets.mail.gatgordonschulzdotde.email }}/* -type d | grep -v "tmp\|new\|cur" | sed 's|/home/azmo/mail/|=\"|g' | sed 's|$|\"|g' | tr '\n' ' '`
+mailboxes `find ~/mail/{{ $secrets.mail.gatgordonschulzdotde.email }}/* -type d | grep -v "tmp\|new\|cur" | sed 's|{{ .chezmoi.homeDir }}/mail/|=\"|g' | sed 's|$|\"|g' | tr '\n' ' '`
 # and finally add the inboxes of our other accounts to switch quickly
-mailboxes `find ~/mail/* -type d | grep -i Inbox | grep -v "tmp\|new\|cur" | sed 's|/home/azmo/mail/|=\"|g' | sed 's|$|\"|g' | tr '\n' ' '`
+mailboxes `find ~/mail/* -type d | grep -i Inbox | grep -v "tmp\|new\|cur" | sed 's|{{ .chezmoi.homeDir }}/mail/|=\"|g' | sed 's|$|\"|g' | tr '\n' ' '`
 
 # Alternate email addresses.
 #alternates ^kontakt@webgefrickel.de$ ^s.rademacker@mailbox.org$
@@ -49,5 +49,8 @@ save-hook ~r01/01/2019-31/12/2019 ={{ $secrets.mail.gatgordonschulzdotde.email }
 save-hook ~r01/01/2020-31/12/2020 ={{ $secrets.mail.gatgordonschulzdotde.email }}/Archive/2020
 save-hook ~r01/01/2021-31/12/2021 ={{ $secrets.mail.gatgordonschulzdotde.email }}/Archive/2021
 save-hook ~r01/01/2022-31/12/2022 ={{ $secrets.mail.gatgordonschulzdotde.email }}/Archive/2022
+save-hook ~r01/01/2023-31/12/2023 ={{ $secrets.mail.gatgordonschulzdotde.email }}/Archive/2023
+save-hook ~r01/01/2024-31/12/2024 ={{ $secrets.mail.gatgordonschulzdotde.email }}/Archive/2024
+save-hook ~r01/01/2025-31/12/2025 ={{ $secrets.mail.gatgordonschulzdotde.email }}/Archive/2025
 
 # vim: ft=muttrc
