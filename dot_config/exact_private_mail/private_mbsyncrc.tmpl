@@ -33,7 +33,7 @@ Channel fastmail-{{ $secrets.mail.gatgordonschulzdotde.email }}
     CopyArrivalDate yes
 
 IMAPAccount yahoo-{{ $secrets.mail.mfatyahoodotde.email }}
-    Host imap$secrets.mail.yahoo.com
+    Host imap.mail.yahoo.com
     AuthMechs *
     User {{ $secrets.mail.mfatyahoodotde.email }}
     PassCmd "$HOME/bin/mail/get_mail_password.sh 'Yahoo {{ $secrets.mail.mfatyahoodotde.email }}'"
