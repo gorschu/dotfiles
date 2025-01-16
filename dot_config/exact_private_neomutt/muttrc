@@ -121,6 +121,8 @@ set uncollapse_jump
 # pager settings
 set pager_context=4
 set pager_index_lines=15
+# mark read after 5 seconds
+set pager_read_delay=5
 
 # don't jump to next message when reaching the end of previous one
 set pager_stop= yes
@@ -166,7 +168,7 @@ source $XDG_CONFIG_HOME/neomutt/private/accounts/config
 # mark all messages in folder as read
 macro index ,m "T ~O | ~N\n;N" "Mark all messages in folder as read"
 # open urls with urlscan
-macro pager ,u "<pipe-message> urlscan<Enter>" "call urlscan to extract URLs out of a message"
+macro index,pager ,u "<pipe-message> urlscan<Enter>" "call urlscan to extract URLs out of a message"
 
 # source: https://tom.wemyss.net/posts/neomutt-markdown-email
 macro compose m \
