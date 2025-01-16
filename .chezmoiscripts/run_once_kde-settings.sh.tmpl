@@ -47,3 +47,5 @@ kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/powerdevilrc --group "Bat
 kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/powerdevilrc --group "Battery" --group "SuspendAndShutdown" --key "AutoSuspendIdleTimeoutSec" 1800
 
 kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/powerdevilrc --group "LowBattery" --group "Performance" --key "PowerProfile" "power-saver"
+
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/ksmserverrc --group "General" --key "loginMode" "restoreSavedSession"
