@@ -92,7 +92,7 @@ Channel gmail-{{ $secrets.mail.gsatgmaildotcom.email }}
     Far :gmail-{{ $secrets.mail.gsatgmaildotcom.email }}-remote:
     Near :gmail-{{ $secrets.mail.gsatgmaildotcom.email }}-local:
     # Exclude everything under the internal [Gmail] folder, except the interesting folders
-    Patterns * ![Gmail]* !all-mail !sent-mail !trash !spam
+    Patterns * ![Gmail]* !Archive !Sent !Trash !Spam
     # Automatically create missing mailboxes, both locally and on the server
     Create Both
     Expunge Both
@@ -102,9 +102,9 @@ Channel gmail-{{ $secrets.mail.gsatgmaildotcom.email }}
     # keep date and time intact when moving mails around
     CopyArrivalDate yes
 
-Channel gmail-{{ $secrets.mail.gsatgmaildotcom.email }}-all-mail
+Channel gmail-{{ $secrets.mail.gsatgmaildotcom.email }}-Archive
     Far :gmail-gordon.schulz@gmail.com-remote:"[Gmail]/All Mail"
-    Near :gmail-gordon.schulz@gmail.com-local:all-mail
+    Near :gmail-gordon.schulz@gmail.com-local:Archive
     # Automatically create missing mailboxes, both locally and on the server
     Create Near
     Expunge Both
@@ -114,9 +114,9 @@ Channel gmail-{{ $secrets.mail.gsatgmaildotcom.email }}-all-mail
     # keep date and time intact when moving mails around
     CopyArrivalDate yes
 
-Channel gmail-{{ $secrets.mail.gsatgmaildotcom.email }}-sent-mail
+Channel gmail-{{ $secrets.mail.gsatgmaildotcom.email }}-Sent
     Far :gmail-gordon.schulz@gmail.com-remote:"[Gmail]/Sent Mail"
-    Near :gmail-gordon.schulz@gmail.com-local:sent-mail
+    Near :gmail-gordon.schulz@gmail.com-local:Sent
     # Automatically create missing mailboxes, both locally and on the server
     Create Near
     Expunge Both
@@ -126,9 +126,9 @@ Channel gmail-{{ $secrets.mail.gsatgmaildotcom.email }}-sent-mail
     # keep date and time intact when moving mails around
     CopyArrivalDate yes
 
-Channel gmail-{{ $secrets.mail.gsatgmaildotcom.email }}-trash
+Channel gmail-{{ $secrets.mail.gsatgmaildotcom.email }}-Trash
     Far :gmail-gordon.schulz@gmail.com-remote:"[Gmail]/Trash"
-    Near :gmail-gordon.schulz@gmail.com-local:trash
+    Near :gmail-gordon.schulz@gmail.com-local:Trash
     # Automatically create missing mailboxes, both locally and on the server
     Create Near
     Expunge Both
@@ -138,9 +138,9 @@ Channel gmail-{{ $secrets.mail.gsatgmaildotcom.email }}-trash
     # keep date and time intact when moving mails around
     CopyArrivalDate yes
 
-Channel gmail-{{ $secrets.mail.gsatgmaildotcom.email }}-spam
+Channel gmail-{{ $secrets.mail.gsatgmaildotcom.email }}-Spam
     Far :gmail-gordon.schulz@gmail.com-remote:"[Gmail]/Spam"
-    Near :gmail-gordon.schulz@gmail.com-local:spam
+    Near :gmail-gordon.schulz@gmail.com-local:Spam
     # Automatically create missing mailboxes, both locally and on the server
     Create Near
     Expunge Both
@@ -150,10 +150,10 @@ Channel gmail-{{ $secrets.mail.gsatgmaildotcom.email }}-spam
     # keep date and time intact when moving mails around
     CopyArrivalDate yes
 
-Group gmail
+Group gmail-{{ $secrets.mail.gsatgmaildotcom.email }}
     Channel gmail-{{ $secrets.mail.gsatgmaildotcom.email }}
-    Channel gmail-{{ $secrets.mail.gsatgmaildotcom.email }}-all-mail
-    Channel gmail-{{ $secrets.mail.gsatgmaildotcom.email }}-sent-mail
-    Channel gmail-{{ $secrets.mail.gsatgmaildotcom.email }}-trash
-    Channel gmail-{{ $secrets.mail.gsatgmaildotcom.email }}-spam
+    Channel gmail-{{ $secrets.mail.gsatgmaildotcom.email }}-Archive
+    Channel gmail-{{ $secrets.mail.gsatgmaildotcom.email }}-Sent
+    Channel gmail-{{ $secrets.mail.gsatgmaildotcom.email }}-Trash
+    Channel gmail-{{ $secrets.mail.gsatgmaildotcom.email }}-Spam
 
