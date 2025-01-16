@@ -1,7 +1,5 @@
+prefix={{ .chezmoi.homeDir }}/.local
 {{ if eq .chezmoi.os "darwin" -}}
-prefix=/Users/j525980/.local
 strict-ssl=false
 @finanzinformatik:registry=https://nexus.intern/repository/npm-group-mkp/
-{{ else }}
-prefix=/home/azmo/.local
 {{ end }}
