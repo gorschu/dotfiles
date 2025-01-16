@@ -37,7 +37,7 @@ config = {
   text_background_opacity = 1.0,
   term = "wezterm",
   -- wayland support is currently ... bad, so don't enable it until the rewrite is done
-  enable_wayland = false,
+  enable_wayland = true,
 
   keys = {
     {
