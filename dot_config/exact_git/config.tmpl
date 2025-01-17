@@ -115,11 +115,11 @@
 
 [user]
 {{ if and (hasKey . "hostname") (eq .chezmoi.hostname .hostname) }}
-  {{- $secrets := (joinPath .chezmoi.sourceDir "secrets" "work.toml.asc" | include | decrypt | fromToml) -}}
+  {{- $secrets := (joinPath .chezmoi.sourceDir "secrets" "work.toml.asc" | include | decrypt | fromToml) }}
   name = {{ $secrets.work.name }}
   email = {{ $secrets.work.email }}
 {{ else }}
-  {{- $secrets := (joinPath .chezmoi.sourceDir "secrets" "personal.toml.asc" | include | decrypt | fromToml) -}}
+  {{- $secrets := (joinPath .chezmoi.sourceDir "secrets" "personal.toml.asc" | include | decrypt | fromToml) }}
   name = Gordon Schulz
   email = {{ $secrets.personal.azmo.email }}
 {{ end }}
