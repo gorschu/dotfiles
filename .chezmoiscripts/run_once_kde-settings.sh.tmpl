@@ -33,6 +33,8 @@ kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kscreenlockerrc --group "
 kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kscreenlockerrc --group "Daemon" --key "Timeout" 10
 
 kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kwinrc --group "Effect-overview" --key "GridBorderActivate" 1
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kwinrc --group "Windows" --key "AutoRaise" "true"
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kwinrc --group "Windows" --key "FocusPolicy" "FocusFollowsMouse"
 
 kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/baloofilerc --group "General" --key 'exclude folders' '$HOME/go/,$HOME/mail/'
 kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/baloofilerc --group "General" --key 'only basic indexing' 'true'
