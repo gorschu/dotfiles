@@ -17,7 +17,8 @@ fi
 kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kcminputrc --group "Libinput" --group "2" --group "7" --group "SynPS/2 Synaptics TouchPad" --key "NaturalScroll" "true"
 {{ end -}}
 kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kcminputrc --group "Keyboard" --key "NumLock" 0
-kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kcminputrc --group "Keyboard" --key "RepeatDelay" 300
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kcminputrc --group "Keyboard" --key "RepeatDelay" 250
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kcminputrc --group "Keyboard" --key "RepeatRate" 40
 
 kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kdeglobals --group "KDE" --key "LookAndFeelPackage" "org.kde.breezedark.desktop"
 
@@ -26,8 +27,8 @@ _strCloseWindow="Meta+Shift+Q\tAlt+F4,Alt+F4,Close Window"
 _strOverview="Meta+W\tMeta,Meta+W,Toggle Overview"
 kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kglobalshortcutsrc --group "kwin" --key "Window Close" "$(_escapeShortcut "${_strCloseWindow}")"
 kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kglobalshortcutsrc --group "kwin" --key "Overview" "$(_escapeShortcut "${_strOverview}")"
-kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kglobalshortcutsrc --group "services" --group "net.local.1password.desktop" --key "_launch" "Meta+Shift+Space"
-kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kglobalshortcutsrc --group "services" --group "net.local.1password-2.desktop" --key "_launch" "Meta+Shift+p"
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kglobalshortcutsrc --group "services" --group "net.local.1password.desktop" --key "_launch" "Ctrl+Meta+Space"
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kglobalshortcutsrc --group "services" --group "net.local.1password-2.desktop" --key "_launch" "Ctrl+Meta+p"
 
 kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kscreenlockerrc --group "Daemon" --key "LockGrace" 30
 kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kscreenlockerrc --group "Daemon" --key "Timeout" 10
