@@ -1,0 +1,11 @@
+# style name or JSON path (default "auto")
+{{ $flavor := trimPrefix "catppuccin-" .colorscheme }}
+style: "{{ .chezmoi.homeDir }}/.config/glow/themes/catppuccin-{{ $flavor }}.json"
+# mouse support (TUI-mode only)
+mouse: false
+# use pager to display markdown
+pager: false
+# word-wrap at width
+width: 80
+
+
