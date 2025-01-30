@@ -52,3 +52,14 @@ kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/powerdevilrc --group "Bat
 kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/powerdevilrc --group "LowBattery" --group "Performance" --key "PowerProfile" "power-saver"
 
 kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/ksmserverrc --group "General" --key "loginMode" "restoreSavedSession"
+
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kwalletrc --group "Wallet" --key "Close When Idle" "false"
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kwalletrc --group "Wallet" --key "Close on Screensaver" "false"
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kwalletrc --group "Wallet" --key "Default Wallet" "kdewallet"
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kwalletrc --group "Wallet" --key "Enabled" "true"
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kwalletrc --group "Wallet" --key "Idle Timeout" 10
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kwalletrc --group "Wallet" --key "Launch Manager" "true"
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kwalletrc --group "Wallet" --key "Leave Manager Open" "false"
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kwalletrc --group "Wallet" --key "Leave Open" "true"
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kwalletrc --group "Wallet" --key "Prompt on Open" "true"
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kwalletrc --group "Wallet" --key "Use One Wallet" "true"
