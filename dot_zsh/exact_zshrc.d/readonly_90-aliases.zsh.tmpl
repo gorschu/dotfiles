@@ -41,8 +41,3 @@ if (( $+commands[eza] )); then
 fi
 
 (( $+commands[batman] )) && alias man=batman
-
-if (( $+commands[doas] )); then
-  alias sudo='doas'
-  alias sudoedit="doas $EDITOR"
-fi
