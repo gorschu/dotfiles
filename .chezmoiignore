@@ -29,6 +29,7 @@ bin
 !.config/tig
 !.config/tmux
 !.config/starship
+!.config/yazi
 !.config/zellij
 .local
 .ssh/keys.private
