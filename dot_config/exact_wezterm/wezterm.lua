@@ -22,6 +22,7 @@ config = {
   },
   use_fancy_tab_bar = true,
   hide_tab_bar_if_only_one_tab = true,
+  hide_mouse_cursor_when_typing = true,
   font = wezterm.font("JetBrainsMono NF"),
   -- harfbuzz_features = { "ss03", "ss04", "ss05" },
   -- harfbuzz_features = { "zero", "ss02" },
