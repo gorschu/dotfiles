@@ -35,6 +35,8 @@ kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kscreenlockerrc --group "
 
 kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kwinrc --group "Effect-overview" --key "GridBorderActivate" 1
 
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/kwinrc --group "NightColor" --key "Active" "true"
+
 kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/baloofilerc --group "General" --key 'exclude folders' '$HOME/go/,$HOME/mail/'
 kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/baloofilerc --group "General" --key 'only basic indexing' 'true'
 
