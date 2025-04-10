@@ -80,6 +80,7 @@
 
 [merge]
     tool = bc3
+    conflictStyle = diff3
 [mergetool]
     prompt = false
     keepBackup = false
@@ -91,6 +92,8 @@
     trustExitCode = true
 [mergetool "bc3"]
     trustExitCode = true
+[rerere]
+    enabled = true
 
 [pager]
     difftool = bat
