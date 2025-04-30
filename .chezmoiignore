@@ -19,7 +19,7 @@ bin
 .config/*
 !.config/atuin
 !.config/bat
-!.config/chezmoi
+!.config/btop
 .config/chezmoi/personal
 !.config/git
 !.config/latexmk
