@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -euo pipefail
+
+{{ if lookPath "bat" }}
+{{ if stat (joinPath .chezmoi.homeDir ".config/bat/themes") }}
+# bat theme directory: {{ output "ls" "-R" (joinPath .chezmoi.homeDir ".config/bat/themes/") | sha256sum }}
+{{ else }}
+# empty sha256sum
+{{ end }}
+bat cache --build > /dev/null
+{{ end }}
