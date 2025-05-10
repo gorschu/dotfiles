@@ -1,0 +1,5 @@
+# shellcheck shell=bash
+
+{{ if eq .chezmoi.os "linux" }}
+export ELECTRON_OZONE_PLATFORM_HINT=auto
+{{ end }}

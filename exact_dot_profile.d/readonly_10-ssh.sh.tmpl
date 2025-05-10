@@ -1,0 +1,36 @@
+# shellcheck shell=bash
+{{ if eq .chezmoi.os "linux" }}
+#
+# set SSH Variables
+{{ $ssh_askpass_base := "" }}
+{{ $kssh_askpass_base := "" }}
+{{ if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
+    {{ $ssh_askpass_base = "/usr/libexec/ssh" }}
+    {{ $kssh_askpass_base = $ssh_askpass_base }}
+{{ else if eq .chezmoi.osRelease.id "ubuntu" "debian" }}
+    {{ $ssh_askpass_base = "/usr/lib/openssh" }}
+    {{ $kssh_askpass_base = "/bin" }}
+{{ else if eq .chezmoi.osRelease.id "fedora" }}
+    {{ $ssh_askpass_base = "/usr/libexec/openssh" }}
+    {{ $kssh_askpass_base = "/usr/bin" }}
+{{ else if eq .chezmoi.osRelease.id "arch" }}
+    {{ $ssh_askpass_base = "/usr/lib/ssh" }}
+    {{ $kssh_askpass_base = "/usr/bin" }}
+{{ end }}
+expr "$XDG_CURRENT_DESKTOP" : ".*GNOME.*" 1>/dev/null && export SSH_ASKPASS={{ $ssh_askpass_base }}/gnome-ssh-askpass
+expr "$XDG_CURRENT_DESKTOP" : ".*KDE.*" 1>/dev/null && export SSH_ASKPASS={{ $kssh_askpass_base }}/ksshaskpass
+[ -z "$SSH_ASKPASS" ] && export SSH_ASKPASS={{ $ssh_askpass_base }}/x11-ssh-askpass
+
+# only set SSH_AUTH_SOCK when we not connected via SSH
+# else we break SSH Agent Forwarding
+if [[ -z ${SSH_CLIENT} ]]; then
+  if [[ -S ${HOME}/.1password/agent.sock ]]; then
+    export SSH_AUTH_SOCK="${HOME}/.1password/agent.sock"
+  else
+    export SSH_AUTH_SOCK=${XDG_RUNTIME_DIR}/ssh-agent.socket
+  fi
+  # import to systemctl user-environment
+  systemctl --user import-environment SSH_AUTH_SOCK SSH_ASKPASS
+fi
+{{ end }}
+
