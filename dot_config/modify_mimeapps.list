@@ -17,9 +17,14 @@ config.read(f"{config_home}/mimeapps.list")
 if not config.has_section("Default Applications"):
     config.add_section("Default Applications")
 
-config.set("Default Applications", "application/x-ica", "citrix-container.desktop")
-
 if xdg_desktop is not None and "GNOME" in xdg_desktop:
   config.set("Default Applications", "inode/directory", "org.gnome.Nautilus.desktop")
+if xdg_desktop is not None and xdg_desktop in ["KDE", "Hyprland"]:
+  config.set("Default Applications", "inode/directory", "org.kde.dolphin.desktop")
+
+config.set("Default Applications", "text/html", "firefox.desktop")
+config.set("Default Applications", "x-scheme-handler/http", "firefox.desktop")
+config.set("Default Applications", "x-scheme-handler/https", "firefox.desktop")
+
 
 config.write(sys.stdout, space_around_delimiters=False)
