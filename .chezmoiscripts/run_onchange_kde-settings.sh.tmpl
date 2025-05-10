@@ -41,11 +41,17 @@ kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/baloofilerc --group "Gene
 kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/baloofilerc --group "General" --key 'only basic indexing' 'true'
 
 kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/powerdevilrc --group "AC" --group "Display" --key "UseProfileSpecificDisplayBrightness" "true"
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/powerdevilrc --group "AC" --group "Display" --key "DimDisplayIdleTimeoutSec" 600
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/powerdevilrc --group "AC" --group "Display" --key "TurnOffDisplayIdleTimeoutSec" 1800
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/powerdevilrc --group "AC" --group "Display" --key "TurnOffDisplayIdleTimeoutWhenLockedSec" 120
 kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/powerdevilrc --group "AC" --group "Performance" --key "PowerProfile" "balanced"
 kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/powerdevilrc --group "AC" --group "SuspendAndShutdown" --key "AutoSuspendIdleTimeoutSec" 3600
 
 kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/powerdevilrc --group "Battery" --group "Display" --key "DisplayBrightness" 50
 kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/powerdevilrc --group "Battery" --group "Display" --key "UseProfileSpecificDisplayBrightness" "true"
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/powerdevilrc --group "Battery" --group "Display" --key "DimDisplayIdleTimeoutSec" 300
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/powerdevilrc --group "Battery" --group "Display" --key "TurnOffDisplayIdleTimeoutSec" 600
+kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/powerdevilrc --group "Battery" --group "Display" --key "TurnOffDisplayIdleTimeoutWhenLockedSec" 120
 kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/powerdevilrc --group "Battery" --group "Performance" --key "PowerProfile" "balanced"
 kwriteconfig6 --file ${XDG_CONFIG_HOME:-$HOME/.config}/powerdevilrc --group "Battery" --group "SuspendAndShutdown" --key "AutoSuspendIdleTimeoutSec" 1800
 
