@@ -24,6 +24,6 @@ enable = true
 search = ["m=0x40A9", "s=", "v=Lenovo Group Limited"]
 mode = "1920x1080@60Hz"
 position = "0,0"
-scale = 1.2
+scale = 1.0
 transform = "normal"
 adaptive_sync = false
