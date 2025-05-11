@@ -25,6 +25,8 @@ if xdg_desktop is not None and xdg_desktop in ["KDE", "Hyprland"]:
 config.set("Default Applications", "text/html", "firefox.desktop")
 config.set("Default Applications", "x-scheme-handler/http", "firefox.desktop")
 config.set("Default Applications", "x-scheme-handler/https", "firefox.desktop")
-
+config.set("Default Applications", "x-scheme-handler/mailto", "org.mozilla.thunderbird.desktop")
+config.set("Default Applications", "x-scheme-handler/mid", "org.mozilla.thunderbird.desktop")
+config.set("Default Applications", "message/rfc822", "org.mozilla.thunderbird.desktop")
 
 config.write(sys.stdout, space_around_delimiters=False)
