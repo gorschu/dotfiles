@@ -225,8 +225,14 @@
       "right": [
         "volume",
         "network",
+        "netstat",
         "bluetooth",
+        "cpu",
+        "ram",
         "battery",
+        "hypridle",
+        "hyprsunset",
+        "power",
         "systray",
         "clock",
         "notifications"
@@ -237,5 +243,7 @@
   "theme.bar.buttons.network.enableBorder": false,
   "bar.network.showWifiInfo": true,
   "theme.bar.buttons.systray.enableBorder": false,
-  "bar.clock.format": "%a %b %d  %I:%M %p"
+  "bar.clock.format": "%a %b %d  %I:%M %p",
+  "bar.customModules.netstat.dynamicIcon": true,
+  "bar.customModules.hyprsunset.temperature": "5500k"
 }
