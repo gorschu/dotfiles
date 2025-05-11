@@ -46,6 +46,11 @@ config = {
       mods = "CMD",
       action = wezterm.action.CloseCurrentTab({ confirm = true }),
     },
+    {
+      key = "Enter",
+      mods = "ALT",
+      action = wezterm.action.DisableDefaultAssignment,
+    },
   },
 }
 
