@@ -1,12 +1,13 @@
 # shellcheck shell=bash
 # set language specific stuff
 export LANG="en_US.UTF-8"
-export LC_CTYPE="de_DE.UTF-8"
+export LANGUAGE="en_US:en_GB:en"
+export LC_CTYPE="en_US.UTF-8"
+export LC_MESSAGES="en_US.UTF-8"
 export LC_NUMERIC="de_DE.UTF-8"
 export LC_TIME="de_DE.UTF-8"
 export LC_COLLATE="de_DE.UTF-8"
 export LC_MONETARY="de_DE.UTF-8"
-export LC_MESSAGES="en_US.UTF-8"
 export LC_PAPER="de_DE.UTF-8"
 export LC_NAME="de_DE.UTF-8"
 export LC_ADDRESS="de_DE.UTF-8"
