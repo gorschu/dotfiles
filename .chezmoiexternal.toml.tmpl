@@ -62,13 +62,21 @@
   refreshPeriod = "168h"
   include = ["*/extras/tmux/*"]
 
+[".config/hypr/themes/catppuccin"]
+  type = "archive"
+  url = "https://github.com/catppuccin/hyprland/archive/main.tar.gz"
+  exact = true
+  stripComponents = 2
+  refreshPeriod = "168h"
+  include = ["*/themes/*"]
+
 [".config/nvim"]
-    type = "git-repo"
-    url = "https://github.com/gorschu/lazyvim.git"
-    branch = "azmo"
-    refreshPeriod = "24h"
-    # [".config/nvim".pull]
-    #     args = ["--depth", "1"]
+  type = "git-repo"
+  url = "https://github.com/gorschu/lazyvim.git"
+  branch = "azmo"
+  refreshPeriod = "24h"
+  # [".config/nvim".pull]
+  #     args = ["--depth", "1"]
 
 [".externals/zsh-syntax-highlighting/catppuccin"]
   type = "archive"
