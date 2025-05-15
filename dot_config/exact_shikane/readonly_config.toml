@@ -3,7 +3,11 @@ name = "homeoffice"
 
 [[profile.output]]
 enable = true
-search = ["m=49B2U6903", "s=AU02421006910", "v=Philips Consumer Electronics Company"]
+search = [
+  "m=49B2U6903",
+  "s=AU02421006910",
+  "v=Philips Consumer Electronics Company",
+]
 mode = "5120x1440@120Hz"
 position = "0,0"
 scale = 1.0
@@ -14,6 +18,27 @@ adaptive_sync = true
 enable = false
 search = ["m=0x40A9", "s=", "v=Lenovo Group Limited"]
 
+# interestingly enough our internal (!) display changes when kernel > 6.12
+[[profile]]
+name = "homeoffice-lts"
+
+[[profile.output]]
+enable = true
+search = [
+  "m=49B2U6903",
+  "s=AU02421006910",
+  "v=Philips Consumer Electronics Company",
+]
+mode = "5120x1440@120Hz"
+position = "0,0"
+scale = 1.0
+transform = "normal"
+adaptive_sync = true
+
+[[profile.output]]
+enable = false
+search = ["m=0x573D", "s=", "v=AU Optronics"]
+
 [[profile]]
 name = "undocked"
 # TODO: Remove this in the future? Seems to be needed (for now) for laptop display to re-enable
@@ -22,6 +47,21 @@ exec = ["hyprctl reload"]
 [[profile.output]]
 enable = true
 search = ["m=0x40A9", "s=", "v=Lenovo Group Limited"]
+mode = "1920x1080@60Hz"
+position = "0,0"
+scale = 1.0
+transform = "normal"
+adaptive_sync = false
+
+# interestingly enough our internal (!) display changes when kernel > 6.12
+[[profile]]
+name = "undocked-lts"
+# TODO: Remove this in the future? Seems to be needed (for now) for laptop display to re-enable
+exec = ["hyprctl reload"]
+
+[[profile.output]]
+enable = true
+search = ["m=0x573D", "s=", "v=AU Optronics"]
 mode = "1920x1080@60Hz"
 position = "0,0"
 scale = 1.0
