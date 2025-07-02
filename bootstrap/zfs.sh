@@ -61,9 +61,6 @@ createPartition() {
   zpool create \
     -o ashift=12 \
     -o autotrim=on \
-    -O encryption=aes-256-gcm \
-    -O keylocation="file:///etc/zfs/zfskey_${pool}_${myHostname}" \
-    -O keyformat=hex \
     -O acltype=posixacl \
     -O compression=zstd \
     -O dnodesize=auto \
@@ -76,7 +73,12 @@ createPartition() {
     "$pool" \
     "$disk-part$partno"
 
-  zfs create -p -o mountpoint=/home/"$user" "$pool/home/$user" &&
+  zfs create -o mountpoint=none \
+    -o encryption=aes-256-gcm \
+    -o keylocation="file:///etc/zfs/zfskey_${pool}_${myHostname}" \
+    -o keyformat=hex "${pool}/local"
+  zfs create -o mountpoint=/home "${pool}/local/home"
+  zfs create -p -o mountpoint=/home/"$user" "$pool/local/home/$user" &&
     sudo chown -R "$user:$user" /tmp/"$pool/home/$user"
 
   echo "ZFS Partition ${disk}-part${partno} created."
