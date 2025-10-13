@@ -1,7 +1,0 @@
-#!/bin/bash
-
-ykman openpgp keys set-touch sig "$1"
-ykman openpgp keys set-touch enc "$1"
-ykman openpgp keys set-touch aut "$1"
-ykman openpgp keys set-touch att "$1"
-ykman openpgp info

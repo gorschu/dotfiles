@@ -1,2 +1,0 @@
-#!/bin/bash
-gpg-connect-agent "scd serialno" "learn --force" /bye
