@@ -123,15 +123,5 @@
 [".config/fontconfig/conf.avail/10-nerd-font-symbols.conf"]
   type = "file"
   url = "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/refs/heads/master/10-nerd-font-symbols.conf"
-  resfreshPeriod = "7d"
+  refreshPeriod = "168h"
 
-{{ if ne .chezmoi.os "darwin" }}
-{{ $tombVersion := "2.11" }}
-[".externals/bin/tomb"]
-  type = "file"
-  url = "https://github.com/dyne/Tomb/archive/refs/tags/v{{ $tombVersion }}.tar.gz"
-  executable = true
-  [".externals/bin/tomb".filter]
-    command = "tar"
-    args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "tomb-{{ $tombVersion }}/tomb"]
-{{ end }}
