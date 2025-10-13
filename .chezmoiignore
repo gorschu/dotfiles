@@ -4,7 +4,6 @@ modified_externally
 install.sh
 */**/*.include
 */**/*.include.asc
-bootstrap
 .zshrc.d/*.zwc
 secrets
 dconf.ini
