@@ -23,7 +23,6 @@ bin
 !.config/btop
 .config/chezmoi/personal
 !.config/git
-!.config/latexmk
 !.config/lazygit
 !.config/lazydocker
 !.config/nvim
