@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
-
 # import and trust our GPG Key
 GPGKEY=DEE550054AA972F6
 GPGKEY_FINGERPRINT=0A47650A15E4F0F4003EC450DEE550054AA972F6
@@ -14,21 +12,3 @@ echo -e "5\ny\n" | gpg --command-fd 0 --expert --edit-key "$GPGKEY_FINGERPRINT" 
 
 GPG_TTY=$(tty)
 export GPG_TTY
-
-# Install age-plugin-yubikey to user-space
-AGE_PLUGIN_VERSION="v0.5.0"
-AGE_PLUGIN_DIR="${HOME}/.local/bin"
-AGE_PLUGIN_BIN="${AGE_PLUGIN_DIR}/age-plugin-yubikey"
-
-if [ ! -f "$AGE_PLUGIN_BIN" ]; then
-    echo "Installing age-plugin-yubikey ${AGE_PLUGIN_VERSION} to ${AGE_PLUGIN_DIR}..."
-    mkdir -p "$AGE_PLUGIN_DIR"
-
-    curl -fsSL "https://github.com/str4d/age-plugin-yubikey/releases/download/${AGE_PLUGIN_VERSION}/age-plugin-yubikey-${AGE_PLUGIN_VERSION}-x86_64-linux.tar.gz" \
-        | tar -xz -C "$AGE_PLUGIN_DIR" --strip-components=1 age-plugin-yubikey/age-plugin-yubikey
-
-    chmod +x "$AGE_PLUGIN_BIN"
-    echo "✓ age-plugin-yubikey installed to $AGE_PLUGIN_BIN"
-else
-    echo "✓ age-plugin-yubikey already installed at $AGE_PLUGIN_BIN"
-fi
