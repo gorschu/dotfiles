@@ -1,21 +1,16 @@
 [Unit]
 Description=Syncthing - File synchronization
-Documentation=https://docs.linuxserver.io/images/docker-syncthing/
-After=network-online.target
-Wants=network-online.target
+Documentation=https://docs.syncthing.net/
 
 [Container]
-Image=lscr.io/linuxserver/syncthing:v2.0.10-ls198
+Image=docker.io/syncthing/syncthing:2.0.10
 AutoUpdate=registry
 Label=io.containers.autoupdate=registry
-
-# Environment - LinuxServer.io standard
-Environment=PUID=1000
-Environment=PGID=1000
-Environment=TZ=Etc/UTC
+HostName=%H
+UserNS=keep-id
 
 # Persist syncthing config and data
-Volume=%h/.config/syncthing:/config:Z
+Volume=%h/.config/syncthing:/var/syncthing:Z
 
 # Mount data directories for synchronization
 # Adjust these paths based on what you want to sync
@@ -32,52 +27,23 @@ PublishPort=22000:22000/udp
 PublishPort=21027:21027/udp
 
 # Security - container level
-User=keep-id
 SecurityLabelDisable=false
 ReadOnlyTmpfs=true
 NoNewPrivileges=true
+AddCapability=SETUID SETGID CHOWN FOWNER
 DropCapability=ALL
 
 # Resource limits
 Memory=1G
-CPUQuota=200%
 
 [Service]
+# Create required directories before starting
+ExecStartPre=/usr/bin/mkdir -p %h/.config/syncthing
+ExecStartPre=/usr/bin/mkdir -p %h/sync
+CPUQuota=200%
 Restart=always
 TimeoutStartSec=300
 TimeoutStopSec=30
-
-# Systemd security hardening
-# Network - needs external access for sync
-PrivateNetwork=false
-
-# Filesystem
-ProtectSystem=strict
-ProtectHome=read-only
-ReadWritePaths=%h/.config/syncthing
-ReadWritePaths=%h/sync
-# Add more ReadWritePaths as needed for additional sync folders
-
-# Kernel
-ProtectKernelTunables=true
-ProtectKernelModules=true
-ProtectKernelLogs=true
-ProtectProc=invisible
-
-# Misc hardening
-NoNewPrivileges=true
-PrivateTmp=true
-ProtectClock=true
-LockPersonality=true
-RestrictRealtime=true
-RestrictSUIDSGID=true
-RemoveIPC=true
-RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
-SystemCallArchitectures=native
-
-# System call filtering
-SystemCallFilter=@system-service
-SystemCallFilter=~@privileged @resources @obsolete
 
 [Install]
 WantedBy=default.target

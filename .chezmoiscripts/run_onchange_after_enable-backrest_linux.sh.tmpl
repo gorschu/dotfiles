@@ -6,23 +6,24 @@ set -euo pipefail
 
 echo "Setting up Backrest backup service..."
 
-# Create required directories
-mkdir -p "${HOME}/.local/share/backrest"/{data,config,cache}
-
 # Reload systemd user daemon to pick up the new quadlet
 systemctl --user daemon-reload
 
-# Enable and start the service
-# The quadlet will be automatically converted to backrest.service by systemd
-echo "Enabling backrest service..."
-systemctl --user enable --now backrest.service
+# Start the service if not already running
+if systemctl --user is-active --quiet backrest.service; then
+    echo "Backrest service already running, restarting to pick up changes..."
+    systemctl --user restart backrest.service
+else
+    echo "Starting backrest service..."
+    systemctl --user start backrest.service
+fi
 
 # Check status
 if systemctl --user is-active --quiet backrest.service; then
-    echo "✓ Backrest service is running"
-    echo "  Access the web UI at: http://localhost:9898"
+  echo "✓ Backrest service is running"
+  echo "  Access the web UI at: http://localhost:9898"
 else
-    echo "⚠ Backrest service failed to start"
-    systemctl --user status backrest.service --no-pager || true
-    exit 1
+  echo "⚠ Backrest service failed to start"
+  systemctl --user status backrest.service --no-pager || true
+  exit 1
 fi

@@ -6,24 +6,24 @@ set -euo pipefail
 
 echo "Setting up Syncthing synchronization service..."
 
-# Create required directories
-mkdir -p "${HOME}/.config/syncthing"
-mkdir -p "${HOME}/Sync"
-
 # Reload systemd user daemon to pick up the new quadlet
 systemctl --user daemon-reload
 
-# Enable and start the service
-# The quadlet will be automatically converted to syncthing.service by systemd
-echo "Enabling syncthing service..."
-systemctl --user enable --now syncthing.service
+# Start the service if not already running
+if systemctl --user is-active --quiet syncthing.service; then
+    echo "Syncthing service already running, restarting to pick up changes..."
+    systemctl --user restart syncthing.service
+else
+    echo "Starting syncthing service..."
+    systemctl --user start syncthing.service
+fi
 
 # Check status
 if systemctl --user is-active --quiet syncthing.service; then
-    echo "✓ Syncthing service is running"
-    echo "  Access the web UI at: http://localhost:8384"
+  echo "✓ Syncthing service is running"
+  echo "  Access the web UI at: http://localhost:8384"
 else
-    echo "⚠ Syncthing service failed to start"
-    systemctl --user status syncthing.service --no-pager || true
-    exit 1
+  echo "⚠ Syncthing service failed to start"
+  systemctl --user status syncthing.service --no-pager || true
+  exit 1
 fi
