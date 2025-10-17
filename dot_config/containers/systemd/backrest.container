@@ -26,7 +26,8 @@ Environment=BACKREST_CONFIG=/config/config.json
 Environment=XDG_CACHE_HOME=/cache
 
 # Security - container level
-SecurityLabelDisable=false
+# SELinux disabled for this container to allow reading entire $HOME for backups
+SecurityLabelDisable=true
 ReadOnlyTmpfs=true
 NoNewPrivileges=true
 DropCapability=ALL
