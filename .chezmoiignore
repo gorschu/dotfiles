@@ -14,6 +14,12 @@ dconf.ini
 .ssh/public
 {{- end }}
 
+{{- /* Ignore Linux-specific files on non-Linux systems */ -}}
+{{- if ne .chezmoi.os "linux" }}
+.config/containers
+.config/systemd
+{{- end }}
+
 {{ if and (hasKey . "hostname") (eq .chezmoi.hostname .hostname) }}
 bin
 .config/*

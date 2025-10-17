@@ -1,0 +1,75 @@
+[Unit]
+Description=Backrest - Web UI for restic backup
+Documentation=https://github.com/garethgeorge/backrest
+After=network-online.target
+Wants=network-online.target
+
+[Container]
+Image=docker.io/garethgeorge/backrest:v1.9.1
+AutoUpdate=registry
+Label=io.containers.autoupdate=registry
+
+# Persist backrest data and configuration
+Volume=%h/.local/share/backrest/data:/data:Z
+Volume=%h/.local/share/backrest/config:/config:Z
+Volume=%h/.local/share/backrest/cache:/cache:Z
+
+# Mount home directory for backup access (read-only for safety)
+Volume=%h:/home-backup:ro,Z
+
+# Network - localhost only for security
+PublishPort=127.0.0.1:9898:9898
+
+# Environment
+Environment=BACKREST_DATA=/data
+Environment=BACKREST_CONFIG=/config/config.json
+Environment=XDG_CACHE_HOME=/cache
+
+# Security - container level
+User=keep-id
+SecurityLabelDisable=false
+ReadOnlyTmpfs=true
+NoNewPrivileges=true
+DropCapability=ALL
+
+# Resource limits
+Memory=2G
+CPUQuota=200%
+
+[Service]
+Restart=always
+TimeoutStartSec=300
+TimeoutStopSec=30
+
+# Systemd security hardening
+PrivateNetwork=false
+
+# Filesystem
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=%h/.local/share/backrest
+# Add more ReadWritePaths if using local backup repositories
+
+# Kernel
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectProc=invisible
+
+# Misc hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectClock=true
+LockPersonality=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+RemoveIPC=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+SystemCallArchitectures=native
+
+# System call filtering
+SystemCallFilter=@system-service
+SystemCallFilter=~@privileged @resources @obsolete
+
+[Install]
+WantedBy=default.target

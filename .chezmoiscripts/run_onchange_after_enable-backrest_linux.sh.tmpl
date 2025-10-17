@@ -1,0 +1,28 @@
+#!/bin/bash
+# run_onchange_after - runs whenever the hash of this file or backrest.container changes
+# Hash: {{ include "dot_config/containers/systemd/backrest.container" | sha256sum }}
+
+set -euo pipefail
+
+echo "Setting up Backrest backup service..."
+
+# Create required directories
+mkdir -p "${HOME}/.local/share/backrest"/{data,config,cache}
+
+# Reload systemd user daemon to pick up the new quadlet
+systemctl --user daemon-reload
+
+# Enable and start the service
+# The quadlet will be automatically converted to backrest.service by systemd
+echo "Enabling backrest service..."
+systemctl --user enable --now backrest.service
+
+# Check status
+if systemctl --user is-active --quiet backrest.service; then
+    echo "✓ Backrest service is running"
+    echo "  Access the web UI at: http://localhost:9898"
+else
+    echo "⚠ Backrest service failed to start"
+    systemctl --user status backrest.service --no-pager || true
+    exit 1
+fi
