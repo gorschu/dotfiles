@@ -14,9 +14,9 @@
     {
       "customType": "regex",
       "description": "Update GitHub releases in chezmoi externals",
-      "fileMatch": [
-        "^\\.chezmoiexternal\\.toml\\.tmpl$",
-        "^\\.chezmoitemplates/externals-.*\\.toml$"
+      "managerFilePatterns": [
+        "/^\\.chezmoiexternal\\.toml\\.tmpl$/",
+        "/^\\.chezmoitemplates/externals-.*\\.toml$/"
       ],
       "matchStrings": [
         "url = \"https://github\\.com/(?<depName>[^/]+/[^/]+)/releases/download/(?<currentValue>v?[0-9.]+)/[^\"]+\""
