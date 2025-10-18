@@ -6,5 +6,5 @@ if [[ ${XDG_CURRENT_DESKTOP:-} != "GNOME" ]]; then
   exit 0
 fi
 
-# dconf.ini hash: {{ include (joinPath .chezmoi.sourceDir "dconf.ini") | sha256sum }}
-dconf load / < {{ joinPath .chezmoi.sourceDir "dconf.ini" | quote }}
+# dconf-settings.ini hash: {{ include (joinPath .chezmoi.sourceDir "dconf-settings.ini") | sha256sum }}
+dconf load / < {{ joinPath .chezmoi.sourceDir "dconf-settings.ini" | quote }}
