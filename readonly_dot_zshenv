@@ -7,4 +7,3 @@ for config_file ($ZDOTDIR/.zshenv.d/*.zsh(N)); do
     source $config_file
 done
 unset config_file
-

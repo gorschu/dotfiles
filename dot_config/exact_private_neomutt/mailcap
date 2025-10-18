@@ -16,4 +16,3 @@ application/pdf; zathura %s 2>/dev/null; test=test -n "$DISPLAY";
 application/pdf; pdftotext %s -; copiousoutput
 
 image/*; sxiv %s; test=test -n "$DISPLAY"
-

@@ -12,4 +12,3 @@ Host *
   ControlMaster auto
   ControlPath ~/tmp/.ssh/master-%r@%n:%p
   ControlPersist 60m
-

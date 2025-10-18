@@ -16,7 +16,7 @@
 % and version 1.3 or later is part of all distributions of LaTeX
 % version 2003/12/01 or later.
 %
-% This file has the LPPL maintenance status "maintained". 
+% This file has the LPPL maintenance status "maintained".
 %
 \ProvidesFile{sections.lco}%
              [2008/12/03 v0.2 unsupported LCO-file]%

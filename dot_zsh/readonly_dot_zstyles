@@ -17,4 +17,3 @@ zstyle :omz:plugins:eza 'header' yes
 zstyle :omz:plugins:eza 'show-group' yes
 zstyle :omz:plugins:eza 'icons' yes
 zstyle :omz:plugins:eza 'hyperlinks' yes
-
