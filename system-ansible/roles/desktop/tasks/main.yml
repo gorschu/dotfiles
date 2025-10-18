@@ -1,0 +1,23 @@
+---
+# Desktop applications
+
+- name: Install GUI applications
+  ansible.builtin.dnf:
+    name:
+      - solaar
+      - firefox
+      - bcompare
+      - kitty
+      - wezterm
+      - ghostty
+    state: present
+
+- name: Install Flatpak applications
+  community.general.flatpak:
+    name: "{{ item }}"
+    state: present
+    method: user
+  loop:
+    - com.google.Chrome
+    - com.vivaldi.Vivaldi
+    - com.hamrick.VueScan

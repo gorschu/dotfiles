@@ -1,0 +1,66 @@
+---
+# Base system configuration - repositories and core utilities
+
+- name: Install RPM Fusion repositories
+  ansible.builtin.dnf:
+    name:
+      - >-
+        https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{
+        ansible_distribution_major_version }}.noarch.rpm
+      - >-
+        https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{
+        ansible_distribution_major_version }}.noarch.rpm
+    state: present
+
+- name: Enable COPR repositories
+  community.general.copr:
+    name: "{{ item }}"
+    state: enabled
+  loop:
+    - solopasha/hyprland
+    - scottames/ghostty
+
+- name: Add scootersoftware repository
+  ansible.builtin.get_url:
+    url: https://www.scootersoftware.com/files/scootersoftware.repo
+    dest: /etc/yum.repos.d/scootersoftware.repo
+    mode: "0644"
+
+- name: Add scootersoftware GPG key
+  ansible.builtin.rpm_key:
+    state: present
+    key: https://www.scootersoftware.com/RPM-GPG-KEY-scootersoftware
+
+- name: Add zrepl repository
+  ansible.builtin.copy:
+    src: zrepl.repo
+    dest: /etc/yum.repos.d/zrepl.repo
+    mode: "0644"
+
+- name: Install system utilities
+  ansible.builtin.dnf:
+    name:
+      - gdisk
+      - parted
+      - btrbk
+      - zrepl
+    state: present
+
+- name: Install CLI tools
+  ansible.builtin.dnf:
+    name:
+      - fzf
+      - ripgrep
+      - fd-find
+      - bat
+      - zoxide
+      - zsh
+      - neovim
+    state: present
+
+- name: Install networking tools
+  ansible.builtin.dnf:
+    name:
+      - NetworkManager-tui
+      - network-manager-applet
+    state: present

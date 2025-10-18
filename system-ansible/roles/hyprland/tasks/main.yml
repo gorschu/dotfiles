@@ -1,0 +1,25 @@
+---
+# Hyprland window manager and Wayland ecosystem
+
+- name: Install Hyprland ecosystem
+  ansible.builtin.dnf:
+    name:
+      - hyprland
+      - uwsm
+      - hyprland-contrib
+      - hyprland-plugins
+      - hyprland-autoname-workspaces
+      - xdg-desktop-portal-hyprland
+      - hyprpaper
+      - hypridle
+      - hyprlock
+      - hyprshot
+      - hyprsysteminfo
+      - hyprdim
+      - hyprnome
+      - mako
+      - waybar-git
+      - swww
+      - cliphist
+      - fuzzel
+    state: present

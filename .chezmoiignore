@@ -3,6 +3,8 @@ LICENSE
 modified_externally
 bootstrap.sh
 apply.sh
+justfile
+system-ansible/
 */**/*.include
 */**/*.include.asc
 .zshrc.d/*.zwc

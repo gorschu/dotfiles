@@ -1,0 +1,23 @@
+---
+# Ansible playbook for traditional Fedora Workstation setup
+# Mirrors the blue-build Silverblue configuration
+#
+# Usage: ansible-playbook local.yml --ask-become-pass
+# Usage (specific roles): ansible-playbook local.yml --tags base,multimedia -K
+
+- name: Configure Fedora Workstation
+  hosts: localhost
+  connection: local
+  become: true
+
+  roles:
+    - role: base
+      tags: [base, repos]
+    - role: multimedia
+      tags: [multimedia, codecs]
+    - role: desktop
+      tags: [desktop, gui]
+    - role: hyprland
+      tags: [hyprland, wayland]
+
+# vim: set ft=yaml.ansible:
