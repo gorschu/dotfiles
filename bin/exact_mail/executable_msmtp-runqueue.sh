@@ -47,15 +47,15 @@ touch "$LOCKFILE" || exit 1
 
 # process all mails
 for MAILFILE in *.mail; do
-    MSMTPFILE="$(echo $MAILFILE | sed -e 's/mail/msmtp/')"
-    echo "*** Sending $MAILFILE to $(sed -e 's/^.*-- \(.*$\)/\1/' $MSMTPFILE) ..."
+    MSMTPFILE="$(echo "$MAILFILE" | sed -e 's/mail/msmtp/')"
+    echo "*** Sending $MAILFILE to $(sed -e 's/^.*-- \(.*$\)/\1/' "$MSMTPFILE") ..."
     if [ ! -f "$MSMTPFILE" ]; then
         echo "No corresponding file $MSMTPFILE found"
         echo "FAILURE"
         continue
     fi
-    msmtp $OPTIONS $(cat "$MSMTPFILE") <"$MAILFILE"
-    if [ $? -eq 0 ]; then
+    # shellcheck disable=SC2086
+    if msmtp $OPTIONS "$(cat "$MSMTPFILE")" <"$MAILFILE"; then
         rm "$MAILFILE" "$MSMTPFILE"
         echo "$MAILFILE sent successfully"
     else

@@ -1,3 +1,4 @@
+#!/bin/sh
 # set browser environment variable
 if [ -e /usr/bin/firefox ]; then
   export BROWSER="/usr/bin/firefox"

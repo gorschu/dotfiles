@@ -2,8 +2,8 @@
 
 TMPDIR=${TMPDIR:-/tmp}
 
-infile="$(mktemp ${TMPDIR}/mutt_XXXXXXXX.txt)"
-outfile="$(mktemp ${TMPDIR}/mutt_XXXXXXXX.pdf)"
+infile="$(mktemp "${TMPDIR}"/mutt_XXXXXXXX.txt)"
+outfile="$(mktemp "${TMPDIR}"/mutt_XXXXXXXX.pdf)"
 
 while read -r line; do
     echo "${line}" >>"${infile}"
