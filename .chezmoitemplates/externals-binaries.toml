@@ -39,6 +39,22 @@
   filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "atuin-x86_64-unknown-linux-musl/atuin"]
   refreshPeriod = "168h"
 
+[".local/bin/lazygit"]
+  type = "file"
+  url = "https://github.com/jesseduffield/lazygit/releases/download/v0.55.1/lazygit_0.55.1_linux_x86_64.tar.gz"
+  executable = true
+  filter.command = "tar"
+  filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "lazygit"]
+  refreshPeriod = "168h"
+
+[".local/bin/lazydocker"]
+  type = "file"
+  url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.24.1/lazydocker_0.24.1_Linux_x86_64.tar.gz"
+  executable = true
+  filter.command = "tar"
+  filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "lazydocker"]
+  refreshPeriod = "168h"
+
 # bat-extras - bash scripts
 [".local/bin/batdiff"]
   type = "file"
