@@ -55,6 +55,14 @@
   filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "lazydocker"]
   refreshPeriod = "168h"
 
+[".local/bin/gh"]
+  type = "file"
+  url = "https://github.com/cli/cli/releases/download/v2.82.0/gh_2.82.0_linux_amd64.tar.gz"
+  executable = true
+  filter.command = "tar"
+  filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "gh_2.82.0_linux_amd64/bin/gh"]
+  refreshPeriod = "168h"
+
 # bat-extras - bash scripts
 [".local/bin/batdiff"]
   type = "file"
