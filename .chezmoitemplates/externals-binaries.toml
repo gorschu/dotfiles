@@ -15,6 +15,14 @@
   filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "zellij"]
   refreshPeriod = "168h"
 
+[".local/bin/topgrade"]
+  type = "file"
+  url = "https://github.com/topgrade-rs/topgrade/releases/download/v16.0.4/topgrade-v16.0.4-x86_64-unknown-linux-musl.tar.gz"
+  executable = true
+  filter.command = "tar"
+  filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "topgrade"]
+  refreshPeriod = "168h"
+
 # bat-extras - bash scripts
 [".local/bin/batdiff"]
   type = "file"
