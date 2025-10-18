@@ -30,7 +30,7 @@ echo "Installing chezmoi..."
 sudo dnf install -y chezmoi
 
 echo ""
-echo "=== Pre-Bootstrap Complete ==="
+echo "=== Bootstrap Complete ==="
 echo ""
 echo "Next steps:"
 echo "  1. Sign in to 1Password (open GUI or run: op account add)"

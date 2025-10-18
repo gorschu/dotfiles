@@ -4,20 +4,16 @@
 
 set -euo pipefail
 
-red=$(tput setaf 1)
-green=$(tput setaf 2)
-reset=$(tput sgr0)
-
 # Check if chezmoi is installed
 if ! command -v chezmoi >/dev/null; then
-  echo "${red}ERROR: chezmoi not found${reset}"
+  echo "ERROR: chezmoi not found"
   echo "Run bootstrap.sh first to install chezmoi and 1Password"
   exit 1
 fi
 
 # GPG/Yubikey setup
 if command -v ykman >/dev/null && ykman list 2>/dev/null | grep -qi yubikey; then
-  echo "${green}Yubikey detected, resetting GPG setup${reset}"
+  echo "Yubikey detected, resetting GPG setup"
   rm -rf "${HOME}/.gnupg"
   pkill gpg-agent 2>/dev/null || true
   pkill keyboxd 2>/dev/null || true
@@ -27,7 +23,7 @@ fi
 # POSIX way to get script's dir: https://stackoverflow.com/a/29834779/12156188
 script_dir="$(cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P)"
 
-echo "${green}Applying dotfiles${reset}"
+echo "Applying dotfiles..."
 
 # Step 1: Initialize chezmoi source directory
 XDG_CONFIG_HOME=$HOME/.config chezmoi init --source="${script_dir}"
@@ -42,7 +38,7 @@ echo "Applying configuration files..."
 XDG_CONFIG_HOME=$HOME/.config chezmoi apply --source="${script_dir}"
 
 echo ""
-echo "${green}Dotfiles applied successfully!${reset}"
+echo "Dotfiles applied successfully!"
 echo ""
 echo "Note: To use git via SSH, run:"
 echo "  chezmoi git remote set-url origin git@github.com:gorschu/dotfiles"
