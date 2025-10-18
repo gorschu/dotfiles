@@ -125,3 +125,12 @@
   url = "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/refs/heads/master/10-nerd-font-symbols.conf"
   refreshPeriod = "168h"
 
+# Static binaries
+[".local/bin/vivid"]
+  type = "archive-file"
+  url = "https://github.com/sharkdp/vivid/releases/download/v0.10.1/vivid-v0.10.1-x86_64-unknown-linux-musl.tar.gz"
+  executable = true
+  stripComponents = 1
+  include = ["*/vivid"]
+  refreshPeriod = "168h"
+

@@ -10,6 +10,17 @@
   ],
   "reviewersFromCodeOwners": true,
   "assigneesFromCodeOwners": true,
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Update GitHub releases in chezmoi externals",
+      "fileMatch": ["^\\.chezmoiexternal\\.toml\\.tmpl$"],
+      "matchStrings": [
+        "url = \"https://github\\.com/(?<depName>[^/]+/[^/]+)/releases/download/(?<currentValue>v?[0-9.]+)/[^\"]+\""
+      ],
+      "datasourceTemplate": "github-releases"
+    }
+  ],
   "packageRules": [
     {
       "description": "Group docker minor/major updates",
