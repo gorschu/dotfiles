@@ -1,4 +1,12 @@
 # Static binaries
+[".local/bin/mise"]
+  type = "file"
+  url = "https://github.com/jdx/mise/releases/download/v2025.10.11/mise-v2025.10.11-linux-x64.tar.gz"
+  executable = true
+  filter.command = "tar"
+  filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "mise/bin/mise"]
+  refreshPeriod = "168h"
+
 [".local/bin/vivid"]
   type = "file"
   url = "https://github.com/sharkdp/vivid/releases/download/v0.10.1/vivid-v0.10.1-x86_64-unknown-linux-musl.tar.gz"
