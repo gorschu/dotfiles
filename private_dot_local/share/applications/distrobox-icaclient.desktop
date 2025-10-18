@@ -1,6 +1,0 @@
-[Desktop Entry]
-Type=Application
-MimeType=application/x-ica
-Name=Distrobox ICAClient
-NoDisplay=true
-Exec=/home/azmo/bin/misc/wfica.sh
