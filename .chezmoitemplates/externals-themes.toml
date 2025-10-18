@@ -1,0 +1,95 @@
+# Theme externals
+[".externals/kitty/tokyonight"]
+  type = "archive"
+  url = "https://github.com/folke/tokyonight.nvim/archive/main.tar.gz"
+  exact = true
+  stripComponents = 3
+  refreshPeriod = "168h"
+  include = ["*/extras/kitty/*.conf"]
+
+[".externals/kitty/catppuccin"]
+  type = "archive"
+  url = "https://github.com/catppuccin/kitty/archive/main.tar.gz"
+  exact = true
+  stripComponents = 1
+  refreshPeriod = "168h"
+  include = ["*/themes", "*/themes/*.conf"]
+
+[".externals/bat/themes/tokyonight"]
+  type = "archive"
+  url = "https://github.com/folke/tokyonight.nvim/archive/main.tar.gz"
+  exact = true
+  stripComponents = 3
+  refreshPeriod = "168h"
+  include = ["*/extras/sublime/*"]
+
+[".externals/bat/themes/catppuccin"]
+  type = "archive"
+  url = "https://github.com/catppuccin/bat/archive/main.tar.gz"
+  exact = true
+  stripComponents = 2
+  refreshPeriod = "168h"
+  include = ["*/themes/*.tmTheme"]
+
+[".externals/btop/themes/catppuccin"]
+  type = "archive"
+  url = "https://github.com/catppuccin/btop/archive/main.tar.gz"
+  exact = true
+  stripComponents = 2
+  refreshPeriod = "168h"
+  include = ["*/themes/*.theme"]
+
+[".externals/tmux/tokyonight"]
+  type = "archive"
+  url = "https://github.com/folke/tokyonight.nvim/archive/main.tar.gz"
+  exact = true
+  stripComponents = 3
+  refreshPeriod = "168h"
+  include = ["*/extras/tmux/*"]
+
+[".config/hypr/themes/catppuccin"]
+  type = "archive"
+  url = "https://github.com/catppuccin/hyprland/archive/main.tar.gz"
+  exact = true
+  stripComponents = 2
+  refreshPeriod = "168h"
+  include = ["*/themes/*"]
+
+[".externals/zsh-syntax-highlighting/catppuccin"]
+  type = "archive"
+  url = "https://github.com/catppuccin/zsh-syntax-highlighting/archive/main.tar.gz"
+  exact = true
+  stripComponents = 2
+  refreshPeriod = "168h"
+  include = ["*/themes/*"]
+
+[".externals/lazygit/catppuccin"]
+  type = "archive"
+  url = "https://github.com/catppuccin/lazygit/archive/main.tar.gz"
+  exact = true
+  stripComponents = 1
+  refreshPeriod = "168h"
+
+[".externals/mako/catppuccin"]
+  type = "archive"
+  url = "https://github.com/catppuccin/mako/archive/main.tar.gz"
+  exact = true
+  stripComponents = 2
+  refreshPeriod = "168h"
+  include = ["*/src/*"]
+
+[".externals/glamour/catppuccin"]
+  type = "archive"
+  url = "https://github.com/catppuccin/glamour/archive/main.tar.gz"
+  exact = true
+  stripComponents = 2
+  refreshPeriod = "168h"
+  include = ["*/themes/*"]
+
+[".externals/neomutt/catppuccin"]
+  type = "archive"
+  url = "https://github.com/catppuccin/neomutt/archive/main.tar.gz"
+  exact = true
+  stripComponents = 1
+  refreshPeriod = "168h"
+  include = ["*/neomuttrc"]
