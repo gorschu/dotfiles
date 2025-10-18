@@ -43,22 +43,9 @@ XDG_CONFIG_HOME=$HOME/.config chezmoi apply --source="${script_dir}"
 
 echo ""
 echo "${green}Dotfiles applied successfully!${reset}"
-
-# Install pre-commit hooks
-if command -v pre-commit >/dev/null; then
-  echo ""
-  echo "Installing pre-commit hooks..."
-  pre-commit install --hook-type commit-msg >/dev/null
-  pre-commit install >/dev/null
-  echo "${green}Pre-commit hooks installed${reset}"
-else
-  echo ""
-  echo "${red}Warning: pre-commit not found, skipping hook installation${reset}"
-  echo "Install with: pip install pre-commit"
-fi
-
 echo ""
 echo "Note: To use git via SSH, run:"
 echo "  chezmoi git remote set-url origin git@github.com:gorschu/dotfiles"
+echo ""
 
 # vim: set ft=sh:
