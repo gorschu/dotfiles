@@ -6,14 +6,8 @@ install.sh
 */**/*.include.asc
 .zshrc.d/*.zwc
 secrets
-dconf.ini
+dconf-settings.ini
 renovate.json
-
-{{- $wants_ssh_keys := list "hephaestus" "artemis" "apollo" }}
-{{- if not (has .chezmoi.hostname $wants_ssh_keys) }}
-.ssh/private
-.ssh/public
-{{- end }}
 
 {{- /* Ignore Linux-specific files on non-Linux systems */ -}}
 {{- if ne .chezmoi.os "linux" }}
@@ -43,7 +37,6 @@ bin
 .ssh/config.d/personal
 .local/share/atuin
 .Xresources*
-dconf.ini
 {{ else }}
 .config/chezmoi/work
 .ssh/config.d/work
