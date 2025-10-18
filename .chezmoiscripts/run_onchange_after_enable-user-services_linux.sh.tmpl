@@ -1,0 +1,44 @@
+#!/bin/bash
+# run_onchange_after - enables and manages user systemd services
+# Hash: {{ include "dot_config/containers/systemd/backrest.container" | sha256sum }}
+# Hash: {{ include "dot_config/containers/systemd/syncthing.container" | sha256sum }}
+# Hash: {{ include "dot_config/private_systemd/private_user/atuin.service" | sha256sum }}
+
+set -euo pipefail
+
+echo "Managing user systemd services..."
+
+# Reload systemd user daemon to pick up any changes
+systemctl --user daemon-reload
+
+# Helper function to start/restart services
+manage_service() {
+    local service="$1"
+    local description="$2"
+
+    if systemctl --user is-active --quiet "$service"; then
+        echo "  $description already running, restarting to pick up changes..."
+        systemctl --user restart "$service"
+    else
+        echo "  Starting $description..."
+        systemctl --user start "$service"
+    fi
+
+    # Verify it started
+    if systemctl --user is-active --quiet "$service"; then
+        echo "  ✓ $description is running"
+    else
+        echo "  ⚠ $description failed to start"
+        systemctl --user status "$service" --no-pager || true
+        return 1
+    fi
+}
+
+# Container services (quadlets)
+manage_service "backrest.service" "Backrest backup service"
+manage_service "syncthing.service" "Syncthing sync service"
+
+# Standard systemd services
+manage_service "atuin.service" "Atuin shell history daemon"
+
+echo "✓ All user services managed"

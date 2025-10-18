@@ -1,8 +1,0 @@
-[Unit]
-Description=Send mails queued in msmtp queue every 5 minutes
-[Timer]
-OnStartupSec=5m
-OnUnitActiveSec=2m
-Persistent=true
-[Install]
-WantedBy=timers.target
