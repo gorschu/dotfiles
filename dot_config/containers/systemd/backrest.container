@@ -3,7 +3,7 @@ Description=Backrest - Web UI for restic backup
 Documentation=https://github.com/garethgeorge/backrest
 
 [Container]
-Image=docker.io/garethgeorge/backrest:v1.9.1
+Image=docker.io/garethgeorge/backrest:v1.9.2
 AutoUpdate=registry
 Label=io.containers.autoupdate=registry
 HostName=%H
