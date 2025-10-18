@@ -1,7 +1,8 @@
 README.md
 LICENSE
 modified_externally
-install.sh
+bootstrap.sh
+apply.sh
 */**/*.include
 */**/*.include.asc
 .zshrc.d/*.zwc
