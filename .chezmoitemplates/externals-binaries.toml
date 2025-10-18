@@ -23,6 +23,22 @@
   filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "topgrade"]
   refreshPeriod = "168h"
 
+[".local/bin/eza"]
+  type = "file"
+  url = "https://github.com/eza-community/eza/releases/download/v0.23.4/eza_x86_64-unknown-linux-musl.tar.gz"
+  executable = true
+  filter.command = "tar"
+  filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "./eza"]
+  refreshPeriod = "168h"
+
+[".local/bin/atuin"]
+  type = "file"
+  url = "https://github.com/atuinsh/atuin/releases/download/v18.8.0/atuin-x86_64-unknown-linux-musl.tar.gz"
+  executable = true
+  filter.command = "tar"
+  filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "atuin-x86_64-unknown-linux-musl/atuin"]
+  refreshPeriod = "168h"
+
 # bat-extras - bash scripts
 [".local/bin/batdiff"]
   type = "file"
