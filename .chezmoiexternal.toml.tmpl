@@ -134,3 +134,52 @@
   filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "vivid-v0.10.1-x86_64-unknown-linux-musl/vivid"]
   refreshPeriod = "168h"
 
+[".local/bin/zellij"]
+  type = "file"
+  url = "https://github.com/zellij-org/zellij/releases/download/v0.43.1/zellij-x86_64-unknown-linux-musl.tar.gz"
+  executable = true
+  filter.command = "tar"
+  filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "zellij"]
+  refreshPeriod = "168h"
+
+# bat-extras - bash scripts
+[".local/bin/batdiff"]
+  type = "file"
+  url = "https://github.com/eth-p/bat-extras/archive/refs/tags/v2024.08.24.tar.gz"
+  executable = true
+  filter.command = "tar"
+  filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "bat-extras-2024.08.24/src/batdiff.sh"]
+  refreshPeriod = "168h"
+
+[".local/bin/batgrep"]
+  type = "file"
+  url = "https://github.com/eth-p/bat-extras/archive/refs/tags/v2024.08.24.tar.gz"
+  executable = true
+  filter.command = "tar"
+  filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "bat-extras-2024.08.24/src/batgrep.sh"]
+  refreshPeriod = "168h"
+
+[".local/bin/batman"]
+  type = "file"
+  url = "https://github.com/eth-p/bat-extras/archive/refs/tags/v2024.08.24.tar.gz"
+  executable = true
+  filter.command = "tar"
+  filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "bat-extras-2024.08.24/src/batman.sh"]
+  refreshPeriod = "168h"
+
+[".local/bin/batwatch"]
+  type = "file"
+  url = "https://github.com/eth-p/bat-extras/archive/refs/tags/v2024.08.24.tar.gz"
+  executable = true
+  filter.command = "tar"
+  filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "bat-extras-2024.08.24/src/batwatch.sh"]
+  refreshPeriod = "168h"
+
+[".local/bin/prettybat"]
+  type = "file"
+  url = "https://github.com/eth-p/bat-extras/archive/refs/tags/v2024.08.24.tar.gz"
+  executable = true
+  filter.command = "tar"
+  filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "bat-extras-2024.08.24/src/prettybat.sh"]
+  refreshPeriod = "168h"
+
