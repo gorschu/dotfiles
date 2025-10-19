@@ -1,8 +1,0 @@
-{{- $secrets := (joinPath .chezmoi.sourceDir "secrets" "mail.toml.asc" | include | decrypt | fromToml) -}}
-# when changing into other mailboxes, use different adresses etc.
-folder-hook {{ $secrets.mail.gatgordonschulzdotde.email }}/* source $XDG_CONFIG_HOME/neomutt/private/accounts/g@gordonschulz.de
-folder-hook {{ $secrets.mail.gsatgmaildotcom.email }}/* source $XDG_CONFIG_HOME/neomutt/private/accounts/gs@gmail.com
-folder-hook {{ $secrets.mail.mfatyahoodotde.email }}/* source $XDG_CONFIG_HOME/neomutt/private/accounts/mf@yahoo.de
-
-
-# vim: ft=muttrc

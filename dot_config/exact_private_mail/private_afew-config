@@ -1,9 +1,0 @@
-[global]
-# This is the default filter chain
-[SpamFilter]
-[KillThreadsFilter]
-[ListMailsFilter]
-[ArchiveSentMailsFilter]
-sent_tag = sent
-[MeFilter]
-[InboxFilter]
