@@ -2,6 +2,7 @@
 # Hyprland window manager and Wayland ecosystem
 
 - name: Install Hyprland ecosystem
+  become: true
   ansible.builtin.dnf:
     name:
       - hyprland

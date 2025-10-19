@@ -2,6 +2,7 @@
 # Multimedia codecs and hardware acceleration
 
 - name: Replace ffmpeg-free with full ffmpeg from RPM Fusion
+  become: true
   ansible.builtin.dnf:
     name:
       - ffmpeg
@@ -14,6 +15,7 @@
     allowerasing: true
 
 - name: Install hardware acceleration with full codec support
+  become: true
   ansible.builtin.dnf:
     name:
       - libva-intel-driver

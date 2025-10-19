@@ -2,6 +2,7 @@
 # Base system configuration - repositories and core utilities
 
 - name: Install RPM Fusion repositories
+  become: true
   ansible.builtin.dnf:
     name:
       - >-
@@ -13,6 +14,7 @@
     state: present
 
 - name: Enable COPR repositories
+  become: true
   community.general.copr:
     name: "{{ item }}"
     state: enabled
@@ -21,23 +23,27 @@
     - scottames/ghostty
 
 - name: Add scootersoftware repository
+  become: true
   ansible.builtin.get_url:
     url: https://www.scootersoftware.com/files/scootersoftware.repo
     dest: /etc/yum.repos.d/scootersoftware.repo
     mode: "0644"
 
 - name: Add scootersoftware GPG key
+  become: true
   ansible.builtin.rpm_key:
     state: present
     key: https://www.scootersoftware.com/RPM-GPG-KEY-scootersoftware
 
 - name: Add zrepl repository
+  become: true
   ansible.builtin.copy:
     src: zrepl.repo
     dest: /etc/yum.repos.d/zrepl.repo
     mode: "0644"
 
 - name: Install system utilities
+  become: true
   ansible.builtin.dnf:
     name:
       - gdisk
@@ -47,6 +53,7 @@
     state: present
 
 - name: Install CLI tools
+  become: true
   ansible.builtin.dnf:
     name:
       - fzf
@@ -59,6 +66,7 @@
     state: present
 
 - name: Install networking tools
+  become: true
   ansible.builtin.dnf:
     name:
       - NetworkManager-tui
