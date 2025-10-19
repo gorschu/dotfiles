@@ -1,0 +1,27 @@
+{{- /* Detect distro logo at chezmoi apply time to avoid filesystem crawling on every shell startup */ -}}
+{{- $logoFile := "" -}}
+{{- $logoPaths := list
+  "/usr/share/pixmaps/fedora-logo.png"
+  "/usr/share/pixmaps/archlinux-logo.png"
+  "/usr/share/pixmaps/debian-logo.png"
+  "/usr/share/pixmaps/ubuntu-logo.png"
+  "/usr/share/pixmaps/opensuse-logo.png"
+  "/usr/share/pixmaps/centos-logo.png"
+  "/usr/share/pixmaps/redhat-logo.png"
+-}}
+{{- range $logoPaths -}}
+  {{- if stat . -}}
+    {{- $logoFile = . -}}
+    {{- break -}}
+  {{- end -}}
+{{- end -}}
+if [[ -o interactive ]]; then
+  if command -v fastfetch &>/dev/null; then
+{{- if $logoFile }}
+    # Use kitty-direct for WezTerm/Ghostty/Kitty (fastest)
+    fastfetch -c examples/7.jsonc --logo '{{ $logoFile }}' --logo-type kitty-direct --logo-width 35
+{{- else }}
+    fastfetch -c examples/7.jsonc
+{{- end }}
+  fi
+fi

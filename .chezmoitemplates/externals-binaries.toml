@@ -15,6 +15,14 @@
   filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "starship"]
   refreshPeriod = "168h"
 
+[".local/bin/fastfetch"]
+  type = "file"
+  url = "https://github.com/fastfetch-cli/fastfetch/releases/download/2.54.0/fastfetch-linux-amd64.tar.gz"
+  executable = true
+  filter.command = "tar"
+  filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "fastfetch-linux-amd64/usr/bin/fastfetch"]
+  refreshPeriod = "168h"
+
 [".local/bin/vivid"]
   type = "file"
   url = "https://github.com/sharkdp/vivid/releases/download/v0.10.1/vivid-v0.10.1-x86_64-unknown-linux-musl.tar.gz"
