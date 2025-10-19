@@ -1,0 +1,29 @@
+---
+# Networking configuration - hostname and tailscale
+
+- name: Set hostname
+  ansible.builtin.hostname:
+    name: "{{ hostname }}"
+  become: true
+  when: hostname is defined
+
+- name: Add hostname to /etc/hosts
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    regexp: "^127\\.0\\.1\\.1\\s"
+    line: "127.0.1.1 {{ hostname }}"
+    state: present
+  become: true
+  when: hostname is defined
+
+- name: Install and configure Tailscale
+  when: networking_tailscale_oauth_client_id is defined and networking_tailscale_oauth_client_secret is defined
+  become: true
+  block:
+    - name: Enable Tailscale with OAuth
+      ansible.builtin.include_role:
+        name: artis3n.tailscale
+      vars:
+        tailscale_oauth_client_id: "{{ networking_tailscale_oauth_client_id }}"
+        tailscale_oauth_secret: "{{ networking_tailscale_oauth_client_secret }}"
+        tailscale_args: "--hostname={{ hostname }}"

@@ -21,11 +21,24 @@ state:
 
 # Run full Ansible system setup
 ansible-setup:
-    cd system-ansible && ansible-playbook local.yml --ask-become-pass
+    #!/bin/bash
+    HOSTNAME=$(chezmoi data --format=json | jq -r '.chezmoi.hostname')
+    cd system-ansible && ansible-playbook local.yml \
+      --vault-password-file <(op read "op://Ansible/Workstations/password") \
+      --extra-vars @vault.yml \
+      --extra-vars "hostname=$HOSTNAME" \
+      --ask-become-pass
 
 # Run Ansible with specific tags (e.g., just ansible-tags base,multimedia)
 ansible-tags TAGS:
-    cd system-ansible && ansible-playbook local.yml --tags {{TAGS}} --ask-become-pass
+    #!/bin/bash
+    HOSTNAME=$(chezmoi data --format=json | jq -r '.chezmoi.hostname')
+    cd system-ansible && ansible-playbook local.yml \
+      --vault-password-file <(op read "op://Ansible/Workstations/password") \
+      --extra-vars @vault.yml \
+      --extra-vars "hostname=$HOSTNAME" \
+      --tags {{TAGS}} \
+      --ask-become-pass
 
 # Lint Ansible playbook
 ansible-lint:
@@ -37,7 +50,14 @@ ansible-check:
 
 # Run Ansible in check mode (dry-run)
 ansible-dry-run:
-    cd system-ansible && ansible-playbook local.yml --check --ask-become-pass
+    #!/bin/bash
+    HOSTNAME=$(chezmoi data --format=json | jq -r '.chezmoi.hostname')
+    cd system-ansible && ansible-playbook local.yml \
+      --vault-password-file <(op read "op://Ansible/Workstations/password") \
+      --extra-vars @vault.yml \
+      --extra-vars "hostname=$HOSTNAME" \
+      --check \
+      --ask-become-pass
 
 # Install Ansible and required collections
 ansible-install:
