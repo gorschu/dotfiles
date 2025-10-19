@@ -1,7 +1,0 @@
-{{ if ne .chezmoi.os "darwin" }}
-# pull in linuxbrew only for interactive terminals, else all hell breaks loose
-[[ -d /home/linuxbrew/.linuxbrew && $- == *i* ]] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-{{ end }}
-# autoupdate brew every 24 hours
-export HOMEBREW_AUTO_UPDATE_SECS=86400
-export HOMEBREW_BUNDLE_FILE=${XDG_CONFIG_HOME:-$HOME/.config}/brewfile
