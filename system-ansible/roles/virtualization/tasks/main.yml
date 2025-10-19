@@ -1,0 +1,49 @@
+---
+- name: Install Incus container manager and tooling
+  become: true
+  ansible.builtin.dnf:
+    name:
+      - incus
+      - incus-tools
+      - incus-selinux
+    state: present
+
+- name: Ensure incus-admin group exists
+  become: true
+  ansible.builtin.group:
+    name: incus-admin
+    state: present
+
+- name: Add users to incus-admin group
+  become: true
+  ansible.builtin.user:
+    name: "{{ item }}"
+    groups: incus-admin
+    append: true
+  loop: "{{ virtualization_incus_admin_users }}"
+  when: virtualization_incus_admin_users | length > 0
+
+- name: Ensure root subordinate UID range for Incus
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/subuid
+    create: true
+    mode: "0644"
+    regexp: '^root:1000000:1000000000$'
+    line: "{{ virtualization_incus_root_subid_range }}"
+
+- name: Ensure root subordinate GID range for Incus
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/subgid
+    create: true
+    mode: "0644"
+    regexp: '^root:1000000:1000000000$'
+    line: "{{ virtualization_incus_root_subid_range }}"
+
+- name: Enable and start Incus service
+  become: true
+  ansible.builtin.systemd:
+    name: incus.service
+    enabled: true
+    state: started
