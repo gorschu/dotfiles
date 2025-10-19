@@ -56,11 +56,9 @@ ohmyzsh/ohmyzsh path:plugins/gnu-utils
 ohmyzsh/ohmyzsh path:plugins/extract
 ohmyzsh/ohmyzsh path:plugins/mise
 ohmyzsh/ohmyzsh path:plugins/rsync
-ohmyzsh/ohmyzsh path:plugins/taskwarrior
 ohmyzsh/ohmyzsh path:plugins/ripgrep kind:fpath
 ohmyzsh/ohmyzsh path:plugins/vscode
 ohmyzsh/ohmyzsh path:plugins/vagrant
-ohmyzsh/ohmyzsh path:plugins/universalarchive
 ohmyzsh/ohmyzsh path:plugins/transfer
 {{ if and (hasKey . "hostname") (eq .chezmoi.hostname .hostname) }}
   ohmyzsh/ohmyzsh path:plugins/gpg-agent
@@ -80,7 +78,6 @@ ohmyzsh/ohmyzsh path:plugins/gh kind:fpath
 # k8s
 ohmyzsh/ohmyzsh path:plugins/helm
 ohmyzsh/ohmyzsh path:plugins/kubectl
-ohmyzsh/ohmyzsh path:plugins/istioctl
 
 # misc stuff
 mdumitru/fancy-ctrl-z
