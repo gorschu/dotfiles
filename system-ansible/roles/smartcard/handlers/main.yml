@@ -1,0 +1,11 @@
+---
+- name: Smartcard reload systemd manager configuration
+  become: true
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Smartcard restart pcscd service
+  become: true
+  ansible.builtin.systemd:
+    name: pcscd.service
+    state: restarted

@@ -3,5 +3,9 @@
 # make gnugpg play nicely with pcscd
 # it is still a complete mess
 disable-ccid
+# allow sharing the reader with pcscd without leaving it locked
+pcsc-shared
+# reset the card if it sits idle to recover from stuck sessions
+card-timeout 10
 {{ end }}
 {{ end }}
