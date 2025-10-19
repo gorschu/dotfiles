@@ -7,6 +7,14 @@
   filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "mise/bin/mise"]
   refreshPeriod = "168h"
 
+[".local/bin/starship"]
+  type = "file"
+  url = "https://github.com/starship/starship/releases/download/v1.23.0/starship-x86_64-unknown-linux-musl.tar.gz"
+  executable = true
+  filter.command = "tar"
+  filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "starship"]
+  refreshPeriod = "168h"
+
 [".local/bin/vivid"]
   type = "file"
   url = "https://github.com/sharkdp/vivid/releases/download/v0.10.1/vivid-v0.10.1-x86_64-unknown-linux-musl.tar.gz"
