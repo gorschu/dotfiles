@@ -120,11 +120,11 @@
 
 [user]
 {{ if and (hasKey . "hostname") (eq .chezmoi.hostname .hostname) }}
-  {{- $secrets := includeTemplate "secrets-work" . | fromJson }}
+  {{- $secrets := includeTemplate "secrets/secrets-work" . | fromJson }}
   name = {{ $secrets.work.name }}
   email = {{ $secrets.work.email }}
 {{ else }}
-  {{- $secrets := includeTemplate "secrets-personal" . | fromJson }}
+  {{- $secrets := includeTemplate "secrets/secrets-personal" . | fromJson }}
   name = Gordon Schulz
   email = {{ $secrets.personal.azmo.email }}
 {{ end }}

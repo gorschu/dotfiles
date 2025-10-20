@@ -1,13 +1,13 @@
 {{- /* External dependencies organized by category */ -}}
 
 {{- /* Themes and color schemes */ -}}
-{{ includeTemplate "externals-themes.toml" . }}
+{{ includeTemplate "externals/externals-themes.toml" . }}
 
 {{- /* Static binaries and CLI tools */ -}}
-{{ includeTemplate "externals-binaries.toml" . }}
+{{ includeTemplate "externals/externals-binaries.toml" . }}
 
 {{- /* Shell plugins and utilities */ -}}
-{{ includeTemplate "externals-shell.toml" . }}
+{{ includeTemplate "externals/externals-shell.toml" . }}
 
 {{- /* Editor configuration */ -}}
-{{ includeTemplate "externals-editor.toml" . }}
+{{ includeTemplate "externals/externals-editor.toml" . }}
