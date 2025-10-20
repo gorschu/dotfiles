@@ -1,0 +1,5 @@
+{{- if hasPrefix "tokyonight-" .colorscheme -}}
+{{ .chezmoi.homeDir }}/.config/zathura/themes/tokyonight
+{{- else if hasPrefix "catppuccin-" .colorscheme -}}
+{{ .chezmoi.homeDir }}/.externals/zathura/catppuccin/{{ .colorscheme }}
+{{- end -}}

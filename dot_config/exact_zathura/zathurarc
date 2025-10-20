@@ -1,5 +1,5 @@
-# load color scheme
-include     colors-azmo
+# Load color scheme
+include colors
 
-# don't recolor everything and the kitchen sink, we are looking at PDFs after all
+# Don't recolor everything - we're looking at PDFs after all
 set recolor false
