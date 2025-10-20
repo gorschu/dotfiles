@@ -1,4 +1,4 @@
-#!/bin/env python3
+#!/usr/bin/env python3
 
 # Add custom application types to mimeapps.list
 
@@ -8,7 +8,8 @@ import sys
 
 config_home = os.environ.get("XDG_CONFIG_HOME")
 if config_home is None:
-    config_home = os.environ.get("HOME")
+    home = os.environ.get("HOME", os.path.expanduser("~"))
+    config_home = os.path.join(home, ".config")
 xdg_desktop = os.environ.get("XDG_CURRENT_DESKTOP")
 
 config = configparser.ConfigParser()
