@@ -1,1 +1,0 @@
-{{ if eq .colorscheme "dracula"}}{{ include (print .chezmoi.homeDir "/.vendor/dracula-tig/config") }}{{ else if eq .colorscheme "gruvbox" }}{{ include (print .chezmoi.homeDir "/.vendor/gruvbox-tig/tigrc") }}{{ end }}
