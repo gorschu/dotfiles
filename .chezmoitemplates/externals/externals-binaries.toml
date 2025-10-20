@@ -135,3 +135,17 @@
   filter.command = "tar"
   filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "difft"]
   refreshPeriod = "168h"
+
+[".local/bin/yazi"]
+  type = "archive-file"
+  url = "https://github.com/sxyazi/yazi/releases/download/v25.5.31/yazi-x86_64-unknown-linux-musl.zip"
+  executable = true
+  path = "yazi-x86_64-unknown-linux-musl/yazi"
+  refreshPeriod = "168h"
+
+[".local/bin/ya"]
+  type = "archive-file"
+  url = "https://github.com/sxyazi/yazi/releases/download/v25.5.31/yazi-x86_64-unknown-linux-musl.zip"
+  executable = true
+  path = "yazi-x86_64-unknown-linux-musl/ya"
+  refreshPeriod = "168h"
