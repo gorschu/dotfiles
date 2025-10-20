@@ -16,6 +16,11 @@ manage_service() {
     local service="$1"
     local description="$2"
 
+    if ! systemctl --user list-unit-files "$service" >/dev/null 2>&1; then
+        echo "  Skipping $description (unit $service not found)"
+        return 0
+    fi
+
     if systemctl --user is-active --quiet "$service"; then
         echo "  $description already running, restarting to pick up changes..."
         systemctl --user restart "$service"
