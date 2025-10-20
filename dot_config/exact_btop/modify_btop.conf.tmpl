@@ -1,0 +1,33 @@
+#!/bin/bash
+# shellcheck disable=all
+# Modify btop.conf to set the color theme based on colorscheme variable
+# This allows btop to manage its own config while we inject theme settings
+
+set -euo pipefail
+
+# Read the existing config (or create minimal config if it doesn't exist)
+if [ ! -s /dev/stdin ]; then
+  echo '#? Config file for btop v. 1.4.3'
+  echo ''
+fi
+
+# Process the config line by line
+while IFS= read -r line; do
+  # Skip existing color_theme lines - we'll add our own
+  if [[ "$line" =~ ^color_theme[[:space:]]*= ]]; then
+    continue
+  fi
+  echo "$line"
+done
+
+# Add our color theme configuration at the end
+echo ""
+echo "#* Theme configuration managed by chezmoi"
+{{ if hasPrefix "tokyonight-" .colorscheme -}}
+echo 'color_theme = "/usr/share/btop/themes/tokyo-night.theme"'
+{{ else if hasPrefix "catppuccin-" .colorscheme -}}
+{{ $flavor := trimPrefix "catppuccin-" .colorscheme -}}
+echo 'color_theme = "catppuccin_{{ $flavor }}"'
+{{ else -}}
+echo '#color_theme = "Default"'
+{{ end -}}
