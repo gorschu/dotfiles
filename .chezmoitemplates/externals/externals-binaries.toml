@@ -127,3 +127,11 @@
   filter.command = "tar"
   filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "bat-extras-2024.08.24/src/prettybat.sh"]
   refreshPeriod = "168h"
+
+[".local/bin/difft"]
+  type = "file"
+  url = "https://github.com/Wilfred/difftastic/releases/download/0.65.0/difft-x86_64-unknown-linux-musl.tar.gz"
+  executable = true
+  filter.command = "tar"
+  filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "difft"]
+  refreshPeriod = "168h"
