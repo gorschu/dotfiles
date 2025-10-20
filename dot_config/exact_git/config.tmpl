@@ -1,131 +1,210 @@
-[alias]
-    dft = difftool --tool difftastic
-    fixup = "!git log -n 50 --pretty=format:'%h %s' --no-merges | fzf | cut -c -7 | xargs -o git commit --fixup"
-    sync = !git switch main && git pull --prune && git branch --format '%(refname:short) %(upstream:track)' | awk '$2 == \"[gone]\" { print $1 }' | xargs -r git branch -D
-
-[color]
-    ui = auto
-
-[commit]
-    gpgsign = true
-    verbose = true
-
-[credential]
-    {{ if and (hasKey . "hostname") (eq .chezmoi.hostname .hostname) }}
-	  helper = osxkeychain
-    {{ else }}
-    helper = cache --timeout=3600
-	  {{ end }}
+# =============================================================================
+# Core Settings
+# =============================================================================
 
 [core]
-    quotepath = false
-    pager = bat
-
-[diff]
-    tool = bc3
-    colorMoved = "dimmed-zebra"
-[diff "gpg"]
-    textconv = gpg --no-tty --decrypt
-[difftool]
-    prompt = false
-    keepBackup = false
-[difftool "bc3"]
-    trustExitCode = true
-[difftool "meld"]
-    trustExitCode = true
-    cmd = meld "$LOCAL" "$REMOTE"
-[difftool "difftastic"]
-        cmd = difft --color auto --background dark --display side-by-side "$LOCAL" "$REMOTE"
-
-[feature]
-    manyFiles = true
-
-[fetch]
-    prune = true
-
-[filter "lfs"]
-	clean = "git-lfs clean -- %f"
-	process = "git-lfs filter-process"
-	required = true
-	smudge = "git-lfs smudge -- %f"
-
-{{ if and (hasKey . "hostname") (eq .chezmoi.hostname .hostname) }}
-[lfs "https://github.intern/"]
-    locksverify = true
-[lfs "https://github-abnahme.intern/"]
-    locksverify = true
-[lfs "https://github-entwicklung.intern/"]
-    locksverify = true
-{{ end }}
-
-[github]
-    user = gorschu
-
-[gui]
-    historybrowser = git-dag
-
-[help]
-    autocorrect = 20
-
-[includeif "gitdir:~/projects/work/**"]
-    path = ~/projects/work/.gitconfig
-[includeif "gitdir:~/sync/workstations/projects/work/**"]
-    path = ~/projects/work/.gitconfig
+	quotepath = false
+{{- if lookPath "bat" }}
+	pager = bat
+{{- else }}
+	# pager = bat  # bat not found - install bat for syntax highlighted paging
+{{- end }}
+	fsmonitor = true
+	untrackedCache = true
 
 [init]
-    {{- if stat (joinPath .chezmoi.homeDir ".git-template") }}
-    templatedir = ~/.git-template
-    {{- end }}
-    defaultBranch = main
+{{- if stat (joinPath .chezmoi.homeDir ".config" "git" "template") }}
+	templatedir = ~/.config/git/template
+{{- end }}
+	defaultBranch = main
 
-[merge]
-    tool = bc3
-    conflictStyle = diff3
-[mergetool]
-    prompt = false
-    keepBackup = false
-    keepTemporaries = false
-[mergetool "meld"]
-    # ONLY use one of these, personal preference
-    cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
-    # cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
-    trustExitCode = true
-[mergetool "bc3"]
-    trustExitCode = true
-[rerere]
-    enabled = true
+[color]
+	ui = auto
 
-[pager]
-    difftool = bat
+[column]
+	ui = auto
+	branch = auto
+	tag = auto
 
-[pull]
-    rebase = true
-
-[push]
-    default = simple
-    autoSetupRemote = true
-
-[rebase]
-    autoSquash = true
-    autoStash = true
-    updateRefs = true
-
-[submodule]
-    fetchJobs = 4
-    recurse = true
-
-[tag]
-    forceSignAnnotated = true
-    gpgSign = true
+# =============================================================================
+# User Identity
+# =============================================================================
 
 [user]
 {{ if and (hasKey . "hostname") (eq .chezmoi.hostname .hostname) }}
-  {{- $secrets := includeTemplate "secrets/secrets-work" . | fromJson }}
-  name = {{ $secrets.work.name }}
-  email = {{ $secrets.work.email }}
+	{{- $secrets := includeTemplate "secrets/secrets-work" . | fromJson }}
+	name = {{ $secrets.work.name }}
+	email = {{ $secrets.work.email }}
 {{ else }}
-  {{- $secrets := includeTemplate "secrets/secrets-personal" . | fromJson }}
-  name = Gordon Schulz
-  email = {{ $secrets.personal.azmo.email }}
+	{{- $secrets := includeTemplate "secrets/secrets-personal" . | fromJson }}
+	name = Gordon Schulz
+	email = {{ $secrets.personal.azmo.email }}
 {{ end }}
-  signingkey = {{ .gpgkey }}
+	signingkey = {{ .gpgkey }}
+
+[github]
+	user = gorschu
+
+# =============================================================================
+# Signing & Security
+# =============================================================================
+
+[commit]
+	gpgsign = true
+	verbose = true
+
+[tag]
+	forceSignAnnotated = true
+	gpgSign = true
+
+[credential]
+{{ if and (hasKey . "hostname") (eq .chezmoi.hostname .hostname) }}
+	helper = osxkeychain
+{{ else }}
+	helper = cache --timeout=7200
+{{ end }}
+
+# =============================================================================
+# Diff & Merge Tools
+# =============================================================================
+
+[diff]
+	tool = bc3
+	algorithm = histogram
+	colorMoved = dimmed-zebra
+	colorMovedWS = allow-indentation-change
+
+[diff "gpg"]
+	textconv = gpg --no-tty --decrypt
+
+[difftool]
+	prompt = false
+	keepBackup = false
+
+[difftool "bc3"]
+	trustExitCode = true
+
+[difftool "meld"]
+	trustExitCode = true
+	cmd = meld "$LOCAL" "$REMOTE"
+
+[difftool "difftastic"]
+	cmd = difft --color auto --background dark --display side-by-side "$LOCAL" "$REMOTE"
+
+[merge]
+	tool = bc3
+	conflictStyle = diff3
+
+[mergetool]
+	prompt = false
+	keepBackup = false
+	keepTemporaries = false
+
+[mergetool "bc3"]
+	trustExitCode = true
+
+[mergetool "meld"]
+	# Choose one approach (personal preference)
+	cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
+	# cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
+	trustExitCode = true
+
+[rerere]
+	enabled = true
+
+# =============================================================================
+# Workflow & Behavior
+# =============================================================================
+
+[pull]
+	rebase = true
+
+[push]
+	autoSetupRemote = true
+
+[fetch]
+	prune = true
+
+[rebase]
+	autoSquash = true
+	autoStash = true
+	updateRefs = true
+
+[help]
+	autocorrect = 20
+
+# =============================================================================
+# Performance & Features
+# =============================================================================
+
+[feature]
+	manyFiles = true
+	experimental = true
+
+[maintenance]
+	auto = true
+	strategy = incremental
+
+# =============================================================================
+# Submodules
+# =============================================================================
+
+[submodule]
+	fetchJobs = 4
+	recurse = true
+
+# =============================================================================
+# Git LFS
+# =============================================================================
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	process = git-lfs filter-process
+	required = true
+	smudge = git-lfs smudge -- %f
+
+{{ if and (hasKey . "hostname") (eq .chezmoi.hostname .hostname) }}
+[lfs "https://github.intern/"]
+	locksverify = true
+
+[lfs "https://github-abnahme.intern/"]
+	locksverify = true
+
+[lfs "https://github-entwicklung.intern/"]
+	locksverify = true
+{{ end }}
+
+# =============================================================================
+# Aliases
+# =============================================================================
+
+[alias]
+	# Quick diff with difftastic
+	dft = difftool --tool difftastic
+
+	# Interactive fixup with fzf
+	fixup = "!git log -n 50 --pretty=format:'%h %s' --no-merges | fzf | cut -c -7 | xargs -o git commit --fixup"
+
+	# Sync: update main and clean gone branches
+	sync = !git switch main && git pull --prune && git branch --format '%(refname:short) %(upstream:track)' | awk '$2 == \"[gone]\" { print $1 }' | xargs -r git branch -D
+
+# =============================================================================
+# Work-Specific Includes
+# =============================================================================
+
+[includeif "gitdir:~/projects/work/**"]
+	path = ~/projects/work/.gitconfig
+
+[includeif "gitdir:~/sync/workstations/projects/work/**"]
+	path = ~/projects/work/.gitconfig
+
+# =============================================================================
+# Pager Configuration
+# =============================================================================
+
+[pager]
+{{- if lookPath "bat" }}
+	difftool = bat
+{{- else }}
+	# difftool = bat  # bat not found - install bat for syntax highlighted diffs
+{{- end }}
