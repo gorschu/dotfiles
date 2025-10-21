@@ -17,6 +17,9 @@ Volume=%h/.cache/backrest:/cache:Z
 # Note: No SELinux relabeling (:Z) to avoid relabeling entire $HOME
 Volume=%h:/backup-home:ro
 
+# Mount a directory for restore, we relabel here
+Volume=%h/tmp/backrest-restore:/backup-restore
+
 # Network - localhost only for security
 PublishPort=127.0.0.1:9898:9898
 
@@ -40,6 +43,7 @@ Memory=2G
 ExecStartPre=/usr/bin/mkdir -p %h/.local/share/backrest
 ExecStartPre=/usr/bin/mkdir -p %h/.config/backrest
 ExecStartPre=/usr/bin/mkdir -p %h/.cache/backrest
+ExecStartPre=/usr/bin/mkdir -p %h/tmp/backrest-restore
 CPUQuota=200%
 Restart=always
 TimeoutStartSec=300
