@@ -9,6 +9,9 @@
   hosts: localhost
   connection: local
 
+  vars_files:
+    - vars.yml
+
   roles:
     - role: networking
       tags: [networking, tailscale]
@@ -27,4 +30,6 @@
       tags: [desktop, gui]
     - role: hyprland
       tags: [hyprland, wayland]
+    - role: niri
+      tags: [niri, wayland]
 # vim: set ft=yaml.ansible:

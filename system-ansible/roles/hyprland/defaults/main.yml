@@ -1,0 +1,5 @@
+---
+# Hyprland role defaults
+
+# State of Hyprland installation: present or absent
+hyprland_state: absent

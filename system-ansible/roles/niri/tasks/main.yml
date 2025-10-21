@@ -1,0 +1,24 @@
+---
+# Niri wayland compositor and ecosystem
+
+- name: "Niri ecosystem - {{ 'Install' if niri_state == 'present' else 'Remove' }}"
+  become: true
+  ansible.builtin.dnf:
+    name:
+      # Core compositor
+      - niri
+      # Application launcher
+      - fuzzel
+      # Notification daemon
+      - mako
+      # Status bar
+      - waybar
+      # Sway utilities (lock/idle/background)
+      - swaylock
+      - swayidle
+      - swaybg
+      # USB automounting
+      - udiskie
+      # X11 app support for Wayland
+      - xwayland-satellite
+    state: "{{ niri_state }}"

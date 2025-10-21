@@ -1,0 +1,5 @@
+---
+# Niri role defaults
+
+# State of Niri installation: present or absent
+niri_state: present

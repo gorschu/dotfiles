@@ -1,7 +1,7 @@
 ---
 # Hyprland window manager and Wayland ecosystem
 
-- name: Install Hyprland ecosystem
+- name: "Hyprland ecosystem - {{ 'Install' if hyprland_state == 'present' else 'Remove' }}"
   become: true
   ansible.builtin.dnf:
     name:
@@ -23,4 +23,4 @@
       - swww
       - cliphist
       - fuzzel
-    state: present
+    state: "{{ hyprland_state }}"

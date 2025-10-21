@@ -1,0 +1,10 @@
+---
+# System-level configuration variables
+#
+# Hyprland window manager state: present or absent
+# Set to 'absent' to remove Hyprland and its ecosystem
+hyprland_state: absent
+
+# Niri window manager state: present or absent
+# Set to 'absent' to remove Niri and its ecosystem
+niri_state: present
