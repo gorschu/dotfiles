@@ -23,3 +23,8 @@
   type = "file"
   url = "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/refs/heads/master/10-nerd-font-symbols.conf"
   refreshPeriod = "168h"
+
+[".config/fastfetch/presets/7.jsonc"]
+  type = "file"
+  url = "https://raw.githubusercontent.com/fastfetch-cli/fastfetch/refs/heads/dev/presets/examples/7.jsonc"
+  refreshPeriod = "168h"
