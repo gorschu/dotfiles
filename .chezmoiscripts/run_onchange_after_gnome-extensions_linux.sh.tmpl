@@ -54,10 +54,10 @@ while IFS= read -r ext; do
     fi
   done
 
-  # If not in desired list, disable it
+  # If not in desired list, uninstall it
   if [[ $FOUND -eq 0 ]]; then
-    echo "  Disabling unmanaged extension: $ext"
-    gext disable "$ext" 2>/dev/null || true
+    echo "  Removing unmanaged extension: $ext"
+    gext uninstall "$ext" 2>/dev/null || true
   fi
 done <<<"$INSTALLED"
 
