@@ -1,5 +1,5 @@
 #!/bin/bash
-# run_onchange_after - manages GNOME extensions via gext
+# Manages GNOME extensions via gnome-extensions and extensions.gnome.org API
 # Extensions list hash: {{ .gnome.extensions.enabled | toJson | sha256sum }}
 
 set -euo pipefail
@@ -10,32 +10,86 @@ if ! command -v gnome-shell &>/dev/null; then
   exit 0
 fi
 
-echo "Managing GNOME extensions..."
-
-# Ensure gext is installed
-if ! command -v gext &>/dev/null; then
-  echo "  Installing gext (gnome-extensions-cli)..."
-  pipx install gnome-extensions-cli --system-site-packages 2>/dev/null || {
-    echo "  Warning: Failed to install gext, skipping extension management"
-    exit 0
-  }
-  # Ensure pipx binaries are in PATH for this session
-  export PATH="$HOME/.local/bin:$PATH"
+# Check for gnome-extensions
+if ! command -v gnome-extensions &>/dev/null; then
+  echo "ERROR: gnome-extensions command not found"
+  echo "Please install gnome-extensions-app package"
+  exit 1
 fi
 
-# Get list of currently installed extensions
-INSTALLED=$(gext list --enabled --disabled 2>/dev/null | awk '{print $1}' || echo "")
+echo "Managing GNOME extensions..."
+
+# Get GNOME Shell version
+SHELL_VERSION=$(gnome-shell --version | cut -d' ' -f3 | cut -d'.' -f1)
+
+# Function to download and install an extension
+install_extension() {
+  local uuid="$1"
+  local tmpdir
+
+  echo "  Downloading $uuid..."
+
+  # Fetch extension info from API
+  local info
+  info=$(curl -sS "https://extensions.gnome.org/extension-info/?uuid=$uuid&shell_version=$SHELL_VERSION" 2>/dev/null || echo "")
+
+  if [[ -z "$info" ]]; then
+    echo "    ERROR: Failed to fetch extension info for $uuid"
+    return 1
+  fi
+
+  # Check if extension exists for this shell version
+  local download_url
+  download_url=$(echo "$info" | jq -r '.download_url // empty')
+
+  if [[ -z "$download_url" ]]; then
+    echo "    ERROR: Extension $uuid not available for GNOME Shell $SHELL_VERSION"
+    return 1
+  fi
+
+  # Download extension
+  tmpdir=$(mktemp -d)
+  if ! curl -sS -L -o "$tmpdir/extension.zip" "https://extensions.gnome.org$download_url" 2>/dev/null; then
+    echo "    ERROR: Failed to download $uuid"
+    rm -rf "$tmpdir"
+    return 1
+  fi
+
+  # Install extension
+  if gnome-extensions install --force "$tmpdir/extension.zip" &>/dev/null; then
+    echo "  Installed $uuid"
+  else
+    echo "    ERROR: Failed to install $uuid"
+    rm -rf "$tmpdir"
+    return 1
+  fi
+
+  rm -rf "$tmpdir"
+  return 0
+}
+
+# Get list of currently installed user extensions
+INSTALLED=$(gnome-extensions list --user 2>/dev/null || echo "")
+
+# Get list of currently enabled extensions
+ENABLED=$(gnome-extensions list --enabled 2>/dev/null || echo "")
 
 # Install and enable desired extensions
 {{ if .gnome.extensions.enabled -}}
 {{ range .gnome.extensions.enabled -}}
-echo "  Installing {{ . }}..."
-gext install "{{ . }}" 2>/dev/null || echo "    Already installed or failed"
-gext enable "{{ . }}" 2>/dev/null || true
+# Check if already installed
+if ! grep -q "{{ . }}" <<<"$INSTALLED"; then
+  install_extension "{{ . }}"
+fi
+# Check if already enabled
+if ! grep -q "{{ . }}" <<<"$ENABLED"; then
+  echo "  Enabling {{ . }}..."
+  gnome-extensions enable "{{ . }}" &>/dev/null || true
+fi
 {{ end -}}
 {{ end }}
 
-# Disable extensions not in our list
+# Uninstall extensions not in our list
 {{ if .gnome.extensions.enabled -}}
 DESIRED_EXTENSIONS=({{ range .gnome.extensions.enabled }}"{{ . }}" {{ end }})
 {{ else -}}
@@ -57,7 +111,7 @@ while IFS= read -r ext; do
   # If not in desired list, uninstall it
   if [[ $FOUND -eq 0 ]]; then
     echo "  Removing unmanaged extension: $ext"
-    gext uninstall "$ext" 2>/dev/null || true
+    gnome-extensions uninstall "$ext" &>/dev/null || true
   fi
 done <<<"$INSTALLED"
 

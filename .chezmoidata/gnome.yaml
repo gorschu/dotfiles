@@ -2,4 +2,4 @@
 # GNOME extensions
 gnome:
   extensions:
-    enabled: []
+    enabled: ["switcher@landau.fi", "paperwm@paperwm.github.com", "caffeine@patapon.info"]
