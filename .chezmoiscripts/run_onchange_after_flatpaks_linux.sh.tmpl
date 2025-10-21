@@ -1,0 +1,58 @@
+#!/bin/bash
+# run_onchange_after - manages user flatpak applications
+# Flatpak list hash: {{ .flatpak.apps | toJson | sha256sum }}
+
+set -euo pipefail
+
+# Only run if flatpak is installed
+if ! command -v flatpak &>/dev/null; then
+  echo "Flatpak not found, skipping flatpak management"
+  exit 0
+fi
+
+echo "Managing Flatpak applications..."
+
+# Ensure flathub remote is added for user
+if ! flatpak remotes --user | grep -q flathub; then
+  echo "  Adding Flathub remote..."
+  flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+fi
+
+# Get list of currently installed user flatpaks
+INSTALLED=$(flatpak list --user --app --columns=application 2>/dev/null || echo "")
+
+# Install desired flatpaks
+{{ if .flatpak.apps -}}
+{{ range .flatpak.apps -}}
+echo "  Installing {{ . }}..."
+flatpak install --user --noninteractive flathub "{{ . }}" 2>/dev/null || echo "    Already installed or failed"
+{{ end -}}
+{{ end }}
+
+# Remove flatpaks not in our list
+{{ if .flatpak.apps -}}
+DESIRED_APPS=({{ range .flatpak.apps }}"{{ . }}" {{ end }})
+{{ else -}}
+DESIRED_APPS=()
+{{ end -}}
+
+while IFS= read -r app; do
+  [[ -z "$app" ]] && continue
+
+  # Check if app is in our desired list
+  FOUND=0
+  for desired in "${DESIRED_APPS[@]}"; do
+    if [[ "$app" == "$desired" ]]; then
+      FOUND=1
+      break
+    fi
+  done
+
+  # If not in desired list, uninstall it
+  if [[ $FOUND -eq 0 ]]; then
+    echo "  Removing unmanaged flatpak: $app"
+    flatpak uninstall --user --noninteractive "$app" 2>/dev/null || true
+  fi
+done <<< "$INSTALLED"
+
+echo "✓ Flatpak applications managed"

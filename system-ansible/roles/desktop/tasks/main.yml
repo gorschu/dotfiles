@@ -12,14 +12,3 @@
       - wezterm
       - ghostty
     state: present
-
-- name: Install Flatpak applications
-  become: true
-  community.general.flatpak:
-    name: "{{ item }}"
-    state: present
-    method: user
-  loop:
-    - com.google.Chrome
-    - com.vivaldi.Vivaldi
-    - com.hamrick.VueScan
