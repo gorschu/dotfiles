@@ -1,0 +1,4 @@
+---
+# General configuration shared across all machines
+colorscheme: catppuccin-macchiato
+terminal: xterm-ghostty

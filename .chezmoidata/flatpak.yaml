@@ -1,0 +1,8 @@
+---
+# Flatpak applications
+flatpak:
+  apps:
+    - com.google.Chrome
+    - com.vivaldi.Vivaldi
+    - com.hamrick.VueScan
+    - md.obsidian.Obsidian

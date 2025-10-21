@@ -1,0 +1,5 @@
+---
+# GNOME extensions
+gnome:
+  extensions:
+    enabled: []
