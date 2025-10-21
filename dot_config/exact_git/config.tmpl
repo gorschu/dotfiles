@@ -38,7 +38,7 @@
 {{ else }}
 	{{- $secrets := includeTemplate "secrets/secrets-personal" . | fromJson }}
 	name = Gordon Schulz
-	email = {{ $secrets.personal.azmo.email }}
+	email = {{ $secrets.personal.gorschu.email }}
 {{ end }}
 	signingkey = {{ .gpgkey }}
 
