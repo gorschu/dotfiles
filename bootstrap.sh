@@ -11,7 +11,7 @@ if ! [[ $(grep "^ID" /etc/os-release) =~ (fedora|rhel) ]]; then
 fi
 
 echo "Installing essential packages..."
-sudo dnf install -y git curl
+sudo dnf install -y git curl pipx
 
 echo ""
 

@@ -1,0 +1,64 @@
+#!/bin/bash
+# run_onchange_after - manages GNOME extensions via gext
+# Extensions list hash: {{ .gnome.extensions.enabled | toJson | sha256sum }}
+
+set -euo pipefail
+
+# Only run if GNOME Shell is installed
+if ! command -v gnome-shell &>/dev/null; then
+  echo "GNOME Shell not found, skipping extension management"
+  exit 0
+fi
+
+echo "Managing GNOME extensions..."
+
+# Ensure gext is installed
+if ! command -v gext &>/dev/null; then
+  echo "  Installing gext (gnome-extensions-cli)..."
+  pipx install gnome-extensions-cli --system-site-packages 2>/dev/null || {
+    echo "  Warning: Failed to install gext, skipping extension management"
+    exit 0
+  }
+  # Ensure pipx binaries are in PATH for this session
+  export PATH="$HOME/.local/bin:$PATH"
+fi
+
+# Get list of currently installed extensions
+INSTALLED=$(gext list --enabled --disabled 2>/dev/null | awk '{print $1}' || echo "")
+
+# Install and enable desired extensions
+{{ if .gnome.extensions.enabled -}}
+{{ range .gnome.extensions.enabled -}}
+echo "  Installing {{ . }}..."
+gext install "{{ . }}" 2>/dev/null || echo "    Already installed or failed"
+gext enable "{{ . }}" 2>/dev/null || true
+{{ end -}}
+{{ end }}
+
+# Disable extensions not in our list
+{{ if .gnome.extensions.enabled -}}
+DESIRED_EXTENSIONS=({{ range .gnome.extensions.enabled }}"{{ . }}" {{ end }})
+{{ else -}}
+DESIRED_EXTENSIONS=()
+{{ end -}}
+
+while IFS= read -r ext; do
+  [[ -z "$ext" ]] && continue
+
+  # Check if extension is in our desired list
+  FOUND=0
+  for desired in "${DESIRED_EXTENSIONS[@]}"; do
+    if [[ "$ext" == "$desired" ]]; then
+      FOUND=1
+      break
+    fi
+  done
+
+  # If not in desired list, disable it
+  if [[ $FOUND -eq 0 ]]; then
+    echo "  Disabling unmanaged extension: $ext"
+    gext disable "$ext" 2>/dev/null || true
+  fi
+done <<<"$INSTALLED"
+
+echo "✓ GNOME extensions managed"
