@@ -1,0 +1,14 @@
+#!/bin/bash
+# run_onchange_after - applies user tmpfiles.d configuration
+{{- $configs := "" -}}
+{{- range glob (joinPath .chezmoi.sourceDir "dot_config/exact_user-tmpfiles.d/*") -}}
+{{- $configs = print $configs (include .) -}}
+{{- end -}}
+# Config hash: {{ $configs | sha256sum }}
+
+set -euo pipefail
+
+echo "Applying user tmpfiles.d configuration..."
+systemd-tmpfiles --user --create
+
+echo "✓ User tmpfiles.d applied"
