@@ -11,4 +11,6 @@
       - kitty
       - wezterm
       - ghostty
+      - gnome-tweaks
+      - gnome-extensions-app
     state: present
