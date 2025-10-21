@@ -10,7 +10,7 @@ HostName=%H
 UserNS=keep-id
 
 # Persist syncthing config and data
-Volume=%h/.config/syncthing:/var/syncthing:Z
+Volume=%h/.config/syncthing:/var/syncthing/config:Z
 
 # Mount data directories for synchronization
 # Adjust these paths based on what you want to sync
