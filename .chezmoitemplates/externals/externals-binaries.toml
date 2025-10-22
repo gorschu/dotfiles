@@ -1,7 +1,7 @@
 # Static binaries
 [".local/bin/mise"]
   type = "file"
-  url = "https://github.com/jdx/mise/releases/download/v2025.10.11/mise-v2025.10.11-linux-x64.tar.gz"
+  url = "https://github.com/jdx/mise/releases/download/v2025.10.14/mise-v2025.10.14-linux-x64.tar.gz"
   executable = true
   filter.command = "tar"
   filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "mise/bin/mise"]
