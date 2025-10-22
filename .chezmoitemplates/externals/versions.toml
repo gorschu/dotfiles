@@ -3,7 +3,7 @@
 # Format: tool = "version" # depName=owner/repo
 
 [versions]
-  mise = "2025.10.14"  # depName=jdx/mise
+  mise = "2025.10.15"  # depName=jdx/mise
   starship = "1.23.0"  # depName=starship/starship
   fastfetch = "2.54.0"  # depName=fastfetch-cli/fastfetch
   vivid = "0.10.1"  # depName=sharkdp/vivid
