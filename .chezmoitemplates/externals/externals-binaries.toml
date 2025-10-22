@@ -81,7 +81,7 @@
 
 [".local/bin/gh"]
   type = "file"
-  url = "https://github.com/cli/cli/releases/download/v2.82.0/gh_2.82.0_linux_amd64.tar.gz"
+  url = "https://github.com/cli/cli/releases/download/v2.82.1/gh_2.82.0_linux_amd64.tar.gz"
   executable = true
   filter.command = "tar"
   filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "gh_2.82.0_linux_amd64/bin/gh"]
