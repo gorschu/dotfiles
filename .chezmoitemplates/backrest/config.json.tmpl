@@ -1,0 +1,13 @@
+{{- /* Load hostname-specific encrypted config and merge with common excludes */ -}}
+{{- $hostConfigFile := printf "backrest/config-%s.json.asc" .chezmoi.hostname -}}
+{{- $hostConfig := includeTemplate $hostConfigFile . | decrypt | mustFromJson -}}
+{{- $commonExcludes := includeTemplate "backrest/excludes-common.json" . | mustFromJson -}}
+{{- /* Merge common excludes with any host-specific excludes from the config */ -}}
+{{- $hostExcludes := list -}}
+{{- if hasKey $hostConfig "hostExcludes" -}}
+{{-   $hostExcludes = $hostConfig.hostExcludes -}}
+{{- end -}}
+{{- $allExcludes := concat $commonExcludes $hostExcludes -}}
+{{- /* Set the merged excludes in the plan */ -}}
+{{- $_ := set (index $hostConfig.plans 0) "excludes" $allExcludes -}}
+{{- $hostConfig | mustToPrettyJson -}}
