@@ -3,6 +3,7 @@ Description=Syncthing - File synchronization
 Documentation=https://docs.syncthing.net/
 
 [Container]
+ContainerName=syncthing
 Image=docker.io/syncthing/syncthing:2.0.10
 AutoUpdate=registry
 Label=io.containers.autoupdate=registry
