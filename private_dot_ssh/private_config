@@ -1,7 +1,9 @@
 # include personal configuration
 Include config.d/*
+
 # global configuration
 Host *
+  # Connection settings
   AddKeysToAgent 60m
   ForwardAgent no
   Compression no
@@ -12,3 +14,13 @@ Host *
   ControlMaster auto
   ControlPath ~/tmp/.ssh/master-%r@%n:%p
   ControlPersist 60m
+
+  # Cryptographic hardening
+  Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-gcm@openssh.com,aes128-ctr
+  # Key exchange algorithms with post-quantum support (sntrup761)
+  KexAlgorithms sntrup761x25519-sha512@openssh.com,curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group18-sha512,diffie-hellman-group16-sha512,diffie-hellman-group-exchange-sha256
+  # Use Encrypt-then-MAC (ETM) variants with SHA-2
+  MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com
+  # Only use Ed25519 (no RSA)
+  HostKeyAlgorithms sk-ssh-ed25519-cert-v01@openssh.com,ssh-ed25519-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,ssh-ed25519
+  PubkeyAcceptedAlgorithms sk-ssh-ed25519-cert-v01@openssh.com,ssh-ed25519-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,ssh-ed25519
