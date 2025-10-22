@@ -1,7 +1,9 @@
+{{- $versions := .versions -}}
+{{- $batExtrasVersion := index $versions "bat-extras" -}}
 # Static binaries
 [".local/bin/mise"]
   type = "file"
-  url = "https://github.com/jdx/mise/releases/download/v2025.10.14/mise-v2025.10.14-linux-x64.tar.gz"
+  url = "https://github.com/jdx/mise/releases/download/v{{ $versions.mise }}/mise-v{{ $versions.mise }}-linux-x64.tar.gz"
   executable = true
   filter.command = "tar"
   filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "mise/bin/mise"]
@@ -9,7 +11,7 @@
 
 [".local/bin/starship"]
   type = "file"
-  url = "https://github.com/starship/starship/releases/download/v1.23.0/starship-x86_64-unknown-linux-musl.tar.gz"
+  url = "https://github.com/starship/starship/releases/download/v{{ $versions.starship }}/starship-x86_64-unknown-linux-musl.tar.gz"
   executable = true
   filter.command = "tar"
   filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "starship"]
@@ -17,7 +19,7 @@
 
 [".local/bin/fastfetch"]
   type = "file"
-  url = "https://github.com/fastfetch-cli/fastfetch/releases/download/2.54.0/fastfetch-linux-amd64.tar.gz"
+  url = "https://github.com/fastfetch-cli/fastfetch/releases/download/{{ $versions.fastfetch }}/fastfetch-linux-amd64.tar.gz"
   executable = true
   filter.command = "tar"
   filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "fastfetch-linux-amd64/usr/bin/fastfetch"]
@@ -25,15 +27,15 @@
 
 [".local/bin/vivid"]
   type = "file"
-  url = "https://github.com/sharkdp/vivid/releases/download/v0.10.1/vivid-v0.10.1-x86_64-unknown-linux-musl.tar.gz"
+  url = "https://github.com/sharkdp/vivid/releases/download/v{{ $versions.vivid }}/vivid-v{{ $versions.vivid }}-x86_64-unknown-linux-musl.tar.gz"
   executable = true
   filter.command = "tar"
-  filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "vivid-v0.10.1-x86_64-unknown-linux-musl/vivid"]
+  filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "vivid-v{{ $versions.vivid }}-x86_64-unknown-linux-musl/vivid"]
   refreshPeriod = "168h"
 
 [".local/bin/zellij"]
   type = "file"
-  url = "https://github.com/zellij-org/zellij/releases/download/v0.43.1/zellij-x86_64-unknown-linux-musl.tar.gz"
+  url = "https://github.com/zellij-org/zellij/releases/download/v{{ $versions.zellij }}/zellij-x86_64-unknown-linux-musl.tar.gz"
   executable = true
   filter.command = "tar"
   filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "zellij"]
@@ -41,7 +43,7 @@
 
 [".local/bin/topgrade"]
   type = "file"
-  url = "https://github.com/topgrade-rs/topgrade/releases/download/v16.0.4/topgrade-v16.0.4-x86_64-unknown-linux-musl.tar.gz"
+  url = "https://github.com/topgrade-rs/topgrade/releases/download/v{{ $versions.topgrade }}/topgrade-v{{ $versions.topgrade }}-x86_64-unknown-linux-musl.tar.gz"
   executable = true
   filter.command = "tar"
   filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "topgrade"]
@@ -49,7 +51,7 @@
 
 [".local/bin/eza"]
   type = "file"
-  url = "https://github.com/eza-community/eza/releases/download/v0.23.4/eza_x86_64-unknown-linux-musl.tar.gz"
+  url = "https://github.com/eza-community/eza/releases/download/v{{ $versions.eza }}/eza_x86_64-unknown-linux-musl.tar.gz"
   executable = true
   filter.command = "tar"
   filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "./eza"]
@@ -57,7 +59,7 @@
 
 [".local/bin/atuin"]
   type = "file"
-  url = "https://github.com/atuinsh/atuin/releases/download/v18.10.0/atuin-x86_64-unknown-linux-musl.tar.gz"
+  url = "https://github.com/atuinsh/atuin/releases/download/v{{ $versions.atuin }}/atuin-x86_64-unknown-linux-musl.tar.gz"
   executable = true
   filter.command = "tar"
   filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "atuin-x86_64-unknown-linux-musl/atuin"]
@@ -65,7 +67,7 @@
 
 [".local/bin/lazygit"]
   type = "file"
-  url = "https://github.com/jesseduffield/lazygit/releases/download/v0.55.1/lazygit_0.55.1_linux_x86_64.tar.gz"
+  url = "https://github.com/jesseduffield/lazygit/releases/download/v{{ $versions.lazygit }}/lazygit_{{ $versions.lazygit }}_linux_x86_64.tar.gz"
   executable = true
   filter.command = "tar"
   filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "lazygit"]
@@ -73,7 +75,7 @@
 
 [".local/bin/lazydocker"]
   type = "file"
-  url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.24.1/lazydocker_0.24.1_Linux_x86_64.tar.gz"
+  url = "https://github.com/jesseduffield/lazydocker/releases/download/v{{ $versions.lazydocker }}/lazydocker_{{ $versions.lazydocker }}_Linux_x86_64.tar.gz"
   executable = true
   filter.command = "tar"
   filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "lazydocker"]
@@ -81,56 +83,56 @@
 
 [".local/bin/gh"]
   type = "file"
-  url = "https://github.com/cli/cli/releases/download/v2.82.1/gh_2.82.0_linux_amd64.tar.gz"
+  url = "https://github.com/cli/cli/releases/download/v{{ $versions.gh }}/gh_{{ $versions.gh }}_linux_amd64.tar.gz"
   executable = true
   filter.command = "tar"
-  filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "gh_2.82.0_linux_amd64/bin/gh"]
+  filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "gh_{{ $versions.gh }}_linux_amd64/bin/gh"]
   refreshPeriod = "168h"
 
 # bat-extras - bash scripts
 [".local/bin/batdiff"]
   type = "file"
-  url = "https://github.com/eth-p/bat-extras/archive/refs/tags/v2024.08.24.tar.gz"
+  url = "https://github.com/eth-p/bat-extras/archive/refs/tags/v{{ $batExtrasVersion }}.tar.gz"
   executable = true
   filter.command = "tar"
-  filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "bat-extras-2024.08.24/src/batdiff.sh"]
+  filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "bat-extras-{{ $batExtrasVersion }}/src/batdiff.sh"]
   refreshPeriod = "168h"
 
 [".local/bin/batgrep"]
   type = "file"
-  url = "https://github.com/eth-p/bat-extras/archive/refs/tags/v2024.08.24.tar.gz"
+  url = "https://github.com/eth-p/bat-extras/archive/refs/tags/v{{ $batExtrasVersion }}.tar.gz"
   executable = true
   filter.command = "tar"
-  filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "bat-extras-2024.08.24/src/batgrep.sh"]
+  filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "bat-extras-{{ $batExtrasVersion }}/src/batgrep.sh"]
   refreshPeriod = "168h"
 
 [".local/bin/batman"]
   type = "file"
-  url = "https://github.com/eth-p/bat-extras/archive/refs/tags/v2024.08.24.tar.gz"
+  url = "https://github.com/eth-p/bat-extras/archive/refs/tags/v{{ $batExtrasVersion }}.tar.gz"
   executable = true
   filter.command = "tar"
-  filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "bat-extras-2024.08.24/src/batman.sh"]
+  filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "bat-extras-{{ $batExtrasVersion }}/src/batman.sh"]
   refreshPeriod = "168h"
 
 [".local/bin/batwatch"]
   type = "file"
-  url = "https://github.com/eth-p/bat-extras/archive/refs/tags/v2024.08.24.tar.gz"
+  url = "https://github.com/eth-p/bat-extras/archive/refs/tags/v{{ $batExtrasVersion }}.tar.gz"
   executable = true
   filter.command = "tar"
-  filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "bat-extras-2024.08.24/src/batwatch.sh"]
+  filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "bat-extras-{{ $batExtrasVersion }}/src/batwatch.sh"]
   refreshPeriod = "168h"
 
 [".local/bin/prettybat"]
   type = "file"
-  url = "https://github.com/eth-p/bat-extras/archive/refs/tags/v2024.08.24.tar.gz"
+  url = "https://github.com/eth-p/bat-extras/archive/refs/tags/v{{ $batExtrasVersion }}.tar.gz"
   executable = true
   filter.command = "tar"
-  filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "bat-extras-2024.08.24/src/prettybat.sh"]
+  filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "bat-extras-{{ $batExtrasVersion }}/src/prettybat.sh"]
   refreshPeriod = "168h"
 
 [".local/bin/difft"]
   type = "file"
-  url = "https://github.com/Wilfred/difftastic/releases/download/0.65.0/difft-x86_64-unknown-linux-musl.tar.gz"
+  url = "https://github.com/Wilfred/difftastic/releases/download/{{ $versions.difft }}/difft-x86_64-unknown-linux-musl.tar.gz"
   executable = true
   filter.command = "tar"
   filter.args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "difft"]
@@ -138,20 +140,20 @@
 
 [".local/bin/yazi"]
   type = "archive-file"
-  url = "https://github.com/sxyazi/yazi/releases/download/v25.5.31/yazi-x86_64-unknown-linux-musl.zip"
+  url = "https://github.com/sxyazi/yazi/releases/download/v{{ $versions.yazi }}/yazi-x86_64-unknown-linux-musl.zip"
   executable = true
   path = "yazi-x86_64-unknown-linux-musl/yazi"
   refreshPeriod = "168h"
 
 [".local/bin/ya"]
   type = "archive-file"
-  url = "https://github.com/sxyazi/yazi/releases/download/v25.5.31/yazi-x86_64-unknown-linux-musl.zip"
+  url = "https://github.com/sxyazi/yazi/releases/download/v{{ $versions.yazi }}/yazi-x86_64-unknown-linux-musl.zip"
   executable = true
   path = "yazi-x86_64-unknown-linux-musl/ya"
   refreshPeriod = "168h"
 
 [".local/bin/cliphist"]
   type = "file"
-  url = "https://github.com/sentriz/cliphist/releases/download/v0.7.0/v0.7.0-linux-amd64"
+  url = "https://github.com/sentriz/cliphist/releases/download/v{{ $versions.cliphist }}/v{{ $versions.cliphist }}-linux-amd64"
   executable = true
   refreshPeriod = "168h"

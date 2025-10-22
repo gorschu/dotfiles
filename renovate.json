@@ -13,13 +13,12 @@
   "customManagers": [
     {
       "customType": "regex",
-      "description": "Update GitHub releases in chezmoi externals",
-      "managerFilePatterns": [
-        "/^\\.chezmoiexternal\\.toml\\.tmpl$/",
-        "/^\\.chezmoitemplates\\/externals\\/externals-.*\\.toml$/"
+      "description": "Update GitHub release versions in versions.toml",
+      "fileMatch": [
+        "^\\.chezmoitemplates/externals/versions\\.toml$"
       ],
       "matchStrings": [
-        "url = \"https://github\\.com/(?<depName>[^/]+/[^/]+)/releases/download/(?<currentValue>v?[0-9.]+)/[^\"]+\""
+        "\\s+[a-z-]+\\s*=\\s*\"(?<currentValue>[0-9.]+)\"\\s*#\\s*depName=(?<depName>[^\\s]+)"
       ],
       "datasourceTemplate": "github-releases"
     }
