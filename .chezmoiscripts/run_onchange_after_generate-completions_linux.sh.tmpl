@@ -1,6 +1,8 @@
 #!/bin/bash
 # run_onchange_after - generates shell completions for installed binaries
-# Dependencies hash: {{ includeTemplate "externals/externals-binaries.toml" . | sha256sum }}
+{{- $versions := includeTemplate "externals/versions.toml" . | fromToml -}}
+{{- $externalsCtx := merge (dict "versions" $versions.versions) . -}}
+# Dependencies hash: {{ includeTemplate "externals/externals-binaries.toml" $externalsCtx | sha256sum }}
 
 set -euo pipefail
 
