@@ -1,11 +1,8 @@
 {{ if ne .chezmoi.os "darwin" }}
 {{ if eq .chezmoi.osRelease.id "fedora" }}
-# make gnugpg play nicely with pcscd
-# it is still a complete mess
-disable-ccid
-# allow sharing the reader with pcscd without leaving it locked
-pcsc-shared
-# reset the card if it sits idle to recover from stuck sessions
-card-timeout 10
+# prefer the built-in CCID driver so gpg-agent owns the reader and caches PINs properly
+# (leaving disable-ccid unset keeps pcscd out of the way)
+# let the card relock itself after 10 minutes of inactivity
+card-timeout 600
 {{ end }}
 {{ end }}
