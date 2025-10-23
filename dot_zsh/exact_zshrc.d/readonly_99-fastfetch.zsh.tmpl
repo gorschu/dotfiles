@@ -1,7 +1,7 @@
 {{- /* Detect distro logo at chezmoi apply time to avoid filesystem crawling on every shell startup */ -}}
 {{- $logoFile := "" -}}
 {{- $logoPaths := list
-  "/usr/share/pixmaps/fedora-logo.png"
+  "/usr/share/pixmaps/fedora-logo-sprite.png"
   "/usr/share/pixmaps/archlinux-logo.png"
   "/usr/share/pixmaps/debian-logo.png"
   "/usr/share/pixmaps/ubuntu-logo.png"
@@ -19,7 +19,7 @@ if [[ -o interactive ]]; then
   if command -v fastfetch &>/dev/null; then
 {{- if $logoFile }}
     # Use kitty-direct for WezTerm/Ghostty/Kitty (fastest)
-    fastfetch -c ~/.config/fastfetch/presets/7.jsonc --logo '{{ $logoFile }}' --logo-type kitty-direct --logo-width 35
+    fastfetch -c ~/.config/fastfetch/presets/7.jsonc --logo '{{ $logoFile }}' --logo-type kitty-direct --logo-width 20
 {{- else }}
     fastfetch -c ~/.config/fastfetch/presets/7.jsonc
 {{- end }}
