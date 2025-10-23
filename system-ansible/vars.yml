@@ -7,4 +7,4 @@ hyprland_state: absent
 
 # Niri window manager state: present or absent
 # Set to 'absent' to remove Niri and its ecosystem
-niri_state: present
+niri_state: absent

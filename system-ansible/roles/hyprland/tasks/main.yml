@@ -1,6 +1,12 @@
 ---
 # Hyprland window manager and Wayland ecosystem
 
+- name: "Hyprland COPR repository - {{ 'Enable' if hyprland_state == 'present' else 'Disable' }}"
+  become: true
+  community.general.copr:
+    name: solopasha/hyprland
+    state: "{{ 'enabled' if hyprland_state == 'present' else 'disabled' }}"
+
 - name: "Hyprland ecosystem - {{ 'Install' if hyprland_state == 'present' else 'Remove' }}"
   become: true
   ansible.builtin.dnf:
