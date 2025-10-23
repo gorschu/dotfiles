@@ -11,42 +11,97 @@ echo "Managing user systemd services..."
 # Reload systemd user daemon to pick up any changes
 systemctl --user daemon-reload
 
-# Helper function to start/restart services
+# Static services that should only be started if down, not enabled since they are generated
+declare -a managed_services_start_only=(
+    "backrest.service"
+    "syncthing.service"
+)
+
+# User-managed services we own and should enable plus restart when configs change
+declare -a user_services_enable_restart=(
+    "atuin.service"
+)
+
+# Services we want enabled but only started if not already running (no forced restart, f's up ghostty)
+declare -a user_services_enable_start=(
+    "app-com.mitchellh.ghostty.service"
+    "podman-auto-update.timer"
+)
+
+# Helper function to manage a service
 manage_service() {
     local service="$1"
-    local description="$2"
+    local mode="$2" # enable_restart, enable_start, start_only
 
     if ! systemctl --user list-unit-files "$service" >/dev/null 2>&1; then
-        echo "  Skipping $description (unit $service not found)"
+        echo "  Skipping $service (unit not found)"
         return 0
     fi
 
-    if systemctl --user is-active --quiet "$service"; then
-        echo "  $description already running, restarting to pick up changes..."
-        systemctl --user restart "$service"
-    else
-        echo "  Starting $description..."
-        systemctl --user start "$service"
+    local unit_state
+    unit_state="$(systemctl --user list-unit-files "$service" --no-legend --no-pager 2>/dev/null | awk '{print $2}')"
+
+    if [[ "$mode" == "enable_restart" || "$mode" == "enable_start" ]]; then
+        if systemctl --user is-enabled --quiet "$service"; then
+            :
+        elif [[ "$unit_state" == "static" || "$unit_state" == "generated" || "$unit_state" == "transient" ]]; then
+            echo "  $service has unit state '$unit_state', skipping enable step"
+        elif systemctl --user enable "$service" >/dev/null 2>&1; then
+            echo "  Enabled $service"
+        else
+            echo "  Warning: Could not enable $service"
+        fi
     fi
 
-    # Verify it started
-    if systemctl --user is-active --quiet "$service"; then
-        echo "  ✓ $description is running"
-    else
-        echo "  ⚠ $description failed to start"
+    local action_taken=""
+
+    case "$mode" in
+        enable_restart)
+            if systemctl --user is-active --quiet "$service"; then
+                echo "  Restarting $service to pick up changes..."
+                systemctl --user restart "$service"
+                action_taken="restart"
+            else
+                echo "  Starting $service..."
+                systemctl --user start "$service"
+                action_taken="start"
+            fi
+            ;;
+        enable_start|start_only)
+            if systemctl --user is-active --quiet "$service"; then
+                action_taken="none"
+            else
+                echo "  Starting $service..."
+                systemctl --user start "$service"
+                action_taken="start"
+            fi
+            ;;
+        *)
+            echo "  Warning: Unknown mode '$mode' for $service"
+            return 1
+            ;;
+    esac
+
+    if ! systemctl --user is-active --quiet "$service"; then
+        echo "  Warning: $service failed to start"
         systemctl --user status "$service" --no-pager || true
         return 1
     fi
 }
 
-# Container services (quadlets)
-manage_service "backrest.service" "Backrest backup service"
-manage_service "syncthing.service" "Syncthing sync service"
+# Process start-only services
+for entry in "${managed_services_start_only[@]}"; do
+    manage_service "$entry" "start_only"
+done
 
-# Standard systemd services
-manage_service "atuin.service" "Atuin shell history daemon"
+# Process user-managed services
+for entry in "${user_services_enable_restart[@]}"; do
+    manage_service "$entry" "enable_restart"
+done
 
-# Application services
-manage_service "app-com.mitchellh.ghostty.service" "Ghostty terminal"
+# Process user-managed services needing enable without restart
+for entry in "${user_services_enable_start[@]}"; do
+    manage_service "$entry" "enable_start"
+done
 
-echo "✓ All user services managed"
+echo "All user services managed"
