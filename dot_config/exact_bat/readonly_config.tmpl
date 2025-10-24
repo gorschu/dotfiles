@@ -5,7 +5,8 @@
 # Specify desired highlighting theme (e.g. "TwoDark"). Run `bat --list-themes`
 # for a list of all available themes
 {{ if eq .colorscheme.name "tokyonight" -}}
---theme "{{ .chezmoi.homeDir }}/.externals/tokyonight.nvim/extras/sublime/tokyonight_{{ .colorscheme.flavor }}.tmTheme"
+{{ $flavorTitle := title .colorscheme.flavor }}
+--theme "Tokyonight {{ $flavorTitle }}"
 {{ else if eq .colorscheme.name "catppuccin" -}}
 {{ $flavorTitle := title .colorscheme.flavor }}
 --theme "Catppuccin {{ $flavorTitle }}"
