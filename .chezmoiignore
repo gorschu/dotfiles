@@ -25,6 +25,7 @@ bin
 !.config/atuin
 !.config/bat
 !.config/btop
+!.config/ghostty
 .config/chezmoi/personal
 !.config/git
 !.config/lazygit
