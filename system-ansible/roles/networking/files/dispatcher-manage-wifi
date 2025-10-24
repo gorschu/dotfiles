@@ -1,0 +1,36 @@
+#!/bin/bash
+# NetworkManager dispatcher script to manage WiFi based on wired connection state
+# $1 = interface name, $2 = action (up, down, etc.)
+
+INTERFACE="${1:-}"
+ACTION="${2:-}"
+
+[[ ! "$ACTION" =~ ^(up|down)$ ]] && exit 0
+[[ ! "$INTERFACE" =~ ^en ]] && exit 0
+
+case "$ACTION" in
+    up)
+        ACTIVE_WIFI=$(nmcli -t -f NAME,TYPE,DEVICE connection show --active 2>/dev/null | \
+            grep ":802-11-wireless:" | cut -d: -f1 | head -1)
+        [[ -n "$ACTIVE_WIFI" ]] && nmcli connection down "$ACTIVE_WIFI" 2>/dev/null
+        ;;
+    down)
+        nmcli device wifi rescan 2>/dev/null
+        AVAILABLE_SSIDS=""
+        for i in {1..5}; do
+            AVAILABLE_SSIDS=$(nmcli -t -f SSID device wifi list 2>/dev/null | sort -u)
+            [[ -n "$AVAILABLE_SSIDS" ]] && break
+            sleep 1
+        done
+
+        while read -r conn; do
+            CONN_SSID=$(nmcli -t connection show "$conn" 2>/dev/null | grep "^802-11-wireless.ssid:" | cut -d: -f2)
+            if [[ -n "$CONN_SSID" ]] && echo "$AVAILABLE_SSIDS" | grep -q "^${CONN_SSID}$"; then
+                nmcli connection up "$conn" 2>/dev/null
+                break
+            fi
+        done < <(nmcli -t -f NAME,TYPE connection show 2>/dev/null | grep ":802-11-wireless$" | cut -d: -f1)
+        ;;
+esac
+
+exit 0
