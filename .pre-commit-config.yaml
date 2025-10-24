@@ -20,7 +20,7 @@ repos:
         files: ^system-ansible/
         pass_filenames: false
         always_run: false
-        args: ["system-ansible/"]
+        args: ["system-ansible/local.yml", "system-ansible/roles/"]
         additional_dependencies:
           - ansible
 

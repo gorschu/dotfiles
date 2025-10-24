@@ -1,5 +1,39 @@
 ---
-# Networking configuration - hostname and tailscale
+# Networking configuration - hostname, NetworkManager, and tailscale
+
+- name: Configure NetworkManager
+  become: true
+  block:
+    - name: Create wired ethernet connections for each interface
+      community.general.nmcli:
+        conn_name: "wired-{{ item }}"
+        ifname: "{{ item }}"
+        type: ethernet
+        autoconnect: "yes"
+        autoconnect_priority: 100
+        method4: auto
+        method6: auto
+        state: present
+      loop: "{{ ansible_interfaces | select('match', '^en') }}"
+      notify: Reload NetworkManager
+
+    - name: Create WiFi connections from vault
+      community.general.nmcli:
+        conn_name: "{{ item.0.key }}"
+        ifname: "{{ item.1 }}"
+        type: wifi
+        ssid: "{{ item.0.value.ssid }}"
+        wifi_sec:
+          key-mgmt: wpa-psk
+          psk: "{{ item.0.value.psk }}"
+        autoconnect: "yes"
+        autoconnect_priority: 10
+        method4: auto
+        method6: auto
+        state: present
+      loop: "{{ networking_wifi_networks | dict2items | product(ansible_interfaces | select('match', '^wl')) | list }}"
+      when: networking_wifi_networks is defined
+      notify: Reload NetworkManager
 
 - name: Set hostname
   ansible.builtin.hostname:

@@ -25,7 +25,8 @@ ansible-setup:
     HOSTNAME=$(chezmoi data --format=json | jq -r '.chezmoi.hostname')
     cd system-ansible && ansible-playbook local.yml \
       --vault-password-file <(op read "op://Ansible/Workstations/password") \
-      --extra-vars @vault.yml \
+      --extra-vars @vars/vault/general.yml \
+      --extra-vars @vars/vault/network.yaml \
       --extra-vars "hostname=$HOSTNAME" \
       --ask-become-pass
 
@@ -35,7 +36,8 @@ ansible-tags TAGS:
     HOSTNAME=$(chezmoi data --format=json | jq -r '.chezmoi.hostname')
     cd system-ansible && ansible-playbook local.yml \
       --vault-password-file <(op read "op://Ansible/Workstations/password") \
-      --extra-vars @vault.yml \
+      --extra-vars @vars/vault/general.yml \
+      --extra-vars @vars/vault/network.yaml \
       --extra-vars "hostname=$HOSTNAME" \
       --tags {{TAGS}} \
       --ask-become-pass
@@ -54,7 +56,8 @@ ansible-dry-run:
     HOSTNAME=$(chezmoi data --format=json | jq -r '.chezmoi.hostname')
     cd system-ansible && ansible-playbook local.yml \
       --vault-password-file <(op read "op://Ansible/Workstations/password") \
-      --extra-vars @vault.yml \
+      --extra-vars @vars/vault/general.yml \
+      --extra-vars @vars/vault/network.yaml \
       --extra-vars "hostname=$HOSTNAME" \
       --check \
       --ask-become-pass
@@ -79,7 +82,11 @@ setup-all:
     ./apply.sh
     @echo ""
     @echo "Running Ansible system setup..."
-    cd system-ansible && ansible-playbook local.yml --ask-become-pass
+    cd system-ansible && ansible-playbook local.yml \
+      --vault-password-file <(op read "op://Ansible/Workstations/password") \
+      --extra-vars @vars/vault/general.yml \
+      --extra-vars @vars/vault/network.yaml \
+      --ask-become-pass
 
 pre-commit-install:
     prek install --hook-type commit-msg
