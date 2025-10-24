@@ -1,0 +1,7 @@
+{{- if eq .colorscheme.name "tokyonight" -}}
+theme = "tokyonight_{{ .colorscheme.flavor }}"
+{{- else if eq .colorscheme.name "catppuccin" -}}
+theme = "catppuccin-{{ .colorscheme.flavor }}.conf"
+{{- else -}}
+# theme not defined for colorscheme {{ .colorscheme.name }}
+{{- end }}

@@ -23,11 +23,10 @@ done
 # Add our color theme configuration at the end
 echo ""
 echo "#* Theme configuration managed by chezmoi"
-{{ if hasPrefix "tokyonight-" .colorscheme -}}
+{{ if eq .colorscheme.name "tokyonight" -}}
 echo 'color_theme = "/usr/share/btop/themes/tokyo-night.theme"'
-{{ else if hasPrefix "catppuccin-" .colorscheme -}}
-{{ $flavor := trimPrefix "catppuccin-" .colorscheme -}}
-echo 'color_theme = "catppuccin_{{ $flavor }}"'
+{{ else if eq .colorscheme.name "catppuccin" -}}
+echo 'color_theme = "catppuccin_{{ .colorscheme.flavor }}"'
 {{ else -}}
 echo '#color_theme = "Default"'
 {{ end -}}

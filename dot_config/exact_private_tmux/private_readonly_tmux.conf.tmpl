@@ -80,13 +80,12 @@ set -g @plugin 'sainnhe/tmux-fzf'
 set -g @plugin 'laktak/extrakto'
 set -g @plugin 'christoomey/vim-tmux-navigator'
 
-{{ if hasPrefix "tokyonight" .colorscheme}}
-{{ $flavor := trimPrefix "tokyonight-" .colorscheme }}
-source-file {{ .chezmoi.homeDir }}/.externals/tmux/tokyonight/tokyonight_{{ $flavor }}.tmux
+{{ if eq .colorscheme.name "tokyonight" }}
+source-file {{ .chezmoi.homeDir }}/.externals/tokyonight.nvim/extras/tmux/tokyonight_{{ .colorscheme.flavor }}.tmux
 {{ end }}
-{{ if hasPrefix "catppuccin" .colorscheme}}
+{{ if eq .colorscheme.name "catppuccin" }}
 set -g @plugin 'catppuccin/tmux'
-set -g @catppuccin_flavour '{{ trimPrefix "catppuccin-" .colorscheme }}'
+set -g @catppuccin_flavour '{{ .colorscheme.flavor }}'
 set -g @catppuccin_window_status_style "rounded"
 # Make the status line pretty and add some modules
 set -g status-right-length 100

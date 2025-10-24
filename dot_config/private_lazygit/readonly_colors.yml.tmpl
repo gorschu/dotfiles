@@ -1,4 +1,5 @@
-{{ if hasPrefix "catppuccin-" .colorscheme }}
-{{ $flavor := trimPrefix "catppuccin-" .colorscheme}}
-{{ include ( joinPath .chezmoi.homeDir ".externals/lazygit/catppuccin/themes-mergable/" (print $flavor "/sky.yml") ) }}
+{{ if eq .colorscheme.name "catppuccin" }}
+{{ include (joinPath .chezmoi.homeDir ".externals/lazygit/catppuccin/themes-mergable" (printf "%s/sky.yml" .colorscheme.flavor)) }}
+{{ else if eq .colorscheme.name "tokyonight" }}
+{{ include (joinPath .chezmoi.homeDir ".externals/tokyonight.nvim/extras/lazygit" (printf "tokyonight_%s.yml" .colorscheme.flavor)) }}
 {{ end }}

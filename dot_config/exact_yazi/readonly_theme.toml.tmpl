@@ -1,6 +1,9 @@
-{{ if hasPrefix "catppuccin" .colorscheme }}
-{{ $flavor := trimPrefix "catppuccin-" .colorscheme }}
+{{ if eq .colorscheme.name "catppuccin" }}
 [flavor]
-dark = "catppuccin-{{ $flavor }}"
-light = "catppuccin-{{ $flavor }}"
+dark = "catppuccin-{{ .colorscheme.flavor }}"
+light = "catppuccin-{{ .colorscheme.flavor }}"
+{{ else if eq .colorscheme.name "tokyonight" }}
+[flavor]
+dark = "tokyonight_{{ .colorscheme.flavor }}"
+light = "tokyonight_{{ .colorscheme.flavor }}"
 {{ end }}

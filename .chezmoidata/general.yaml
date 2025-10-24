@@ -1,4 +1,6 @@
 ---
 # General configuration shared across all machines
-colorscheme: catppuccin-macchiato
+colorscheme:
+  name: tokyonight
+  flavor: moon
 terminal: xterm-ghostty

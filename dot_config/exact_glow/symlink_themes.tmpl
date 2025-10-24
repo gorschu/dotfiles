@@ -1,1 +1,5 @@
+{{ if eq .colorscheme.name "catppuccin" }}
 {{ .chezmoi.homeDir }}/.externals/glamour/catppuccin
+{{ else if eq .colorscheme.name "tokyonight" }}
+{{ .chezmoi.homeDir }}/.externals/tokyonight.nvim/extras/glow
+{{ end }}

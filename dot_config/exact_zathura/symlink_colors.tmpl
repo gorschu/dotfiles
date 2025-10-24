@@ -1,5 +1,5 @@
-{{- if hasPrefix "tokyonight-" .colorscheme -}}
+{{- if eq .colorscheme.name "tokyonight" -}}
 {{ .chezmoi.homeDir }}/.config/zathura/themes/tokyonight
-{{- else if hasPrefix "catppuccin-" .colorscheme -}}
-{{ .chezmoi.homeDir }}/.externals/zathura/catppuccin/{{ .colorscheme }}
+{{- else if eq .colorscheme.name "catppuccin" -}}
+{{ .chezmoi.homeDir }}/.externals/zathura/catppuccin/{{ printf "catppuccin-%s" .colorscheme.flavor }}
 {{- end -}}

@@ -1,12 +1,12 @@
-{{ if hasPrefix "tokyonight-" .colorscheme }}
-export LS_COLORS="$(vivid generate one-dark)"
+{{ $scheme := printf "%s-%s" .colorscheme.name .colorscheme.flavor }}
+{{ if and .colorscheme.name .colorscheme.flavor }}
+export LS_COLORS="$(vivid generate {{ $scheme }})"
 export EZA_COLORS="${LS_COLORS}"
 {{ else }}
-export LS_COLORS="$(vivid generate {{ .colorscheme }})"
+export LS_COLORS="$(vivid generate default)"
 export EZA_COLORS="${LS_COLORS}"
 {{ end }}
 
-{{ if hasPrefix "catppuccin" .colorscheme }}
-{{ $flavor := trimPrefix "catppuccin-" .colorscheme }}
-source {{ .chezmoi.homeDir }}/.externals/zsh-syntax-highlighting/catppuccin/catppuccin_{{ $flavor }}-zsh-syntax-highlighting.zsh
+{{ if eq .colorscheme.name "catppuccin" }}
+source {{ .chezmoi.homeDir }}/.externals/zsh-syntax-highlighting/catppuccin/catppuccin_{{ .colorscheme.flavor }}-zsh-syntax-highlighting.zsh
 {{ end }}

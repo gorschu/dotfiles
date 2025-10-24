@@ -1,7 +1,5 @@
-{{ if hasPrefix "tokyonight-" .colorscheme }}
-{{ $flavor := trimPrefix "tokyonight-" .colorscheme }}
-{{ .chezmoi.homeDir }}/.externals/kitty/tokyonight/tokyonight_{{ $flavor }}.conf
-{{ else if hasPrefix "catppuccin-" .colorscheme }}
-{{ $flavor := trimPrefix "catppuccin-" .colorscheme }}
-{{ .chezmoi.homeDir }}/.externals/kitty/catppuccin/themes/{{ $flavor }}.conf
+{{ if eq .colorscheme.name "tokyonight" }}
+{{ .chezmoi.homeDir }}/.externals/tokyonight.nvim/extras/kitty/tokyonight_{{ .colorscheme.flavor }}.conf
+{{ else if eq .colorscheme.name "catppuccin" }}
+{{ .chezmoi.homeDir }}/.externals/kitty/catppuccin/themes/{{ .colorscheme.flavor }}.conf
 {{ end }}
