@@ -1,4 +1,2 @@
-{{ if and (hasKey . "workHostname") (ne .chezmoi.hostname .workHostname) }}
 # set DOCKER_HOST to podman
 export DOCKER_HOST=unix:///run/user/$(id -u)/podman/podman.sock
-{{ end }}
