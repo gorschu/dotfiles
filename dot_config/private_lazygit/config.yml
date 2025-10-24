@@ -1,5 +1,0 @@
-git:
-  overrideGpg: true
-  # commitPrefix:
-  #   pattern: "^\\w+\\/(\\w+-\\w+).*"
-  #   replace: '[$1] '

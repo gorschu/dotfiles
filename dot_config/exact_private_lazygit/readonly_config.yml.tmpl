@@ -1,0 +1,15 @@
+{{- $themePath := "" -}}
+{{- if eq .colorscheme.name "catppuccin" -}}
+{{- $themePath = joinPath .chezmoi.homeDir ".externals/lazygit/catppuccin/themes-mergable" (printf "%s/sky.yml" .colorscheme.flavor) -}}
+{{- else if eq .colorscheme.name "tokyonight" -}}
+{{- $themePath = joinPath .chezmoi.homeDir ".externals/tokyonight.nvim/extras/lazygit" (printf "tokyonight_%s.yml" .colorscheme.flavor) -}}
+{{- end -}}
+
+git:
+  overrideGpg: true
+
+{{- if $themePath }}
+{{ include $themePath }}
+{{- else }}
+# Add additional LazyGit configuration below
+{{- end }}
