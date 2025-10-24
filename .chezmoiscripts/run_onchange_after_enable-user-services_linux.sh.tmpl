@@ -42,42 +42,37 @@ manage_service() {
         return 0
     fi
 
-    local unit_state
-    unit_state="$(systemctl --user list-unit-files "$service" --no-legend --no-pager 2>/dev/null | awk '{print $2}')"
-
+    # Try to enable service if mode requires it
     if [[ "$mode" == "enable_restart" || "$mode" == "enable_start" ]]; then
-        if systemctl --user is-enabled --quiet "$service"; then
-            :
-        elif [[ "$unit_state" == "static" || "$unit_state" == "generated" || "$unit_state" == "transient" ]]; then
-            echo "  $service has unit state '$unit_state', skipping enable step"
-        elif systemctl --user enable "$service" >/dev/null 2>&1; then
-            echo "  Enabled $service"
-        else
-            echo "  Warning: Could not enable $service"
+        if ! systemctl --user is-enabled --quiet "$service"; then
+            local unit_state
+            unit_state="$(systemctl --user list-unit-files "$service" --no-legend --no-pager 2>/dev/null | awk '{print $2}')"
+
+            if [[ "$unit_state" == "static" || "$unit_state" == "generated" || "$unit_state" == "transient" ]]; then
+                echo "  $service has unit state '$unit_state', skipping enable step"
+            elif systemctl --user enable "$service" >/dev/null 2>&1; then
+                echo "  Enabled $service"
+            else
+                echo "  Warning: Could not enable $service"
+            fi
         fi
     fi
 
-    local action_taken=""
-
+    # Perform action based on mode
     case "$mode" in
-        enable_restart)
+        enable_restart|start_only)
             if systemctl --user is-active --quiet "$service"; then
-                echo "  Restarting $service to pick up changes..."
-                systemctl --user restart "$service"
-                action_taken="restart"
+                echo "  Reloading or restarting $service to pick up changes..."
+                systemctl --user reload-or-restart "$service"
             else
                 echo "  Starting $service..."
                 systemctl --user start "$service"
-                action_taken="start"
             fi
             ;;
-        enable_start|start_only)
-            if systemctl --user is-active --quiet "$service"; then
-                action_taken="none"
-            else
+        enable_start)
+            if ! systemctl --user is-active --quiet "$service"; then
                 echo "  Starting $service..."
                 systemctl --user start "$service"
-                action_taken="start"
             fi
             ;;
         *)
