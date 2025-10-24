@@ -1,12 +1,4 @@
 # Theme externals
-[".externals/kitty/tokyonight"]
-  type = "archive"
-  url = "https://github.com/folke/tokyonight.nvim/archive/main.tar.gz"
-  exact = true
-  stripComponents = 3
-  refreshPeriod = "168h"
-  include = ["*/extras/kitty/*.conf"]
-
 [".externals/kitty/catppuccin"]
   type = "archive"
   url = "https://github.com/catppuccin/kitty/archive/main.tar.gz"
@@ -15,13 +7,19 @@
   refreshPeriod = "168h"
   include = ["*/themes", "*/themes/*.conf"]
 
-[".externals/bat/themes/tokyonight"]
+[".externals/tokyonight.nvim"]
   type = "archive"
   url = "https://github.com/folke/tokyonight.nvim/archive/main.tar.gz"
   exact = true
-  stripComponents = 3
+  stripComponents = 1
   refreshPeriod = "168h"
-  include = ["*/extras/sublime/*"]
+
+[".externals/catppuccin-ghostty"]
+  type = "archive"
+  url = "https://github.com/catppuccin/ghostty/archive/main.tar.gz"
+  exact = true
+  stripComponents = 1
+  refreshPeriod = "168h"
 
 [".externals/bat/themes/catppuccin"]
   type = "archive"
@@ -38,14 +36,6 @@
   stripComponents = 2
   refreshPeriod = "168h"
   include = ["*/themes/*.theme"]
-
-[".externals/tmux/tokyonight"]
-  type = "archive"
-  url = "https://github.com/folke/tokyonight.nvim/archive/main.tar.gz"
-  exact = true
-  stripComponents = 3
-  refreshPeriod = "168h"
-  include = ["*/extras/tmux/*"]
 
 [".config/hypr/themes/catppuccin"]
   type = "archive"
