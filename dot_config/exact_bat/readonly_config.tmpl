@@ -5,11 +5,9 @@
 # Specify desired highlighting theme (e.g. "TwoDark"). Run `bat --list-themes`
 # for a list of all available themes
 {{ if eq .colorscheme.name "tokyonight" -}}
-{{ $flavorTitle := title .colorscheme.flavor }}
---theme "Tokyonight {{ $flavorTitle }}"
+--theme "TokyoNight"
 {{ else if eq .colorscheme.name "catppuccin" -}}
-{{ $flavorTitle := title .colorscheme.flavor }}
---theme "Catppuccin {{ $flavorTitle }}"
+--theme "Catppuccin"
 {{ end }}
 --style="auto"
 
