@@ -13,19 +13,23 @@ systemctl --user daemon-reload
 
 # Static services that should only be started if down, not enabled since they are generated
 declare -a managed_services_start_only=(
-    "backrest.service"
-    "syncthing.service"
+{{- range .services.systemd.start_only }}
+    "{{ . }}"
+{{- end }}
 )
 
 # User-managed services we own and should enable plus restart when configs change
 declare -a user_services_enable_restart=(
-    "atuin.service"
+{{- range .services.systemd.enable_restart }}
+    "{{ . }}"
+{{- end }}
 )
 
 # Services we want enabled but only started if not already running (no forced restart, f's up ghostty)
 declare -a user_services_enable_start=(
-    "app-com.mitchellh.ghostty.service"
-    "podman-auto-update.timer"
+{{- range .services.systemd.enable_start }}
+    "{{ . }}"
+{{- end }}
 )
 
 # Helper function to manage a service

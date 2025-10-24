@@ -1,0 +1,11 @@
+services:
+  systemd:
+    start_only:
+      - backrest.service
+      - syncthing.service
+    enable_restart:
+      - atuin.service
+    enable_start:
+      - app-com.mitchellh.ghostty.service
+      - podman.socket
+      - podman-auto-update.timer
