@@ -1,7 +1,0 @@
-{{ if eq .colorscheme.name "catppuccin" }}
-{{ .chezmoi.homeDir }}/.externals/yazi/flavors
-{{ else if eq .colorscheme.name "tokyonight" }}
-{{ .chezmoi.homeDir }}/.externals/tokyonight.nvim/extras/yazi
-{{ else }}
-{{ .chezmoi.homeDir }}/.externals/yazi/flavors
-{{ end }}
