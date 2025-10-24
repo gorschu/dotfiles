@@ -20,6 +20,8 @@
         networking_tailscale_oauth_client_secret: "{{ vault_tailscale_oauth[hostname].client_secret }}"
     - role: base
       tags: [base, repos]
+    - role: btrbk
+      tags: [btrbk, storage]
     - role: smartcard
       tags: [smartcard, gpg]
     - role: virtualization

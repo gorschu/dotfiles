@@ -1,0 +1,19 @@
+# btrbk configuration for /root
+# Automated btrfs snapshot management for /root
+
+timestamp_format long
+transaction_log /var/log/btrbk.log
+
+# ============================================
+# /root - Short-lived snapshots
+# ============================================
+# Snapshots every 6 hours, keep 1 week
+
+volume /mnt/btrfs_root
+  snapshot_dir snapshots/root
+  snapshot_create always
+  snapshot_preserve_min 1d
+  snapshot_preserve 7d
+
+  subvolume root
+    snapshot_name snapshot.{{ ansible_hostname }}_root

@@ -1,0 +1,20 @@
+# btrbk configuration for /home
+# Automated btrfs snapshot management for /home
+
+timestamp_format long
+transaction_log /var/log/btrbk.log
+
+# ============================================
+# /home - Long-term retention
+# ============================================
+# Snapshots every 15 minutes via systemd timer
+# Keep 1 day minimum, then 14 daily, 30 weekly, 12 monthly
+
+volume /mnt/btrfs_root
+  snapshot_dir snapshots/home
+  snapshot_create always
+  snapshot_preserve_min 1d
+  snapshot_preserve 14d 30w 12m
+
+  subvolume home
+    snapshot_name snapshot.{{ ansible_hostname }}_home

@@ -11,6 +11,7 @@ system-ansible/
 ├── inventory.ini       # Localhost inventory
 └── roles/
     ├── base/           # Repositories, system utilities, CLI tools
+    ├── btrbk/          # Btrfs snapshot management
     ├── multimedia/     # Codecs and hardware acceleration
     ├── desktop/        # GUI applications and Flatpaks
     └── hyprland/       # Hyprland window manager ecosystem
@@ -41,8 +42,8 @@ ansible-playbook local.yml --ask-become-pass
 # Only base (repos + system utilities + CLI tools)
 ansible-playbook local.yml --tags base -K
 
-# Base + multimedia codecs
-ansible-playbook local.yml --tags base,multimedia -K
+# Base + btrbk snapshot management
+ansible-playbook local.yml --tags base,btrbk -K
 
 # Only desktop applications
 ansible-playbook local.yml --tags desktop -K
@@ -57,9 +58,15 @@ ansible-playbook local.yml --tags hyprland -K
 - RPM Fusion (free + nonfree)
 - COPR repos (hyprland, wezterm, ghostty)
 - Third-party repos (scootersoftware, zrepl)
-- System utilities (gdisk, parted, btrbk, zrepl)
+- System utilities (gdisk, parted, zrepl)
 - CLI tools (fzf, ripgrep, bat, neovim, etc.)
 - Networking tools
+
+### btrbk
+- Btrfs snapshot management
+- Automated snapshots for `/root` (12-hour interval, 1-week retention)
+- Automated snapshots for `/home` (15-minute interval, 1-day/4-week/3-month/1-year tiered retention)
+- Systemd timers for scheduled snapshots
 
 ### multimedia
 - Full ffmpeg (replaces ffmpeg-free)

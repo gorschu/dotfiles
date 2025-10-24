@@ -1,0 +1,13 @@
+[Unit]
+Description=btrbk /home snapshots
+Documentation=man:btrbk(1)
+ConditionPathExists=/etc/btrbk/btrbk-home.conf
+Requires=mnt-btrfs_root.mount
+After=mnt-btrfs_root.mount
+
+[Service]
+Type=oneshot
+ExecStartPre=/usr/bin/mkdir -p /mnt/btrfs_root/snapshots/home
+ExecStart=/usr/bin/btrbk -c /etc/btrbk/btrbk-home.conf run
+StandardOutput=journal
+StandardError=journal
