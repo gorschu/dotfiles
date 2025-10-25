@@ -1,10 +1,4 @@
-{{ if and (hasKey .chezmoi.osRelease "id") (eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed") }}
-# opensuse sets this variable to avoid reading the profile twice, but since we using
-# zsh as our login shell the variables there don't get applied (for some reason)
-typeset +r PROFILEREAD
-unset PROFILEREAD
-. /etc/zprofile
-{{ else if and (hasKey .chezmoi.osRelease "id") (eq .chezmoi.osRelease.id "ubuntu" "debian") }}
+{{ if and (hasKey .chezmoi.osRelease "id") (eq .chezmoi.osRelease.id "ubuntu" "debian") }}
 if [ -n "$ZSH_VERSION" ]; then # emulate sh behaviour to not break shit
     emulate sh -c '. /etc/profile'
 else
