@@ -2,7 +2,4 @@
 [".config/nvim"]
   type = "git-repo"
   url = "https://github.com/gorschu/lazyvim.git"
-  branch = "azmo"
   refreshPeriod = "24h"
-  # [".config/nvim".pull]
-  #     args = ["--depth", "1"]
