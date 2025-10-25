@@ -86,6 +86,7 @@
       - golang
       - uv
       - lua
+      - luarocks
     state: present
 
 - name: Install networking tools
