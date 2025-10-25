@@ -1,2 +1,5 @@
 # set DOCKER_HOST to podman
 export DOCKER_HOST=unix:///run/user/$(id -u)/podman/podman.sock
+{{ if eq .chezmoi.os "linux" }}
+systemctl --user import-environment DOCKER_HOST
+{{ end }}
