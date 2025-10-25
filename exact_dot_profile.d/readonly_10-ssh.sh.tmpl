@@ -4,10 +4,7 @@
 # set SSH Variables
 {{ $ssh_askpass_base := "" }}
 {{ $kssh_askpass_base := "" }}
-{{ if eq .chezmoi.osRelease.id "opensuse-leap" "opensuse-tumbleweed" }}
-    {{ $ssh_askpass_base = "/usr/libexec/ssh" }}
-    {{ $kssh_askpass_base = $ssh_askpass_base }}
-{{ else if eq .chezmoi.osRelease.id "ubuntu" "debian" }}
+{{ if eq .chezmoi.osRelease.id "ubuntu" "debian" }}
     {{ $ssh_askpass_base = "/usr/lib/openssh" }}
     {{ $kssh_askpass_base = "/bin" }}
 {{ else if eq .chezmoi.osRelease.id "fedora" }}
