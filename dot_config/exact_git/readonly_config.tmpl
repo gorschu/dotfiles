@@ -32,7 +32,7 @@
 # =============================================================================
 
 [user]
-{{ if and (hasKey . "hostname") (eq .chezmoi.hostname .hostname) }}
+{{ if .is_work_machine }}
 	{{- $secrets := includeTemplate "secrets/secrets-work" . | fromJson }}
 	name = {{ $secrets.work.name }}
 	email = {{ $secrets.work.email }}
@@ -59,7 +59,7 @@
 	gpgSign = true
 
 [credential]
-{{ if and (hasKey . "hostname") (eq .chezmoi.hostname .hostname) }}
+{{ if .is_work_machine }}
 	helper = osxkeychain
 {{ else }}
 	helper = cache --timeout=7200
@@ -163,7 +163,7 @@
 	required = true
 	smudge = git-lfs smudge -- %f
 
-{{ if and (hasKey . "hostname") (eq .chezmoi.hostname .hostname) }}
+{{ if .is_work_machine }}
 [lfs "https://github.intern/"]
 	locksverify = true
 

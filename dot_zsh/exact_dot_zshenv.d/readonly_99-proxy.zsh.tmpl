@@ -1,9 +1,9 @@
-{{ if and (hasKey . "hostname") (eq .chezmoi.hostname .hostname) -}}
-  {{- $secrets := includeTemplate "secrets/secrets-work" . | fromJson -}}
-  {{ if and (hasKey $secrets "user") (hasKey $secrets "password") -}}
+{{- if .is_work_machine -}}
+{{- $secrets := includeTemplate "secrets/secrets-work" . | fromJson -}}
+{{- if and (hasKey $secrets.work "user") (hasKey $secrets.work "password") }}
 export https_proxy='{{ $secrets.work.proxyProtocol }}://{{ $secrets.work.user }}:{{ $secrets.work.password }}@{{ $secrets.work.proxyHost }}:{{ $secrets.work.proxyPort }}'
-  {{ else -}}
+{{- else }}
 export https_proxy={{ $secrets.work.proxyProtocol }}://{{ $secrets.work.proxyHost }}:{{ $secrets.work.proxyPort }}
-  {{ end }}
+{{- end }}
 export no_proxy='{{ $secrets.work.proxyExclusion }}'
-{{ end }}
+{{- end }}
