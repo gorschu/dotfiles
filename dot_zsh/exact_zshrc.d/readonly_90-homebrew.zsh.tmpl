@@ -1,4 +1,4 @@
-{{ if and (hasKey . "hostname") (eq .chezmoi.hostname .hostname) }}
+{{ if .is_work_machine }}
 export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
 export HOMEBREW_TEMP="${HOME}/tmp/.homebrew"
 {{ end }}

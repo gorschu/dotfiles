@@ -20,7 +20,7 @@ renovate.json
 .config/systemd
 {{- end }}
 
-{{ if and (hasKey . "hostname") (eq .chezmoi.hostname .hostname) }}
+{{ if .is_work_machine }}
 bin
 .config/*
 !.config/atuin

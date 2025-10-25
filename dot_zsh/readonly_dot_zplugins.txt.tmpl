@@ -60,7 +60,7 @@ ohmyzsh/ohmyzsh path:plugins/ripgrep kind:fpath
 ohmyzsh/ohmyzsh path:plugins/vscode
 ohmyzsh/ohmyzsh path:plugins/vagrant
 ohmyzsh/ohmyzsh path:plugins/transfer
-{{ if and (hasKey . "hostname") (eq .chezmoi.hostname .hostname) }}
+{{ if .is_work_machine }}
   ohmyzsh/ohmyzsh path:plugins/gpg-agent
 {{ end }}
 
