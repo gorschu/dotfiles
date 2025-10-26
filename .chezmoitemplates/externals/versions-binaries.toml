@@ -18,3 +18,4 @@
   difft = "0.65.0"  # depName=Wilfred/difftastic
   yazi = "25.5.31"  # depName=sxyazi/yazi
   cliphist = "0.7.0"  # depName=sentriz/cliphist
+  mani = "0.31.0"  # depName=alajmo/mani

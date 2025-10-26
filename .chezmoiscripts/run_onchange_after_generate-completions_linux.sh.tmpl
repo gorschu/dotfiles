@@ -1,6 +1,6 @@
 #!/bin/bash
 # run_onchange_after - generates shell completions for installed binaries
-{{- $versions := includeTemplate "externals/versions.toml" . | fromToml -}}
+{{- $versions := includeTemplate "externals/versions-binaries.toml" . | fromToml -}}
 {{- $externalsCtx := merge (dict "versions" $versions.versions) . -}}
 # Dependencies hash: {{ includeTemplate "externals/externals-binaries.toml" $externalsCtx | sha256sum }}
 
@@ -40,4 +40,4 @@ generate_completion "gopass" "completion bash" "completion zsh"
 generate_completion "gh" "completion -s bash" "completion -s zsh"
 generate_completion "mani" "completion bash" "completion zsh"
 
-echo "✓ Shell completions generated"
+echo "  Shell completions generated"

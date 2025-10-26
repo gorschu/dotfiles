@@ -1,13 +1,13 @@
 {{- /* External dependencies organized by category */ -}}
 
 {{- /* Load version definitions */ -}}
-{{- $versions := includeTemplate "externals/versions.toml" . | fromToml -}}
+{{- $binaryVersions := includeTemplate "externals/versions-binaries.toml" . | fromToml -}}
 
 {{- /* Themes and color schemes */ -}}
 {{ includeTemplate "externals/externals-themes.toml" . }}
 
 {{- /* Static binaries and CLI tools */ -}}
-{{ includeTemplate "externals/externals-binaries.toml" (merge (dict "versions" $versions.versions) .) }}
+{{ includeTemplate "externals/externals-binaries.toml" (merge (dict "versions" $binaryVersions.versions) .) }}
 
 {{- /* Shell plugins and utilities */ -}}
 {{ includeTemplate "externals/externals-shell.toml" . }}
