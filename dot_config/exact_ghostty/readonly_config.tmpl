@@ -5,3 +5,14 @@ theme = "catppuccin-{{ .colorscheme.flavor }}.conf"
 {{- else -}}
 # theme not defined for colorscheme {{ .colorscheme.name }}
 {{- end }}
+
+# Font Configuration
+font-family = "Monaspace Neon Frozen Medium"
+font-family-italic = "Monaspace Radon Frozen Medium"
+font-size = 10.5
+
+# Enable contextual alternates (texture healing)
+font-feature = calt
+
+shell-integration = zsh
+shell-integration-features = true
