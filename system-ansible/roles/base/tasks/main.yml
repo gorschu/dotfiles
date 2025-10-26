@@ -74,6 +74,7 @@
       - zsh
       - neovim
       - btop
+      - bsdtar
     state: present
 
 - name: Install development toolchains
