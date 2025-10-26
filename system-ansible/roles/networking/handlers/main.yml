@@ -6,3 +6,12 @@
   ansible.builtin.systemd_service:
     name: NetworkManager
     state: restarted
+  notify: Wait for network connectivity
+
+- name: Wait for network connectivity
+  ansible.builtin.command: ping -c 1 8.8.8.8
+  register: result
+  until: result.rc == 0
+  retries: 30
+  delay: 3
+  changed_when: false
