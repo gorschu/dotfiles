@@ -28,14 +28,14 @@ install_font() {
 
 echo "Checking fonts..."
 
-# Monaspace Variable Fonts
+# Monaspace Static Fonts (frozen - variable does not really work on terminals)
 MONASPACE_VERSION="{{ $fontVersions.versions.monaspace }}"
 install_font \
   "Monaspace" \
   "${MONASPACE_VERSION}" \
-  "https://github.com/githubnext/monaspace/releases/download/v${MONASPACE_VERSION}/monaspace-variable-v${MONASPACE_VERSION}.zip" \
+  "https://github.com/githubnext/monaspace/releases/download/v${MONASPACE_VERSION}/monaspace-frozen-v${MONASPACE_VERSION}.zip" \
   "${HOME}/.local/share/fonts/monaspace" \
-  --strip-components=2 "Variable Fonts/"
+  --strip-components=2 "Frozen Fonts/"
 
 # Nerd Fonts Symbols Only
 NERD_FONTS_VERSION="{{ $fontVersions.versions.nerd_fonts }}"
