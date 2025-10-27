@@ -16,6 +16,7 @@ renovate.json
 
 {{- /* Ignore Linux-specific files on non-Linux systems */ -}}
 {{- if ne .chezmoi.os "linux" }}
+.chezmoiscripts/*_linux.sh*
 .config/containers
 .config/systemd
 {{- end }}
