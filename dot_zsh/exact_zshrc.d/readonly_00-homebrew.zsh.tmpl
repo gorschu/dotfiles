@@ -1,7 +1,12 @@
+# only run when on an interactive terminal
 if [[ $- != *i* ]]; then
   return
 fi
 
+{{ if .is_work_machine }}
+export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
+export HOMEBREW_TEMP="${HOME}/tmp/.homebrew"
+{{ else }}
 # Homebrew lives outside system paths; only expose it in interactive shells.
 source "${XDG_CONFIG_HOME:-${HOME}/.config}/homebrew/env"
 
@@ -24,3 +29,4 @@ if [[ -x "${BREW_BIN}" ]]; then
     typeset -gU fpath
   fi
 fi
+{{ end }}
