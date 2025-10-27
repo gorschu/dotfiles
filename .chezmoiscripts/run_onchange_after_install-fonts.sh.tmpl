@@ -1,0 +1,45 @@
+#!/bin/bash
+# run_onchange_after - installs fonts from GitHub releases
+{{- $fontVersions := includeTemplate "externals/versions-fonts.toml" . | fromToml -}}
+# Font versions hash: {{ $fontVersions.versions | toJson | sha256sum }}
+
+set -euo pipefail
+
+# Function to install a font if version doesn't match
+install_font() {
+  local name="$1"
+  local version="$2"
+  local url="$3"
+  local dir="$4"
+  shift 4
+  local bsdtar_args=("$@")
+
+  if [[ "$(cat ${dir}/.version 2>/dev/null)" != "${version}" ]]; then
+    echo "  Installing ${name} v${version}..."
+    mkdir -p "${dir}"
+    rm -rf "${dir}"/*
+    curl -fsSL "${url}" | bsdtar -xf- -C "${dir}" "${bsdtar_args[@]}"
+    echo "${version}" > "${dir}/.version"
+    echo "  ${name} v${version} installed"
+  else
+    echo "  ${name} v${version} already installed"
+  fi
+}
+
+echo "Checking fonts..."
+
+# Nerd Fonts Symbols Only
+NERD_FONTS_VERSION="{{ $fontVersions.versions.nerd_fonts }}"
+install_font \
+  "Nerd Fonts Symbols" \
+  "${NERD_FONTS_VERSION}" \
+  "https://github.com/ryanoasis/nerd-fonts/releases/download/v${NERD_FONTS_VERSION}/NerdFontsSymbolsOnly.zip" \
+  "${HOME}/.local/share/fonts/nerd-fonts-symbols" \
+  --include='*.ttf'
+
+# Rebuild font cache if any fonts were installed
+if fc-list | grep -q "SymbolsNerd"; then
+  echo "Rebuilding font cache..."
+  fc-cache -f
+  echo "  Font cache updated"
+fi
