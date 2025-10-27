@@ -1,4 +1,26 @@
-{{ if .is_work_machine }}
-export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
-export HOMEBREW_TEMP="${HOME}/tmp/.homebrew"
-{{ end }}
+if [[ $- != *i* ]]; then
+  return
+fi
+
+# Homebrew lives outside system paths; only expose it in interactive shells.
+source "${XDG_CONFIG_HOME:-${HOME}/.config}/homebrew/env"
+
+if [[ -x "${BREW_BIN}" ]]; then
+  path=(${path:#${HOMEBREW_PREFIX}/bin})
+  path=(${path:#${HOMEBREW_PREFIX}/sbin})
+  path+=("${HOMEBREW_PREFIX}/bin" "${HOMEBREW_PREFIX}/sbin")
+  path=($^path(-/N))
+  typeset -gU path
+
+  if [[ -d "${HOMEBREW_PREFIX}/share/man" ]]; then
+    manpath=(${manpath:#${HOMEBREW_PREFIX}/share/man})
+    manpath+=("${HOMEBREW_PREFIX}/share/man")
+    typeset -gU manpath
+  fi
+
+  if [[ -d "${HOMEBREW_PREFIX}/share/zsh/site-functions" ]]; then
+    fpath=(${fpath:#${HOMEBREW_PREFIX}/share/zsh/site-functions})
+    fpath+=("${HOMEBREW_PREFIX}/share/zsh/site-functions")
+    typeset -gU fpath
+  fi
+fi

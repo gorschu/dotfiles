@@ -1,0 +1,8 @@
+---
+# Homebrew installation details for templates and scripts
+homebrew:
+  prefix: "/home/linuxbrew/.linuxbrew"
+  cacheDir: "homebrew"
+  bundleFiles:
+    - ".config/homebrew/Brewfile"
+    - ".config/homebrew/Brewfile.fonts"

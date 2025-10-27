@@ -1,6 +1,6 @@
 {{- /* External dependencies organized by category */ -}}
 
-{{- /* Load version definitions */ -}}
+{{- /* Load version definitions for binaries not in Homebrew */ -}}
 {{- $binaryVersions := includeTemplate "externals/versions-binaries.toml" . | fromToml -}}
 
 {{- /* Themes and color schemes */ -}}

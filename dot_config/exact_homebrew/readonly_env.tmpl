@@ -1,0 +1,11 @@
+# Homebrew environment configuration
+BREW_PREFIX="{{ .homebrew.prefix }}"
+BREW_BIN="${BREW_PREFIX}/bin/brew"
+BREW_CACHE="${XDG_CACHE_HOME:-${HOME}/.cache}/{{ .homebrew.cacheDir }}"
+
+export HOMEBREW_PREFIX="${BREW_PREFIX}"
+export HOMEBREW_REPOSITORY="${BREW_PREFIX}"
+export HOMEBREW_CELLAR="${BREW_PREFIX}/Cellar"
+export HOMEBREW_CACHE="${BREW_CACHE}"
+export HOMEBREW_NO_AUTO_UPDATE=1
+export HOMEBREW_DOWNLOAD_CONCURRENCY=auto

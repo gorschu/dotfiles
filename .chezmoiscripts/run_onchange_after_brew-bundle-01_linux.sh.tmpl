@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+# Install/update packages, fonts and whatnot from all Brewfiles.
+# Remove anything not actively declared.
+
+{{- $homeDir := .chezmoi.homeDir }}
+{{- range .homebrew.bundleFiles }}
+# {{ . }}: {{ include (joinPath $homeDir .) | sha256sum }}
+{{- end }}
+
+set -euo pipefail
+
+source "${XDG_CONFIG_HOME:-{{ .chezmoi.homeDir }}/.config}/homebrew/env"
+
+FONT_DIR="${XDG_DATA_HOME:-{{ .chezmoi.homeDir }}/.local/share}/fonts"
+COMBINED_BREWFILE="${BREW_CACHE}/Brewfile.combined"
+
+if [[ ! -x "${BREW_BIN}" ]]; then
+  echo "Homebrew not available, skipping bundle."
+  exit 0
+fi
+
+# Combine all Brewfiles into one temporary file
+mkdir -p "${BREW_CACHE}"
+: > "${COMBINED_BREWFILE}"
+
+{{- $homeDir := .chezmoi.homeDir }}
+{{- range .homebrew.bundleFiles }}
+BREWFILE="{{ joinPath $homeDir . }}"
+if [[ -f "${BREWFILE}" ]]; then
+  cat "${BREWFILE}" >> "${COMBINED_BREWFILE}"
+  echo "" >> "${COMBINED_BREWFILE}"
+else
+  echo "WARNING: Brewfile ${BREWFILE} not found"
+fi
+{{- end }}
+
+if [[ ! -s "${COMBINED_BREWFILE}" ]]; then
+  echo "No Brewfiles found; skipping bundle."
+  exit 0
+fi
+
+echo "Running brew bundle with cleanup..."
+"${BREW_BIN}" bundle --file "${COMBINED_BREWFILE}" --cleanup
+
+if [[ -d "${FONT_DIR}" ]]; then
+  echo "Refreshing font cache..."
+  fc-cache -f "${FONT_DIR}"
+  echo "  Font cache updated"
+fi

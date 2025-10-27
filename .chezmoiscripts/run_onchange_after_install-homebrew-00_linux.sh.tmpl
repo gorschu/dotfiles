@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Install Homebrew into the configured prefix
+# we handle everything ourselves, therefore no installer usage
+
+set -euo pipefail
+
+source "${XDG_CONFIG_HOME:-{{ .chezmoi.homeDir }}/.config}/homebrew/env"
+
+BREW_REPO="https://github.com/Homebrew/brew"
+
+if [[ -x "${BREW_BIN}" ]]; then
+  exit 0
+fi
+
+PARENT_DIR="$(dirname "${BREW_PREFIX}")"
+
+if [[ ! -d "${PARENT_DIR}" ]]; then
+  if ! mkdir -p "${PARENT_DIR}" 2>/dev/null; then
+    echo "Creating ${PARENT_DIR}..."
+    sudo install -d -m 0755 -o "$(id -u)" -g "$(id -g)" "${PARENT_DIR}"
+  fi
+fi
+
+mkdir -p "${BREW_CACHE}"
+
+git clone --depth=1 "${BREW_REPO}" "${BREW_PREFIX}"
+
+"${BREW_PREFIX}/bin/brew" update --force --quiet

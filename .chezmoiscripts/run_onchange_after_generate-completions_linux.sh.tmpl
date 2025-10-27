@@ -9,7 +9,7 @@ set -euo pipefail
 echo "Generating shell completions..."
 
 # Completion directories
-BASH_COMPLETIONS="${HOME}/.local/share/bash-completion/completions"
+BASH_COMPLETIONS="${XDG_DATA_HOME:-${HOME}/.local/share}/bash-completion/completions"
 ZSH_COMPLETIONS="${HOME}/.zsh/.zsh_completions.d"
 
 # Create completion directories
@@ -31,13 +31,6 @@ generate_completion() {
 }
 
 # Generate completions for all tools
-generate_completion "eza" "--generate-completions bash" "--generate-completions zsh"
-generate_completion "atuin" "gen-completions --shell bash" "gen-completions --shell zsh"
-generate_completion "topgrade" "--gen-completion bash" "--gen-completion zsh"
-generate_completion "zellij" "setup --generate-completion bash" "setup --generate-completion zsh"
-generate_completion "chezmoi" "completion bash" "completion zsh"
-generate_completion "gopass" "completion bash" "completion zsh"
-generate_completion "gh" "completion -s bash" "completion -s zsh"
-generate_completion "mani" "completion bash" "completion zsh"
+# generate_completion "custom-tool" "--completions bash" "--completions zsh"
 
-echo "  Shell completions generated"
+# echo "  Shell completions generated"
