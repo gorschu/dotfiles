@@ -1,8 +1,9 @@
 # style name or JSON path (default "auto")
+{{- $configHome := env "XDG_CONFIG_HOME" | default (joinPath .chezmoi.homeDir ".config") }}
 {{ if eq .colorscheme.name "catppuccin" }}
-style: "{{ .chezmoi.homeDir }}/.config/glow/themes/catppuccin-{{ .colorscheme.flavor }}.json"
+style: "{{ joinPath $configHome "glow/themes" }}/catppuccin-{{ .colorscheme.flavor }}.json"
 {{ else if eq .colorscheme.name "tokyonight" }}
-style: "{{ .chezmoi.homeDir }}/.config/glow/themes/tokyonight_{{ .colorscheme.flavor }}.json"
+style: "{{ joinPath $configHome "glow/themes" }}/tokyonight_{{ .colorscheme.flavor }}.json"
 {{ else }}
 style: "auto"
 {{ end }}

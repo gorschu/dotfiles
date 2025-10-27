@@ -1,5 +1,6 @@
+{{- $configHome := env "XDG_CONFIG_HOME" | default (joinPath .chezmoi.homeDir ".config") }}
 {{- if eq .colorscheme.name "tokyonight" -}}
-{{ .chezmoi.homeDir }}/.config/zathura/themes/tokyonight
+{{ joinPath $configHome "zathura/themes/tokyonight" }}
 {{- else if eq .colorscheme.name "catppuccin" -}}
 {{ .chezmoi.homeDir }}/.externals/zathura/catppuccin/{{ printf "catppuccin-%s" .colorscheme.flavor }}
 {{- end -}}

@@ -3,8 +3,9 @@
 set -euo pipefail
 
 {{ if lookPath "bat" }}
-{{ if stat (joinPath .chezmoi.homeDir ".config/bat/themes") }}
-# bat theme directory: {{ output "ls" "-R" (joinPath .chezmoi.homeDir ".config/bat/themes/") | sha256sum }}
+{{- $configHome := env "XDG_CONFIG_HOME" | default (joinPath .chezmoi.homeDir ".config") }}
+{{ if stat (joinPath $configHome "bat/themes") }}
+# bat theme directory: {{ output "ls" "-R" (joinPath $configHome "bat/themes/") | sha256sum }}
 {{ else }}
 # empty sha256sum
 {{ end }}

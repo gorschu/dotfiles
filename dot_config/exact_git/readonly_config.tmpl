@@ -13,8 +13,9 @@
 	untrackedCache = true
 
 [init]
-{{- if stat (joinPath .chezmoi.homeDir ".config" "git" "template") }}
-	templatedir = ~/.config/git/template
+{{- $configHome := env "XDG_CONFIG_HOME" | default (joinPath .chezmoi.homeDir ".config") }}
+{{- if stat (joinPath $configHome "git" "template") }}
+	templatedir = {{ joinPath $configHome "git/template" }}
 {{- end }}
 	defaultBranch = main
 
