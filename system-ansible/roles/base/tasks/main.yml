@@ -66,28 +66,9 @@
   become: true
   ansible.builtin.dnf:
     name:
-      - fzf
-      - ripgrep
-      - fd-find
-      - bat
-      - zoxide
       - zsh
       - neovim
-      - btop
       - bsdtar
-    state: present
-
-- name: Install development toolchains
-  become: true
-  ansible.builtin.dnf:
-    name:
-      - rustup
-      - cargo
-      - rust
-      - golang
-      - uv
-      - lua
-      - luarocks
     state: present
 
 - name: Install networking tools

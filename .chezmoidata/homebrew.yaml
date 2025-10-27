@@ -4,5 +4,6 @@ homebrew:
   prefix: "/home/linuxbrew/.linuxbrew"
   cacheDir: "homebrew"
   bundleFiles:
-    - ".config/homebrew/Brewfile"
+    - ".config/homebrew/Brewfile.cli"
     - ".config/homebrew/Brewfile.fonts"
+    - ".config/homebrew/Brewfile.dev"

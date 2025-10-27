@@ -1,0 +1,6 @@
+brew "go"
+brew "lua"
+brew "luarocks"
+brew "rust"
+brew "rustup"
+brew "uv"
