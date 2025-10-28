@@ -1,7 +1,6 @@
 services:
   systemd:
     start_only:
-      - backrest.service
       - syncthing.service
     enable_restart:
       - atuin.service
