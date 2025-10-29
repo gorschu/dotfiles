@@ -11,6 +11,7 @@ if wezterm.config_builder then
 end
 
 config = {
+  max_fps = 120,
   initial_rows = 50,
   initial_cols = 140,
   color_scheme = "Catppuccin Macchiato", -- or Macchiato, Frappe, Latte
