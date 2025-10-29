@@ -4,3 +4,4 @@
 
 [versions]
   nerd_fonts = "3.4.0"  # depName=ryanoasis/nerd-fonts
+  nonicons = "1.0.0"  # Manual tracking - no releases, update version manually to force re-download

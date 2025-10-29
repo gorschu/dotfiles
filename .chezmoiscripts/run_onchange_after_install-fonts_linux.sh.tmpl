@@ -37,8 +37,21 @@ install_font \
   "${HOME}/.local/share/fonts/nerd-fonts-symbols" \
   --include='*.ttf'
 
+# Nonicons (single file, no archive)
+NONICONS_VERSION="{{ $fontVersions.versions.nonicons }}"
+NONICONS_DIR="${HOME}/.local/share/fonts/nonicons"
+if [[ "$(cat ${NONICONS_DIR}/.version 2>/dev/null)" != "${NONICONS_VERSION}" ]]; then
+  echo "  Installing Nonicons v${NONICONS_VERSION}..."
+  mkdir -p "${NONICONS_DIR}"
+  curl -fsSL -o "${NONICONS_DIR}/nonicons.ttf" "https://raw.githubusercontent.com/ya2s/nonicons/master/dist/nonicons.ttf"
+  echo "${NONICONS_VERSION}" > "${NONICONS_DIR}/.version"
+  echo "  Nonicons v${NONICONS_VERSION} installed"
+else
+  echo "  Nonicons v${NONICONS_VERSION} already installed"
+fi
+
 # Rebuild font cache if any fonts were installed
-if fc-list | grep -q "SymbolsNerd"; then
+if fc-list | grep -qE "(SymbolsNerd|Nonicons)"; then
   echo "Rebuilding font cache..."
   fc-cache -f
   echo "  Font cache updated"
