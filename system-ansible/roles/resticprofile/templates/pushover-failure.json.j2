@@ -1,0 +1,10 @@
+{{ ansible_managed | comment(decoration='// ') }}
+// Pushover notification template for resticprofile backup failures
+{
+  "token": "{{ resticprofile_pushover_token }}",
+  "user": "{{ resticprofile_pushover_user_key }}",
+  "title": "Backup Failed on {{ ansible_hostname }}: {{ "{{" }} .ProfileName {{ "}}" }}/{{ "{{" }} .ProfileCommand {{ "}}" }}",
+  "message": "Host: {{ ansible_hostname }}\nExit Code: {{ "{{" }} .Error.ExitCode {{ "}}" }}\nError: {{ "{{" }} .Error.Message {{ "}}" }}",
+  "priority": 1,
+  "sound": "alarm"
+}

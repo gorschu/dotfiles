@@ -1,0 +1,50 @@
+{{ ansible_managed | comment }}
+# Resticprofile configuration for system-level backup of /home
+
+[global]
+  prevent-sleep = true
+  send-timeout = "30s"
+  cleanup-cache = true
+  ionice-class = 2 # best-effort
+  ionice-level = 6
+  priority = "low" # nice 10
+
+[default]
+  status-file = "/var/lib/resticprofile/status.json"
+  extended-status = true
+  send-after-fail = "https://api.pushover.net/1/messages.json"
+  send-after-fail-body-template = "/etc/resticprofile/hooks/pushover-failure.json"
+  send-after-fail-args = "-a {{ resticprofile_pushover_token }} -u {{ resticprofile_pushover_user_key }}"
+  schedule-after-network-online = true
+  schedule-permission = "system"
+
+{% for backend in resticprofile_backend_names %}
+[daily-{{ backend }}]
+  inherit = "default"
+  repository = "{{ resticprofile_backend_credentials[backend].repository }}"
+  env-file = ["/etc/resticprofile/{{ backend }}.env"]
+  initialize = true
+
+  [daily-{{ backend }}.backup]
+    source = ["/home", "/etc"]
+    exclude-file = "/etc/resticprofile/excludes.txt"
+    exclude-caches = true
+    one-file-system = true
+
+    tag = ["host:{{ ansible_hostname }}", "system-backup", "daily"]
+
+    limit-upload = 3840
+    schedule = "daily"
+
+  [daily-{{ backend }}.retention]
+    after-backup = true
+    prune = true
+    keep-daily = 7
+    keep-weekly = 4
+    keep-monthly = 12
+    keep-yearly = 2
+
+  [daily-{{ backend }}.check]
+    read-data-subset = "1/7"
+    schedule = "daily"
+{% endfor %}

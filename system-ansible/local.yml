@@ -21,7 +21,9 @@
     - role: base
       tags: [base, repos]
     - role: btrbk
-      tags: [btrbk, storage]
+      tags: [btrbk, storage, backup]
+    - role: resticprofile
+      tags: [resticprofile, backup]
     - role: smartcard
       tags: [smartcard, gpg]
     - role: virtualization
