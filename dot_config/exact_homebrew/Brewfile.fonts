@@ -1,1 +1,3 @@
-cask "font-monaspace-frozen"
+cask "font-jetbrains-mono"
+cask "font-iosevka"
+cask "font-maple-mono"
