@@ -1,6 +1,6 @@
 ---
 # General configuration shared across all machines
 colorscheme:
-  name: tokyonight
-  flavor: moon
+  name: catppuccin
+  flavor: mocha
 terminal: xterm-ghostty
