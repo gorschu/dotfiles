@@ -1,0 +1,8 @@
+{{ if hasKey .colorscheme "name" }}
+export COLORSCHEME_NAME={{ .colorscheme.name }}
+{{ end }}
+{{ if hasKey .colorscheme "flavor" }}
+export COLORSCHEME_FLAVOR={{ .colorscheme.flavor }}
+{{ end }}
+
+# vim: ft=sh
