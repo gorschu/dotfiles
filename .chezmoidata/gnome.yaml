@@ -2,4 +2,8 @@
 # GNOME extensions
 gnome:
   extensions:
-    enabled: ["switcher@landau.fi", "paperwm@paperwm.github.com", "caffeine@patapon.info"]
+    enabled:
+      - switcher@landau.fi
+      - paperwm@paperwm.github.com
+      - caffeine@patapon.info
+      - appindicatorsupport@rgcjonas.gmail.com
