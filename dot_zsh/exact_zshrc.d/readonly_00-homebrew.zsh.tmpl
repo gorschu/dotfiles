@@ -7,10 +7,11 @@ fi
 export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
 export HOMEBREW_TEMP="${HOME}/tmp/.homebrew"
 {{ else }}
-if [[ -x "${BREW_BIN}" ]]; then
-  # Load global environment variables for brew
-  source "${XDG_CONFIG_HOME:-${HOME}/.config}/homebrew/env"
+# Load global environment variables for brew
+BREW_ENV="${XDG_CONFIG_HOME:-${HOME}/.config}/homebrew/env"
+[[ -f "${BREW_ENV}" ]] && source "${BREW_ENV}"
 
+if [[ -x "${BREW_BIN}" ]]; then
   path=(${path:#${HOMEBREW_PREFIX}/bin})
   path=(${path:#${HOMEBREW_PREFIX}/sbin})
   path+=("${HOMEBREW_PREFIX}/bin" "${HOMEBREW_PREFIX}/sbin")
