@@ -1,4 +1,10 @@
-source=~/.config/hypr/themes/catppuccin/macchiato.conf
+{{- if eq .colorscheme.name "catppuccin" }}
+source=~/.config/hypr/themes/catppuccin/{{ .colorscheme.flavor }}.conf
+{{- else if eq .colorscheme.name "tokyonight" }}
+source=~/.config/hypr/themes/tokyonight/{{ .colorscheme.flavor }}.conf
+{{- else }}
+# No theme file available for {{ .colorscheme.name }}
+{{- end }}
 ################
 ### MONITORS ###
 ################
@@ -63,8 +69,13 @@ general {
     # https://wiki.hyprland.org/Configuring/Variables/#variable-types for info about colors
     # col.active_border = rgba(33ccffee) rgba(00ff99ee) 45deg
     # col.inactive_border = rgba(595959aa)
+{{- if eq .colorscheme.name "catppuccin" }}
     col.active_border = $mauve
     col.inactive_border = $sky
+{{- else if eq .colorscheme.name "tokyonight" }}
+    col.active_border = $blue
+    col.inactive_border = $cyan
+{{- end }}
 
     # Set to true enable resizing windows by clicking and dragging on borders and gaps
     resize_on_border = true
