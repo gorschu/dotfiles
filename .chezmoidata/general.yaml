@@ -4,4 +4,3 @@ colorscheme:
   name: catppuccin
   flavor: mocha
   sub_flavor: lavender
-terminal: xterm-ghostty
