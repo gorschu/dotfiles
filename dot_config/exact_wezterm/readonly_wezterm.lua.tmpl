@@ -14,7 +14,17 @@ config = {
   max_fps = 120,
   initial_rows = 50,
   initial_cols = 140,
-  color_scheme = "Catppuccin Macchiato", -- or Macchiato, Frappe, Latte
+{{- if eq .colorscheme.name "catppuccin" }}
+  color_scheme = "Catppuccin {{ .colorscheme.flavor | title }}",
+{{- else if eq .colorscheme.name "tokyonight" }}
+  {{- if eq .colorscheme.flavor "night" }}
+  color_scheme = "Tokyo Night",
+  {{- else }}
+  color_scheme = "Tokyo Night {{ .colorscheme.flavor | title }}",
+  {{- end }}
+{{- else }}
+  color_scheme = "Catppuccin Macchiato", -- fallback
+{{- end }}
   window_padding = {
     left = 5,
     right = 5,
