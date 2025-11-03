@@ -27,7 +27,7 @@
     - role: smartcard
       tags: [smartcard, gpg]
     - role: virtualization
-      tags: [virtualization, incus]
+      tags: [virtualization, incus, docker, containers]
     - role: multimedia
       tags: [multimedia, codecs]
     - role: desktop
