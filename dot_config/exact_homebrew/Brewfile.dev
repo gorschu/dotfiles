@@ -4,3 +4,6 @@ brew "luarocks"
 brew "rust"
 brew "rustup"
 brew "uv"
+
+cask "codex"
+cask "claude-code"

@@ -1,0 +1,15 @@
+#!/bin/bash
+# run_onchange_after - installs AI CLI tools via npm to user-space
+# Hash: ai-cli-tools-v1  # Bump this to force reinstall
+
+set -euo pipefail
+
+echo "Installing AI CLI tools..."
+
+# GitHub Copilot CLI
+if ! command -v copilot &>/dev/null; then
+  echo "  Installing GitHub Copilot CLI..."
+  npm install -g @github/copilot
+else
+  echo "  ✓ GitHub Copilot CLI already installed"
+fi
