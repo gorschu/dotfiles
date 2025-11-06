@@ -82,7 +82,7 @@ setup-all:
     @echo ""
     @read -p "Continue? (y/N) " -n 1 -r && echo && [[ $$REPLY =~ ^[Yy]$ ]] || exit 1
     @echo "Applying dotfiles..."
-    ./apply.sh
+    ./bootstrap-apply.sh
     @echo ""
     @echo "Running Ansible system setup..."
     cd system-ansible && ansible-playbook local.yml \
