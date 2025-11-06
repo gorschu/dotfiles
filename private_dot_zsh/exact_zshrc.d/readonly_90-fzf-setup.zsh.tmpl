@@ -34,20 +34,27 @@ export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
 {{ end }}
 {{ end }}
 
-FZF_FD_OPTIONS="--follow --exclude .git --exclude node_modules"
+# Build FZF exclude options from config file
+FZF_FD_OPTIONS="--follow"
+if [[ -f ${XDG_CONFIG_HOME:-$HOME/.config}/fzf/excludes ]]; then
+  while IFS= read -r pattern; do
+    [[ -z "$pattern" || "$pattern" =~ ^# ]] && continue  # skip empty lines and comments
+    FZF_FD_OPTIONS="$FZF_FD_OPTIONS --exclude $pattern"
+  done < "${XDG_CONFIG_HOME:-$HOME/.config}/fzf/excludes"
+fi
+export FZF_FD_OPTIONS
 export FZF_DEFAULT_COMMAND="fd --type f --type l --hidden $FZF_FD_OPTIONS"
 export FZF_CTRL_T_COMMAND="fd $FZF_FD_OPTIONS"
 export FZF_ALT_C_COMMAND="fd --type d --hidden $FZF_FD_OPTIONS"
-export FZF_ALT_C_OPTS="
-  --walker-skip .git,node_modules,target
-  --preview 'eza -T {}'"
 export FZF_CTRL_T_OPTS="
-  --walker-skip .git,node_modules,target
-  --preview 'bat -n --color=always {}'
+  --preview '[ -d {} ] && eza -T {} || bat -n --color=always {}'
   --bind 'ctrl-/:change-preview-window(down|hidden|)'"
+export FZF_ALT_C_OPTS="
+  --preview 'eza -T {}'"
 
 if [[ -f ${ZDOTDIR:-$HOME}/fzf-git.sh ]]; then
-  # unbind CTRL-G first. If not fzf-git keybind are not working because it's bound to list-expand by default
+  # unbind CTRL-G first.
+  # If not fzf-git keybind are not working because it is bound to list-expand by default
   bindkey -r '^G'
   source ${ZDOTDIR:-$HOME}/fzf-git.sh
 fi

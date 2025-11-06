@@ -1,0 +1,21 @@
+# source in fzf
+# try homebrew first (HOMEBREW_PREFIX set in readonly_00-homebrew.zsh.tmpl)
+if [ -f "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh" ]; then
+  source "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh"
+  source "$HOMEBREW_PREFIX/opt/fzf/shell/completion.zsh"
+{{ if eq .chezmoi.os "linux" }}
+# fallback to system packages for linux (fedora, arch, debian, etc)
+elif [ -f /usr/share/fzf/shell/key-bindings.zsh ]; then
+  source /usr/share/fzf/shell/key-bindings.zsh
+elif [ -f /usr/share/fzf/key-bindings.zsh ]; then
+  source /usr/share/fzf/key-bindings.zsh
+# fallback to custom install via install script
+elif [ -f ~/.fzf.zsh ]; then
+  source ~/.fzf.zsh
+{{ end }}
+fi
+
+# Rebind ALT-C to ALT-D to avoid paperwm window center conflict
+bindkey -r '^[c'  # unbind default ALT-C
+# Map ALT-D to the same fzf-cd-widget that ALT-C uses
+bindkey '^[d' fzf-cd-widget
