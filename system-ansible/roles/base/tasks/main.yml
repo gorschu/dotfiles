@@ -69,6 +69,7 @@
       - zsh
       - neovim
       - bsdtar
+      - yp-tools
     state: present
 
 - name: Install networking tools
