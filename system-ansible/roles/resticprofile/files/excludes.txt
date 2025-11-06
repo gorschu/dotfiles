@@ -156,6 +156,9 @@ Games/
 .local/share/soar
 .local/share/bluefin-cli
 
+# Fonts
+.local/share/fonts
+
 # Email caches (IMAP)
 .thunderbird/*/ImapMail/
 .thunderbird/*/Imap/

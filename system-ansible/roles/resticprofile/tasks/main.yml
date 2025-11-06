@@ -7,9 +7,11 @@
     - name: Install resticprofile
       when: resticprofile_state == 'present'
       block:
-        - name: Install restic package
+        - name: Install restic and Python packages
           ansible.builtin.dnf:
-            name: restic
+            name:
+              - restic
+              - python3-pip
             state: present
 
         - name: Create resticprofile bin directory
@@ -75,6 +77,21 @@
             owner: root
             group: root
 
+        - name: Create apprise venv directory
+          ansible.builtin.file:
+            path: /opt/resticprofile/apprise-venv
+            state: directory
+            mode: "0755"
+            owner: root
+            group: root
+
+        - name: Install apprise in isolated venv
+          ansible.builtin.pip:
+            name: apprise
+            virtualenv: /opt/resticprofile/apprise-venv
+            virtualenv_command: /usr/bin/python3 -m venv
+            state: present
+
         - name: Create resticprofile state directory
           ansible.builtin.file:
             path: /var/lib/resticprofile
@@ -100,11 +117,11 @@
             group: root
           notify: Systemd daemon-reload
 
-        - name: Deploy pushover notification template
+        - name: Deploy notification script
           ansible.builtin.template:
-            src: pushover-failure.json.j2
-            dest: /etc/resticprofile/hooks/pushover-failure.json
-            mode: "0600"
+            src: notify.sh.j2
+            dest: /etc/resticprofile/hooks/notify.sh
+            mode: "0755"
             owner: root
             group: root
 

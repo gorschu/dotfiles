@@ -27,6 +27,7 @@ ansible-setup:
       --vault-password-file <(op read "op://Ansible/Workstations/password") \
       --extra-vars @vars/vault/general.yml \
       --extra-vars @vars/vault/network.yaml \
+      --extra-vars @vars/vault/backup.yml \
       --extra-vars "hostname=$HOSTNAME" \
       --ask-become-pass
 
@@ -38,6 +39,7 @@ ansible-tags TAGS:
       --vault-password-file <(op read "op://Ansible/Workstations/password") \
       --extra-vars @vars/vault/general.yml \
       --extra-vars @vars/vault/network.yaml \
+      --extra-vars @vars/vault/backup.yml \
       --extra-vars "hostname=$HOSTNAME" \
       --tags {{TAGS}} \
       --ask-become-pass
@@ -58,6 +60,7 @@ ansible-dry-run:
       --vault-password-file <(op read "op://Ansible/Workstations/password") \
       --extra-vars @vars/vault/general.yml \
       --extra-vars @vars/vault/network.yaml \
+      --extra-vars @vars/vault/backup.yml \
       --extra-vars "hostname=$HOSTNAME" \
       --check \
       --ask-become-pass
@@ -86,6 +89,7 @@ setup-all:
       --vault-password-file <(op read "op://Ansible/Workstations/password") \
       --extra-vars @vars/vault/general.yml \
       --extra-vars @vars/vault/network.yaml \
+      --extra-vars @vars/vault/backup.yml \
       --ask-become-pass
 
 pre-commit-install:
