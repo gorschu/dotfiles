@@ -1,7 +1,7 @@
 #!/bin/bash
 # run_onchange_after - applies user tmpfiles.d configuration
 {{- $configs := "" -}}
-{{- range glob (joinPath .chezmoi.sourceDir "dot_config/exact_private_user-tmpfiles.d/*") -}}
+{{- range glob (joinPath .chezmoi.sourceDir "private_dot_config/exact_private_user-tmpfiles.d/*") -}}
 {{- $configs = print $configs (include .) -}}
 {{- end -}}
 # Config hash: {{ $configs | sha256sum }}
