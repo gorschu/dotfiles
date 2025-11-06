@@ -19,9 +19,9 @@ if [[ -o interactive ]]; then
   if command -v fastfetch &>/dev/null; then
 {{- if $logoFile }}
     # Use kitty-direct for WezTerm/Ghostty/Kitty (fastest)
-    fastfetch -c "${XDG_CONFIG_HOME:-$HOME/.config}/fastfetch/presets/7.jsonc" --logo '{{ $logoFile }}' --logo-type kitty-direct --logo-width 20
+    fastfetch -c "${XDG_CONFIG_HOME:-$HOME/.config}/fastfetch/custom.jsonc" --logo '{{ $logoFile }}' --logo-type kitty-direct --logo-width 20
 {{- else }}
-    fastfetch -c "${XDG_CONFIG_HOME:-$HOME/.config}/fastfetch/presets/7.jsonc"
+    fastfetch -c "${XDG_CONFIG_HOME:-$HOME/.config}/fastfetch/custom.jsonc"
 {{- end }}
   fi
 fi
