@@ -4,6 +4,7 @@ if [[ $- != *i* ]]; then
 fi
 
 {{ if .is_work_machine }}
+export HOMEBREW_PREFIX="${HOME}/homebrew"
 export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
 export HOMEBREW_TEMP="${HOME}/tmp/.homebrew"
 {{ else }}
