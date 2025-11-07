@@ -9,3 +9,5 @@ export HOMEBREW_CELLAR="${BREW_PREFIX}/Cellar"
 export HOMEBREW_CACHE="${BREW_CACHE}"
 export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_DOWNLOAD_CONCURRENCY=auto
+# prevents brew from nuking itself
+export HOMEBREW_FORCE_VENDOR_RUBY=1
