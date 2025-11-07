@@ -3,7 +3,6 @@ services:
     start_only:
       - syncthing.service
     enable_restart:
-      - atuin.service
     enable_start:
       - app-com.mitchellh.ghostty.service
       - podman.socket

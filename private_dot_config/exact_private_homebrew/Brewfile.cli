@@ -1,4 +1,4 @@
-brew "atuin"
+brew "atuin", restart_service: true
 brew "bat"
 brew "bat-extras"
 brew "btop"
