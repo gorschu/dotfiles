@@ -29,9 +29,9 @@
   become: true
   ansible.builtin.systemd:
     name: docker.service
-    enabled: "{{ virtualization_docker_state == 'present' }}"
-    state: "{{ 'started' if virtualization_docker_state == 'present' else 'stopped' }}"
-  when: virtualization_docker_state in ['present', 'absent']
+    enabled: true
+    state: started
+  when: virtualization_docker_state == 'present'
 
 - name: Remove Docker packages
   become: true
