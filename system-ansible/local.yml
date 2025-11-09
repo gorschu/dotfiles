@@ -32,6 +32,8 @@
       tags: [multimedia, codecs]
     - role: desktop
       tags: [desktop, gui]
+    - role: jetbrains_toolbox
+      tags: [desktop, jetbrains, toolbox]
     - role: hyprland
       tags: [hyprland, wayland]
     - role: niri

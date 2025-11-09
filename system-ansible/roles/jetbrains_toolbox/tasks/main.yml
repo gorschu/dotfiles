@@ -1,0 +1,153 @@
+---
+- name: Manage JetBrains Toolbox when state is present
+  when: jetbrains_toolbox_state == 'present'
+  block:
+    - name: Derive Toolbox paths
+      ansible.builtin.set_fact:
+        jetbrains_toolbox_install_parent: "{{ jetbrains_toolbox_install_dir | dirname }}"
+        jetbrains_toolbox_binary_path: "{{ jetbrains_toolbox_install_dir }}/bin/jetbrains-toolbox"
+        jetbrains_toolbox_symlink_parent: "{{ jetbrains_toolbox_symlink_path | dirname }}"
+
+    - name: Check Toolbox install parent directory
+      ansible.builtin.stat:
+        path: "{{ jetbrains_toolbox_install_parent }}"
+      register: jetbrains_toolbox_install_parent_stat
+
+    - name: Create Toolbox install parent directory when missing
+      ansible.builtin.file:
+        path: "{{ jetbrains_toolbox_install_parent }}"
+        state: directory
+        mode: "0755"
+      when: not jetbrains_toolbox_install_parent_stat.stat.exists
+
+    - name: Check Toolbox symlink parent directory
+      ansible.builtin.stat:
+        path: "{{ jetbrains_toolbox_symlink_parent }}"
+      register: jetbrains_toolbox_symlink_parent_stat
+
+    - name: Create Toolbox symlink parent directory when missing
+      ansible.builtin.file:
+        path: "{{ jetbrains_toolbox_symlink_parent }}"
+        state: directory
+        mode: "0755"
+      when: not jetbrains_toolbox_symlink_parent_stat.stat.exists
+
+    - name: Check if Toolbox is already installed
+      ansible.builtin.stat:
+        path: "{{ jetbrains_toolbox_binary_path }}"
+      register: jetbrains_toolbox_binary_stat
+
+    - name: Install JetBrains Toolbox
+      when: not jetbrains_toolbox_binary_stat.stat.exists
+      block:
+        - name: Ensure cache directory exists
+          ansible.builtin.file:
+            path: "{{ jetbrains_toolbox_cache_dir }}"
+            state: directory
+            mode: "0755"
+
+        - name: Fetch JetBrains Toolbox release metadata
+          ansible.builtin.uri:
+            url: "{{ jetbrains_toolbox_release_api }}"
+            return_content: true
+          register: jetbrains_toolbox_release_response
+
+        - name: Determine download links for current architecture
+          ansible.builtin.set_fact:
+            jetbrains_toolbox_release: "{{ jetbrains_toolbox_release_response.json['TBA'][0] }}"
+            jetbrains_toolbox_arch_key: >-
+              {{
+                'linuxARM64'
+                if ansible_architecture in ['aarch64', 'arm64']
+                else 'linux'
+              }}
+
+        - name: Ensure architecture is supported
+          ansible.builtin.assert:
+            that:
+              - jetbrains_toolbox_release.downloads[jetbrains_toolbox_arch_key] is defined
+            fail_msg: "JetBrains Toolbox does not publish a build for {{ ansible_architecture }}."
+
+        - name: Set Toolbox download facts
+          ansible.builtin.set_fact:
+            jetbrains_toolbox_download_url: >-
+              {{ jetbrains_toolbox_release.downloads[jetbrains_toolbox_arch_key].link }}
+            jetbrains_toolbox_checksum_url: >-
+              {{ jetbrains_toolbox_release.downloads[jetbrains_toolbox_arch_key].checksumLink }}
+            jetbrains_toolbox_build_dir: >-
+              {{ jetbrains_toolbox_install_parent }}/jetbrains-toolbox-{{ jetbrains_toolbox_release.build }}
+
+        - name: Download Toolbox checksum
+          ansible.builtin.get_url:
+            url: "{{ jetbrains_toolbox_checksum_url }}"
+            dest: "{{ jetbrains_toolbox_cache_dir }}/jetbrains-toolbox.tar.gz.sha256"
+            mode: "0600"
+            force: true
+
+        - name: Read expected checksum
+          ansible.builtin.slurp:
+            src: "{{ jetbrains_toolbox_cache_dir }}/jetbrains-toolbox.tar.gz.sha256"
+          register: jetbrains_toolbox_checksum_file
+
+        - name: Register checksum fact
+          ansible.builtin.set_fact:
+            jetbrains_toolbox_checksum: >-
+              {{ (jetbrains_toolbox_checksum_file.content | b64decode) | regex_search('^[0-9a-fA-F]+') }}
+
+        - name: Download JetBrains Toolbox archive
+          ansible.builtin.get_url:
+            url: "{{ jetbrains_toolbox_download_url }}"
+            dest: "{{ jetbrains_toolbox_cache_dir }}/jetbrains-toolbox.tar.gz"
+            mode: "0600"
+            force: true
+            checksum: "sha256:{{ jetbrains_toolbox_checksum }}"
+
+        - name: Remove any stale extracted directory
+          ansible.builtin.file:
+            path: "{{ jetbrains_toolbox_build_dir }}"
+            state: absent
+
+        - name: Extract Toolbox archive
+          ansible.builtin.unarchive:
+            src: "{{ jetbrains_toolbox_cache_dir }}/jetbrains-toolbox.tar.gz"
+            dest: "{{ jetbrains_toolbox_install_parent }}"
+            remote_src: true
+
+        - name: Remove existing Toolbox installation directory
+          ansible.builtin.file:
+            path: "{{ jetbrains_toolbox_install_dir }}"
+            state: absent
+
+        - name: Move Toolbox into final location
+          ansible.builtin.command:
+            cmd: "mv {{ jetbrains_toolbox_build_dir }} {{ jetbrains_toolbox_install_dir }}"
+          changed_when: true
+
+        - name: Clean Toolbox cache
+          ansible.builtin.file:
+            path: "{{ jetbrains_toolbox_cache_dir }}"
+            state: absent
+
+    - name: Ensure Toolbox symlink exists
+      ansible.builtin.file:
+        src: "{{ jetbrains_toolbox_binary_path }}"
+        dest: "{{ jetbrains_toolbox_symlink_path }}"
+        state: link
+
+- name: Remove JetBrains Toolbox when state is absent
+  when: jetbrains_toolbox_state == 'absent'
+  block:
+    - name: Remove Toolbox install directory
+      ansible.builtin.file:
+        path: "{{ jetbrains_toolbox_install_dir }}"
+        state: absent
+
+    - name: Remove Toolbox symlink
+      ansible.builtin.file:
+        path: "{{ jetbrains_toolbox_symlink_path }}"
+        state: absent
+
+    - name: Remove Toolbox cache directory
+      ansible.builtin.file:
+        path: "{{ jetbrains_toolbox_cache_dir }}"
+        state: absent
