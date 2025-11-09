@@ -1,6 +1,0 @@
----
-jetbrains_toolbox_state: present
-jetbrains_toolbox_install_dir: "{{ ansible_env.HOME }}/.local/share/jetbrains-toolbox"
-jetbrains_toolbox_symlink_path: "{{ ansible_env.HOME }}/.local/bin/jetbrains-toolbox"
-jetbrains_toolbox_cache_dir: "{{ ansible_env.HOME }}/.cache/jetbrains-toolbox"
-jetbrains_toolbox_release_api: "https://data.services.jetbrains.com/products/releases?code=TBA&latest=true&type=release"

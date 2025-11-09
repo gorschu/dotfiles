@@ -15,8 +15,5 @@ resticprofile_version: "0.32.0"
 resticprofile_path: "/opt/resticprofile"
 resticprofile_bin_path: "{{ resticprofile_path }}/bin"
 
-# JetBrains Toolbox installation state: present or absent
-jetbrains_toolbox_state: present
-
 # BeyondCompare installation state: present or absent
 beyondcompare_state: present

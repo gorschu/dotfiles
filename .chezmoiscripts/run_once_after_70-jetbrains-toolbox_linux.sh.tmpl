@@ -1,0 +1,66 @@
+#!/bin/bash
+# Install JetBrains Toolbox
+# Installation hash: {{ .chezmoi.os }}_{{ .chezmoi.arch }}
+
+set -euo pipefail
+
+# Skip installation if no GUI session
+if [[ -z "${DISPLAY:-}" ]] && [[ "${XDG_SESSION_TYPE:-}" != "x11" ]] && [[ "${XDG_SESSION_TYPE:-}" != "wayland" ]]; then
+  echo "Skipping JetBrains Toolbox installation: no GUI session detected"
+  exit 0
+fi
+
+INSTALL_DIR="${HOME}/.local/share/jetbrains-toolbox"
+SYMLINK_PATH="${HOME}/.local/bin/jetbrains-toolbox"
+CACHE_DIR="${HOME}/.cache/jetbrains-toolbox"
+API_URL="https://data.services.jetbrains.com/products/releases?code=TBA&latest=true&type=release"
+
+mkdir -p "${CACHE_DIR}"
+
+echo "Fetching JetBrains Toolbox release information..."
+RELEASE_JSON=$(curl -fsSL "${API_URL}")
+
+DOWNLOAD_URL=$(echo "${RELEASE_JSON}" | jq -r '.TBA[0].downloads.linux.link')
+CHECKSUM_URL=$(echo "${RELEASE_JSON}" | jq -r '.TBA[0].downloads.linux.checksumLink')
+BUILD=$(echo "${RELEASE_JSON}" | jq -r '.TBA[0].build')
+
+if [[ -z "${DOWNLOAD_URL}" || "${DOWNLOAD_URL}" == "null" ]]; then
+  echo "Failed to fetch JetBrains Toolbox download URL"
+  exit 1
+fi
+
+if [[ "$(cat ${INSTALL_DIR}/.build 2>/dev/null)" == "${BUILD}" ]]; then
+  echo "JetBrains Toolbox build ${BUILD} already installed"
+  exit 0
+fi
+
+echo "Downloading JetBrains Toolbox build ${BUILD}..."
+curl -fsSL "${CHECKSUM_URL}" -o "${CACHE_DIR}/toolbox.tar.gz.sha256"
+EXPECTED_CHECKSUM=$(cut -d' ' -f1 "${CACHE_DIR}/toolbox.tar.gz.sha256")
+
+curl -fsSL -o "${CACHE_DIR}/toolbox.tar.gz" "${DOWNLOAD_URL}"
+
+ACTUAL_CHECKSUM=$(sha256sum "${CACHE_DIR}/toolbox.tar.gz" | cut -d' ' -f1)
+if [[ "${ACTUAL_CHECKSUM}" != "${EXPECTED_CHECKSUM}" ]]; then
+  echo "Checksum verification failed"
+  exit 1
+fi
+
+echo "Extracting JetBrains Toolbox..."
+EXTRACT_DIR="${HOME}/.local/share/jetbrains-toolbox-extract-${BUILD}"
+rm -rf "${EXTRACT_DIR}" "${INSTALL_DIR}"
+mkdir -p "${EXTRACT_DIR}"
+
+tar -xzf "${CACHE_DIR}/toolbox.tar.gz" -C "${EXTRACT_DIR}"
+mv "${EXTRACT_DIR}"/jetbrains-toolbox-*/* "${EXTRACT_DIR}/"
+rm -rf "${EXTRACT_DIR}"/jetbrains-toolbox-*
+mv "${EXTRACT_DIR}" "${INSTALL_DIR}"
+
+mkdir -p "$(dirname ${SYMLINK_PATH})"
+ln -sf "${INSTALL_DIR}/bin/jetbrains-toolbox" "${SYMLINK_PATH}"
+
+echo "${BUILD}" > "${INSTALL_DIR}/.build"
+
+rm -rf "${CACHE_DIR}"
+
+echo "JetBrains Toolbox build ${BUILD} installed"

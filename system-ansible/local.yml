@@ -34,8 +34,6 @@
       tags: [desktop, gui]
     - role: beyondcompare
       tags: [desktop, beyondcompare]
-    - role: jetbrains_toolbox
-      tags: [desktop, jetbrains, toolbox]
     - role: hyprland
       tags: [hyprland, wayland]
     - role: niri
