@@ -20,19 +20,6 @@
     name: scottames/ghostty
     state: enabled
 
-- name: Add scootersoftware repository
-  become: true
-  ansible.builtin.get_url:
-    url: https://www.scootersoftware.com/files/scootersoftware.repo
-    dest: /etc/yum.repos.d/scootersoftware.repo
-    mode: "0644"
-
-- name: Add scootersoftware GPG key
-  become: true
-  ansible.builtin.rpm_key:
-    state: present
-    key: https://www.scootersoftware.com/RPM-GPG-KEY-scootersoftware
-
 - name: Check if ZFS kernel module is available
   ansible.builtin.command: modinfo zfs
   register: base_zfs_module_check
