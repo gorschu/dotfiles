@@ -1,0 +1,6 @@
+{{- $configHome := env "XDG_CONFIG_HOME" | default (joinPath .chezmoi.homeDir ".config") }}
+# Include dropin configuration files from topgrade.d/
+[include]
+paths = ["{{ joinPath $configHome "topgrade/topgrade.d/post_commands-ansible.toml" }}"]
+
+[misc]

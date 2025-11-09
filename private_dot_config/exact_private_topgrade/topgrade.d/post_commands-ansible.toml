@@ -1,0 +1,3 @@
+# Post-update commands
+[post_commands]
+"System Ansible Sync" = "cd ~/.local/share/chezmoi && just ansible-setup"
