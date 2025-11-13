@@ -35,6 +35,30 @@
       when: networking_wifi_networks is defined
       notify: Reload NetworkManager
 
+    - name: Check current metered status for WiFi connections
+      ansible.builtin.command:
+        cmd: nmcli -t -f connection.metered connection show "{{ item.key }}"
+      loop: "{{ networking_wifi_networks | dict2items }}"
+      when: networking_wifi_networks is defined
+      register: networking_wifi_metered_status
+      changed_when: false
+      failed_when: false
+
+    - name: Configure metered status for WiFi connections
+      ansible.builtin.command:
+        cmd: >-
+          nmcli connection modify "{{ item.item.key }}"
+          connection.metered {{ 'yes' if item.item.value.metered | default(false) else 'no' }}
+      loop: "{{ networking_wifi_metered_status.results }}"
+      when:
+        - networking_wifi_networks is defined
+        - item.rc == 0
+        - >-
+          (item.item.value.metered | default(false) and item.stdout != 'connection.metered:yes') or
+          (not (item.item.value.metered | default(false)) and item.stdout != 'connection.metered:no')
+      changed_when: true
+      notify: Reload NetworkManager
+
 - name: Set hostname
   ansible.builtin.hostname:
     name: "{{ hostname }}"

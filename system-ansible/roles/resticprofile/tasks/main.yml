@@ -197,6 +197,14 @@
             owner: root
             group: root
 
+        - name: Deploy metered connection check script
+          ansible.builtin.template:
+            src: check-metered.sh.j2
+            dest: /etc/resticprofile/hooks/check-metered.sh
+            mode: "0755"
+            owner: root
+            group: root
+
         - name: Deploy excludes.txt
           ansible.builtin.copy:
             src: excludes.txt
@@ -204,6 +212,15 @@
             mode: "0600"
             owner: root
             group: root
+
+        - name: Deploy systemd drop-in file for metered connection detection
+          ansible.builtin.template:
+            src: 99-skip-metered.conf.j2
+            dest: /etc/resticprofile/99-skip-metered.conf
+            mode: "0644"
+            owner: root
+            group: root
+          notify: Systemd daemon-reload
 
         - name: Deploy backend-specific env files with restricted permissions
           ansible.builtin.template:

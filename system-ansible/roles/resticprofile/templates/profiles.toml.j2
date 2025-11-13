@@ -20,6 +20,7 @@
   repository = "{{ resticprofile_backend_credentials[backend].repository }}"
   env-file = ["/etc/resticprofile/{{ backend }}.env"]
   initialize = true
+  systemd-drop-in-files = ["99-skip-metered.conf"]
 
   [workstation-{{ backend }}.backup]
     source = ["/home", "/etc"]
