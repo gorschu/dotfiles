@@ -1,3 +1,4 @@
+brew "distrobox"
 brew "go"
 brew "lua"
 brew "luarocks"
