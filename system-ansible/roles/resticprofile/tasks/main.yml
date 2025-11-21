@@ -123,71 +123,74 @@
           register: resticprofile_temp_config
           changed_when: false
 
-        - name: Dry-run template profiles.toml to temp location
-          ansible.builtin.template:
-            src: profiles.toml.j2
-            dest: "{{ resticprofile_temp_config.path }}"
-            mode: "0600"
-          changed_when: false
-
-        - name: Check current profiles.toml
-          ansible.builtin.stat:
-            path: /etc/resticprofile/profiles.toml
-            checksum_algorithm: sha256
-          register: resticprofile_current_config
-
-        - name: Check new profiles.toml
-          ansible.builtin.stat:
-            path: "{{ resticprofile_temp_config.path }}"
-            checksum_algorithm: sha256
-          register: resticprofile_new_config
-
-        - name: Determine if config needs update
-          vars:
-            current_exists: "{{ resticprofile_current_config.stat.exists }}"
-            checksums_match: >-
-              {{ resticprofile_current_config.stat.checksum | default('') ==
-                 resticprofile_new_config.stat.checksum }}
-          ansible.builtin.set_fact:
-            resticprofile_config_needs_update: >-
-              {{ not current_exists or not checksums_match }}
-
-        - name: Update resticprofile config if changed
-          when: resticprofile_config_needs_update | bool
+        - name: Config comparison and deployment
           block:
-            - name: Unschedule all timers before updating config
-              ansible.builtin.command:
-                cmd: "{{ resticprofile_bin_path }}/resticprofile unschedule --all"
-              failed_when: false
-              changed_when: true
-
-            - name: Deploy profiles.toml with restricted permissions
+            - name: Dry-run template profiles.toml to temp location
               ansible.builtin.template:
                 src: profiles.toml.j2
-                dest: /etc/resticprofile/profiles.toml
+                dest: "{{ resticprofile_temp_config.path }}"
                 mode: "0600"
-                owner: root
-                group: root
-              register: resticprofile_profiles_deploy
-              notify: Systemd daemon-reload
+              changed_when: false
 
-            - name: Flush handlers before running resticprofile schedule
-              ansible.builtin.meta: flush_handlers
+            - name: Check current profiles.toml
+              ansible.builtin.stat:
+                path: /etc/resticprofile/profiles.toml
+                checksum_algorithm: sha256
+              register: resticprofile_current_config
 
-            - name: Regenerate systemd units
-              ansible.builtin.command:
-                cmd: >-
-                  {{ resticprofile_bin_path }}/resticprofile schedule --all
-                  --start --reload
-              register: resticprofile_schedule_result
-              changed_when: resticprofile_schedule_result.rc == 0
-              failed_when: resticprofile_schedule_result.rc != 0
+            - name: Check new profiles.toml
+              ansible.builtin.stat:
+                path: "{{ resticprofile_temp_config.path }}"
+                checksum_algorithm: sha256
+              register: resticprofile_new_config
 
-        - name: Cleanup temp config file
-          ansible.builtin.file:
-            path: "{{ resticprofile_temp_config.path }}"
-            state: absent
-          changed_when: false
+            - name: Determine if config needs update
+              vars:
+                current_exists: "{{ resticprofile_current_config.stat.exists }}"
+                checksums_match: >-
+                  {{ resticprofile_current_config.stat.checksum | default('') ==
+                     resticprofile_new_config.stat.checksum }}
+              ansible.builtin.set_fact:
+                resticprofile_config_needs_update: >-
+                  {{ not current_exists or not checksums_match }}
+
+            - name: Update resticprofile config if changed
+              when: resticprofile_config_needs_update | bool
+              block:
+                - name: Unschedule all timers before updating config
+                  ansible.builtin.command:
+                    cmd: "{{ resticprofile_bin_path }}/resticprofile unschedule --all"
+                  failed_when: false
+                  changed_when: true
+
+                - name: Deploy profiles.toml with restricted permissions
+                  ansible.builtin.template:
+                    src: profiles.toml.j2
+                    dest: /etc/resticprofile/profiles.toml
+                    mode: "0600"
+                    owner: root
+                    group: root
+                  register: resticprofile_profiles_deploy
+                  notify: Systemd daemon-reload
+
+                - name: Flush handlers before running resticprofile schedule
+                  ansible.builtin.meta: flush_handlers
+
+                - name: Regenerate systemd units
+                  ansible.builtin.command:
+                    cmd: >-
+                      {{ resticprofile_bin_path }}/resticprofile schedule --all
+                      --start --reload
+                  register: resticprofile_schedule_result
+                  changed_when: resticprofile_schedule_result.rc == 0
+                  failed_when: resticprofile_schedule_result.rc != 0
+
+          always:
+            - name: Cleanup temp config file
+              ansible.builtin.file:
+                path: "{{ resticprofile_temp_config.path }}"
+                state: absent
+              changed_when: false
 
         - name: Deploy notification script
           ansible.builtin.template:
