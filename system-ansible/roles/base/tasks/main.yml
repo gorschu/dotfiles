@@ -63,6 +63,7 @@
   become: true
   ansible.builtin.dnf:
     name:
+      - sshfs
       - NetworkManager-tui
       - network-manager-applet
     state: present
