@@ -7,3 +7,4 @@ flatpak:
     - com.vivaldi.Vivaldi
     - com.hamrick.VueScan
     - md.obsidian.Obsidian
+    - io.mpv.Mpv
