@@ -120,9 +120,34 @@ downloads/
 .local/share/lutris/
 Games/
 
-# all of Flatpak for now, might need to !<dir> something later on if we
-# want to carry something
+# Flatpak
 .var/app
+# backup betterbird
+!.var/app/eu.betterbird.Betterbird/
+# but exclude betterbird cruft (flatpak runtime overhead)
+.var/app/eu.betterbird.Betterbird/.ld.so/
+.var/app/eu.betterbird.Betterbird/.local/
+.var/app/eu.betterbird.Betterbird/cache/
+.var/app/eu.betterbird.Betterbird/config/
+.var/app/eu.betterbird.Betterbird/data/
+.var/app/eu.betterbird.Betterbird/.thunderbird/*/ImapMail/
+.var/app/eu.betterbird.Betterbird/.thunderbird/*/Mail/Local Folders/
+.var/app/eu.betterbird.Betterbird/.thunderbird/*/cache/
+.var/app/eu.betterbird.Betterbird/.thunderbird/*/cache2/
+.var/app/eu.betterbird.Betterbird/.thunderbird/*/startupCache/
+.var/app/eu.betterbird.Betterbird/.thunderbird/*/OfflineCache/
+.var/app/eu.betterbird.Betterbird/.thunderbird/*/jumpListCache/
+.var/app/eu.betterbird.Betterbird/.thunderbird/*/storage/default/*/cache/
+.var/app/eu.betterbird.Betterbird/.thunderbird/*/datareporting/
+.var/app/eu.betterbird.Betterbird/.thunderbird/*/crashes/
+.var/app/eu.betterbird.Betterbird/.thunderbird/*/minidumps/
+.var/app/eu.betterbird.Betterbird/.thunderbird/*/saved-telemetry-pings/
+.var/app/eu.betterbird.Betterbird/.thunderbird/*/*.sqlite-wal
+.var/app/eu.betterbird.Betterbird/.thunderbird/*/*.sqlite-shm
+.var/app/eu.betterbird.Betterbird/.thunderbird/*/lock
+.var/app/eu.betterbird.Betterbird/.thunderbird/*/.parentlock
+.var/app/eu.betterbird.Betterbird/.thunderbird/*/session*.json
+.var/app/eu.betterbird.Betterbird/.thunderbird/*/sessionCheckpoints.json
 .local/share/flatpak
 
 # Indexing and tracking (rebuilt on access)
