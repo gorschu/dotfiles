@@ -6,5 +6,7 @@ brew "rust"
 brew "rustup"
 brew "uv"
 
+brew "gemini-cli"
 cask "codex"
 cask "claude-code"
+cask "copilot-cli"
