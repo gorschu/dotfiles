@@ -2,8 +2,10 @@
 {{- $secrets := includeTemplate "secrets/secrets-work" . | fromJson -}}
 {{- if and (hasKey $secrets.work "user") (hasKey $secrets.work "password") }}
 export https_proxy='{{ $secrets.work.proxyProtocol }}://{{ $secrets.work.user }}:{{ $secrets.work.password }}@{{ $secrets.work.proxyHost }}:{{ $secrets.work.proxyPort }}'
+export http_proxy=${https_proxy}
 {{- else }}
 export https_proxy={{ $secrets.work.proxyProtocol }}://{{ $secrets.work.proxyHost }}:{{ $secrets.work.proxyPort }}
+export http_proxy=${https_proxy}
 {{- end }}
 export no_proxy='{{ $secrets.work.proxyExclusion }}'
 {{- end }}
