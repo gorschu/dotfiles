@@ -189,6 +189,9 @@
 	# Sync: update main and clean gone branches
 	sync = !git switch main && git pull --prune && git branch --format '%(refname:short) %(upstream:track)' | awk '$2 == \"[gone]\" { print $1 }' | xargs -r git branch -D
 
+  # Get git root directory
+  root = "rev-parse --show-toplevel"
+
 # =============================================================================
 # Work-Specific Includes
 # =============================================================================
