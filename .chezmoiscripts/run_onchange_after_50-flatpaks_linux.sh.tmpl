@@ -1,6 +1,15 @@
 #!/bin/bash
 # run_onchange_after - manages user flatpak applications
-# Flatpak list hash: {{ .flatpak.apps | toJson | sha256sum }}
+{{- $commonApps := .common.flatpak.apps | default list -}}
+{{- $hostApps := list -}}
+{{- if hasKey (.hosts | default dict) .chezmoi.hostname -}}
+{{-   $hostData := index .hosts .chezmoi.hostname -}}
+{{-   if hasKey $hostData "flatpak" -}}
+{{-     $hostApps = $hostData.flatpak.apps | default list -}}
+{{-   end -}}
+{{- end -}}
+{{- $allApps := concat $commonApps $hostApps | uniq | sortAlpha -}}
+# Flatpak list hash: {{ $allApps | toJson | sha256sum }}
 
 set -euo pipefail
 
@@ -22,16 +31,16 @@ fi
 INSTALLED=$(flatpak list --user --app --columns=application 2>/dev/null || echo "")
 
 # Install desired flatpaks
-{{ if .flatpak.apps -}}
-{{ range .flatpak.apps -}}
+{{ if $allApps -}}
+{{ range $allApps -}}
 echo "  Installing {{ . }}..."
 flatpak install --user --noninteractive flathub "{{ . }}" 2>/dev/null || echo "    Already installed or failed"
 {{ end -}}
 {{ end }}
 
 # Remove flatpaks not in our list
-{{ if .flatpak.apps -}}
-DESIRED_APPS=({{ range .flatpak.apps }}"{{ . }}" {{ end }})
+{{ if $allApps -}}
+DESIRED_APPS=({{ range $allApps }}"{{ . }}" {{ end }})
 {{ else -}}
 DESIRED_APPS=()
 {{ end -}}

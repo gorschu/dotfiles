@@ -1,10 +1,20 @@
 ---
-# Flatpak applications
-flatpak:
-  apps:
-    - eu.betterbird.Betterbird
-    - com.google.Chrome
-    - com.vivaldi.Vivaldi
-    - com.hamrick.VueScan
-    - md.obsidian.Obsidian
-    - io.mpv.Mpv
+# Flatpak applications - common apps installed on all hosts
+common:
+  flatpak:
+    apps:
+      - eu.betterbird.Betterbird
+      - com.google.Chrome
+      - com.vivaldi.Vivaldi
+      - com.hamrick.VueScan
+      - md.obsidian.Obsidian
+      - io.mpv.Mpv
+
+# Host-specific flatpak applications
+hosts:
+  artemis:
+    flatpak:
+      apps:
+        - com.valvesoftware.Steam
+        - net.lutris.Lutris
+        - com.usebottles.bottles
