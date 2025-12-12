@@ -1,5 +1,8 @@
 services:
   systemd:
+    mask:
+      - gcr-ssh-agent.socket
+      - gcr-ssh-agent.service
     start_only:
       - syncthing.service
     enable_restart:

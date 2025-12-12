@@ -6,6 +6,30 @@ set -euo pipefail
 
 echo "Managing user systemd services..."
 
+# Services to mask (prevent from starting)
+declare -a services_to_mask=(
+{{- range .services.systemd.mask }}
+    "{{ . }}"
+{{- end }}
+)
+
+# Mask unwanted services first
+for service in "${services_to_mask[@]}"; do
+    if systemctl --user list-unit-files "$service" &>/dev/null; then
+        if systemctl --user is-active --quiet "$service"; then
+            echo "  Stopping $service..."
+            systemctl --user stop "$service" || true
+        fi
+
+        # Check if already masked by looking at unit file state
+        state=$(systemctl --user list-unit-files "$service" 2>/dev/null | awk 'NR==2 {print $2}')
+        if [[ "$state" != "masked" ]]; then
+            echo "  Masking $service..."
+            systemctl --user mask "$service"
+        fi
+    fi
+done
+
 # Reload systemd user daemon to pick up any changes
 systemctl --user daemon-reload
 
