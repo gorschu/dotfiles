@@ -15,7 +15,9 @@
     {
       "customType": "regex",
       "description": "Update GitHub release versions in versions-*.toml files",
-      "fileMatch": ["^\\.chezmoitemplates/externals/versions-.+\\.toml$"],
+      "managerFilePatterns": [
+        "/^\\.chezmoitemplates/externals/versions-.+\\.toml$/"
+      ],
       "matchStrings": [
         "\\s*[a-zA-Z0-9_-]+\\s*=\\s*\"(?<currentValue>[^\"]+)\"\\s*#\\s*renovate:\\s*datasource=(?<datasource>[a-z-]+)\\s+depName=(?<depName>[^\\s]+)"
       ]
@@ -23,7 +25,9 @@
     {
       "customType": "regex",
       "description": "Update mise.toml tools with inline renovate annotations",
-      "fileMatch": ["^\\.mise\\.toml$"],
+      "managerFilePatterns": [
+        "/^\\.mise\\.toml$/"
+      ],
       "matchStrings": [
         "\\s*[a-zA-Z0-9_-]+\\s*=\\s*\"(?<currentValue>[^\"]+)\"\\s*#\\s*renovate:\\s*datasource=(?<datasource>[a-z-]+)\\s+depName=(?<depName>[^\\s]+)"
       ]
@@ -32,7 +36,9 @@
   "packageRules": [
     {
       "description": "Group pre-commit hook updates",
-      "matchManagers": ["pre-commit"],
+      "matchManagers": [
+        "pre-commit"
+      ],
       "groupName": "pre-commit-hooks",
       "semanticCommitType": "chore",
       "semanticCommitScope": "deps",
