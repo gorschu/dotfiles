@@ -1,6 +1,6 @@
 # External binary versions
 # Renovate will update these versions, and they'll be substituted into download URLs
-# Format: tool = "version" # depName=owner/repo
+# Format: tool = "version" # renovate: datasource=github-releases depName=owner/repo
 
 [versions]
-  cliphist = "0.7.0"  # depName=sentriz/cliphist
+  cliphist = "0.7.0"  # renovate: datasource=github-releases depName=sentriz/cliphist

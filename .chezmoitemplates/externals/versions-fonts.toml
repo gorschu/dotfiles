@@ -1,7 +1,7 @@
 # External font versions
 # Renovate will update these versions, and they'll be substituted into download URLs
-# Format: font = "version" # depName=owner/repo
+# Format: font = "version" # renovate: datasource=github-releases depName=owner/repo
 
 [versions]
-  nerd_fonts = "3.4.0"  # depName=ryanoasis/nerd-fonts
+  nerd_fonts = "3.4.0"  # renovate: datasource=github-releases depName=ryanoasis/nerd-fonts
   nonicons = "1.0.0"  # Manual tracking - no releases, update version manually to force re-download
