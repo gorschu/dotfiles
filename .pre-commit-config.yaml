@@ -1,7 +1,7 @@
 repos:
   # Secret scanning
   - repo: https://github.com/gitleaks/gitleaks
-    rev: v8.29.0
+    rev: v8.30.0
     hooks:
       - id: gitleaks
 
@@ -14,7 +14,7 @@ repos:
 
   # Ansible quality
   - repo: https://github.com/ansible/ansible-lint
-    rev: v25.11.0
+    rev: v25.12.1
     hooks:
       - id: ansible-lint
         files: ^system-ansible/
