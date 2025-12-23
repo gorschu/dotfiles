@@ -7,3 +7,4 @@ homebrew:
     - ".config/homebrew/Brewfile.cli"
     - ".config/homebrew/Brewfile.fonts"
     - ".config/homebrew/Brewfile.dev"
+    - ".config/homebrew/Brewfile.cloud"

@@ -1,0 +1,5 @@
+brew "kubectl"
+brew "helm"
+brew "helmfile"
+brew "flarectl"
+brew "k3sup"
