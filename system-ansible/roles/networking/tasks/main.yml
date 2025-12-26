@@ -14,7 +14,7 @@
         method4: auto
         method6: auto
         state: present
-      loop: "{{ ansible_interfaces | select('match', '^en') }}"
+      loop: "{{ ansible_interfaces | select('match', networking_wired_interface_pattern) }}"
       notify: Reload NetworkManager
 
     - name: Create WiFi connections from vault
@@ -31,7 +31,10 @@
         method4: auto
         method6: auto
         state: present
-      loop: "{{ networking_wifi_networks | dict2items | product(ansible_interfaces | select('match', '^wl')) | list }}"
+      loop: >-
+        {{ networking_wifi_networks | dict2items
+           | product(ansible_interfaces | select('match', networking_wifi_interface_pattern))
+           | list }}
       when: networking_wifi_networks is defined
       notify: Reload NetworkManager
 

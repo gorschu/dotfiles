@@ -242,7 +242,7 @@
             path: /var/lib/resticprofile/status.json
           register: resticprofile_status_json_stat
 
-        - name: Ensure status.json is readable by users
+        - name: Ensure status.json has appropriate permissions
           ansible.builtin.file:
             path: /var/lib/resticprofile/status.json
             mode: "0644"

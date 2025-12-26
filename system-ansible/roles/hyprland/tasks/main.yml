@@ -1,32 +1,33 @@
 ---
 # Hyprland window manager and Wayland ecosystem
 
-- name: "Hyprland COPR repository - {{ 'Enable' if hyprland_state == 'present' else 'Disable' }}"
+- name: Configure Hyprland
   become: true
-  community.general.copr:
-    name: solopasha/hyprland
-    state: "{{ 'enabled' if hyprland_state == 'present' else 'disabled' }}"
+  block:
+    - name: "Hyprland COPR repository - {{ 'Enable' if hyprland_state == 'present' else 'Disable' }}"
+      community.general.copr:
+        name: solopasha/hyprland
+        state: "{{ 'enabled' if hyprland_state == 'present' else 'disabled' }}"
 
-- name: "Hyprland ecosystem - {{ 'Install' if hyprland_state == 'present' else 'Remove' }}"
-  become: true
-  ansible.builtin.dnf:
-    name:
-      - hyprland
-      - uwsm
-      - hyprland-contrib
-      - hyprland-plugins
-      - hyprland-autoname-workspaces
-      - xdg-desktop-portal-hyprland
-      - hyprpaper
-      - hypridle
-      - hyprlock
-      - hyprshot
-      - hyprsysteminfo
-      - hyprdim
-      - hyprnome
-      - mako
-      - waybar-git
-      - swww
-      - cliphist
-      - fuzzel
-    state: "{{ hyprland_state }}"
+    - name: "Hyprland ecosystem - {{ 'Install' if hyprland_state == 'present' else 'Remove' }}"
+      ansible.builtin.dnf:
+        name:
+          - hyprland
+          - uwsm
+          - hyprland-contrib
+          - hyprland-plugins
+          - hyprland-autoname-workspaces
+          - xdg-desktop-portal-hyprland
+          - hyprpaper
+          - hypridle
+          - hyprlock
+          - hyprshot
+          - hyprsysteminfo
+          - hyprdim
+          - hyprnome
+          - mako
+          - waybar-git
+          - swww
+          - cliphist
+          - fuzzel
+        state: "{{ hyprland_state }}"

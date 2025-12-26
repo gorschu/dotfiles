@@ -13,5 +13,5 @@
     dest: /etc/systemd/system/pcscd.service.d/auto-exit.conf
     mode: "0644"
   notify:
-    - smartcard reload systemd manager configuration
-    - smartcard restart pcscd service
+    - Smartcard reload systemd
+    - Smartcard restart pcscd service

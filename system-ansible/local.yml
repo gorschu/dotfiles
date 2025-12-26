@@ -16,8 +16,8 @@
     - role: networking
       tags: [networking, tailscale]
       vars:
-        networking_tailscale_oauth_client_id: "{{ vault_tailscale_oauth[hostname].client_id }}"
-        networking_tailscale_oauth_client_secret: "{{ vault_tailscale_oauth[hostname].client_secret }}"
+        networking_tailscale_oauth_client_id: "{{ vault_tailscale_oauth_workstation.client_id }}"
+        networking_tailscale_oauth_client_secret: "{{ vault_tailscale_oauth_workstation.client_secret }}"
     - role: base
       tags: [base, repos]
     - role: btrbk

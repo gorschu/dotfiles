@@ -1,69 +1,65 @@
 ---
 # Base system configuration - repositories and core utilities
 
-- name: Install RPM Fusion repositories
-  become: true
-  ansible.builtin.dnf:
-    name:
-      - >-
-        https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{
-        ansible_distribution_major_version }}.noarch.rpm
-      - >-
-        https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{
-        ansible_distribution_major_version }}.noarch.rpm
-    state: present
-    disable_gpg_check: true
-
-- name: Enable COPR repositories
-  become: true
-  community.general.copr:
-    name: scottames/ghostty
-    state: enabled
-
 - name: Check if ZFS kernel module is available
   ansible.builtin.command: modinfo zfs
   register: base_zfs_module_check
   changed_when: false
   failed_when: false
 
-- name: Add zrepl repository
+- name: Configure repositories and install packages
   become: true
-  ansible.builtin.copy:
-    src: zrepl.repo
-    dest: /etc/yum.repos.d/zrepl.repo
-    mode: "0644"
-  when: base_zfs_module_check.rc == 0
+  block:
+    - name: Install RPM Fusion repositories
+      ansible.builtin.dnf:
+        name:
+          - >-
+            https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{
+            ansible_distribution_major_version }}.noarch.rpm
+          - >-
+            https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{
+            ansible_distribution_major_version }}.noarch.rpm
+        state: present
+        disable_gpg_check: true
 
-- name: Install system utilities
-  become: true
-  ansible.builtin.dnf:
-    name:
-      - gdisk
-      - parted
-    state: present
+    - name: Enable COPR repositories
+      community.general.copr:
+        name: scottames/ghostty
+        state: enabled
 
-- name: Install zrepl
-  become: true
-  ansible.builtin.dnf:
-    name: zrepl
-    state: present
-  when: base_zfs_module_check.rc == 0
+    - name: Add zrepl repository
+      ansible.builtin.copy:
+        src: zrepl.repo
+        dest: /etc/yum.repos.d/zrepl.repo
+        mode: "0644"
+      when: base_zfs_module_check.rc == 0
 
-- name: Install CLI tools
-  become: true
-  ansible.builtin.dnf:
-    name:
-      - zsh
-      - neovim
-      - bsdtar
-      - yp-tools
-    state: present
+    - name: Install system utilities
+      ansible.builtin.dnf:
+        name:
+          - gdisk
+          - parted
+        state: present
 
-- name: Install networking tools
-  become: true
-  ansible.builtin.dnf:
-    name:
-      - sshfs
-      - NetworkManager-tui
-      - network-manager-applet
-    state: present
+    - name: Install zrepl
+      ansible.builtin.dnf:
+        name: zrepl
+        state: present
+      when: base_zfs_module_check.rc == 0
+
+    - name: Install CLI tools
+      ansible.builtin.dnf:
+        name:
+          - zsh
+          - neovim
+          - bsdtar
+          - yp-tools
+        state: present
+
+    - name: Install networking tools
+      ansible.builtin.dnf:
+        name:
+          - sshfs
+          - NetworkManager-tui
+          - network-manager-applet
+        state: present

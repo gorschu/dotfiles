@@ -10,7 +10,7 @@ hyprland_state: absent
 niri_state: absent
 
 # Resticprofile backup management state: present or absent
-resticprofile_state: present
+resticprofile_state: absent
 resticprofile_version: "0.32.0"
 resticprofile_path: "/opt/resticprofile"
 resticprofile_bin_path: "{{ resticprofile_path }}/bin"

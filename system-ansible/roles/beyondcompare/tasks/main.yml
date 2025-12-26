@@ -1,71 +1,26 @@
 ---
-- name: Create temp file for repo download
-  ansible.builtin.tempfile:
-    state: file
-    suffix: .repo
-  register: beyondcompare_temp_repo
-  changed_when: false
-  when: beyondcompare_state == 'present'
-
-- name: Download scootersoftware repository to temp location
-  ansible.builtin.get_url:
-    url: https://www.scootersoftware.com/files/scootersoftware.repo
-    dest: "{{ beyondcompare_temp_repo.path }}"
-    mode: "0644"
-  changed_when: false
-  when: beyondcompare_state == 'present'
-
-- name: Check current scootersoftware.repo checksum
-  ansible.builtin.stat:
-    path: /etc/yum.repos.d/scootersoftware.repo
-    checksum_algorithm: sha256
-  register: beyondcompare_current_scootersoftware_repo
-  when: beyondcompare_state == 'present'
-
-- name: Check downloaded scootersoftware.repo checksum
-  ansible.builtin.stat:
-    path: "{{ beyondcompare_temp_repo.path }}"
-    checksum_algorithm: sha256
-  register: beyondcompare_downloaded_scootersoftware_repo
-  when: beyondcompare_state == 'present'
-
-- name: Store scootersoftware.repo checksums
-  ansible.builtin.set_fact:
-    beyondcompare_current_checksum: "{{ beyondcompare_current_scootersoftware_repo.stat.checksum | default('') }}"
-    beyondcompare_downloaded_checksum: "{{ beyondcompare_downloaded_scootersoftware_repo.stat.checksum }}"
-  when: beyondcompare_state == 'present'
-
-- name: Compare scootersoftware.repo checksums
-  ansible.builtin.set_fact:
-    beyondcompare_repo_needs_update: "{{ beyondcompare_current_checksum != beyondcompare_downloaded_checksum }}"
-  when: beyondcompare_state == 'present'
-
-- name: Update scootersoftware repository if different
+- name: Configure BeyondCompare
   become: true
-  ansible.builtin.copy:
-    src: "{{ beyondcompare_temp_repo.path }}"
-    dest: /etc/yum.repos.d/scootersoftware.repo
-    mode: "0644"
-    remote_src: true
-  when:
-    - beyondcompare_state == 'present'
-    - beyondcompare_repo_needs_update
+  block:
+    - name: Download scootersoftware repository file
+      ansible.builtin.get_url:
+        url: https://www.scootersoftware.com/files/scootersoftware.repo
+        dest: /etc/yum.repos.d/scootersoftware.repo
+        mode: "0644"
+      when: beyondcompare_state == 'present'
 
-- name: Clean up scootersoftware temp file
-  ansible.builtin.file:
-    path: "{{ beyondcompare_temp_repo.path }}"
-    state: absent
-  changed_when: false
-  when: beyondcompare_state == 'present'
+    - name: Remove scootersoftware repository file
+      ansible.builtin.file:
+        path: /etc/yum.repos.d/scootersoftware.repo
+        state: absent
+      when: beyondcompare_state == 'absent'
 
-- name: Add scootersoftware GPG key
-  become: true
-  ansible.builtin.rpm_key:
-    state: "{{ 'present' if beyondcompare_state == 'present' else 'absent' }}"
-    key: https://www.scootersoftware.com/RPM-GPG-KEY-scootersoftware
+    - name: Add scootersoftware GPG key
+      ansible.builtin.rpm_key:
+        state: "{{ 'present' if beyondcompare_state == 'present' else 'absent' }}"
+        key: https://www.scootersoftware.com/RPM-GPG-KEY-scootersoftware
 
-- name: Install BeyondCompare
-  become: true
-  ansible.builtin.dnf:
-    name: bcompare
-    state: "{{ beyondcompare_state }}"
+    - name: Install BeyondCompare
+      ansible.builtin.dnf:
+        name: bcompare
+        state: "{{ beyondcompare_state }}"
