@@ -70,4 +70,5 @@
           - sshfs
           - NetworkManager-tui
           - network-manager-applet
+          - wireguard-tools
         state: present
