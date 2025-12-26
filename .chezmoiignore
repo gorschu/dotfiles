@@ -1,8 +1,8 @@
+00-bootstrap.sh
+01-bootstrap-apply.sh
 README.md
 LICENSE
 modified_externally
-bootstrap.sh
-apply.sh
 justfile
 system-ansible/
 */**/*.include

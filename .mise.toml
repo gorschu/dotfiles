@@ -5,7 +5,9 @@
 experimental = true
 
 [tools]
-prek = "0.2.22" # renovate: datasource=github-releases depName=j178/prek
+prek = "0.2" # renovate: datasource=github-releases depName=j178/prek
+ansible = "13.1" # renovate: datasource=github-releases depName=ansible/ansible
+pipx = "latest"
 
 [tasks.install-hooks]
 description = "Install pre-commit hooks using prek"

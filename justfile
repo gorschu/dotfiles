@@ -65,9 +65,8 @@ ansible-dry-run:
       --check \
       --ask-become-pass
 
-# Install Ansible and required collections
+# Install required collections
 ansible-install:
-    sudo dnf install -y ansible
     ansible-galaxy collection install -r system-ansible/requirements.yml
 
 # Bootstrap fresh system (1Password + chezmoi)

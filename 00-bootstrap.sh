@@ -11,7 +11,10 @@ if ! [[ $(grep "^ID" /etc/os-release) =~ (fedora|rhel) ]]; then
 fi
 
 echo "Installing essential packages..."
-sudo dnf install -y just git curl jq nodejs-npm
+sudo dnf install -y just git curl jq nodejs-npm bsdtar
+
+echo "Installing gnupg packages..."
+sudo dnf install -y gnupg2-scdaemon
 
 echo ""
 
@@ -34,6 +37,6 @@ echo "=== Bootstrap Complete ==="
 echo ""
 echo "Next steps:"
 echo "  1. Sign in to 1Password (open GUI or run: op account add)"
-echo "  2. Apply dotfiles: ./bootstrap-apply.sh"
-echo "  3. (Optional) Run system-level setup with Ansible: just ansible-setup"
+echo "  2. Run system-level setup with Ansible: just ansible-setup"
+echo "  3. Apply dotfiles: ./01-bootstrap-apply.sh"
 echo ""
