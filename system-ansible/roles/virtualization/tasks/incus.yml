@@ -51,7 +51,7 @@
 - name: Enable and start Incus service
   become: true
   ansible.builtin.systemd_service:
-    name: incus.service
+    name: incus.socket
     enabled: "{{ virtualization_incus_state == 'present' }}"
     state: "{{ 'started' if virtualization_incus_state == 'present' else 'stopped' }}"
   when: virtualization_incus_state in ['present', 'absent']
