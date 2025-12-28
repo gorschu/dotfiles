@@ -159,4 +159,6 @@
         tailscale_tags:
           - "workstation"
         tailscale_oauth_ephemeral: false
-        tailscale_args: "--hostname={{ hostname }}"
+        tailscale_args: >-
+          --hostname={{ hostname }}
+          --accept-routes={{ 'true' if networking_tailscale_accept_routes else 'false' }}
