@@ -7,7 +7,7 @@ function zvm_after_init() {
 }
 
 # Lazy-load (autoload) Zsh function files from a directory.
-ZFUNCDIR=${ZDOTDIR:-$HOME}/.zfunctions
+ZFUNCDIR=${ZDOTDIR:-$HOME}/zfunctions.d
 fpath=($ZFUNCDIR $fpath)
 autoload -Uz $ZFUNCDIR/*(.:t)
 
