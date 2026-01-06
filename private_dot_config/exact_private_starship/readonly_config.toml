@@ -12,7 +12,7 @@ vimcmd_visual_symbol = "[<<=](bold cyan) "
 
 [cmd_duration]
 disabled = false
-format = "🕙 [$duration]($style) "
+format = "  [$duration]($style) "
 min_time_to_notify = 180000
 show_notifications = true
 
