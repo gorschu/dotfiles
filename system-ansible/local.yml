@@ -34,6 +34,8 @@
       tags: [desktop, gui]
     - role: beyondcompare
       tags: [desktop, beyondcompare]
+    - role: vscode
+      tags: [desktop, vscode]
     - role: hyprland
       tags: [hyprland, wayland]
     - role: niri
