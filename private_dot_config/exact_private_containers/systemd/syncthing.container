@@ -4,7 +4,7 @@ Documentation=https://docs.syncthing.net/
 
 [Container]
 ContainerName=syncthing
-Image=docker.io/syncthing/syncthing:2.0.12
+Image=docker.io/syncthing/syncthing:2.0.13
 AutoUpdate=registry
 Label=io.containers.autoupdate=registry
 HostName=%H
