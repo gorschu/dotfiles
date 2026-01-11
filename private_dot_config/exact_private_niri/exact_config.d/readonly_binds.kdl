@@ -11,4 +11,6 @@ binds {
   // Fix window sizing for German keyboard (= key doesn't exist)
   Mod+Plus { set-column-width "+10%"; }
   Mod+Shift+Plus { set-window-height "+10%"; }
+
+  Mod+Return hotkey-overlay-title="Open Terminal" { spawn "ghostty"; }
 }
