@@ -7,4 +7,8 @@ binds {
 
   // Fix hotkey overlay (Shift+/ doesn't work on German layout)
   Mod+F1 { show-hotkey-overlay; }
+
+  // Fix window sizing for German keyboard (= key doesn't exist)
+  Mod+Plus { set-column-width "+10%"; }
+  Mod+Shift+Plus { set-window-height "+10%"; }
 }
