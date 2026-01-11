@@ -1,0 +1,6 @@
+// 1Password scratchpad behavior (floating window)
+window-rule {
+    match app-id=r#"1[Pp]assword"#
+    open-floating true
+    default-column-width { proportion 0.4; }
+}

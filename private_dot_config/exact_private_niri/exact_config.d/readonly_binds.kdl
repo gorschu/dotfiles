@@ -13,4 +13,8 @@ binds {
   Mod+Shift+Plus { set-window-height "+10%"; }
 
   Mod+Return hotkey-overlay-title="Open Terminal" { spawn "ghostty"; }
+
+  // 1Password keybinds
+  Mod+Shift+Space hotkey-overlay-title="1Password Quick Access" { spawn "1password" "--quick-access"; }
+  Mod+Shift+P hotkey-overlay-title="1Password Toggle" { spawn "1password" "--toggle"; }
 }
