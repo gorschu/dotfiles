@@ -12,18 +12,28 @@ fi
 
 echo "Managing DMS plugins..."
 
-# Get list of currently installed plugins
-INSTALLED=$(dms plugins list 2>/dev/null | tail -n +2 | awk '{print $1}' || echo "")
+# Track if any changes were made
+CHANGES_MADE=0
+
+# Get list of currently installed plugins (extract IDs from multi-line format)
+INSTALLED=$(dms plugins list 2>/dev/null | grep -E '^\s+ID:' | awk '{print $2}' || echo "")
 
 # Install desired plugins
 {{ if .dms.plugins.enabled -}}
 {{ range .dms.plugins.enabled -}}
-# Check if already installed
 if ! grep -q "^{{ . }}$" <<<"$INSTALLED"; then
   echo "  Installing plugin: {{ . }}..."
-  dms plugins install "{{ . }}" || echo "    WARNING: Failed to install {{ . }}"
+  if OUTPUT=$(dms plugins install "{{ . }}" 2>&1); then
+    echo "    ✓ Installed {{ . }}"
+    CHANGES_MADE=1
+  elif echo "$OUTPUT" | grep -q "already installed"; then
+    echo "    ✓ Plugin {{ . }} already installed"
+  else
+    echo "    WARNING: Failed to install {{ . }}"
+    echo "    Error: $OUTPUT"
+  fi
 else
-  echo "  Plugin {{ . }} already installed"
+  echo "  ✓ Plugin {{ . }} already installed"
 fi
 {{ end -}}
 {{ end }}
@@ -51,11 +61,14 @@ while IFS= read -r plugin; do
   if [[ $FOUND -eq 0 ]]; then
     echo "  Removing unmanaged plugin: $plugin"
     dms plugins uninstall "$plugin" &>/dev/null || true
+    CHANGES_MADE=1
   fi
 done <<<"$INSTALLED"
 
-# Restart DMS to load plugins
-echo "  Restarting DMS to load plugins..."
-dms restart &>/dev/null || echo "    Note: DMS restart may require manual action"
+# Restart DMS if changes were made
+if [[ $CHANGES_MADE -eq 1 ]]; then
+  echo "  Restarting DMS to load plugins..."
+  dms restart &>/dev/null || echo "    Note: DMS restart may require manual action"
+fi
 
 echo "✓ DMS plugins managed"
