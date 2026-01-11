@@ -1,7 +1,17 @@
 layout {
-    tab-indicator {
-        position "right"
-        width 4
-        gap 2
-    }
+  gaps 8
+  struts {
+    top -4
+    bottom -4
+  }
+  tab-indicator {
+    position "left"
+    width 8
+    gap 2
+    place-within-column
+    // catppuccin mauve flavor
+    active-color   "#cba6f7"
+    inactive-color "#6c7086"
+    urgent-color   "#f38ba8"
+  }
 }
