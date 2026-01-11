@@ -1,0 +1,23 @@
+input {
+    keyboard {
+        xkb {
+            layout "de"
+            variant "nodeadkeys"
+        }
+        repeat-delay 250
+        repeat-rate 25
+        numlock
+    }
+    touchpad {
+      tap
+      natural-scroll
+      dwt
+      dwtp
+    }
+    mouse {
+    }
+    trackpoint {
+    }
+    //focus-follows-mouse
+    warp-mouse-to-focus
+}

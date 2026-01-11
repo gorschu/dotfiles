@@ -1,0 +1,10 @@
+binds {
+  Mod+Shift+q repeat=false { close-window; }
+
+  // Fix consume/expel for German keyboard (brackets don't work)
+  Mod+Comma  { consume-or-expel-window-left; }
+  Mod+Period { consume-or-expel-window-right; }
+
+  // Fix hotkey overlay (Shift+/ doesn't work on German layout)
+  Mod+F1 { show-hotkey-overlay; }
+}

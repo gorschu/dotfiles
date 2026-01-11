@@ -7,7 +7,8 @@ hyprland_state: absent
 
 # Niri window manager state: present or absent
 # Set to 'absent' to remove Niri and its ecosystem
-niri_state: absent
+niri_state: present
+niri_use_dms: true
 
 # Resticprofile backup management state: present or absent
 resticprofile_state: absent

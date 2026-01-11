@@ -1,0 +1,7 @@
+layout {
+    tab-indicator {
+        position "right"
+        width 4
+        gap 2
+    }
+}

@@ -1,0 +1,6 @@
+---
+# DankMaterialShell plugins
+dms:
+  plugins:
+    enabled:
+      - niriWindows  # List and switch to open Niri windows from the launcher
