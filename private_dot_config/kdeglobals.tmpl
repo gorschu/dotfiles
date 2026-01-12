@@ -1,0 +1,4 @@
+{{- $xdg := lower (env "XDG_CURRENT_DESKTOP") -}}
+{{- if not (contains $xdg "kde") -}}
+{{- includeTemplate (print "kdeglobals/" (lower .colorscheme.kde)) . -}}
+{{- end -}}

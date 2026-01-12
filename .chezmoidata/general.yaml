@@ -4,3 +4,4 @@ colorscheme:
   name: catppuccin
   flavor: mocha
   sub_flavor: lavender
+  kde: breezedark

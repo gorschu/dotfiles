@@ -3,6 +3,7 @@ services:
     mask:
       - gcr-ssh-agent.socket
       - gcr-ssh-agent.service
+      - app-org.kde.xwaylandvideobridge@autostart.service
     start_only:
       - syncthing.service
     enable_restart:

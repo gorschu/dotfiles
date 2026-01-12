@@ -11,12 +11,14 @@ niri_use_dms: true
 
 # Package lists
 niri_core_packages:
-  - niri            # Core compositor
-  - udiskie         # USB automounting
-  - xwayland-satellite  # X11 app support for Wayland
-  - pinentry-qt     # Better GPG passphrase dialog
-  - plasma-breeze-qt5   # Qt5 theme
-  - plasma-breeze-qt6   # Qt6 theme
+  - niri                    # Core compositor
+  - udiskie                 # USB automounting
+  - xwayland-satellite      # X11 app support for Wayland
+  - pinentry-qt             # Better GPG passphrase dialog
+  - plasma-breeze-qt5       # Qt5 theme
+  - plasma-breeze-qt6       # Qt6 theme
+  - plasma-integration      # KDE platform theme for Qt6 apps
+  - plasma-integration-qt5  # KDE platform theme for Qt5 apps
 
 niri_traditional_packages:
   - fuzzel          # Application launcher
