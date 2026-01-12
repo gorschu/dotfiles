@@ -1,4 +1,4 @@
 [Desktop Entry]
 Type=Application
 Name=NetworkManager Applet
-Hidden=true
+NotShowIn=KDE;GNOME;niri;
