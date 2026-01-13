@@ -44,9 +44,7 @@
 
     - name: Install system utilities
       ansible.builtin.dnf:
-        name:
-          - gdisk
-          - parted
+        name: "{{ base_system_utils }}"
         state: present
 
     - name: Install zrepl
@@ -57,18 +55,10 @@
 
     - name: Install CLI tools
       ansible.builtin.dnf:
-        name:
-          - zsh
-          - neovim
-          - bsdtar
-          - yp-tools
+        name: "{{ base_cli_utils }}"
         state: present
 
     - name: Install networking tools
       ansible.builtin.dnf:
-        name:
-          - sshfs
-          - NetworkManager-tui
-          - network-manager-applet
-          - wireguard-tools
+        name: "{{ base_networking_utils }}"
         state: present

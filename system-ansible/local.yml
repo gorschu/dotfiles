@@ -20,6 +20,18 @@
         networking_tailscale_oauth_client_secret: "{{ vault_tailscale_oauth_workstation.client_secret }}"
     - role: base
       tags: [base, repos]
+    - role: desktop
+      tags: [desktop, gui]
+    - role: multimedia
+      tags: [multimedia, codecs]
+    - role: hyprland
+      tags: [hyprland, wayland]
+    - role: niri
+      tags: [niri, wayland]
+    - role: beyondcompare
+      tags: [desktop, beyondcompare]
+    - role: vscode
+      tags: [desktop, vscode]
     - role: btrbk
       tags: [btrbk, storage, backup]
     - role: resticprofile
@@ -28,16 +40,4 @@
       tags: [smartcard, gpg]
     - role: virtualization
       tags: [virtualization, incus, docker, containers]
-    - role: multimedia
-      tags: [multimedia, codecs]
-    - role: desktop
-      tags: [desktop, gui]
-    - role: beyondcompare
-      tags: [desktop, beyondcompare]
-    - role: vscode
-      tags: [desktop, vscode]
-    - role: hyprland
-      tags: [hyprland, wayland]
-    - role: niri
-      tags: [niri, wayland]
 # vim: set ft=yaml.ansible:

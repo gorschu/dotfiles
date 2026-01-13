@@ -4,11 +4,11 @@
 - name: Install GUI applications
   become: true
   ansible.builtin.dnf:
-    name:
-      - solaar
-      - firefox
-      - kitty
-      - ghostty
-      - gnome-tweaks
-      - gnome-extensions-app
+    name: "{{ desktop_gui_applications }}"
+    state: present
+
+- name: Install GNOME applications/dependencies
+  become: true
+  ansible.builtin.dnf:
+    name: "{{ desktop_gnome_applications_dependencies }}"
     state: present
