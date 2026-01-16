@@ -1,5 +1,5 @@
-brew "kubectl"
+brew "flarectl"
 brew "helm"
 brew "helmfile"
-brew "flarectl"
+brew "kubectl"
 brew "k3sup"
