@@ -20,6 +20,8 @@
         networking_tailscale_oauth_client_secret: "{{ vault_tailscale_oauth_workstation.client_secret }}"
     - role: base
       tags: [base, repos]
+    - role: notebook
+      tags: [notebook, power]
     - role: desktop
       tags: [desktop, gui]
     - role: multimedia
