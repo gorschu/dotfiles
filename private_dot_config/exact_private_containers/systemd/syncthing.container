@@ -15,7 +15,7 @@ Volume=%h/.config/syncthing:/var/syncthing/config:Z
 
 # Mount data directories for synchronization
 # Adjust these paths based on what you want to sync
-Volume=%h/sync:/sync:Z
+Volume=%h/synced:/synced:Z
 
 # Network ports
 # 8384: Web UI
@@ -40,7 +40,7 @@ Memory=1G
 [Service]
 # Create required directories before starting
 ExecStartPre=/usr/bin/mkdir -p %h/.config/syncthing
-ExecStartPre=/usr/bin/mkdir -p %h/sync
+ExecStartPre=/usr/bin/mkdir -p %h/synced
 CPUQuota=200%
 Restart=always
 TimeoutStartSec=300
