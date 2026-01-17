@@ -32,6 +32,8 @@
       tags: [niri, wayland]
     - role: vicinae
       tags: [desktop, vicinae]
+    - role: ghostty
+      tags: [desktop, ghostty]
     - role: beyondcompare
       tags: [desktop, beyondcompare]
     - role: vscode

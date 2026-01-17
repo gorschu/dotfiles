@@ -22,11 +22,6 @@
         state: present
         disable_gpg_check: true
 
-    - name: Enable COPR repositories
-      community.general.copr:
-        name: scottames/ghostty
-        state: enabled
-
     - name: Add zrepl repository
       ansible.builtin.copy:
         src: zrepl.repo
