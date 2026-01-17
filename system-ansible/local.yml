@@ -30,6 +30,8 @@
       tags: [hyprland, wayland]
     - role: niri
       tags: [niri, wayland]
+    - role: vicinae
+      tags: [desktop, vicinae]
     - role: beyondcompare
       tags: [desktop, beyondcompare]
     - role: vscode

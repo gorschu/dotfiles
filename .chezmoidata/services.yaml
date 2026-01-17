@@ -11,3 +11,4 @@ services:
       - app-com.mitchellh.ghostty.service
       - podman.socket
       - podman-auto-update.timer
+      - vicinae.service

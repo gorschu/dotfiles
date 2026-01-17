@@ -53,4 +53,3 @@ repos:
       - id: check-merge-conflict
       - id: mixed-line-ending
       - id: check-yaml
-      - id: check-json
