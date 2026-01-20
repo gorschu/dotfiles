@@ -1,3 +1,6 @@
-My dotfiles, managed by [chezmoi](https://github.com/twpayne/chezmoi).
+# My dotfiles, managed by [chezmoi](https://github.com/twpayne/chezmoi)
 
-Also some basic system setup Ansible playbook in [system-ansible](https://github.com/gorschu/dotfiles/tree/ad1aee0d4fd4ff2bcfd9e7e8435e2b8b25a93d4e/system-ansible).
+## What we try to achieve
+
+- be as distribution/OS-agnostic as possible. The only requirement - ideally - should be [mise](https://https://mise.jdx.dev/) to install everything we need.
+- be as declarative as possible. This can't be nix nor home-manager, but on the bright side - we don't have to be as straight as nix and can keep our day job.
