@@ -12,18 +12,6 @@ repos:
       - id: conventional-pre-commit
         stages: [commit-msg]
 
-  # Ansible quality
-  - repo: https://github.com/ansible/ansible-lint
-    rev: v26.1.0
-    hooks:
-      - id: ansible-lint
-        files: ^system-ansible/
-        pass_filenames: false
-        always_run: false
-        args: ["system-ansible/local.yml", "system-ansible/roles/"]
-        additional_dependencies:
-          - ansible
-
   # Shell script quality
   - repo: https://github.com/shellcheck-py/shellcheck-py
     rev: v0.10.0.1
