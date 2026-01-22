@@ -10,6 +10,7 @@ prek = "0.2"       # renovate: datasource=github-releases depName=j178/prek
 ansible = "13.1"   # renovate: datasource=github-releases depName=ansible/ansible
 chezmoi = "2.69.3" # renovate: datasource=github-releases depName=twpayne/chezmoi
 pipx = "latest"
+uv = "latest"
 
 [tasks.install-hooks]
 description = "Install pre-commit hooks using prek"
