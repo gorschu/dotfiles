@@ -56,6 +56,16 @@
     state: "{{ 'started' if virtualization_incus_state == 'present' else 'stopped' }}"
   when: virtualization_incus_state in ['present', 'absent']
 
+- name: Trust incusbr0 interface in firewalld
+  become: true
+  ansible.posix.firewalld:
+    zone: trusted
+    interface: incusbr0
+    permanent: true
+    immediate: true
+    state: enabled
+  when: virtualization_incus_state == 'present'
+
 - name: Remove Incus packages
   become: true
   ansible.builtin.dnf:
