@@ -1,5 +1,3 @@
-00-bootstrap.sh
-01-bootstrap-apply.sh
 README.md
 LICENSE
 modified_externally
@@ -7,12 +5,12 @@ justfile
 system-ansible/
 */**/*.include
 */**/*.include.asc
-.zshrc.d/*.zwc
 secrets
 dconf-settings.ini
 renovate.json
 .ssh/keys.public
 .gitignore
+bootstrap
 
 {{- /* Ignore Linux-specific files on non-Linux systems */ -}}
 {{- if ne .chezmoi.os "linux" }}
