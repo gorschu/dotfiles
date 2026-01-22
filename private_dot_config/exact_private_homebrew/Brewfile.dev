@@ -5,6 +5,7 @@ brew "luarocks"
 brew "rustup"
 brew "uv"
 
+brew "specify" # github speckit
 brew "gemini-cli"
 cask "codex"
 cask "claude-code"
