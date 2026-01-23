@@ -1,4 +1,4 @@
-# Justfile for dotfiles management and system setup
+# Justfile for dotfiles management
 # Run `just` or `just --list` to see available commands
 
 default:
@@ -19,77 +19,9 @@ list-managed:
 state:
     chezmoi status
 
-# Run full Ansible system setup
-ansible-setup:
-    #!/bin/bash
-    HOSTNAME=$(chezmoi data --format=json | jq -r '.chezmoi.hostname')
-    cd system-ansible && ansible-playbook local.yml \
-      --vault-password-file <(op read "op://Ansible/Workstations/password") \
-      --extra-vars @vars/vault/general.yml \
-      --extra-vars @vars/vault/network.yaml \
-      --extra-vars @vars/vault/backup.yml \
-      --extra-vars "hostname=$HOSTNAME" \
-      --ask-become-pass
-
-# Run Ansible with specific tags (e.g., just ansible-tags base,multimedia)
-ansible-tags TAGS:
-    #!/bin/bash
-    HOSTNAME=$(chezmoi data --format=json | jq -r '.chezmoi.hostname')
-    cd system-ansible && ansible-playbook local.yml \
-      --vault-password-file <(op read "op://Ansible/Workstations/password") \
-      --extra-vars @vars/vault/general.yml \
-      --extra-vars @vars/vault/network.yaml \
-      --extra-vars @vars/vault/backup.yml \
-      --extra-vars "hostname=$HOSTNAME" \
-      --tags {{TAGS}} \
-      --ask-become-pass
-
-# Lint Ansible playbook
-ansible-lint:
-    cd system-ansible && ansible-lint
-
-# Check Ansible syntax
-ansible-check:
-    cd system-ansible && ansible-playbook local.yml --syntax-check
-
-# Run Ansible in check mode (dry-run)
-ansible-dry-run:
-    #!/bin/bash
-    HOSTNAME=$(chezmoi data --format=json | jq -r '.chezmoi.hostname')
-    cd system-ansible && ansible-playbook local.yml \
-      --vault-password-file <(op read "op://Ansible/Workstations/password") \
-      --extra-vars @vars/vault/general.yml \
-      --extra-vars @vars/vault/network.yaml \
-      --extra-vars @vars/vault/backup.yml \
-      --extra-vars "hostname=$HOSTNAME" \
-      --check \
-      --ask-become-pass
-
-# Install required collections
-ansible-install:
-    ansible-galaxy collection install -r system-ansible/requirements.yml
-
 # Bootstrap fresh system (1Password + chezmoi)
 bootstrap:
     ./bootstrap.sh
-
-# Full fresh system setup (bootstrap → apply → ansible)
-setup-all:
-    @echo "This will run the full setup. Make sure you've:"
-    @echo "  1. Signed in to 1Password first"
-    @echo "  2. Installed Ansible (run: just ansible-install)"
-    @echo ""
-    @read -p "Continue? (y/N) " -n 1 -r && echo && [[ $$REPLY =~ ^[Yy]$ ]] || exit 1
-    @echo "Applying dotfiles..."
-    ./bootstrap-apply.sh
-    @echo ""
-    @echo "Running Ansible system setup..."
-    cd system-ansible && ansible-playbook local.yml \
-      --vault-password-file <(op read "op://Ansible/Workstations/password") \
-      --extra-vars @vars/vault/general.yml \
-      --extra-vars @vars/vault/network.yaml \
-      --extra-vars @vars/vault/backup.yml \
-      --ask-become-pass
 
 pre-commit-install:
     prek install --hook-type commit-msg
