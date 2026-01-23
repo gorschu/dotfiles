@@ -19,11 +19,6 @@ bootstrap
 .config/systemd
 {{- end }}
 
-{{- /* Let KDE manage kdeglobals on KDE desktops */ -}}
-{{- if contains (lower (env "XDG_CURRENT_DESKTOP")) "kde" }}
-.config/kdeglobals
-{{- end }}
-
 {{ if .is_work_machine }}
 bin
 .config/*
