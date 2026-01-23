@@ -41,5 +41,7 @@ echo ""
 echo "Note: To use git via SSH, run:"
 echo "  chezmoi git remote set-url origin git@github.com:gorschu/dotfiles"
 echo ""
+echo "!!! Remember to log into atuin *IMMEDIATELY* to not blow up your database with wrong keys !!!"
+echo ""
 
 # vim: set ft=sh:
