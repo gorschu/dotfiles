@@ -38,8 +38,6 @@ print_complete() {
   echo ""
   echo -e "\tNext steps:"
   echo -e "\t1. Apply dotfiles: ${ROOT}/01-bootstrap-apply.sh"
-  echo -e "\t2. (Optional) Install 1Password for SSH key sync"
-  echo -e "\t3. (Fedora only) Run system-level setup: just ansible-setup"
   echo ""
 }
 

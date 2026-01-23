@@ -19,23 +19,21 @@ if command -v ykman >/dev/null && ykman list 2>/dev/null | grep -qi yubikey; the
   pkill keyboxd 2>/dev/null || true
 fi
 
-# Chezmoi init and apply (3-step process to handle externals dependency)
-# POSIX way to get script's dir: https://stackoverflow.com/a/29834779/12156188
-script_dir="$(cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P)"
+project_root="$(git rev-parse --show-toplevel)"
 
 echo "Applying dotfiles..."
 
 # Step 1: Initialize chezmoi source directory
-XDG_CONFIG_HOME=$HOME/.config chezmoi init --source="${script_dir}"
+XDG_CONFIG_HOME=$HOME/.config chezmoi init --source="${project_root}"
 
 # Step 2: Apply externals first (themes/plugins that other configs depend on)
 # This must happen before step 3 because symlinks and includes reference these paths
 echo "Downloading external dependencies (themes, plugins)..."
-XDG_CONFIG_HOME=$HOME/.config chezmoi apply --source="${script_dir}" "${HOME}/.externals"
+XDG_CONFIG_HOME=$HOME/.config chezmoi apply --source="${project_root}" "${HOME}/.externals"
 
 # Step 3: Apply everything else (now symlinks/includes work)
 echo "Applying configuration files..."
-XDG_CONFIG_HOME=$HOME/.config chezmoi apply --source="${script_dir}"
+XDG_CONFIG_HOME=$HOME/.config chezmoi apply --source="${project_root}"
 
 echo ""
 echo "Dotfiles applied successfully!"
