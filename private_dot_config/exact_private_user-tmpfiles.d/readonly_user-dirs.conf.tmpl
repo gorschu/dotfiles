@@ -1,0 +1,12 @@
+#Type   Path            Mode    User       Group      Age Argument
+d       %h/.local/bin  0755     gorschu    gorschu    -   -
+{{ if eq (joinPath .chezmoi.homeDir "data" "general" | stat).type "dir" }}
+d       %h/data/general/mozilla/.mozilla                  0700     gorschu    gorschu    -   -
+d       %h/data/general/mozilla/.config/mozilla           0700     gorschu    gorschu    -   -
+d       %h/data/general/flatpak                           0700     gorschu    gorschu    -   -
+{{ end }}
+{{ if eq (joinPath .chezmoi.homeDir "/data" "media" | stat).type "dir" }}
+d       %h/data/media/documents 0700     gorschu    gorschu    -   -
+d       %h/data/media/pictures  0700     gorschu    gorschu    -   -
+d       %h/data/media/videos    0700     gorschu    gorschu    -   -
+{{ end }}

@@ -1,4 +1,14 @@
 #Type   Path        Mode      User    Group   Age Argument
-L+      %h/Documents/synced   - - - - %h/synced/documents
-L+      %h/Pictures/synced    - - - - %h/synced/pictures
-L+      %h/projects/synced    - - - - %h/synced/projects
+{{ if eq (joinPath .chezmoi.homeDir "data" "general" | stat).type "dir" }}
+L+      %h/.mozilla        - - - - %h/data/general/mozilla/.mozilla
+L+      %h/.config/mozilla - - - - %h/data/general/mozilla/.config/mozilla
+L+      %h/.var            - - - - %h/data/general/flatpak
+{{ end }}
+{{ if eq (joinPath .chezmoi.homeDir "data" "media" | stat).type "dir" }}
+L+      %h/Documents - - - - %h/data/media/documents
+L+      %h/Pictures  - - - - %h/data/media/pictures
+L+      %h/Videos  - - - - %h/data/media/videos
+{{ end }}
+{{ if eq (joinPath .chezmoi.homeDir "data" "projects" | stat).type "dir" }}
+L+      %h/projects - - - - %h/data/projects
+{{ end }}
