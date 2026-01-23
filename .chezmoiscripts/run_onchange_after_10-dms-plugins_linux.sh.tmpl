@@ -65,10 +65,14 @@ while IFS= read -r plugin; do
   fi
 done <<<"$INSTALLED"
 
-# Restart DMS if changes were made
+# Restart DMS if changes were made (but not under KDE or GNOME)
 if [[ $CHANGES_MADE -eq 1 ]]; then
-  echo "  Restarting DMS to load plugins..."
-  dms restart &>/dev/null || echo "    Note: DMS restart may require manual action"
+  if [[ "${XDG_CURRENT_DESKTOP:-}" == *"KDE"* || "${XDG_CURRENT_DESKTOP:-}" == *"GNOME"* ]]; then
+    echo "  Skipping DMS restart (running under $XDG_CURRENT_DESKTOP)"
+  else
+    echo "  Restarting DMS to load plugins..."
+    dms restart &>/dev/null || echo "    Note: DMS restart may require manual action"
+  fi
 fi
 
 echo "✓ DMS plugins managed"
