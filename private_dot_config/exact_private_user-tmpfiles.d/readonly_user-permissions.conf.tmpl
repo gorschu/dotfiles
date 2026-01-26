@@ -6,14 +6,14 @@ z       %h/Pictures   0700    gorschu    gorschu    -   -
 z       %h/Videos     0700    gorschu    gorschu    -   -
 {{ end }}
 
-{{ if eq (joinPath .chezmoi.homeDir "data" "media" | stat).type "dir" }}
+{{ with joinPath .chezmoi.homeDir "data" "media" | stat }}{{ if eq .type "dir" }}
 z %h/data/media 0700 gorschu gorschu - -
 z %h/data/media 0700 gorschu gorschu - -
 z %h/data/media 0700 gorschu gorschu - -
-{{ end }}
-{{ if eq (joinPath .chezmoi.homeDir "data" "projects" | stat).type "dir" }}
+{{ end }}{{ end }}
+{{ with joinPath .chezmoi.homeDir "data" "projects" | stat }}{{ if eq .type "dir" }}
 z %h/data/projects    0700 gorschu gorschu - -
-{{ end }}
-{{ if eq (joinPath .chezmoi.homeDir "data" "general" | stat).type "dir" }}
+{{ end }}{{ end }}
+{{ with joinPath .chezmoi.homeDir "data" "general" | stat }}{{ if eq .type "dir" }}
 z %h/data/general    0700 gorschu gorschu - -
-{{ end }}
+{{ end }}{{ end }}
