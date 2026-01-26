@@ -1,6 +1,8 @@
 # shellcheck shell=bash
 if [[ -d "/tmp/${USER}" ]]; then
   export TMPDIR="${TMPDIR:-/tmp/${USER}}"
+else
+  export TMPDIR="/tmp"
 fi
 {{ if eq .chezmoi.os "linux" }}
 systemctl --user import-environment TMPDIR
