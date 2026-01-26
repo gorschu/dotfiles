@@ -4,8 +4,7 @@ services:
       - gcr-ssh-agent.socket
       - gcr-ssh-agent.service
       - app-org.kde.xwaylandvideobridge@autostart.service
-    start_only:
-      - syncthing.service
+    start_only: []
     enable_restart:
     enable_start:
       - app-com.mitchellh.ghostty.service

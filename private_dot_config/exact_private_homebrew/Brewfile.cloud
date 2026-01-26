@@ -4,3 +4,4 @@ brew "helmfile"
 brew "kubectl"
 brew "k3sup"
 brew "sops"
+brew "syncthing", restart_service: true
