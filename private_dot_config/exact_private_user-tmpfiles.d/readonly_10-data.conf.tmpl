@@ -1,0 +1,29 @@
+#Type   Path                                      Mode  User     Group    Age Argument
+{{ with joinPath .chezmoi.homeDir "data" | stat }}{{ if eq .type "dir" }}
+# Directories under data/
+d       %h/data/general/mozilla/.mozilla          0700  gorschu  gorschu  -   -
+d       %h/data/general/mozilla/.config/mozilla   0700  gorschu  gorschu  -   -
+d       %h/data/general/flatpak                   0700  gorschu  gorschu  -   -
+d       %h/data/general/config                    0700  gorschu  gorschu  -   -
+d       %h/data/media/documents                   0700  gorschu  gorschu  -   -
+d       %h/data/media/documents/synced            0700  gorschu  gorschu  -   -
+d       %h/data/media/pictures                    0700  gorschu  gorschu  -   -
+d       %h/data/media/pictures/synced             0700  gorschu  gorschu  -   -
+d       %h/data/media/videos                      0700  gorschu  gorschu  -   -
+d       %h/data/projects/synced                   0700  gorschu  gorschu  -   -
+
+# Top-level symlinks into data/
+L+      %h/.mozilla                               -     -        -        -   %h/data/general/mozilla/.mozilla
+L+      %h/.config/mozilla                        -     -        -        -   %h/data/general/mozilla/.config/mozilla
+L+      %h/.config/syncthing                      -     -        -        -   %h/data/general/config/syncthing
+L+      %h/.var                                   -     -        -        -   %h/data/general/flatpak
+L+      %h/Documents                              -     -        -        -   %h/data/media/documents
+L+      %h/Pictures                               -     -        -        -   %h/data/media/pictures
+L+      %h/Videos                                 -     -        -        -   %h/data/media/videos
+L+      %h/projects                               -     -        -        -   %h/data/projects
+
+# Synced view - links to synced subdirs in data/
+L+      %h/synced/projects                        -     -        -        -   %h/data/projects/synced
+L+      %h/synced/documents                       -     -        -        -   %h/data/media/documents/synced
+L+      %h/synced/pictures                        -     -        -        -   %h/data/media/pictures/synced
+{{ end }}{{ end }}
