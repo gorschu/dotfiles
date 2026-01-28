@@ -33,6 +33,7 @@ pre-commit:
 
 # Sync SSH public keys from 1Password
 sync-ssh-keys:
-    ~/.local/share/chezmoi/.chezmoiscripts/run_onchange_before_sync-ssh-keys-from-1password.sh.tmpl
+    chezmoi execute-template < \
+      ~/.local/share/chezmoi/.chezmoiscripts/run_after_00-sync-ssh-keys-from-1password.sh.tmpl | bash
 
 # vim: set ft=just :
