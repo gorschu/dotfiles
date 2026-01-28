@@ -17,5 +17,4 @@ hosts:
     flatpak:
       apps:
         - com.valvesoftware.Steam
-        - net.lutris.Lutris
         - com.usebottles.bottles
