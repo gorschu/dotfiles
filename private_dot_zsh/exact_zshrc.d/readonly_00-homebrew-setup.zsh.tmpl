@@ -21,7 +21,7 @@ if [[ -x "${BREW_BIN}" ]]; then
 
   if [[ -d "${HOMEBREW_PREFIX}/share/man" ]]; then
     manpath=(${manpath:#${HOMEBREW_PREFIX}/share/man})
-    manpath+=("${HOMEBREW_PREFIX}/share/man")
+    manpath+=("${HOMEBREW_PREFIX}/share/man" "")
     typeset -gU manpath
   fi
 
