@@ -18,6 +18,7 @@ hosts:
       apps:
         - com.valvesoftware.Steam
         - com.usebottles.bottles
+        - com.discordapp.Discord
         - runtime/org.freedesktop.Platform.VulkanLayer.vkBasalt/x86_64/25.08
         - runtime/org.freedesktop.Platform.VulkanLayer.gamescope/x86_64/25.08
         - runtime/org.freedesktop.Platform.VulkanLayer.MangoHud/x86_64/25.08
