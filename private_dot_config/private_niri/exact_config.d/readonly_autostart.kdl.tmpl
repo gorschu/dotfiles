@@ -1,0 +1,4 @@
+{{- $kwalletInit := or (and (stat "/usr/libexec/pam_kwallet_init") "/usr/libexec/pam_kwallet_init") (and (stat "/usr/lib/pam_kwallet_init") "/usr/lib/pam_kwallet_init") }}
+{{- if $kwalletInit }}
+spawn-at-startup "{{ $kwalletInit }}"
+{{- end }}

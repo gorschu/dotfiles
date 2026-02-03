@@ -187,14 +187,11 @@ overview {
         off
     }
 }
-// Add lines like this to spawn processes at startup.
-// Note that running niri as a session supports xdg-desktop-autostart,
-// which may be more convenient to use.
-// See the binds section below for more spawn examples.
-// This line starts waybar, a commonly used bar for Wayland compositors.
+
 environment {
   XDG_CURRENT_DESKTOP "niri"
 }
+
 hotkey-overlay {
     skip-at-startup
 }
@@ -311,6 +308,7 @@ include "dms/outputs.kdl"
 include "dms/cursor.kdl"
 
 // include drop-in files
+include "config.d/autostart.kdl"
 include "config.d/binds.kdl"
 include "config.d/input.kdl"
 include "config.d/layout.kdl"
