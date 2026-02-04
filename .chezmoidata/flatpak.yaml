@@ -10,6 +10,7 @@ common:
       - md.obsidian.Obsidian
       - io.mpv.Mpv
       - org.gimp.GIMP
+      - org.libreoffice.LibreOffice
 
 # Host-specific flatpak applications
 hosts:
