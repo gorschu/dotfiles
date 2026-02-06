@@ -1,0 +1,25 @@
+---
+# Mail account configuration (non-sensitive data only)
+mail:
+  accounts:
+    fastmail:
+      default: true
+      imap_host: imap.fastmail.com
+      imap_port: 993
+      smtp_host: smtp.fastmail.com
+      smtp_port: 465
+      smtp_starttls: false
+    gmail:
+      default: false
+      imap_host: imap.gmail.com
+      imap_port: 993
+      smtp_host: smtp.gmail.com
+      smtp_port: 587
+      smtp_starttls: true
+    gmx:
+      default: false
+      imap_host: imap.gmx.com
+      imap_port: 993
+      smtp_host: mail.gmx.com
+      smtp_port: 587
+      smtp_starttls: true

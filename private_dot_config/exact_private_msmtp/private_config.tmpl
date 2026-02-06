@@ -1,0 +1,44 @@
+{{- $secrets := includeTemplate "secrets/secrets-mail" . | fromJson -}}
+{{- $mail := .mail -}}
+# msmtp configuration - managed by chezmoi
+
+defaults
+auth on
+tls on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+logfile ~/.local/state/msmtp/msmtp.log
+
+# Fastmail
+account fastmail
+host {{ $mail.accounts.fastmail.smtp_host }}
+port {{ $mail.accounts.fastmail.smtp_port }}
+{{- if not $mail.accounts.fastmail.smtp_starttls }}
+tls_starttls off
+{{- end }}
+from {{ $secrets.fastmail.email }}
+user {{ $secrets.fastmail.email }}
+password {{ $secrets.fastmail.password }}
+
+# Gmail
+account gmail
+host {{ $mail.accounts.gmail.smtp_host }}
+port {{ $mail.accounts.gmail.smtp_port }}
+{{- if $mail.accounts.gmail.smtp_starttls }}
+tls_starttls on
+{{- end }}
+from {{ $secrets.gmail.email }}
+user {{ $secrets.gmail.email }}
+password {{ $secrets.gmail.password }}
+
+# GMX
+account gmx
+host {{ $mail.accounts.gmx.smtp_host }}
+port {{ $mail.accounts.gmx.smtp_port }}
+{{- if $mail.accounts.gmx.smtp_starttls }}
+tls_starttls on
+{{- end }}
+from {{ $secrets.gmx.email }}
+user {{ $secrets.gmx.email }}
+password {{ $secrets.gmx.password }}
+
+account default : fastmail

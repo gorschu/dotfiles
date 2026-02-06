@@ -1,0 +1,8 @@
+#!/bin/bash
+# Tag by account
+notmuch tag +fastmail -- path:fastmail/** and tag:new
+notmuch tag +gmail -- path:gmail/** and tag:new
+notmuch tag +gmx -- path:gmx/** and tag:new
+
+# Clear processing tag
+notmuch tag -new -- tag:new

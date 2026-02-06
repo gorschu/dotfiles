@@ -5,6 +5,7 @@ homebrew:
   cacheDir: "homebrew"
   bundleFiles:
     - ".config/homebrew/Brewfile.cli"
-    - ".config/homebrew/Brewfile.fonts"
-    - ".config/homebrew/Brewfile.dev"
     - ".config/homebrew/Brewfile.cloud"
+    - ".config/homebrew/Brewfile.dev"
+    - ".config/homebrew/Brewfile.fonts"
+    - ".config/homebrew/Brewfile.mail"

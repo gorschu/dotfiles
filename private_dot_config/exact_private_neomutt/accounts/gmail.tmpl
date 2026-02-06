@@ -1,0 +1,13 @@
+{{- $secrets := includeTemplate "secrets/secrets-mail" . | fromJson -}}
+{{- $mail := .mail -}}
+# Gmail account
+
+set from = "{{ $secrets.gmail.email }}"
+set realname = "{{ $secrets.gmail.realname }}"
+set sendmail = "msmtp -a gmail"
+
+set folder = "~/mail/gmail"
+set spoolfile = "+INBOX"
+set record = "+Sent"
+set postponed = "+Drafts"
+set trash = "+Trash"

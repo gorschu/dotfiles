@@ -1,0 +1,97 @@
+{{- $secrets := includeTemplate "secrets/secrets-mail" . | fromJson -}}
+{{- $mail := .mail -}}
+# neomutt configuration - managed by chezmoi
+
+# Paths
+set folder = "~/mail"
+set mailcap_path = "~/.config/neomutt/mailcap"
+auto_view text/html application/pdf
+set tmpdir = "/tmp"
+
+# Maildir settings
+set mbox_type = Maildir
+set check_new = yes
+
+# Sidebar
+set sidebar_visible = yes
+set sidebar_width = 30
+set sidebar_format = "%D%* %N/%S"
+set sidebar_short_path = yes
+set sidebar_folder_indent = no
+# set sidebar_indent_string = "  "
+set mail_check_stats = yes
+
+# notmuch integration
+set nm_default_url = "notmuch://{{ .chezmoi.homeDir }}/data/mail"
+set nm_query_type = messages
+
+# Mailboxes with display names
+named-mailboxes "── Fastmail ────────" +fastmail/INBOX
+named-mailboxes "   Sent" +fastmail/Sent
+named-mailboxes "   Drafts" +fastmail/Drafts
+named-mailboxes "   Archive" +fastmail/Archive
+named-mailboxes "   Trash" +fastmail/Trash
+named-mailboxes "── Gmail ───────────" +gmail/INBOX
+named-mailboxes "   Sent" +gmail/Sent
+named-mailboxes "   Drafts" +gmail/Drafts
+named-mailboxes "   Archive" +gmail/Archive
+named-mailboxes "   Trash" +gmail/Trash
+named-mailboxes "── GMX ─────────────" +gmx/INBOX
+named-mailboxes "   Sent" +gmx/Sent
+named-mailboxes "   Drafts" +gmx/Drafts
+named-mailboxes "   Trash" +gmx/Trash
+
+# Default account
+source ~/.config/neomutt/accounts/fastmail
+
+# Account switching via folder-hook
+folder-hook 'fastmail/*' 'source ~/.config/neomutt/accounts/fastmail'
+folder-hook 'gmail/*' 'source ~/.config/neomutt/accounts/gmail'
+folder-hook 'gmx/*' 'source ~/.config/neomutt/accounts/gmx'
+
+# Archive to year folder based on message date
+folder-hook 'fastmail/*' 'save-hook . "{{ .chezmoi.homeDir }}/mail/fastmail/Archive/%[%Y]"'
+folder-hook 'gmail/*' 'save-hook . "{{ .chezmoi.homeDir }}/mail/gmail/Archive"'
+folder-hook 'gmx/*' 'save-hook . "{{ .chezmoi.homeDir }}/mail/gmx/Archive/%[%Y]"'
+
+# Editor
+set editor = "nvim"
+
+# Compose settings
+set text_flowed = yes
+set edit_headers = yes
+set use_from = yes
+set envelope_from = yes
+
+# Display
+set date_format = "%Y-%m-%d %H:%M"
+set index_format = "%4C %Z %?X?📎&  ? %d %-20.20F %s"
+set sort = threads
+set sort_aux = reverse-last-date-received
+set strict_threads = yes
+set pager_index_lines = 10
+set pager_context = 3
+set pager_stop = yes
+set pager_read_delay = 5
+set tilde = yes
+set markers = no
+
+# GPG/PGP settings
+set crypt_use_gpgme = yes
+set crypt_autopgp = yes
+set crypt_autosign = no
+set crypt_autoencrypt = no
+set crypt_verify_sig = yes
+set crypt_replysign = yes
+set crypt_replyencrypt = yes
+set pgp_self_encrypt = yes
+set smime_is_default = no
+
+# Keybindings and colors
+source ~/.config/neomutt/bindings.muttrc
+source ~/.config/neomutt/gpg.muttrc
+source ~/.externals/neomutt/catppuccin/neomuttrc
+
+# Color overrides (after theme)
+color index color3 default ~D       # Deleted = yellow/peach
+color index color6 default ~P       # From me = cyan/teal

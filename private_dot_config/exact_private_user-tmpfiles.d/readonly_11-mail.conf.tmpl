@@ -1,0 +1,15 @@
+#Type   Path                                      Mode  User     Group    Age Argument
+{{ with joinPath .chezmoi.homeDir "data" | stat }}{{ if eq .type "dir" }}
+# Mail directories (per-account stores for mbsync)
+d       %h/data/mail                              0700  -        -        -   -
+d       %h/data/mail/fastmail                     0700  -        -        -   -
+d       %h/data/mail/gmail                        0700  -        -        -   -
+d       %h/data/mail/gmx                          0700  -        -        -   -
+
+# Symlink for mail access
+L+      %h/mail                                   -     -        -        -   %h/data/mail
+
+# Log directories
+d       %h/.local/state/msmtp                     0700  -        -        -   -
+d       %h/.local/state/mbsync                    0700  -        -        -   -
+{{ end }}{{ end }}

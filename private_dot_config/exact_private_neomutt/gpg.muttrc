@@ -1,0 +1,4 @@
+# GPG/PGP keybindings
+
+# Index/pager: verify or extract keys
+bind index,pager \Ck extract-keys

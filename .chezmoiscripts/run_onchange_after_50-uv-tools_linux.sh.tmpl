@@ -1,0 +1,20 @@
+#!/bin/bash
+# run_onchange_after - installs Python CLI tools via uv when config .chezmoidata changes
+{{- $tools := .uv.tools | default list -}}
+# Tools list hash: {{ $tools | toJson | sha256sum }}
+
+set -euo pipefail
+
+if ! command -v uv &>/dev/null; then
+  echo "uv not found, skipping Python tool installation"
+  exit 0
+fi
+
+echo "Installing Python CLI tools via uv..."
+
+{{ range $tools -}}
+echo "  Installing {{ . }}..."
+uv tool install {{ . }}
+{{ end }}
+
+echo "Done"

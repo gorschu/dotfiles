@@ -1,0 +1,19 @@
+{{- $secrets := includeTemplate "secrets/secrets-mail" . | fromJson -}}
+{{- $mail := .mail -}}
+[database]
+path={{ .chezmoi.homeDir }}/data/mail
+
+[user]
+name={{ $secrets.fastmail.realname }}
+primary_email={{ $secrets.fastmail.email }}
+other_email={{ $secrets.gmail.email }};{{ $secrets.gmx.email }}
+
+[new]
+tags=new;inbox
+ignore=.mbsyncstate;.uidvalidity
+
+[search]
+exclude_tags=deleted;spam
+
+[maildir]
+synchronize_flags=true

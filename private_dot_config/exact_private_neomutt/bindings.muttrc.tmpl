@@ -1,0 +1,57 @@
+# Vim-like navigation
+bind index,pager j next-entry
+bind index,pager k previous-entry
+bind index,pager J next-unread
+bind index,pager K previous-unread
+bind index,pager g noop
+bind index gg first-entry
+bind index G last-entry
+bind pager gg top
+bind pager G bottom
+
+# Sidebar
+bind index,pager \Cp sidebar-prev
+bind index,pager \Cn sidebar-next
+bind index,pager \Co sidebar-open
+bind index,pager B sidebar-toggle-visible
+
+# Tagging
+bind index \; tag-prefix
+
+# Index
+bind index l limit
+bind index h noop
+macro index,pager gb "<change-folder>-<enter>" "go back to previous folder"
+bind index R group-reply
+bind index <space> collapse-thread
+
+# Pager
+bind pager h exit
+bind pager l view-attachments
+bind pager H display-toggle-weed
+
+# Attachments
+bind attach <return> view-mailcap
+bind attach l view-mailcap
+bind attach h exit
+
+# Search with notmuch
+bind index,pager \\ vfolder-from-query
+
+# Show entire thread (across all folders)
+bind index,pager + entire-thread
+
+# Sync
+macro index S "<shell-escape>~/.local/bin/mail-sync<enter>" "sync all mail"
+
+# Quick navigation
+macro index,pager gi "<change-folder>{{ .chezmoi.homeDir }}/mail/fastmail/INBOX<enter>" "go to inbox"
+macro index,pager gf "<vfolder-from-query>tag:flagged<enter>" "go to flagged"
+
+# Go to archive (prefills path)
+folder-hook 'fastmail/*' 'macro index,pager ga "<change-folder>{{ .chezmoi.homeDir }}/mail/fastmail/Archive/" "go to archive"'
+folder-hook 'gmail/*' 'macro index,pager ga "<change-folder>{{ .chezmoi.homeDir }}/mail/gmail/Archive/<enter>" "go to archive"'
+folder-hook 'gmx/*' 'macro index,pager ga "<change-folder>{{ .chezmoi.homeDir }}/mail/gmx/Archive/" "go to archive"'
+
+# Archive (uses save-hook for message-date-based year folder)
+macro index,pager A "<save-message><enter>" "archive message"

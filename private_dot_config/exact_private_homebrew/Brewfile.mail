@@ -1,0 +1,7 @@
+# Mail tools
+brew "isync"
+brew "neomutt"
+brew "notmuch"
+brew "msmtp"
+brew "w3m"
+brew "poppler"

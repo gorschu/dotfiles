@@ -1,0 +1,13 @@
+{{- $secrets := includeTemplate "secrets/secrets-mail" . | fromJson -}}
+{{- $mail := .mail -}}
+# Fastmail account
+
+set from = "{{ $secrets.fastmail.email }}"
+set realname = "{{ $secrets.fastmail.realname }}"
+set sendmail = "msmtp -a fastmail"
+
+set folder = "~/mail/fastmail"
+set spoolfile = "+INBOX"
+set record = "+Sent"
+set postponed = "+Drafts"
+set trash = "+Trash"

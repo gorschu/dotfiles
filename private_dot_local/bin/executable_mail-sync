@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# Mail sync wrapper for mbsync/neomutt
+
+set -euo pipefail
+
+LOG_DIR="${HOME}/.local/state/mbsync"
+LOG_FILE="${LOG_DIR}/sync.log"
+LOCK_FILE="${LOG_DIR}/sync.lock"
+
+# Ensure log directory exists
+mkdir -p "${LOG_DIR}"
+
+# Prevent concurrent syncs
+exec 9>"${LOCK_FILE}"
+if ! flock -n 9; then
+  echo "Another sync is already running"
+  exit 0
+fi
+
+log() {
+  local msg="$(date -Iseconds) $*"
+  echo "${msg}" >>"${LOG_FILE}"
+  echo "$*"
+}
+
+notify_error() {
+  local msg="$1"
+  log "ERROR: ${msg}"
+  if command -v notify-send &>/dev/null; then
+    notify-send -u critical -t 10000 "Mail Sync Failed" "${msg}"
+  fi
+}
+
+log "Starting mail sync"
+
+# Run mbsync for all accounts
+if ! mbsync -a 2>&1 | tee -a "${LOG_FILE}"; then
+  notify_error "mbsync failed - check ${LOG_FILE}"
+  exit 1
+fi
+
+log "mbsync completed, running notmuch"
+
+# Index new mail
+if ! notmuch new 2>&1 | tee -a "${LOG_FILE}"; then
+  notify_error "notmuch indexing failed - check ${LOG_FILE}"
+  exit 1
+fi
+
+log "Sync completed successfully"

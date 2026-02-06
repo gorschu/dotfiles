@@ -1,0 +1,177 @@
+{{- $secrets := includeTemplate "secrets/secrets-mail" . | fromJson -}}
+{{- $mail := .mail -}}
+# mbsync configuration - managed by chezmoi
+
+# Global defaults
+Create Both
+Expunge Both
+SyncState *
+CopyArrivalDate yes
+
+# Fastmail
+#
+IMAPAccount fastmail
+Host {{ $mail.accounts.fastmail.imap_host }}
+Port {{ $mail.accounts.fastmail.imap_port }}
+AuthMechs LOGIN
+User {{ $secrets.fastmail.email }}
+Pass {{ $secrets.fastmail.password }}
+TLSType IMAPS
+TLSVersions +1.2
+SystemCertificates yes
+
+IMAPStore fastmail-remote
+Account fastmail
+
+MaildirStore fastmail-local
+Path ~/data/mail/fastmail/
+Inbox ~/data/mail/fastmail/INBOX
+SubFolders Verbatim
+
+Channel fastmail
+Far :fastmail-remote:
+Near :fastmail-local:
+Patterns *
+Sync All
+
+# Gmail (separate channels for clean folder names)
+#
+IMAPAccount gmail
+Host {{ $mail.accounts.gmail.imap_host }}
+Port {{ $mail.accounts.gmail.imap_port }}
+AuthMechs LOGIN
+User {{ $secrets.gmail.email }}
+Pass {{ $secrets.gmail.password }}
+TLSType IMAPS
+TLSVersions +1.2
+SystemCertificates yes
+
+IMAPStore gmail-remote
+Account gmail
+
+MaildirStore gmail-local
+Path ~/data/mail/gmail/
+Inbox ~/data/mail/gmail/INBOX
+SubFolders Verbatim
+
+Channel gmail-inbox
+Far :gmail-remote:INBOX
+Near :gmail-local:INBOX
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-sent
+Far :gmail-remote:"[Gmail]/Sent Mail"
+Near :gmail-local:Sent
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-drafts
+Far :gmail-remote:"[Gmail]/Drafts"
+Near :gmail-local:Drafts
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-trash
+Far :gmail-remote:"[Gmail]/Trash"
+Near :gmail-local:Trash
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-archive
+Far :gmail-remote:"[Gmail]/All Mail"
+Near :gmail-local:Archive
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-labels
+Far :gmail-remote:
+Near :gmail-local:
+Patterns * !INBOX ![Gmail]* !Sent !Drafts !Trash !Archive
+Create Both
+Expunge Both
+SyncState *
+
+Group gmail
+Channel gmail-inbox
+Channel gmail-sent
+Channel gmail-drafts
+Channel gmail-trash
+Channel gmail-archive
+Channel gmail-labels
+
+# GMX (separate channels to clean silly German names)
+#
+IMAPAccount gmx
+Host {{ $mail.accounts.gmx.imap_host }}
+Port {{ $mail.accounts.gmx.imap_port }}
+AuthMechs LOGIN
+User {{ $secrets.gmx.email }}
+Pass {{ $secrets.gmx.password }}
+TLSType IMAPS
+TLSVersions +1.2
+SystemCertificates yes
+
+IMAPStore gmx-remote
+Account gmx
+
+MaildirStore gmx-local
+Path ~/data/mail/gmx/
+Inbox ~/data/mail/gmx/INBOX
+SubFolders Verbatim
+
+Channel gmx-inbox
+Far :gmx-remote:INBOX
+Near :gmx-local:INBOX
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmx-sent
+Far ":gmx-remote:Gesendet"
+Near :gmx-local:Sent
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmx-drafts
+Far ":gmx-remote:Entwürfe"
+Near :gmx-local:Drafts
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmx-trash
+Far ":gmx-remote:Gelöscht"
+Near :gmx-local:Trash
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmx-spam
+Far ":gmx-remote:Spamverdacht"
+Near :gmx-local:Spam
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmx-other
+Far :gmx-remote:
+Near :gmx-local:
+Patterns * !INBOX !Gesendet !Entwürfe !Gelöscht !Spamverdacht !OUTBOX !Sent !Drafts !Trash !Spam
+Create Both
+Expunge Both
+SyncState *
+
+Group gmx
+Channel gmx-inbox
+Channel gmx-sent
+Channel gmx-drafts
+Channel gmx-trash
+Channel gmx-spam
+Channel gmx-other
