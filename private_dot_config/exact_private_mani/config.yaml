@@ -1,0 +1,65 @@
+themes:
+  # catppuccin-mocha
+  default:
+    tree:
+      style: rounded
+
+    table:
+      style: rounded
+      header:
+        fg: "#f5c2e7" # pink
+        attr: bold
+      title_column:
+        fg: "#89b4fa" # blue
+
+    stream:
+      prefix: true
+      header: true
+      header_char: "─"
+      prefix_colors:
+        - "#f38ba8" # red
+        - "#fab387" # peach
+        - "#f9e2af" # yellow
+        - "#a6e3a1" # green
+        - "#94e2d5" # teal
+        - "#89b4fa" # blue
+        - "#cba6f7" # mauve
+
+    block:
+      key:
+        fg: "#f9e2af" # yellow
+      separator:
+        fg: "#6c7086" # overlay0
+      value:
+        fg: "#cdd6f4" # text
+      value_true:
+        fg: "#a6e3a1" # green
+      value_false:
+        fg: "#f38ba8" # red
+
+targets:
+  all:
+    all: true
+
+tasks:
+  status:
+    desc: Show git status
+    cmd: git status -s
+    target: all
+
+  fetch:
+    desc: Fetch from remote
+    cmd: git fetch --all --prune
+
+  pull:
+    desc: Pull latest changes
+    cmd: git pull
+
+  branch:
+    desc: Show current branch
+    cmd: git branch --show-current
+    target: all
+
+  push:
+    desc: Push to remote
+    cmd: git push
