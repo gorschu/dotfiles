@@ -15,7 +15,7 @@ print_section "Updating package database"
 sudo pacman -Sy
 
 print_section "Installing essential packages"
-sudo pacman -S --needed --noconfirm just git curl jq npm bsdtar gnupg
+sudo pacman -S --needed --noconfirm just git curl jq npm libarchive gnupg python
 
 print_section "Installing chezmoi"
 sudo pacman -S --needed --noconfirm chezmoi
