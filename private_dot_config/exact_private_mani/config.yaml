@@ -64,4 +64,4 @@ tasks:
 
   push:
     desc: Push to remote
-    cmd: git push
+    cmd: GIT_TERMINAL_PROMPT=0 GIT_SSH_COMMAND='ssh -o ConnectTimeout=10' git push
