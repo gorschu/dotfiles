@@ -44,7 +44,9 @@ targets:
 tasks:
   status:
     desc: Show git status
-    cmd: git status -s
+    cmd: |
+      s=$(git status -s)
+      [ -z "$s" ] && echo "clean" || echo "$s"
     target: all
 
   fetch:
