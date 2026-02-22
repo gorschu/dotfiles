@@ -6,4 +6,18 @@ source = ~/.config/hypr/themes/tokyonight/{{ .colorscheme.flavor }}.conf
 # No theme file available for {{ .colorscheme.name }}
 {{- end }}
 
-source = ~/.config/hypr/conf.d/*.conf
+# Core
+source = ~/.config/hypr/conf.d/10-env.conf
+source = ~/.config/hypr/conf.d/20-input.conf
+
+# Visuals
+source = ~/.config/hypr/conf.d/30-appearance.conf
+
+# Window behavior
+source = ~/.config/hypr/conf.d/40-windowrules.conf
+
+# Controls
+source = ~/.config/hypr/conf.d/50-keybinds.conf
+
+# Session startup
+source = ~/.config/hypr/conf.d/90-autostart.conf
