@@ -46,8 +46,17 @@ bind = $mainMod, Print, exec, hyprshot -m window
 bind = $mainMod, F, fullscreen, 1
 bind = $mainMod SHIFT, F, fullscreen, 0
 
-# Window grouping
-bind = $mainMod, W, togglegroup,
+# Window grouping (Alt prefix)
+bind = ALT, W, togglegroup,
+bind = ALT, Tab, changegroupactive, f
+bind = ALT SHIFT, Tab, changegroupactive, b
+bind = ALT, h, changegroupactive, b
+bind = ALT, l, changegroupactive, f
+bind = ALT SHIFT, h, moveintogroup, l
+bind = ALT SHIFT, l, moveintogroup, r
+bind = ALT SHIFT, k, moveintogroup, u
+bind = ALT SHIFT, j, moveintogroup, d
+bind = ALT SHIFT, W, moveoutofgroup,
 
 {{- if lookPath "dms" }}
 

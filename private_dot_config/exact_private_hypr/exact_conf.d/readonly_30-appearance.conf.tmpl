@@ -62,6 +62,32 @@ animations {
     animation = workspacesOut, 1, 1.94, almostLinear, fade
 }
 
+group {
+{{- if eq .colorscheme.name "catppuccin" }}
+    col.border_active = $mauve
+    col.border_inactive = $overlay0
+{{- else if eq .colorscheme.name "tokyonight" }}
+    col.border_active = $blue
+    col.border_inactive = $fg_gutter
+{{- end }}
+
+    groupbar {
+        enabled = true
+        render_titles = true
+        font_family = Sans
+        font_size = 11
+        height = 18
+        indicator_height = 2
+{{- if eq .colorscheme.name "catppuccin" }}
+        col.active = $mauve
+        col.inactive = $surface0
+{{- else if eq .colorscheme.name "tokyonight" }}
+        col.active = $blue
+        col.inactive = $fg_gutter
+{{- end }}
+    }
+}
+
 dwindle {
     pseudotile = true
     preserve_split = true
