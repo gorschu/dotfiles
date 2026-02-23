@@ -1,6 +1,6 @@
 #!/bin/bash
 # Manages DankMaterialShell plugins via dms plugins CLI
-# Plugins list hash: {{ .dms.plugins.enabled | toJson | sha256sum }}
+# Plugins list hash: {{ .dms.plugins | toJson | sha256sum }}
 
 set -euo pipefail
 
@@ -12,6 +12,30 @@ fi
 
 echo "Managing DMS plugins..."
 
+# Build desired plugin list: common + compositor-specific
+DESIRED_PLUGINS=(
+{{- range .dms.plugins.common }}
+  "{{ . }}"
+{{- end }}
+)
+
+case "${XDG_CURRENT_DESKTOP:-}" in
+  niri)
+    DESIRED_PLUGINS+=(
+{{- range .dms.plugins.niri }}
+      "{{ . }}"
+{{- end }}
+    )
+    ;;
+  Hyprland)
+    DESIRED_PLUGINS+=(
+{{- range .dms.plugins.hyprland }}
+      "{{ . }}"
+{{- end }}
+    )
+    ;;
+esac
+
 # Track if any changes were made
 CHANGES_MADE=0
 
@@ -19,36 +43,27 @@ CHANGES_MADE=0
 INSTALLED=$(dms plugins list 2>/dev/null | grep -E '^\s+ID:' | awk '{print $2}' || echo "")
 
 # Install desired plugins
-{{ if .dms.plugins.enabled -}}
-{{ range .dms.plugins.enabled -}}
-if ! grep -q "^{{ . }}$" <<<"$INSTALLED"; then
-  echo "  Installing plugin: {{ . }}..."
-  if OUTPUT=$(dms plugins install "{{ . }}" 2>&1); then
-    echo "    ✓ Installed {{ . }}"
-    CHANGES_MADE=1
-  elif echo "$OUTPUT" | grep -q "already installed"; then
-    echo "    ✓ Plugin {{ . }} already installed"
+for plugin in "${DESIRED_PLUGINS[@]}"; do
+  if ! grep -q "^${plugin}$" <<<"$INSTALLED"; then
+    echo "  Installing plugin: ${plugin}..."
+    if OUTPUT=$(dms plugins install "${plugin}" 2>&1); then
+      echo "    ✓ Installed ${plugin}"
+      CHANGES_MADE=1
+    elif echo "$OUTPUT" | grep -q "already installed"; then
+      echo "    ✓ Plugin ${plugin} already installed"
+    else
+      echo "    WARNING: Failed to install ${plugin}"
+      echo "    Error: $OUTPUT"
+    fi
   else
-    echo "    WARNING: Failed to install {{ . }}"
-    echo "    Error: $OUTPUT"
+    echo "  ✓ Plugin ${plugin} already installed"
   fi
-else
-  echo "  ✓ Plugin {{ . }} already installed"
-fi
-{{ end -}}
-{{ end }}
+done
 
 # Uninstall plugins not in our list
-{{ if .dms.plugins.enabled -}}
-DESIRED_PLUGINS=({{ range .dms.plugins.enabled }}"{{ . }}" {{ end }})
-{{ else -}}
-DESIRED_PLUGINS=()
-{{ end -}}
-
 while IFS= read -r plugin; do
   [[ -z "$plugin" ]] && continue
 
-  # Check if plugin is in our desired list
   FOUND=0
   for desired in "${DESIRED_PLUGINS[@]}"; do
     if [[ "$plugin" == "$desired" ]]; then
@@ -57,7 +72,6 @@ while IFS= read -r plugin; do
     fi
   done
 
-  # If not in desired list, uninstall it
   if [[ $FOUND -eq 0 ]]; then
     echo "  Removing unmanaged plugin: $plugin"
     dms plugins uninstall "$plugin" &>/dev/null || true
