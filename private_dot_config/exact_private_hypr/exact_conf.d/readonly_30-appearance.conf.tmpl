@@ -95,6 +95,9 @@ dwindle {
 
 master {
     mfact = 0.6
+    # Required for orientation=center to affect single-window workspaces.
+    # 0 == always allow centered master.
+    slave_count_for_center_master = 0
 }
 
 cursor {
