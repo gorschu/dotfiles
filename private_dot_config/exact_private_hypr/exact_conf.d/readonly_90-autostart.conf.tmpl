@@ -1,0 +1,6 @@
+exec-once = uwsm app -- /usr/lib/pam_kwallet_init
+exec-once = uwsm app -- /usr/bin/shikane
+{{- if not (lookPath "dms") }}
+exec-once = uwsm app -- /usr/bin/hypridle
+{{- end }}
+exec-once = systemctl --user start hyprpolkitagent

@@ -45,8 +45,9 @@ tasks:
   status:
     desc: Show git status
     cmd: |
+      path=$(dirname "$(pwd)" | sed "s|$HOME|~|")
       s=$(git status -s)
-      [ -z "$s" ] && echo "clean" || echo "$s"
+      if [ -z "$s" ]; then echo "($path) clean"; else echo "($path)"; echo "$s"; fi
     target: all
 
   fetch:

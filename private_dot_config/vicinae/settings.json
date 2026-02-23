@@ -7,14 +7,18 @@
 // If you want to maintain a configuration file with your own comments and formatting, you should create a separate file and add it to the 'imports' array.
 //
 // Learn more about configuration at https://docs.vicinae.com/config
-
 {
-   "$schema": "https://vicinae.com/schemas/config.json",
-   "close_on_focus_loss": true,
-   "pop_to_root_on_close": true,
-   "theme": {
-      "dark": {
-         "name": "catppuccin-mocha"
-      }
-   }
+  "$schema": "https://vicinae.com/schemas/config.json",
+  "close_on_focus_loss": false,
+  "pop_to_root_on_close": true,
+  "theme": {
+    "dark": {
+      "name": "catppuccin-mocha",
+      "icon_theme": "auto"
+    },
+    "light": {
+      "name": "catppuccin-latte",
+      "icon_theme": "auto"
+    }
+  }
 }
