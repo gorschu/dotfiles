@@ -5,33 +5,60 @@ binds {
     Mod+Tab repeat=false { toggle-overview; }
     Mod+Shift+Slash { show-hotkey-overlay; }
 
-    // === Application Launchers (dms) ===
+    // === Launcher ===
+{{- if lookPath "dms" }}
+    Mod+Space repeat=false hotkey-overlay-title="Spotlight" { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
+{{- else }}
+    Mod+Space repeat=false { spawn "vicinae" "toggle"; }
+{{- end }}
+
+    // === Terminal ===
+    Mod+Return hotkey-overlay-title="Open Terminal" { spawn "kitty" "--single-instance"; }
     Mod+T hotkey-overlay-title="Open Terminal" { spawn "kitty"; }
+
+    // === Clipboard ===
+{{- if lookPath "dms" }}
     Mod+V hotkey-overlay-title="Clipboard Manager" {
         spawn "dms" "ipc" "call" "clipboard" "toggle";
     }
+{{- else }}
+    Mod+V hotkey-overlay-title="Clipboard Manager" {
+        spawn "sh" "-c" "cliphist list | fuzzel -d | cliphist decode | wl-copy";
+    }
+{{- end }}
+
+    // === Lock ===
+{{- if lookPath "dms" }}
+    Mod+Alt+L hotkey-overlay-title="Lock Screen" {
+        spawn "dms" "ipc" "call" "lock" "lock";
+    }
+{{- else }}
+    Mod+Alt+L hotkey-overlay-title="Lock Screen" {
+        spawn "hyprlock";
+    }
+{{- end }}
+
+{{- if lookPath "dms" }}
+
+    // === DMS-only binds ===
     Mod+M hotkey-overlay-title="Task Manager" {
         spawn "dms" "ipc" "call" "processlist" "focusOrToggle";
     }
-    // Mod+Comma hotkey-overlay-title="Settings" {
-    //     spawn "dms" "ipc" "call" "settings" "focusOrToggle";
-    // }
     Mod+Y hotkey-overlay-title="Browse Wallpapers" {
         spawn "dms" "ipc" "call" "dankdash" "wallpaper";
     }
     Mod+N hotkey-overlay-title="Notification Center" { spawn "dms" "ipc" "call" "notifications" "toggle"; }
     Mod+Shift+N hotkey-overlay-title="Notepad" { spawn "dms" "ipc" "call" "notepad" "toggle"; }
-
-    // === Security (dms) ===
-    Mod+Alt+L hotkey-overlay-title="Lock Screen" {
-        spawn "dms" "ipc" "call" "lock" "lock";
-    }
-    Mod+Shift+E { quit; }
+    Mod+X hotkey-overlay-title="Power Menu" { spawn "dms" "ipc" "call" "powermenu" "toggle"; }
     Ctrl+Alt+Delete hotkey-overlay-title="Task Manager" {
         spawn "dms" "ipc" "call" "processlist" "focusOrToggle";
     }
+{{- end }}
 
-    // === Audio Controls (dms) ===
+    Mod+Shift+E { quit; }
+
+    // === Audio Controls ===
+{{- if lookPath "dms" }}
     XF86AudioRaiseVolume allow-when-locked=true {
         spawn "dms" "ipc" "call" "audio" "increment" "3";
     }
@@ -44,17 +71,54 @@ binds {
     XF86AudioMicMute allow-when-locked=true {
         spawn "dms" "ipc" "call" "audio" "micmute";
     }
+{{- else }}
+    XF86AudioRaiseVolume allow-when-locked=true {
+        spawn "wpctl" "set-volume" "-l" "1" "@DEFAULT_AUDIO_SINK@" "5%+";
+    }
+    XF86AudioLowerVolume allow-when-locked=true {
+        spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%-";
+    }
+    XF86AudioMute allow-when-locked=true {
+        spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle";
+    }
+    XF86AudioMicMute allow-when-locked=true {
+        spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle";
+    }
+{{- end }}
 
-    // === Brightness Controls (dms) ===
+    // === Brightness Controls ===
+{{- if lookPath "dms" }}
     XF86MonBrightnessUp allow-when-locked=true {
        spawn "dms" "ipc" "call" "brightness" "increment" "5" "";
     }
     XF86MonBrightnessDown allow-when-locked=true {
        spawn "dms" "ipc" "call" "brightness" "decrement" "5" "";
     }
+{{- else }}
+    XF86MonBrightnessUp allow-when-locked=true {
+       spawn "brightnessctl" "s" "10%+";
+    }
+    XF86MonBrightnessDown allow-when-locked=true {
+       spawn "brightnessctl" "s" "10%-";
+    }
+{{- end }}
+
+    // === Media Player Controls ===
+{{- if lookPath "dms" }}
+    XF86AudioNext allow-when-locked=true { spawn "dms" "ipc" "call" "mpris" "next"; }
+    XF86AudioPause allow-when-locked=true { spawn "dms" "ipc" "call" "mpris" "playPause"; }
+    XF86AudioPlay allow-when-locked=true { spawn "dms" "ipc" "call" "mpris" "playPause"; }
+    XF86AudioPrev allow-when-locked=true { spawn "dms" "ipc" "call" "mpris" "previous"; }
+{{- else }}
+    XF86AudioNext allow-when-locked=true { spawn "playerctl" "next"; }
+    XF86AudioPause allow-when-locked=true { spawn "playerctl" "play-pause"; }
+    XF86AudioPlay allow-when-locked=true { spawn "playerctl" "play-pause"; }
+    XF86AudioPrev allow-when-locked=true { spawn "playerctl" "previous"; }
+{{- end }}
 
     // === Window Management ===
     Mod+Q repeat=false { close-window; }
+    Mod+Shift+Q repeat=false { close-window; }
     Mod+F { maximize-column; }
     Mod+Shift+F { fullscreen-window; }
     Mod+Shift+T { toggle-window-floating; }
@@ -178,19 +242,20 @@ binds {
     Mod+Shift+Equal { set-window-height "+10%"; }
 
     // === Screenshots ===
+{{- if lookPath "dms" }}
+    Print { spawn "dms" "screenshot" "full"; }
+    Mod+Print { spawn "dms" "screenshot" "window"; }
+{{- else }}
     XF86Launch1 { screenshot; }
     Ctrl+XF86Launch1 { screenshot-screen; }
     Alt+XF86Launch1 { screenshot-window; }
     Print { screenshot; }
     Ctrl+Print { screenshot-screen; }
     Alt+Print { screenshot-window; }
+{{- end }}
 
     // === System Controls ===
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
-
-
-    // original custom overrides
-    Mod+Shift+Q repeat=false { close-window; }
 
     // German keyboard fixes (brackets and = key don't work)
     Mod+Comma  { consume-or-expel-window-left; }
@@ -199,12 +264,7 @@ binds {
     Mod+Plus { set-column-width "+10%"; }
     Mod+Shift+Plus { set-window-height "+10%"; }
 
-    Mod+Return hotkey-overlay-title="Open Terminal" { spawn "kitty" "--single-instance"; }
-
     // 1Password keybinds
     Mod+Shift+Space hotkey-overlay-title="1Password Quick Access" { spawn "1password" "--quick-access"; }
     Mod+Shift+P hotkey-overlay-title="1Password Toggle" { spawn "1password" "--toggle"; }
-
-    // vicinae (overrides dms spotlight)
-    Mod+Space repeat=false { spawn "vicinae" "toggle"; }
 }
