@@ -1,5 +1,5 @@
 exec-once = uwsm app -- /usr/lib/pam_kwallet_init
-exec-once = uwsm app -- /usr/bin/shikane
+exec-once = uwsm app -- ~/.config/hypr/scripts/monitor-hotplug.sh
 {{- if not (lookPath "dms") }}
 exec-once = uwsm app -- /usr/bin/hypridle
 {{- end }}
