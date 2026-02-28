@@ -7,6 +7,7 @@ bind = $mainMod, Q, killactive,
 bind = $mainMod SHIFT, Q, exec, uwsm stop
 bind = $mainMod, E, exec, $fileManager
 bind = $mainMod SHIFT, T, togglefloating,
+bind = $mainMod, T, layoutmsg, togglesplit
 bind = $mainMod, P, pseudo,
 
 bind = $mainMod SHIFT, M, layoutmsg, swapwithmaster
@@ -86,6 +87,12 @@ bind = $mainMod SHIFT, h, movewindow, l
 bind = $mainMod SHIFT, l, movewindow, r
 bind = $mainMod SHIFT, k, movewindow, u
 bind = $mainMod SHIFT, j, movewindow, d
+
+# Resize windows
+binde = $mainMod CTRL, h, resizeactive, -30 0
+binde = $mainMod CTRL, l, resizeactive, 30 0
+binde = $mainMod CTRL, k, resizeactive, 0 -30
+binde = $mainMod CTRL, j, resizeactive, 0 30
 
 # Switch workspaces
 bind = $mainMod, 1, workspace, 1
