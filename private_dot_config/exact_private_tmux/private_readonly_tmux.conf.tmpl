@@ -14,9 +14,6 @@ set-option -g mouse on
 # keep unattached sessions alive
 set-option -g destroy-unattached off
 
-# fixes pgup/pgdown issues. this might mess up tmux window title renaming!
-# update: finally fixed - but is it still needed?
-set -g terminal-overrides 'xterm*:smcup@:rmcup@'
 # monitor for activity
 set-window-option -g monitor-activity on
 set-option -gw window-status-activity-style fg=default,bg=default
@@ -26,8 +23,9 @@ set-option -g visual-bell on
 # automatically rename windows
 setw -g automatic-rename on
 set -g allow-rename on
+set -g renumber-windows on
 ## update the these variables of terminal emulator when creating a new session or attaching a existing session
-set -g update-environment 'DISPLAY SSH_AUTH_SOCK SSH_ASKPASS SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY TERM GPG_AGENT_INFO GPG_TTY'
+set -g update-environment 'DISPLAY SSH_AUTH_SOCK SSH_ASKPASS SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY GPG_AGENT_INFO GPG_TTY'
 # repeat a command for two seconds even without prefix key set
 set -g repeat-time 2000
 # make tmux copy (ctrl-b-[) start and end like vim's visual mode
@@ -36,19 +34,23 @@ set -g repeat-time 2000
 bind-key -Tcopy-mode-vi 'V' send -X rectangle-toggle
 bind-key -Tcopy-mode-vi 'v' send -X begin-selection
 
-# allow passthrough
+# allow passthrough for kitty graphics protocol etc.
 set -g allow-passthrough on
-# enable true color support for 256color terminals
-set -g default-terminal "tmux-256color"
-set -ga terminal-overrides ',*256col*:Tc,xterm-kitty,wezterm,alacritty:Tc'
-# nvim guicursor override
-# :help tui-cursor-shape
-set -ga terminal-overrides '*:Ss=\E[%p1%d q:Se=\E[ q'
-# nvim tokyonight overrides - source: https://github.com/folke/tokyonight.nvim
-# Undercurl
+# forward focus events to applications (needed for nvim FocusGained/FocusLost)
+set -g focus-events on
+# reduce escape delay (tmux-sensible also sets this, being explicit)
+set -s escape-time 0
+# true color and terminal capability overrides
 set -g default-terminal "${TERM}"
-set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'  # undercurl support
-set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'  # underscore colours - needs tmux-3.0
+set -ga terminal-overrides ',xterm-kitty:Tc'
+set -ga terminal-overrides ',*256col*:Tc'
+set -ga terminal-overrides ',wezterm:Tc'
+set -ga terminal-overrides ',alacritty:Tc'
+# cursor shape - nvim guicursor (:help tui-cursor-shape)
+set -ga terminal-overrides '*:Ss=\E[%p1%d q:Se=\E[ q'
+# undercurl support (nvim, source: https://github.com/folke/tokyonight.nvim)
+set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'
+set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'  # needs tmux-3.0
 
 # bind prefix-C-c to send literal C-l to the terminal.
 # C-l is taken by ... pretty much everything (including vim-tmux-navigator and
@@ -68,7 +70,6 @@ set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
 set -g @plugin 'tmux-plugins/tmux-yank'
 set -g @plugin 'tmux-plugins/tmux-pain-control'
-set -g @plugin 'tmux-plugins/tmux-copycat'
 set -g @plugin 'tmux-plugins/tmux-sessionist'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-continuum'
@@ -108,6 +109,32 @@ set -g @continuum-restore 'off'
 set -g @continuum-save-interval '15'
 
 set -g @prefix_highlight_show_copy_mode 'on'
+{{- $ctpBase    := dict "mocha" "#1e1e2e" "macchiato" "#24273a" "frappe" "#303446" "latte" "#eff1f5" }}
+{{- $ctpAccents := dict
+  "lavender" (dict "mocha" "#b4befe" "macchiato" "#b7bdf8" "frappe" "#babbf1" "latte" "#7287fd")
+  "teal"     (dict "mocha" "#94e2d5" "macchiato" "#8bd5ca" "frappe" "#81c8be" "latte" "#179299")
+  "blue"     (dict "mocha" "#89b4fa" "macchiato" "#8aadf4" "frappe" "#8caaee" "latte" "#1e66f5")
+  "mauve"    (dict "mocha" "#cba6f7" "macchiato" "#c6a0f6" "frappe" "#ca9ee6" "latte" "#8839ef")
+  "sapphire" (dict "mocha" "#74c7ec" "macchiato" "#7dc4e4" "frappe" "#85c1dc" "latte" "#209fb5")
+  "sky"      (dict "mocha" "#89dceb" "macchiato" "#91d7e3" "frappe" "#99d1db" "latte" "#04a5e5")
+  "green"    (dict "mocha" "#a6e3a1" "macchiato" "#a6da95" "frappe" "#a6d189" "latte" "#40a02b")
+  "peach"    (dict "mocha" "#fab387" "macchiato" "#f5a97f" "frappe" "#ef9f76" "latte" "#fe640b")
+}}
+{{- if eq .colorscheme.name "catppuccin" }}
+{{- $fg := index $ctpBase .colorscheme.flavor }}
+{{- $bg := index (index $ctpAccents .colorscheme.sub_flavor) .colorscheme.flavor }}
+set -g @prefix_highlight_copy_mode_attr 'fg={{ $fg }},bg={{ $bg }},bold'
+{{- else if eq .colorscheme.name "tokyonight" }}
+{{- if eq .colorscheme.flavor "night" }}
+set -g @prefix_highlight_copy_mode_attr 'fg=#1a1b26,bg=#7dcfff,bold'
+{{- else if eq .colorscheme.flavor "storm" }}
+set -g @prefix_highlight_copy_mode_attr 'fg=#24283b,bg=#7dcfff,bold'
+{{- else if eq .colorscheme.flavor "moon" }}
+set -g @prefix_highlight_copy_mode_attr 'fg=#222436,bg=#86e1fc,bold'
+{{- else if eq .colorscheme.flavor "day" }}
+set -g @prefix_highlight_copy_mode_attr 'fg=#e9e9ec,bg=#0f4b6e,bold'
+{{- end }}
+{{- end }}
 
 # Initialize TMUX plugin manager
 # (keep this line at the very bottom of tmux.conf)
