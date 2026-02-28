@@ -41,6 +41,9 @@ bind index,pager \\ vfolder-from-query
 # Show entire thread (across all folders)
 bind index,pager + entire-thread
 
+# Browse URLs in message
+macro index,pager \cb "<pipe-message> urlscan<Enter>" "browse URLs in message"
+
 # Sync
 macro index S "<shell-escape>~/.local/bin/mail-sync<enter>" "sync all mail"
 
