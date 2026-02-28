@@ -1,6 +1,8 @@
-exec-once = uwsm app -- /usr/lib/pam_kwallet_init
-exec-once = uwsm app -- ~/.config/hypr/scripts/monitor-hotplug.sh
-{{- if not (lookPath "dms") }}
-exec-once = uwsm app -- /usr/bin/hypridle
+exec-once = /usr/lib/pam_kwallet_init
+exec-once = ~/.config/hypr/scripts/monitor-hotplug.sh
+{{- if lookPath "dms" }}
+exec-once = dms run
+{{- else }}
+exec-once = /usr/bin/hypridle
 {{- end }}
 exec-once = systemctl --user start hyprpolkitagent
