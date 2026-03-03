@@ -1,0 +1,97 @@
+#!/bin/bash
+
+set -euo pipefail
+
+if [[ ${XDG_CURRENT_DESKTOP:-} != "KDE" ]]; then
+  exit 0
+fi
+
+# config hash: {{ include (joinPath .chezmoi.sourceDir ".chezmoiscripts" "run_onchange_after-99-kde-settings_linux.sh.tmpl") | sha256sum }}
+
+function _escapeShortcut() {
+  local _tab=$'\t'
+  local _str=$1
+  echo "${_str//\\t/${_tab}}"
+}
+
+_cfg="${XDG_CONFIG_HOME:-$HOME/.config}"
+
+# --- Input ---
+{{ if has .chezmoi.hostname (list "apollo" "hephaestus") -}}
+# Touchpad natural scroll (laptops)
+kwriteconfig6 --file "$_cfg/kcminputrc" --group "Libinput" --group "2" --group "7" --group "SynPS/2 Synaptics TouchPad" --key "NaturalScroll" "true"
+{{ end -}}
+# --- Keyboard Layout ---
+kwriteconfig6 --file "$_cfg/kxkbrc" --group "Layout" --key "Use" "true"
+kwriteconfig6 --file "$_cfg/kxkbrc" --group "Layout" --key "LayoutList" "de"
+kwriteconfig6 --file "$_cfg/kxkbrc" --group "Layout" --key "VariantList" "nodeadkeys"
+kwriteconfig6 --file "$_cfg/kxkbrc" --group "Layout" --key "Model" "pc105"
+kwriteconfig6 --file "$_cfg/kxkbrc" --group "Layout" --key "ResetOldOptions" "true"
+kwriteconfig6 --file "$_cfg/kxkbrc" --group "Layout" --key "Options" "caps:escape"
+
+kwriteconfig6 --file "$_cfg/kcminputrc" --group "Keyboard" --key "NumLock" 0
+kwriteconfig6 --file "$_cfg/kcminputrc" --group "Keyboard" --key "RepeatDelay" 250
+kwriteconfig6 --file "$_cfg/kcminputrc" --group "Keyboard" --key "RepeatRate" 40
+
+# --- Theme ---
+kwriteconfig6 --file "$_cfg/kdeglobals" --group "KDE" --key "LookAndFeelPackage" "org.kde.breezedark.desktop"
+
+# --- Global Shortcuts ---
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "Window Close" "$(_escapeShortcut "Meta+Q\tAlt+F4,Alt+F4,Close Window")"
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "Overview" "$(_escapeShortcut "Meta+W\tMeta,Meta+W,Toggle Overview")"
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "services" --group "org.kde.krunner.desktop" --key "_launch" "$(_escapeShortcut "Meta+Space\tAlt+F2\tSearch")"
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "services" --group "net.local.terminal.desktop" --key "_launch" "Meta+Return"
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "services" --group "net.local.1password.desktop" --key "_launch" "Shift+Meta+Space"
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "services" --group "net.local.1password-2.desktop" --key "_launch" "Shift+Meta+P"
+# Window cycling for current app (Meta+^ like GNOME Alt+Tab for same app)
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows of Current Application" "Meta+^,Meta+^,Walk Through Windows of Current Application"
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows of Current Application (Reverse)" "Meta+Shift+^,Meta+Shift+^,Walk Through Windows of Current Application (Reverse)"
+# Disable Activities shortcut (conflicts with Meta+Q)
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "plasmashell" --key "manage activities" "none,Meta+Q,Show Activity Switcher"
+
+# --- Screen Lock ---
+kwriteconfig6 --file "$_cfg/kscreenlockerrc" --group "Daemon" --key "LockGrace" 30
+kwriteconfig6 --file "$_cfg/kscreenlockerrc" --group "Daemon" --key "Timeout" 10
+
+# --- KWin ---
+kwriteconfig6 --file "$_cfg/kwinrc" --group "Effect-overview" --key "GridBorderActivate" 1
+kwriteconfig6 --file "$_cfg/kwinrc" --group "NightColor" --key "Active" "true"
+
+# --- Baloo (file indexing) ---
+kwriteconfig6 --file "$_cfg/baloofilerc" --group "General" --key "exclude folders" "\$HOME/go/,\$HOME/mail/"
+kwriteconfig6 --file "$_cfg/baloofilerc" --group "General" --key "only basic indexing" "true"
+
+# --- Power (AC) ---
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "AC" --group "Display" --key "UseProfileSpecificDisplayBrightness" "true"
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "AC" --group "Display" --key "DimDisplayIdleTimeoutSec" 600
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "AC" --group "Display" --key "TurnOffDisplayIdleTimeoutSec" 1800
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "AC" --group "Display" --key "TurnOffDisplayIdleTimeoutWhenLockedSec" 120
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "AC" --group "Performance" --key "PowerProfile" "balanced"
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "AC" --group "SuspendAndShutdown" --key "AutoSuspendIdleTimeoutSec" 3600
+
+# --- Power (Battery) ---
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "Battery" --group "Display" --key "DisplayBrightness" 50
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "Battery" --group "Display" --key "UseProfileSpecificDisplayBrightness" "true"
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "Battery" --group "Display" --key "DimDisplayIdleTimeoutSec" 300
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "Battery" --group "Display" --key "TurnOffDisplayIdleTimeoutSec" 600
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "Battery" --group "Display" --key "TurnOffDisplayIdleTimeoutWhenLockedSec" 120
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "Battery" --group "Performance" --key "PowerProfile" "balanced"
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "Battery" --group "SuspendAndShutdown" --key "AutoSuspendIdleTimeoutSec" 1800
+
+# --- Power (Low Battery) ---
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "LowBattery" --group "Performance" --key "PowerProfile" "power-saver"
+
+# --- Session ---
+kwriteconfig6 --file "$_cfg/ksmserverrc" --group "General" --key "loginMode" "emptySession"
+
+# --- KWallet ---
+kwriteconfig6 --file "$_cfg/kwalletrc" --group "Wallet" --key "Close When Idle" "false"
+kwriteconfig6 --file "$_cfg/kwalletrc" --group "Wallet" --key "Close on Screensaver" "false"
+kwriteconfig6 --file "$_cfg/kwalletrc" --group "Wallet" --key "Default Wallet" "kdewallet"
+kwriteconfig6 --file "$_cfg/kwalletrc" --group "Wallet" --key "Enabled" "true"
+kwriteconfig6 --file "$_cfg/kwalletrc" --group "Wallet" --key "Idle Timeout" 10
+kwriteconfig6 --file "$_cfg/kwalletrc" --group "Wallet" --key "Launch Manager" "true"
+kwriteconfig6 --file "$_cfg/kwalletrc" --group "Wallet" --key "Leave Manager Open" "false"
+kwriteconfig6 --file "$_cfg/kwalletrc" --group "Wallet" --key "Leave Open" "true"
+kwriteconfig6 --file "$_cfg/kwalletrc" --group "Wallet" --key "Prompt on Open" "true"
+kwriteconfig6 --file "$_cfg/kwalletrc" --group "Wallet" --key "Use One Wallet" "true"

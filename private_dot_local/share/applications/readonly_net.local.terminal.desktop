@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Terminal
+Exec=kitty --single-instance
+Terminal=false
+Type=Application
+Icon=kitty
+NoDisplay=true
+StartupNotify=false
