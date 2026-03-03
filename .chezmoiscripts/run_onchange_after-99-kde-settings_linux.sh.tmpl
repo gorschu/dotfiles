@@ -48,6 +48,13 @@ kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "Walk Throu
 kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows of Current Application (Reverse)" "Meta+Shift+^,Meta+Shift+^,Walk Through Windows of Current Application (Reverse)"
 # Disable Activities shortcut (conflicts with Meta+Q)
 kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "plasmashell" --key "manage activities" "none,Meta+Q,Show Activity Switcher"
+# Move lock screen to Meta+Shift+L (frees Meta+L for window focus)
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "ksmserver" --key "Lock Session" "$(_escapeShortcut "Meta+Shift+L\tScreensaver,Meta+L\tScreensaver,Lock Session")"
+# Directional window focus (vim-style)
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "Switch Window Left" "Meta+H,Meta+Alt+Left,Switch to Window to the Left"
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "Switch Window Down" "Meta+J,Meta+Alt+Down,Switch to Window Below"
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "Switch Window Up" "Meta+K,Meta+Alt+Up,Switch to Window Above"
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "Switch Window Right" "Meta+L,Meta+Alt+Right,Switch to Window to the Right"
 
 # --- Screen Lock ---
 kwriteconfig6 --file "$_cfg/kscreenlockerrc" --group "Daemon" --key "LockGrace" 30
@@ -56,6 +63,9 @@ kwriteconfig6 --file "$_cfg/kscreenlockerrc" --group "Daemon" --key "Timeout" 10
 # --- KWin ---
 kwriteconfig6 --file "$_cfg/kwinrc" --group "Effect-overview" --key "GridBorderActivate" 1
 kwriteconfig6 --file "$_cfg/kwinrc" --group "NightColor" --key "Active" "true"
+kwriteconfig6 --file "$_cfg/kwinrc" --group "Windows" --key "FocusPolicy" "FocusFollowsMouse"
+# Warp mouse cursor to focused window
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "MoveMouseToFocus" "Meta+Ö,Meta+F5,Move Mouse to Focus"
 
 # --- Baloo (file indexing) ---
 kwriteconfig6 --file "$_cfg/baloofilerc" --group "General" --key "exclude folders" "\$HOME/go/,\$HOME/mail/"
