@@ -1,32 +1,42 @@
-#Type   Path                                      Mode  User     Group    Age Argument
+#Type   Path                                                Mode  User     Group    Age Argument
 {{ with joinPath .chezmoi.homeDir "data" | stat }}{{ if eq .type "dir" }}
 # Directories under data/
-d       %h/data/general/mozilla/.mozilla          0700  gorschu  gorschu  -   -
-d       %h/data/general/mozilla/.config/mozilla   0700  gorschu  gorschu  -   -
-d       %h/data/general/flatpak                   0700  gorschu  gorschu  -   -
-d       %h/data/general/config                    0700  gorschu  gorschu  -   -
-d       %h/data/general/local/state/syncthing     0700  gorschu  gorschu  -   -
-d       %h/data/general/local/share/atuin         0700  gorschu  gorschu  -   -
-d       %h/data/media/documents                   0700  gorschu  gorschu  -   -
-d       %h/data/media/documents/synced            0700  gorschu  gorschu  -   -
-d       %h/data/media/pictures                    0700  gorschu  gorschu  -   -
-d       %h/data/media/pictures/synced             0700  gorschu  gorschu  -   -
-d       %h/data/media/videos                      0700  gorschu  gorschu  -   -
-d       %h/data/projects/synced                   0700  gorschu  gorschu  -   -
+d       %h/data/general/mozilla/.mozilla                    0700  gorschu  gorschu  -   -
+d       %h/data/general/mozilla/.config/mozilla             0700  gorschu  gorschu  -   -
+d       %h/data/general/flatpak                             0700  gorschu  gorschu  -   -
+d       %h/data/general/config                              0700  gorschu  gorschu  -   -
+d       %h/data/general/config/google-chrome                0700  gorschu  gorschu  -   -
+d       %h/data/general/config/google-chrome-beta           0700  gorschu  gorschu  -   -
+d       %h/data/general/config/google-chrome-unstable       0700  gorschu  gorschu  -   -
+d       %h/data/general/config/vivaldi                      0700  gorschu  gorschu  -   -
+d       %h/data/general/config/vivaldi-snapshot             0700  gorschu  gorschu  -   -
+d       %h/data/general/local/state/syncthing               0700  gorschu  gorschu  -   -
+d       %h/data/general/local/share/atuin                   0700  gorschu  gorschu  -   -
+d       %h/data/media/documents                             0700  gorschu  gorschu  -   -
+d       %h/data/media/documents/synced                      0700  gorschu  gorschu  -   -
+d       %h/data/media/pictures                              0700  gorschu  gorschu  -   -
+d       %h/data/media/pictures/synced                       0700  gorschu  gorschu  -   -
+d       %h/data/media/videos                                0700  gorschu  gorschu  -   -
+d       %h/data/projects/synced                             0700  gorschu  gorschu  -   -
 
 # Top-level symlinks into data/
-L+      %h/.mozilla                               -     -        -        -   %h/data/general/mozilla/.mozilla
-L+      %h/.config/mozilla                        -     -        -        -   %h/data/general/mozilla/.config/mozilla
-L+      %h/.local/state/syncthing                 -     -        -        -   %h/data/general/local/state/syncthing
-L+      %h/.local/share/atuin                     -     -        -        -   %h/data/general/local/share/atuin
-L+      %h/.var                                   -     -        -        -   %h/data/general/flatpak
-L+      %h/Documents                              -     -        -        -   %h/data/media/documents
-L+      %h/Pictures                               -     -        -        -   %h/data/media/pictures
-L+      %h/Videos                                 -     -        -        -   %h/data/media/videos
-L+      %h/projects                               -     -        -        -   %h/data/projects
+L+      %h/.mozilla                                         -     -        -        -   %h/data/general/mozilla/.mozilla
+L+      %h/.config/mozilla                                  -     -        -        -   %h/data/general/mozilla/.config/mozilla
+L+      %h/.config/google-chrome                            -     -        -        -   %h/data/general/config/google-chrome
+L+      %h/.config/google-chrome-beta                       -     -        -        -   %h/data/general/config/google-chrome-beta
+L+      %h/.config/google-chrome-unstable                   -     -        -        -   %h/data/general/config/google-chrome-unstable
+L+      %h/.config/vivaldi                                  -     -        -        -   %h/data/general/config/vivaldi
+L+      %h/.config/vivaldi-snapshot                         -     -        -        -   %h/data/general/config/vivaldi-snapshot
+L+      %h/.local/state/syncthing                           -     -        -        -   %h/data/general/local/state/syncthing
+L+      %h/.local/share/atuin                               -     -        -        -   %h/data/general/local/share/atuin
+L+      %h/.var                                             -     -        -        -   %h/data/general/flatpak
+L+      %h/Documents                                        -     -        -        -   %h/data/media/documents
+L+      %h/Pictures                                         -     -        -        -   %h/data/media/pictures
+L+      %h/Videos                                           -     -        -        -   %h/data/media/videos
+L+      %h/projects                                         -     -        -        -   %h/data/projects
 
 # Synced view - links to synced subdirs in data/
-L+      %h/synced/projects                        -     -        -        -   %h/data/projects/synced
-L+      %h/synced/documents                       -     -        -        -   %h/data/media/documents/synced
-L+      %h/synced/pictures                        -     -        -        -   %h/data/media/pictures/synced
+L+      %h/synced/projects                                  -     -        -        -   %h/data/projects/synced
+L+      %h/synced/documents                                 -     -        -        -   %h/data/media/documents/synced
+L+      %h/synced/pictures                                  -     -        -        -   %h/data/media/pictures/synced
 {{ end }}{{ end }}
