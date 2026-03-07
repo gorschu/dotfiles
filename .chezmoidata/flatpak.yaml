@@ -4,8 +4,6 @@ common:
   flatpak:
     apps:
       - eu.betterbird.Betterbird
-      - com.google.Chrome
-      - com.vivaldi.Vivaldi
       - com.hamrick.VueScan
       - md.obsidian.Obsidian
       - io.mpv.Mpv
