@@ -4,6 +4,7 @@
 [general]
 status_path = "~/.local/share/vdirsyncer/status/"
 
+# Tasks
 [pair tasks_fastmail]
 a = "tasks_local"
 b = "tasks_remote"
@@ -19,5 +20,42 @@ fileext = ".ics"
 type = "caldav"
 url = "{{ $secrets.fastmail.dav_tasks_url }}"
 username = "{{ $secrets.fastmail.email }}"
-password = "{{ $secrets.fastmail.dav_tasks_password }}"
+password = "{{ $secrets.fastmail.dav_caldav_password }}"
 item_types = ["VTODO"]
+
+# Calendar
+[pair calendar_fastmail]
+a = "calendar_local"
+b = "calendar_remote"
+collections = ["Personal", ["Work", "Work", "c8eac131-140b-48c2-91f6-63a59bd4b906"], "Tasks"]
+conflict_resolution = "b wins"
+
+[storage calendar_local]
+type = "filesystem"
+path = "~/.local/share/vdirsyncer/calendars/"
+fileext = ".ics"
+
+[storage calendar_remote]
+type = "caldav"
+url = "https://caldav.fastmail.com/dav/"
+username = "{{ $secrets.fastmail.email }}"
+password = "{{ $secrets.fastmail.dav_caldav_password }}"
+item_types = ["VEVENT"]
+
+# Contacts
+[pair contacts_fastmail]
+a = "contacts_local"
+b = "contacts_remote"
+collections = null
+conflict_resolution = "b wins"
+
+[storage contacts_local]
+type = "filesystem"
+path = "~/.local/share/vdirsyncer/contacts/"
+fileext = ".vcf"
+
+[storage contacts_remote]
+type = "carddav"
+url = "{{ $secrets.fastmail.dav_contacts_url }}"
+username = "{{ $secrets.fastmail.email }}"
+password = "{{ $secrets.fastmail.dav_contacts_password }}"
