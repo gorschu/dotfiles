@@ -18,8 +18,10 @@ d       %h/data/media/pictures                              0700  gorschu  gorsc
 d       %h/data/media/pictures/synced                       0700  gorschu  gorschu  -   -
 d       %h/data/media/videos                                0700  gorschu  gorschu  -   -
 d       %h/data/projects/synced                             0700  gorschu  gorschu  -   -
+{{ end }}{{ end }}
 
-# Top-level symlinks into data/
+{{ with joinPath .chezmoi.homeDir "data/.ready" | stat }}
+# Top-level symlinks into data/ (only after data drive is initialised)
 L+      %h/.mozilla                                         -     -        -        -   %h/data/general/mozilla/.mozilla
 L+      %h/.config/mozilla                                  -     -        -        -   %h/data/general/mozilla/.config/mozilla
 L+      %h/.config/google-chrome                            -     -        -        -   %h/data/general/config/google-chrome
@@ -39,4 +41,4 @@ L+      %h/projects                                         -     -        -    
 L+      %h/synced/projects                                  -     -        -        -   %h/data/projects/synced
 L+      %h/synced/documents                                 -     -        -        -   %h/data/media/documents/synced
 L+      %h/synced/pictures                                  -     -        -        -   %h/data/media/pictures/synced
-{{ end }}{{ end }}
+{{ end }}

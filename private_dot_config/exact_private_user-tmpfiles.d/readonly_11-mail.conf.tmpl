@@ -7,10 +7,14 @@ d       %h/data/mail/fastmail                     0700  -        -        -   -
 d       %h/data/mail/gmail                        0700  -        -        -   -
 d       %h/data/mail/gmx                          0700  -        -        -   -
 
-# Symlink for mail access
-L+      %h/mail                                   -     -        -        -   %h/data/mail
-
 # Log directories
 d       %h/.local/state/msmtp                     0700  -        -        -   -
 d       %h/.local/state/mbsync                    0700  -        -        -   -
 {{ end }}{{ end }}
+
+{{- if $host.has_mail }}
+{{ with joinPath .chezmoi.homeDir "data/.ready" | stat }}
+# Symlink for mail access (only after data drive is initialised)
+L+      %h/mail                                   -     -        -        -   %h/data/mail
+{{ end }}
+{{- end }}
