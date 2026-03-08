@@ -17,7 +17,8 @@ function _escapeShortcut() {
 _cfg="${XDG_CONFIG_HOME:-$HOME/.config}"
 
 # --- Input ---
-{{ if has .chezmoi.hostname (list "apollo" "hephaestus") -}}
+{{- $host := index (.hosts | default dict) .chezmoi.hostname | default dict -}}
+{{ if $host.is_laptop -}}
 # Touchpad natural scroll (laptops)
 kwriteconfig6 --file "$_cfg/kcminputrc" --group "Libinput" --group "2" --group "7" --group "SynPS/2 Synaptics TouchPad" --key "NaturalScroll" "true"
 {{ end -}}

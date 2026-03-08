@@ -1,5 +1,6 @@
 #Type   Path                                      Mode  User     Group    Age Argument
-{{ with joinPath .chezmoi.homeDir "data" | stat }}{{ if eq .type "dir" }}
+{{- $host := index (.hosts | default dict) .chezmoi.hostname | default dict -}}
+{{ with joinPath .chezmoi.homeDir "data" | stat }}{{ if and (eq .type "dir") $host.has_mail }}
 # Mail directories (per-account stores for mbsync)
 d       %h/data/mail                              0700  -        -        -   -
 d       %h/data/mail/fastmail                     0700  -        -        -   -
