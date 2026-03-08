@@ -1,0 +1,11 @@
+[Unit]
+Description=Sync mail via mbsync and index with notmuch
+After=network-online.target
+Wants=network-online.target
+ConditionPathIsDirectory=%h/data/mail
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/mail-sync
+StandardOutput=journal
+StandardError=journal
