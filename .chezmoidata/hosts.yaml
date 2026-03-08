@@ -3,6 +3,7 @@
 hosts:
   artemis:
     has_mail: false
+    has_pim: true
     is_laptop: false
     flatpak:
       apps:
@@ -14,7 +15,9 @@ hosts:
         - runtime/org.freedesktop.Platform.VulkanLayer.MangoHud/x86_64/25.08
   apollo:
     has_mail: true
+    has_pim: true
     is_laptop: true
   hephaestus:
     has_mail: true
+    has_pim: true
     is_laptop: true
