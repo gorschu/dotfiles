@@ -11,3 +11,4 @@ services:
       - podman.socket
       - podman-auto-update.timer
       - vicinae.service
+      - homebrew.vdirsyncer.timer

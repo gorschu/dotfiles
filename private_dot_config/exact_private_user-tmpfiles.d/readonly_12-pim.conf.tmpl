@@ -1,0 +1,14 @@
+#Type   Path                                                Mode  User     Group    Age Argument
+{{ with joinPath .chezmoi.homeDir "data" | stat }}{{ if eq .type "dir" }}
+# vdirsyncer PIM data
+d       %h/data/general/local/share/vdirsyncer             0700  gorschu  gorschu  -   -
+d       %h/data/general/local/share/vdirsyncer/status      0700  gorschu  gorschu  -   -
+d       %h/data/general/local/share/vdirsyncer/tasks       0700  gorschu  gorschu  -   -
+d       %h/data/general/local/share/vdirsyncer/calendars   0700  gorschu  gorschu  -   -
+d       %h/data/general/local/share/vdirsyncer/contacts    0700  gorschu  gorschu  -   -
+d       %h/data/general/local/share/khal                   0700  gorschu  gorschu  -   -
+
+# Symlinks
+L+      %h/.local/share/vdirsyncer                         -     -        -        -   %h/data/general/local/share/vdirsyncer
+L+      %h/.local/share/khal                               -     -        -        -   %h/data/general/local/share/khal
+{{ end }}{{ end }}

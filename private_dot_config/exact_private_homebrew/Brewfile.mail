@@ -6,7 +6,7 @@ brew "msmtp"
 brew "w3m"
 brew "urlscan"
 brew "poppler"
-brew "vdirsyncer"
+brew "vdirsyncer", restart_service: true
 brew "todoman"
 brew "khal"
 brew "khard"
