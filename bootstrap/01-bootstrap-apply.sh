@@ -4,6 +4,12 @@
 
 set -euo pipefail
 
+# Append Homebrew to PATH without clobbering system tools
+BREW_PREFIX="/home/linuxbrew/.linuxbrew"
+if [[ -x "${BREW_PREFIX}/bin/brew" ]]; then
+  export PATH="${PATH}:${BREW_PREFIX}/bin:${BREW_PREFIX}/sbin"
+fi
+
 # Check if chezmoi is installed
 if ! command -v chezmoi >/dev/null; then
   echo "ERROR: chezmoi not found"
@@ -31,8 +37,12 @@ XDG_CONFIG_HOME=$HOME/.config chezmoi init --source="${project_root}"
 echo "Downloading external dependencies (themes, plugins)..."
 XDG_CONFIG_HOME=$HOME/.config chezmoi apply --source="${project_root}" "${HOME}/.externals"
 
-# Step 3: Apply everything else (now symlinks/includes work)
+# Step 3: Apply everything — deploys Brewfiles and runs brew bundle via after-scripts
 echo "Applying configuration files..."
+XDG_CONFIG_HOME=$HOME/.config chezmoi apply --source="${project_root}"
+
+# Step 4: Re-apply so templates with lookPath render correctly now that brew tools are installed
+echo "Re-applying to finalize template rendering with installed tools..."
 XDG_CONFIG_HOME=$HOME/.config chezmoi apply --source="${project_root}"
 
 echo ""

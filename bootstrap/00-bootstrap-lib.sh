@@ -41,6 +41,29 @@ print_complete() {
   echo ""
 }
 
+# Install Homebrew to /home/linuxbrew/.linuxbrew (Linux only, idempotent)
+install_homebrew() {
+  local brew_prefix="/home/linuxbrew/.linuxbrew"
+  local brew_bin="$brew_prefix/bin/brew"
+
+  if [[ -x "$brew_bin" ]]; then
+    echo "  Homebrew already installed at $brew_prefix"
+    return 0
+  fi
+
+  local parent_dir
+  parent_dir="$(dirname "$brew_prefix")"
+  if [[ ! -d "$parent_dir" ]]; then
+    sudo install -d -m 0755 -o "$(id -u)" -g "$(id -g)" "$parent_dir"
+  fi
+
+  local brew_cache="${XDG_CACHE_HOME:-$HOME/.cache}/homebrew"
+  mkdir -p "$brew_cache"
+
+  git clone --depth=1 https://github.com/Homebrew/brew "$brew_prefix"
+  "$brew_bin" update --force --quiet
+}
+
 # Verify expected OS or exit
 require_os() {
   local expected="$1"
