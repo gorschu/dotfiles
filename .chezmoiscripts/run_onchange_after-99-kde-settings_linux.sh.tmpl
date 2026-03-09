@@ -35,7 +35,13 @@ kwriteconfig6 --file "$_cfg/kcminputrc" --group "Keyboard" --key "RepeatDelay" 2
 kwriteconfig6 --file "$_cfg/kcminputrc" --group "Keyboard" --key "RepeatRate" 40
 
 # --- Theme ---
-kwriteconfig6 --file "$_cfg/kdeglobals" --group "KDE" --key "LookAndFeelPackage" "org.kde.breezedark.desktop"
+{{- if eq .colorscheme.kde "auto" }}
+kwriteconfig6 --file "$_cfg/kdeglobals" --group "KDE" --key "AutomaticLookAndFeel" "true"
+kwriteconfig6 --file "$_cfg/kdeglobals" --group "KDE" --delete-key "LookAndFeelPackage" 2>/dev/null || true
+{{- else }}
+kwriteconfig6 --file "$_cfg/kdeglobals" --group "KDE" --key "AutomaticLookAndFeel" "false"
+kwriteconfig6 --file "$_cfg/kdeglobals" --group "KDE" --key "LookAndFeelPackage" "{{ .colorscheme.kde }}"
+{{- end }}
 
 # --- Global Shortcuts ---
 kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "Window Close" "$(_escapeShortcut "Meta+Q\tAlt+F4,Alt+F4,Close Window")"
