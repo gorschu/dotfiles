@@ -1,0 +1,3 @@
+[allowlist]
+description = "GPG-encrypted files are intentionally encrypted secrets"
+paths = ['''\.asc$''']

@@ -13,3 +13,5 @@ services:
       - vicinae.service
       - homebrew.vdirsyncer.timer
       - mail-sync.timer
+      - rclone-mount@gdrive.service
+      - rclone-mount@dropbox.service
