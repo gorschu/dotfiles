@@ -8,10 +8,15 @@ ConditionPathExists=%h/.config/rclone/rclone.conf
 Type=notify
 ExecStartPre=/usr/bin/mkdir -p %h/Cloud/%i
 ExecStart={{ lookPath "rclone" | default (printf "%s/bin/rclone" .homebrew.prefix) }} mount %i: %h/Cloud/%i \
-    --vfs-cache-mode writes \
-    --vfs-cache-max-size 1G \
-    --dir-cache-time 5m \
-    --poll-interval 1m
+    --vfs-cache-mode full \
+    --vfs-cache-max-size 5G \
+    --vfs-cache-max-age 24h \
+    --dir-cache-time 1h \
+    --buffer-size 256M \
+    --vfs-read-chunk-size 32M \
+    --vfs-read-chunk-size-limit 1G \
+    --transfers 8 \
+    --poll-interval 5m
 ExecStop=/usr/bin/fusermount3 -uz %h/Cloud/%i
 Restart=on-failure
 RestartSec=10
