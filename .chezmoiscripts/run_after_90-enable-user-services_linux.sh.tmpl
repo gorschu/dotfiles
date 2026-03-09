@@ -58,7 +58,13 @@ manage_service() {
     local service="$1"
     local mode="$2" # enable_restart, enable_start, start_only
 
-    if ! systemctl --user list-unit-files "$service" >/dev/null 2>&1; then
+    # For template instances (e.g. foo@bar.service), fall back to checking the template unit
+    local lookup_service="$service"
+    if [[ "$service" =~ @[^.]+\. ]]; then
+        lookup_service="${service/@*/}@.${service##*.}"
+    fi
+
+    if ! systemctl --user list-unit-files "$lookup_service" >/dev/null 2>&1; then
         echo "  Skipping $service (unit not found)"
         return 0
     fi
@@ -67,7 +73,7 @@ manage_service() {
     if [[ "$mode" == "enable_restart" || "$mode" == "enable_start" ]]; then
         if ! systemctl --user is-enabled --quiet "$service"; then
             local unit_state
-            unit_state="$(systemctl --user list-unit-files "$service" --no-legend --no-pager 2>/dev/null | awk '{print $2}')"
+            unit_state="$(systemctl --user list-unit-files "$lookup_service" --no-legend --no-pager 2>/dev/null | awk '{print $2}')"
 
             if [[ "$unit_state" == "static" || "$unit_state" == "generated" || "$unit_state" == "transient" ]]; then
                 echo "  $service has unit state '$unit_state', skipping enable step"
