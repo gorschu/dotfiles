@@ -8,6 +8,7 @@ hosts:
     flatpak:
       apps:
         - com.valvesoftware.Steam
+        - net.davidotek.pupgui2
         - com.usebottles.bottles
         - com.discordapp.Discord
         - runtime/org.freedesktop.Platform.VulkanLayer.vkBasalt/x86_64/25.08
