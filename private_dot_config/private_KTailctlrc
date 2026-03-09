@@ -1,0 +1,4 @@
+[Interface]
+peerFilter=zebra-scoville.ts.net
+showTagsInPeerList=true
+startMinimized=true
