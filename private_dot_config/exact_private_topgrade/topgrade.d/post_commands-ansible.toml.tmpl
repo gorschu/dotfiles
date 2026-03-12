@@ -1,0 +1,5 @@
+{{- if and (eq .chezmoi.os "linux") (eq (get .chezmoi.osRelease "id") "arch") -}}
+# Post-update commands
+[post_commands]
+"System Ansible Sync" = "cd ~/projects/ansible-workstations-arch/ansible && ./run-playbook.sh -l {{ .chezmoi.hostname }}"
+{{- end -}}
