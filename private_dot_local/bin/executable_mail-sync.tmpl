@@ -34,7 +34,7 @@ notify_error() {
 log "Starting mail sync"
 
 # Run mbsync for all accounts
-if ! mbsync -a 2>&1 | tee -a "${LOG_FILE}"; then
+if ! {{ lookPath "mbsync" | default (printf "%s/bin/mbsync" .homebrew.prefix) }} -a 2>&1 | tee -a "${LOG_FILE}"; then
   notify_error "mbsync failed - check ${LOG_FILE}"
   exit 1
 fi
@@ -42,7 +42,7 @@ fi
 log "mbsync completed, running notmuch"
 
 # Index new mail
-if ! notmuch new 2>&1 | tee -a "${LOG_FILE}"; then
+if ! {{ lookPath "notmuch" | default (printf "%s/bin/notmuch" .homebrew.prefix) }} new 2>&1 | tee -a "${LOG_FILE}"; then
   notify_error "notmuch indexing failed - check ${LOG_FILE}"
   exit 1
 fi

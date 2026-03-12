@@ -6,7 +6,6 @@ if [[ ${XDG_CURRENT_DESKTOP:-} != "KDE" ]]; then
   exit 0
 fi
 
-# config hash: {{ include (joinPath .chezmoi.sourceDir ".chezmoiscripts" "run_onchange_after-99-kde-settings_linux.sh.tmpl") | sha256sum }}
 
 function _escapeShortcut() {
   local _tab=$'\t'
