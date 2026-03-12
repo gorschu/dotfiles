@@ -99,7 +99,7 @@ manage_service() {
         enable_start)
             if ! systemctl --user is-active --quiet "$service"; then
                 echo "  Starting $service..."
-                systemctl --user start "$service"
+                systemctl --user start "$service" || true
             fi
             ;;
         *)
@@ -111,6 +111,8 @@ manage_service() {
     if ! systemctl --user is-active --quiet "$service"; then
         echo "  Warning: $service failed to start"
         systemctl --user status "$service" --no-pager || true
+        # Non-fatal for enable_start services (best-effort start)
+        [[ "$mode" == "enable_start" ]] && return 0
         return 1
     fi
 }
