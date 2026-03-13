@@ -33,6 +33,17 @@ notify_error() {
 
 log "Starting mail sync"
 
+# Check for network connectivity before attempting sync
+if command -v nm-online &>/dev/null; then
+  if ! nm-online -q -t 5; then
+    log "No network connectivity (NetworkManager offline), skipping sync"
+    exit 0
+  fi
+elif ! getent hosts {{ (index .mail.accounts 0).imap.host }} &>/dev/null; then
+  log "No network connectivity (DNS resolution failed), skipping sync"
+  exit 0
+fi
+
 # Run mbsync for all accounts
 if ! {{ lookPath "mbsync" | default (printf "%s/bin/mbsync" .homebrew.prefix) }} -a 2>&1 | tee -a "${LOG_FILE}"; then
   notify_error "mbsync failed - check ${LOG_FILE}"
