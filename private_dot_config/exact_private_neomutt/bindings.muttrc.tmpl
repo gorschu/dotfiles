@@ -56,5 +56,8 @@ folder-hook 'fastmail/*' 'macro index,pager ga "<change-folder>{{ .chezmoi.homeD
 folder-hook 'gmail/*' 'macro index,pager ga "<change-folder>{{ .chezmoi.homeDir }}/mail/gmail/Archive/<enter>" "go to archive"'
 folder-hook 'gmx/*' 'macro index,pager ga "<change-folder>{{ .chezmoi.homeDir }}/mail/gmx/Archive/" "go to archive"'
 
+# Fuzzy-find any maildir
+macro index,pager gm "<enter-command>set wait_key=no<enter><shell-escape>~/.config/neomutt/scripts/fzf-maildir<enter><enter-command>source /tmp/mutt-folder-cmd<enter><enter-command>set wait_key=yes<enter>" "fuzzy-find any maildir"
+
 # Archive (uses save-hook for message-date-based year folder)
 macro index,pager A "<save-message><enter>" "archive message"

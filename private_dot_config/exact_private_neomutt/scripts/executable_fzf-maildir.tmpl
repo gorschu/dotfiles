@@ -1,0 +1,11 @@
+#!/bin/sh
+# shellcheck disable=SC1083
+# find all mail directories and use fzf to fuzzy find/change to it
+folder=$(find -L {{ .chezmoi.homeDir }}/mail -type d -name cur | sed 's|/cur$||' | sort -u | sed 's|{{ .chezmoi.homeDir }}/mail/||' | fzf)
+if [ -n "$folder" ]; then
+  echo "push '<change-folder>{{ .chezmoi.homeDir }}/mail/$folder<enter>'" >/tmp/mutt-folder-cmd
+else
+  echo "noop" >/tmp/mutt-folder-cmd
+fi
+
+# vim: set ft=sh:
