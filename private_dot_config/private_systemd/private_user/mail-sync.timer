@@ -2,8 +2,8 @@
 Description=Periodically sync mail
 
 [Timer]
-OnBootSec=5min
-OnUnitActiveSec=10min
+OnBootSec=2min
+OnUnitActiveSec=5min
 AccuracySec=1min
 
 [Install]
