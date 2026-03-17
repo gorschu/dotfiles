@@ -1,2 +1,10 @@
 import:
   - projects.yaml
+
+tasks:
+  prl:
+    desc: List open PRs (GitHub)
+    target:
+      all: true
+    cmd: |
+      git remote get-url origin 2>/dev/null | grep -q github.com && gh pr list || true
