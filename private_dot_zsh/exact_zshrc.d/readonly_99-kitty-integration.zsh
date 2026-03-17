@@ -12,6 +12,17 @@ if test -n "$KITTY_INSTALLATION_DIR"; then
     unfunction kitty-integration
     alias kssh="kitty +kitten ssh"
 
+    # kitty-scrollback.nvim: edit current cmdline in neovim via <C-x><C-e>
+    autoload -Uz edit-command-line
+    zle -N edit-command-line
+    function kitty_scrollback_edit_command_line() {
+        local VISUAL="${XDG_DATA_HOME:-$HOME/.local/share}/nvim/lazy/kitty-scrollback.nvim/scripts/edit_command_line.sh"
+        zle edit-command-line
+        zle kill-whole-line
+    }
+    zle -N kitty_scrollback_edit_command_line
+    bindkey '^x^e' kitty_scrollback_edit_command_line
+
     # Inside tmux, OSC 7 hits tmux's PTY and never reaches Kitty.
     # Wrap it in DCS passthrough so Kitty can track cwd for new_*_with_cwd.
     if [[ -n "$TMUX" ]]; then
