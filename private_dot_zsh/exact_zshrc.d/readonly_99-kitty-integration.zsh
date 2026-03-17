@@ -10,7 +10,7 @@ if test -n "$KITTY_INSTALLATION_DIR"; then
     autoload -Uz -- "$KITTY_INSTALLATION_DIR"/shell-integration/zsh/kitty-integration
     kitty-integration
     unfunction kitty-integration
-    alias ssh="kitty +kitten ssh"
+    alias kssh="kitty +kitten ssh"
 
     # Inside tmux, OSC 7 hits tmux's PTY and never reaches Kitty.
     # Wrap it in DCS passthrough so Kitty can track cwd for new_*_with_cwd.
