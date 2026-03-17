@@ -39,7 +39,7 @@ if command -v nm-online &>/dev/null; then
     log "No network connectivity (NetworkManager offline), skipping sync"
     exit 0
   fi
-elif ! getent hosts {{ (index .mail.accounts 0).imap.host }} &>/dev/null; then
+elif ! getent hosts {{ range .mail.accounts }}{{ .imap_host }}{{ break }}{{ end }} &>/dev/null; then
   log "No network connectivity (DNS resolution failed), skipping sync"
   exit 0
 fi
