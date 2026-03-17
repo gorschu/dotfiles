@@ -1,0 +1,6 @@
+{{- if eq .chezmoi.os "linux" -}}
+# Reload systemd user daemon and restart any running Homebrew-managed services
+# after upgrades (e.g. atuin, syncthing) so updated unit files take effect.
+[post_commands]
+"Reload Homebrew systemd services" = "systemctl --user daemon-reload && systemctl --user list-units 'homebrew.*.service' --state=active --plain --no-legend | awk '{print $1}' | xargs -r systemctl --user restart"
+{{- end -}}
