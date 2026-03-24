@@ -1,4 +1,14 @@
+# Allow spaces in folder names when typing in prompts
+bind editor <space> noop
+
 # Vim-like navigation
+bind index \Cd next-page
+bind index \Cu previous-page
+bind pager \Cd half-down
+bind pager \Cu half-up
+bind index,pager \ed delete-thread
+bind index,pager \eu undelete-thread
+bind index \et tag-thread
 bind index,pager j next-entry
 bind index,pager k previous-entry
 bind index,pager J next-unread
