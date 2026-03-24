@@ -5,5 +5,17 @@
 {{ $notmuch }} tag +gmail -- path:gmail/** and tag:new
 {{ $notmuch }} tag +gmx -- path:gmx/** and tag:new
 
+# Tag inbox only for messages actually in an Inbox folder
+{{ $notmuch }} tag +inbox -- path:fastmail/INBOX/** and tag:new
+{{ $notmuch }} tag +inbox -- path:gmail/INBOX/** and tag:new
+{{ $notmuch }} tag +inbox -- path:gmx/INBOX/** and tag:new
+
 # Clear processing tag
 {{ $notmuch }} tag -new -- tag:new
+
+# Sync folder location → tags (runs on all messages, not just new)
+{{ $notmuch }} tag -inbox -unread +trash -- path:fastmail/Trash/** and \(tag:inbox or tag:unread\)
+{{ $notmuch }} tag -inbox -unread +trash -- path:gmail/Trash/** and \(tag:inbox or tag:unread\)
+{{ $notmuch }} tag -inbox -unread +trash -- path:gmx/Trash/** and \(tag:inbox or tag:unread\)
+{{ $notmuch }} tag -inbox -unread +spam  -- path:fastmail/Spam/** and \(tag:inbox or tag:unread\)
+{{ $notmuch }} tag -inbox -unread +spam  -- path:gmx/Spam/** and \(tag:inbox or tag:unread\)

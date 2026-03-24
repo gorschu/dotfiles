@@ -9,11 +9,11 @@ primary_email={{ $secrets.fastmail.email }}
 other_email={{ $secrets.gmail.email }};{{ $secrets.gmx.email }}
 
 [new]
-tags=new;inbox
+tags=new
 ignore=.mbsyncstate;.uidvalidity
 
 [search]
-exclude_tags=deleted;spam
+exclude_tags=deleted;spam;trash
 
 [maildir]
 synchronize_flags=true
