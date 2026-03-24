@@ -2,7 +2,7 @@
 # Per-host feature flags and configuration
 hosts:
   artemis:
-    has_mail: false
+    has_mail: true
     has_pim: true
     is_laptop: false
     flatpak:
