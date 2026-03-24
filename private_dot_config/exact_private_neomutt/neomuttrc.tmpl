@@ -5,7 +5,10 @@
 # Paths
 set folder = "~/mail"
 set mailcap_path = "~/.config/neomutt/mailcap"
-auto_view text/html application/pdf
+auto_view text/html application/pdf \
+          application/vnd.openxmlformats-officedocument.wordprocessingml.document \
+          application/vnd.oasis.opendocument.text \
+          application/msword
 set tmpdir = "/tmp"
 
 # Maildir settings
@@ -69,6 +72,7 @@ set index_format = "%4C %Z %?X?📎&  ? %d %-20.20F %s"
 set sort = threads
 set sort_aux = reverse-last-date-received
 set strict_threads = yes
+set pager_format = "[%B] -%Z- %C/%m: %-20.20n %s%* -- (%P)"
 set pager_index_lines = 10
 set pager_context = 3
 set pager_stop = yes
