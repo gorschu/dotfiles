@@ -1,5 +1,5 @@
 # antidote
-zstyle ':antidote:bundle' use-friendly-names 'yes'
+zstyle ':antidote:bundle' path-style 'short'
 zstyle ':antidote:bundle' file ${ZDOTDIR:-$HOME}/.zplugins.txt
 
 # zephyr
