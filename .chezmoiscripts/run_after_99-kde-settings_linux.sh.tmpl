@@ -18,8 +18,13 @@ _cfg="${XDG_CONFIG_HOME:-$HOME/.config}"
 # --- Input ---
 {{- $host := index (.hosts | default dict) .chezmoi.hostname | default dict -}}
 {{ if $host.is_laptop -}}
-# Touchpad natural scroll (laptops)
-kwriteconfig6 --file "$_cfg/kcminputrc" --group "Libinput" --group "2" --group "7" --group "SynPS/2 Synaptics TouchPad" --key "NaturalScroll" "true"
+# Touchpad natural scroll (laptops) — detect via DBus so device name/ID doesn't need hardcoding
+for _dev in $(qdbus6 org.kde.KWin /org/kde/KWin/InputDevice ListPointers 2>/dev/null); do
+  _touchpad=$(qdbus6 org.kde.KWin "/org/kde/KWin/InputDevice/$_dev" org.freedesktop.DBus.Properties.Get org.kde.KWin.InputDevice supportsScrollTwoFinger 2>/dev/null)
+  if [[ "$_touchpad" == "true" ]]; then
+    qdbus6 org.kde.KWin "/org/kde/KWin/InputDevice/$_dev" org.freedesktop.DBus.Properties.Set org.kde.KWin.InputDevice naturalScroll true 2>/dev/null || true
+  fi
+done
 {{ end -}}
 # --- Keyboard Layout ---
 kwriteconfig6 --file "$_cfg/kxkbrc" --group "Layout" --key "Use" "true"
