@@ -1,7 +1,8 @@
 [Unit]
 Description=rclone FUSE mount for %i
 Documentation=https://rclone.org/commands/rclone_mount/
-After=network.target
+After=network-online.target
+Wants=network-online.target
 ConditionPathExists=%h/.config/rclone/rclone.conf
 
 [Service]
@@ -16,10 +17,19 @@ ExecStart={{ lookPath "rclone" | default (printf "%s/bin/rclone" .homebrew.prefi
     --vfs-read-chunk-size 32M \
     --vfs-read-chunk-size-limit 1G \
     --transfers 8 \
-    --poll-interval 5m
+    --poll-interval 15m \
+    --retries 10 \
+    --low-level-retries 20 \
+    --retries-sleep 5s \
+    --timeout 30m \
+    --contimeout 60s
 ExecStop=/usr/bin/fusermount3 -uz %h/Cloud/%i
-Restart=on-failure
-RestartSec=10
+Restart=always
+RestartSec=15
+RestartSteps=5
+RestartMaxDelaySec=5m
+StartLimitIntervalSec=10m
+StartLimitBurst=5
 StandardOutput=journal
 StandardError=journal
 
