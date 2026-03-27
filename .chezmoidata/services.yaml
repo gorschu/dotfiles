@@ -11,7 +11,6 @@ services:
       - app-com.mitchellh.ghostty.service
       - podman.socket
       - podman-auto-update.timer
-      - vicinae.service
       - homebrew.vdirsyncer.timer
       - mail-sync.timer
       - rclone-mount@gdrive.service
