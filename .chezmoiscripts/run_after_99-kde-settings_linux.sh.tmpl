@@ -19,11 +19,25 @@ _cfg="${XDG_CONFIG_HOME:-$HOME/.config}"
 {{- $host := index (.hosts | default dict) .chezmoi.hostname | default dict -}}
 {{ if $host.is_laptop -}}
 # Touchpad natural scroll (laptops) — detect via DBus so device name/ID doesn't need hardcoding
-for _dev in $(qdbus6 org.kde.KWin /org/kde/KWin/InputDevice ListPointers 2>/dev/null); do
-  _touchpad=$(qdbus6 org.kde.KWin "/org/kde/KWin/InputDevice/$_dev" org.freedesktop.DBus.Properties.Get org.kde.KWin.InputDevice supportsScrollTwoFinger 2>/dev/null)
-  if [[ "$_touchpad" == "true" ]]; then
-    qdbus6 org.kde.KWin "/org/kde/KWin/InputDevice/$_dev" org.freedesktop.DBus.Properties.Set org.kde.KWin.InputDevice naturalScroll true 2>/dev/null || true
-  fi
+# qdbus6 segfaults when reading InputDevice properties, so we use busctl instead.
+_kwin_dev="/org/kde/KWin/InputDevice"
+_kwin_iface="org.kde.KWin.InputDevice"
+_kwin_mgr="org.kde.KWin.InputDeviceManager"
+
+_dev_prop() { busctl --user get-property org.kde.KWin "$_kwin_dev/$1" "$_kwin_iface" "$2" 2>/dev/null; }
+_dev_list=$(busctl --user get-property org.kde.KWin "$_kwin_dev" "$_kwin_mgr" devicesSysNames 2>/dev/null \
+  | sed 's/^[^ ]* //;s/"//g')
+
+for _sn in $_dev_list; do
+  [[ "$(_dev_prop "$_sn" supportsScrollTwoFinger)" == *true* ]] || continue
+
+  _tp_name=$(_dev_prop "$_sn" name | sed 's/^s "//;s/"$//')
+  _tp_vendor=$(_dev_prop "$_sn" vendor | awk '{print $2}')
+  _tp_product=$(_dev_prop "$_sn" product | awk '{print $2}')
+
+  kwriteconfig6 --file "$_cfg/kcminputrc" \
+    --group "Libinput" --group "$_tp_vendor" --group "$_tp_product" --group "$_tp_name" \
+    --key "NaturalScroll" "true"
 done
 {{ end -}}
 # --- Keyboard Layout ---
