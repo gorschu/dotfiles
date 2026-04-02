@@ -1,9 +1,10 @@
+{{- $vdirsyncer := lookPath "vdirsyncer" | default (printf "%s/bin/vdirsyncer" .homebrew.prefix) -}}
 [Unit]
 ConditionPathExists=%h/.config/vdirsyncer/config
 
 [Service]
 # vdirsyncer 0.20.0 requires a discovered collections cache even for
 # explicitly configured pairs, so populate it before each sync run.
-ExecStartPre=/home/linuxbrew/.linuxbrew/opt/vdirsyncer/bin/vdirsyncer -v ERROR discover tasks_fastmail calendar_fastmail contacts_fastmail
+ExecStartPre={{ $vdirsyncer }} -v ERROR discover tasks_fastmail calendar_fastmail contacts_fastmail
 StandardOutput=journal
 StandardError=journal
