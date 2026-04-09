@@ -1,7 +1,9 @@
 ---
 # General configuration shared across all machines
 colorscheme:
-  name: catppuccin
-  flavor: mocha
-  sub_flavor: lavender
+  # name: catppuccin
+  # flavor: mocha
+  # sub_flavor: lavender
+  name: tokyonight
+  flavor: storm
   kde: auto

@@ -7,8 +7,15 @@
 {{- $secondaryColor := $theme.semantic.secondary -}}
 {{- $mutedColor := $theme.ui.fg_muted | default $theme.ui.comment -}}
 {{- $replaceColor := "" -}}
+{{- $hostnameColor := $theme.semantic.primary -}}
+{{- $rootColor := $theme.semantic.error -}}
+{{- $userColor := $theme.ui.fg -}}
+{{- $vcsColor := $promptColor -}}
 {{- if eq $theme.name "tokyonight" -}}
   {{- $replaceColor = $theme.accent.magenta -}}
+  {{- $hostnameColor = $secondaryColor -}}
+  {{- $userColor = $theme.accent.magenta -}}
+  {{- $vcsColor = $successColor -}}
 {{- else -}}
   {{- $replaceColor = $theme.accent.mauve -}}
 {{- end -}}
@@ -66,7 +73,7 @@ symbol = " "
 [git_branch]
 disabled = false
 symbol = " "
-style = "bold {{ $promptColor }}"
+style = "bold {{ $vcsColor }}"
 
 [git_commit]
 disabled = false
@@ -90,14 +97,7 @@ symbol = " "
 
 [hg_branch]
 symbol = " "
-style = "bold {{ $promptColor }}"
-
-{{- $hostnameColor := $theme.semantic.primary -}}
-{{- $rootColor := $theme.semantic.error -}}
-{{- $userColor := $theme.ui.fg -}}
-{{- if and (eq $theme.name "tokyonight") (eq $theme.meta.appearance "dark") -}}
-  {{- $userColor = $theme.ui.fg_dark -}}
-{{- end }}
+style = "bold {{ $vcsColor }}"
 [hostname]
 format = "[@$hostname]($style) in "
 ssh_only = false
@@ -176,4 +176,4 @@ style = "bold {{ $secondaryColor }}"
 format = "[$user]($style)"
 show_always = true
 style_root = "bold {{ $rootColor }}"
-style_user = "bold {{ $promptColor }}"
+style_user = "bold {{ $userColor }}"
