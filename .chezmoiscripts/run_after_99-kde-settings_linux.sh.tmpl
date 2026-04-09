@@ -39,6 +39,9 @@ for _sn in $_dev_list; do
     --group "Libinput" --group "$_tp_vendor" --group "$_tp_product" --group "$_tp_name" \
     --key "NaturalScroll" "true"
 done
+
+# Allow laptop speakers/headphones to be boosted above 100%
+kwriteconfig6 --file "$_cfg/plasmaparc" --group "General" --key "RaiseMaximumVolume" --type bool "true"
 {{ end -}}
 # --- Keyboard Layout ---
 kwriteconfig6 --file "$_cfg/kxkbrc" --group "Layout" --key "Use" "true"
