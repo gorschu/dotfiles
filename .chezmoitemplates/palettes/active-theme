@@ -1,0 +1,51 @@
+{{- /*
+Resolve the currently selected local theme palette into a single JSON object.
+
+This is intentionally limited to the themes we actively support in local
+template logic: Catppuccin and Tokyo Night.
+*/ -}}
+{{- if eq .colorscheme.name "tokyonight" -}}
+  {{- $flavorName := .colorscheme.flavor | default "storm" -}}
+  {{- $flavor := index .palettes.tokyonight.flavors $flavorName -}}
+  {{- dict
+      "name" "tokyonight"
+      "flavor" $flavorName
+      "meta" $flavor.meta
+      "ui" $flavor.ui
+      "accent" $flavor.accent
+      "selected" (dict
+        "accent_name" "primary"
+        "accent" $flavor.semantic.primary
+      )
+      "semantic" $flavor.semantic
+      "diff" $flavor.diff
+      "git" $flavor.git
+      "terminal" $flavor.terminal
+      "rainbow" $flavor.rainbow
+    | toJson -}}
+{{- else -}}
+  {{- $flavorName := .colorscheme.flavor | default "mocha" -}}
+  {{- $flavor := index .palettes.catppuccin.flavors $flavorName -}}
+  {{- $accentName := .colorscheme.sub_flavor | default "lavender" -}}
+  {{- dict
+      "name" "catppuccin"
+      "flavor" $flavorName
+      "meta" $flavor.meta
+      "ui" $flavor.ui
+      "accent" $flavor.accent
+      "selected" (dict
+        "accent_name" $accentName
+        "accent" (index $flavor.accent $accentName)
+      )
+      "semantic" $flavor.semantic
+      "rainbow" (list
+        $flavor.accent.red
+        $flavor.accent.peach
+        $flavor.accent.yellow
+        $flavor.accent.green
+        $flavor.accent.teal
+        $flavor.accent.blue
+        $flavor.accent.mauve
+      )
+    | toJson -}}
+{{- end -}}

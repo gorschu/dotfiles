@@ -1,3 +1,4 @@
+{{- $theme := includeTemplate "palettes/active-theme" . | fromJson -}}
 # don't spawn login shells
 set -g default-command "${SHELL}"
 
@@ -109,31 +110,10 @@ set -g @continuum-restore 'off'
 set -g @continuum-save-interval '15'
 
 set -g @prefix_highlight_show_copy_mode 'on'
-{{- $ctpBase    := dict "mocha" "#1e1e2e" "macchiato" "#24273a" "frappe" "#303446" "latte" "#eff1f5" }}
-{{- $ctpAccents := dict
-  "lavender" (dict "mocha" "#b4befe" "macchiato" "#b7bdf8" "frappe" "#babbf1" "latte" "#7287fd")
-  "teal"     (dict "mocha" "#94e2d5" "macchiato" "#8bd5ca" "frappe" "#81c8be" "latte" "#179299")
-  "blue"     (dict "mocha" "#89b4fa" "macchiato" "#8aadf4" "frappe" "#8caaee" "latte" "#1e66f5")
-  "mauve"    (dict "mocha" "#cba6f7" "macchiato" "#c6a0f6" "frappe" "#ca9ee6" "latte" "#8839ef")
-  "sapphire" (dict "mocha" "#74c7ec" "macchiato" "#7dc4e4" "frappe" "#85c1dc" "latte" "#209fb5")
-  "sky"      (dict "mocha" "#89dceb" "macchiato" "#91d7e3" "frappe" "#99d1db" "latte" "#04a5e5")
-  "green"    (dict "mocha" "#a6e3a1" "macchiato" "#a6da95" "frappe" "#a6d189" "latte" "#40a02b")
-  "peach"    (dict "mocha" "#fab387" "macchiato" "#f5a97f" "frappe" "#ef9f76" "latte" "#fe640b")
-}}
 {{- if eq .colorscheme.name "catppuccin" }}
-{{- $fg := index $ctpBase .colorscheme.flavor }}
-{{- $bg := index (index $ctpAccents .colorscheme.sub_flavor) .colorscheme.flavor }}
-set -g @prefix_highlight_copy_mode_attr 'fg={{ $fg }},bg={{ $bg }},bold'
+set -g @prefix_highlight_copy_mode_attr 'fg={{ $theme.ui.base }},bg={{ $theme.selected.accent }},bold'
 {{- else if eq .colorscheme.name "tokyonight" }}
-{{- if eq .colorscheme.flavor "night" }}
-set -g @prefix_highlight_copy_mode_attr 'fg=#1a1b26,bg=#7dcfff,bold'
-{{- else if eq .colorscheme.flavor "storm" }}
-set -g @prefix_highlight_copy_mode_attr 'fg=#24283b,bg=#7dcfff,bold'
-{{- else if eq .colorscheme.flavor "moon" }}
-set -g @prefix_highlight_copy_mode_attr 'fg=#222436,bg=#86e1fc,bold'
-{{- else if eq .colorscheme.flavor "day" }}
-set -g @prefix_highlight_copy_mode_attr 'fg=#e9e9ec,bg=#0f4b6e,bold'
-{{- end }}
+set -g @prefix_highlight_copy_mode_attr 'fg={{ $theme.ui.bg }},bg={{ $theme.accent.cyan }},bold'
 {{- end }}
 
 # Initialize TMUX plugin manager

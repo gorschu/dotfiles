@@ -1,11 +1,9 @@
-{{ $scheme := printf "%s-%s" .colorscheme.name .colorscheme.flavor }}
 {{ if and .colorscheme.name .colorscheme.flavor }}
-export LS_COLORS="$(vivid generate {{ $scheme }})"
-export EZA_COLORS="${LS_COLORS}"
+export LS_COLORS="$(vivid generate {{ printf "%s-%s" .colorscheme.name .colorscheme.flavor }})"
 {{ else }}
 export LS_COLORS="$(vivid generate default)"
-export EZA_COLORS="${LS_COLORS}"
 {{ end }}
+export EZA_COLORS="${LS_COLORS}"
 
 {{ if eq .colorscheme.name "catppuccin" }}
 source {{ .chezmoi.homeDir }}/.externals/zsh-syntax-highlighting/catppuccin/catppuccin_{{ .colorscheme.flavor }}-zsh-syntax-highlighting.zsh

@@ -1,0 +1,113 @@
+{{- $theme := includeTemplate "palettes/active-theme" . | fromJson -}}
+{{- $header := "" -}}
+{{- if eq $theme.name "tokyonight" -}}
+  {{- $header = $theme.accent.magenta -}}
+{{- else -}}
+  {{- $header = $theme.accent.pink -}}
+{{- end -}}
+{{- $titlecol := $theme.semantic.primary -}}
+{{- $key := $theme.semantic.warning -}}
+{{- $separator := $theme.ui.fg_muted | default $theme.ui.comment -}}
+{{- $value := "" -}}
+{{- if eq $theme.name "tokyonight" -}}
+  {{- if eq $theme.meta.appearance "light" -}}
+    {{- $value = $theme.ui.fg -}}
+  {{- else -}}
+    {{- $value = $theme.ui.fg_dark -}}
+  {{- end -}}
+{{- else -}}
+  {{- $value = $theme.ui.fg -}}
+{{- end -}}
+{{- $vtrue := $theme.semantic.success -}}
+{{- $vfalse := $theme.semantic.error -}}
+{{- $p1 := "" -}}
+{{- $p2 := "" -}}
+{{- $p3 := "" -}}
+{{- $p4 := "" -}}
+{{- $p5 := "" -}}
+{{- $p6 := "" -}}
+{{- $p7 := "" -}}
+{{- if eq $theme.name "tokyonight" -}}
+  {{- $p1 = $theme.semantic.error -}}
+  {{- $p2 = $theme.accent.orange -}}
+  {{- $p3 = $theme.semantic.warning -}}
+  {{- $p4 = $theme.semantic.success -}}
+  {{- $p5 = $theme.accent.green1 -}}
+  {{- $p6 = $theme.semantic.primary -}}
+  {{- $p7 = $theme.accent.magenta -}}
+{{- else -}}
+  {{- $p1 = $theme.accent.red -}}
+  {{- $p2 = $theme.accent.peach -}}
+  {{- $p3 = $theme.semantic.warning -}}
+  {{- $p4 = $theme.semantic.success -}}
+  {{- $p5 = $theme.accent.teal -}}
+  {{- $p6 = $theme.semantic.primary -}}
+  {{- $p7 = $theme.accent.mauve -}}
+{{- end -}}
+themes:
+  default:
+    tree:
+      style: rounded
+
+    table:
+      style: rounded
+      header:
+        fg: "{{ $header }}"
+        attr: bold
+      title_column:
+        fg: "{{ $titlecol }}"
+
+    stream:
+      prefix: true
+      header: true
+      header_char: "─"
+      prefix_colors:
+        - "{{ $p1 }}"
+        - "{{ $p2 }}"
+        - "{{ $p3 }}"
+        - "{{ $p4 }}"
+        - "{{ $p5 }}"
+        - "{{ $p6 }}"
+        - "{{ $p7 }}"
+
+    block:
+      key:
+        fg: "{{ $key }}"
+      separator:
+        fg: "{{ $separator }}"
+      value:
+        fg: "{{ $value }}"
+      value_true:
+        fg: "{{ $vtrue }}"
+      value_false:
+        fg: "{{ $vfalse }}"
+
+targets:
+  all:
+    all: true
+
+tasks:
+  status:
+    desc: Show git status
+    cmd: |
+      path=$(dirname "$(pwd)" | sed "s|$HOME|~|")
+      s=$(git status -s)
+      if [ -z "$s" ]; then echo "($path) clean"; else echo "($path)"; echo "$s"; fi
+    target: all
+
+  fetch:
+    desc: Fetch from remote
+    cmd: git fetch --all --prune
+
+  pull:
+    desc: Pull latest changes
+    cmd: git pull
+
+  branch:
+    desc: Show current branch
+    cmd: git branch --show-current
+    target: all
+
+  push:
+    desc: Push to remote
+    cmd: GIT_TERMINAL_PROMPT=0 GIT_SSH_COMMAND='ssh -o ConnectTimeout=10' git push

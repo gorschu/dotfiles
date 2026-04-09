@@ -1,3 +1,4 @@
+{{- $theme := includeTemplate "palettes/active-theme" . | fromJson -}}
 [aws]
 disabled = false
 symbol = "  "
@@ -70,11 +71,17 @@ symbol = " "
 [hg_branch]
 symbol = " "
 
+{{- $hostnameColor := $theme.semantic.primary -}}
+{{- $rootColor := $theme.semantic.error -}}
+{{- $userColor := $theme.ui.fg -}}
+{{- if and (eq $theme.name "tokyonight") (eq $theme.meta.appearance "dark") -}}
+  {{- $userColor = $theme.ui.fg_dark -}}
+{{- end }}
 [hostname]
 format = "[@$hostname]($style) in "
 ssh_only = false
 ssh_symbol = "󰣀  "
-style = "#8aadf4"
+style = "{{ $hostnameColor }}"
 
 [java]
 symbol = " "
@@ -144,5 +151,5 @@ disabled = false
 [username]
 format = "[$user]($style)"
 show_always = true
-style_root = "#ed8796"
-style_user = "#f4dbd6"
+style_root = "{{ $rootColor }}"
+style_user = "{{ $userColor }}"

@@ -1,18 +1,22 @@
+{{- $theme := includeTemplate "palettes/active-theme" . | fromJson -}}
+{{- $personalColor := $theme.semantic.primary -}}
+{{- $workColor := $theme.semantic.success -}}
+{{- $tasksColor := $theme.semantic.warning -}}
 # khal configuration - managed by chezmoi
 
 [calendars]
 
 [[calendars.Personal]]
 path = ~/.local/share/vdirsyncer/calendars/Personal
-color = #89b4fa
+color = {{ $personalColor }}
 
 [[calendars.Work]]
 path = ~/.local/share/vdirsyncer/calendars/Work
-color = #a6e3a1
+color = {{ $workColor }}
 
 [[calendars.Tasks]]
 path = ~/.local/share/vdirsyncer/calendars/Tasks
-color = #f9e2af
+color = {{ $tasksColor }}
 
 [sqlite]
 path = ~/.local/share/khal/khal.db
