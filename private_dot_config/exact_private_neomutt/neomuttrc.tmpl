@@ -67,6 +67,7 @@ set use_from = yes
 set envelope_from = yes
 
 # Display
+set color_directcolor = yes
 set date_format = "%Y-%m-%d %H:%M"
 set index_format = "%4C %Z %?X?📎&  ? %d %-20.20F %s"
 set sort = threads
@@ -94,8 +95,8 @@ set smime_is_default = no
 # Keybindings and colors
 source ~/.config/neomutt/bindings.muttrc
 source ~/.config/neomutt/gpg.muttrc
-source ~/.externals/neomutt/catppuccin/neomuttrc
-
-# Color overrides (after theme)
-color index color3 default ~D       # Deleted = yellow/peach
-color index color6 default ~P       # From me = cyan/teal
+{{ if eq .colorscheme.name "tokyonight" -}}
+source ~/.config/neomutt/themes/tokyonight.muttrc
+{{ else -}}
+source ~/.config/neomutt/themes/catppuccin.muttrc
+{{ end }}

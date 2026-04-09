@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# NeoMutt wrapper to force a direct-color terminfo entry.
+
+set -euo pipefail
+
+self="$(readlink -f "$0" 2>/dev/null || printf '%s\n' "$0")"
+neomutt_bin=""
+
+while IFS= read -r candidate; do
+  [[ -n "$candidate" ]] || continue
+
+  candidate_real="$(readlink -f "$candidate" 2>/dev/null || printf '%s\n' "$candidate")"
+  if [[ "$candidate_real" == "$self" ]]; then
+    continue
+  fi
+
+  neomutt_bin="$candidate_real"
+  break
+done < <(type -ap neomutt)
+
+if [[ -z "$neomutt_bin" ]]; then
+  neomutt_bin="{{ printf "%s/bin/neomutt" .homebrew.prefix }}"
+fi
+
+exec env TERM=xterm-direct "$neomutt_bin" "$@"

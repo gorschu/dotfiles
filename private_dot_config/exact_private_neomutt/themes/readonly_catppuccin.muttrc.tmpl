@@ -1,0 +1,158 @@
+{{- $flavorName := "mocha" -}}
+{{- if eq .colorscheme.name "catppuccin" -}}
+  {{- $flavorName = (.colorscheme.flavor | default "mocha") -}}
+{{- end -}}
+{{- $flavor := index .palettes.catppuccin.flavors $flavorName -}}
+{{- $accentName := "lavender" -}}
+{{- if eq .colorscheme.name "catppuccin" -}}
+  {{- $accentName = (.colorscheme.sub_flavor | default "lavender") -}}
+{{- end -}}
+{{- $accent := index $flavor.accent $accentName -}}
+{{- $bg := $flavor.ui.bg -}}
+{{- $bgAlt := $flavor.ui.bg_dark -}}
+{{- $selection := $flavor.ui.bg_highlight -}}
+{{- $fg := $flavor.ui.fg -}}
+{{- $fgSoft := $flavor.ui.fg_dark -}}
+{{- $fgMuted := $flavor.ui.fg_muted -}}
+{{- $border := $flavor.ui.border -}}
+{{- $surface := $flavor.ui.bg_highlight -}}
+{{- $warn := $flavor.semantic.warning -}}
+{{- $err := $flavor.semantic.error -}}
+{{- $ok := $flavor.semantic.success -}}
+{{- $info := $flavor.semantic.info -}}
+{{- $primary := $flavor.semantic.primary -}}
+{{- $secondary := $flavor.semantic.secondary -}}
+{{- $orange := $flavor.accent.peach -}}
+{{- $purple := $flavor.accent.mauve -}}
+{{- $pink := $flavor.accent.pink -}}
+{{- $rosewater := $flavor.accent.rosewater -}}
+{{- $sky := $flavor.accent.sky -}}
+{{- $maroon := $flavor.accent.maroon -}}
+{{- $onStrong := $flavor.ui.base -}}
+{{- if eq $flavor.meta.appearance "light" -}}
+  {{- $onStrong = $flavor.ui.fg -}}
+{{- end -}}
+# Catppuccin NeoMutt theme - managed by chezmoi
+# Flavor: {{ $flavor.meta.display_name }}
+# Accent: {{ $accentName }}
+
+uncolor index *
+uncolor header *
+uncolor body *
+unmono index *
+unmono header *
+unmono body *
+
+color normal              {{ $fg }}      {{ $bg }}
+color attachment    bold  {{ $pink }}    {{ $bg }}
+color attach_headers      {{ $purple }}  {{ $bgAlt }}
+color bold                {{ $pink }}    {{ $bg }}
+color underline           {{ $accent }}  {{ $bg }}
+color error         bold  {{ $err }}     {{ $bg }}
+color message             {{ $sky }}     {{ $bg }}
+color markers       bold  {{ $border }}  {{ $selection }}
+color prompt        bold  {{ $accent }}  {{ $bg }}
+color progress      bold  {{ $accent }}  {{ $bgAlt }}
+color search        bold  {{ $onStrong }} {{ $accent }}
+color signature           {{ $purple }}  {{ $bg }}
+color status        bold  {{ $onStrong }} {{ $accent }}
+color indicator     bold  {{ $accent }}  {{ $selection }}
+color tree                {{ $fgMuted }} {{ $bg }}
+color tilde               {{ $fgMuted }} {{ $bg }}
+
+color compose_header              {{ $accent }}   {{ $bg }}
+color compose_security_none       {{ $fgMuted }}  {{ $bg }}
+color compose_security_encrypt    {{ $accent }}   {{ $bg }}
+color compose_security_sign       {{ $warn }}     {{ $bg }}
+color compose_security_both       {{ $ok }}       {{ $bg }}
+
+color hdrdefault    bold  {{ $fgSoft }}  {{ $bg }}
+color header        bold  {{ $accent }}  {{ $bg }} "^(From|To|Cc|Bcc|Reply-To):"
+color header        bold  {{ $pink }}    {{ $bg }} "^Subject:"
+color header              {{ $sky }}     {{ $bg }} "^(Date|Organization|List-(Id|Post|Archive)|X-Label|Tags):"
+
+color index_number        {{ $fgMuted }} {{ $bg }}
+color index_date          {{ $fgMuted }} {{ $bg }}
+color index_flags         {{ $fgSoft }}  {{ $bg }}
+color index_size          {{ $fgMuted }} {{ $bg }}
+color index_author        {{ $fgSoft }}  {{ $bg }}
+color index_subject       {{ $fg }}      {{ $bg }}
+color index_label         {{ $purple }}  {{ $bg }}
+color index_tag           {{ $warn }}    {{ $bg }}
+color index_tags          {{ $warn }}    {{ $bg }}
+color index_collapsed     {{ $fgMuted }} {{ $bg }}
+
+color index               {{ $fgSoft }}  {{ $bg }} "~R"
+color index         bold  {{ $accent }}   {{ $bg }} "~N"
+color index         bold  {{ $accent }}   {{ $bg }} "~U"
+color index               {{ $secondary }} {{ $bg }} "~P"
+color index               {{ $info }}     {{ $bg }} "~Q"
+color index               {{ $warn }}     {{ $bg }} "~T"
+color index         bold  {{ $orange }}   {{ $bg }} "~F"
+color index               {{ $fgMuted }}  {{ $bg }} "~v"
+color index         bold  {{ $secondary }} {{ $bg }} "~p!~F"
+color index         bold  {{ $secondary }} {{ $bg }} "~N~p!~F"
+color index         bold  {{ $maroon }}   {{ $bg }} "~D"
+color index         bold  {{ $orange }}   {{ $bg }} "~N~F"
+color index         bold  {{ $orange }}   {{ $bg }} "~U~F"
+color index         bold  {{ $accent }}   {{ $bg }} "~v~(~N)"
+color index         bold  {{ $orange }}   {{ $bg }} "~v~(~F)"
+color index         bold  {{ $orange }}   {{ $bg }} "~v~(~F~N)"
+color index         bold  {{ $maroon }}   {{ $bg }} "~v~(~D)"
+
+color index_number        {{ $maroon }}   {{ $bg }} "~D"
+color index_date          {{ $maroon }}   {{ $bg }} "~D"
+color index_flags         {{ $maroon }}   {{ $bg }} "~D"
+color index_size          {{ $maroon }}   {{ $bg }} "~D"
+color index_author  bold  {{ $maroon }}   {{ $bg }} "~D"
+color index_subject bold  {{ $maroon }}   {{ $bg }} "~D"
+color index_label         {{ $maroon }}   {{ $bg }} "~D"
+color index_tag           {{ $maroon }}   {{ $bg }} "~D"
+color index_tags          {{ $maroon }}   {{ $bg }} "~D"
+color index_collapsed     {{ $maroon }}   {{ $bg }} "~D"
+
+color index_number        {{ $maroon }}   {{ $bg }} "~v~(~D)"
+color index_date          {{ $maroon }}   {{ $bg }} "~v~(~D)"
+color index_flags         {{ $maroon }}   {{ $bg }} "~v~(~D)"
+color index_size          {{ $maroon }}   {{ $bg }} "~v~(~D)"
+color index_author  bold  {{ $maroon }}   {{ $bg }} "~v~(~D)"
+color index_subject bold  {{ $maroon }}   {{ $bg }} "~v~(~D)"
+color index_label         {{ $maroon }}   {{ $bg }} "~v~(~D)"
+color index_tag           {{ $maroon }}   {{ $bg }} "~v~(~D)"
+color index_tags          {{ $maroon }}   {{ $bg }} "~v~(~D)"
+color index_collapsed     {{ $maroon }}   {{ $bg }} "~v~(~D)"
+
+color sidebar_background  {{ $fgSoft }}  {{ $bgAlt }}
+color sidebar_divider     {{ $border }}  {{ $bgAlt }}
+color sidebar_ordinary    {{ $fgSoft }}  {{ $bgAlt }}
+color sidebar_spool_file  {{ $primary }} {{ $bgAlt }}
+color sidebar_new         {{ $accent }}  {{ $bgAlt }}
+color sidebar_flagged     {{ $orange }}  {{ $bgAlt }}
+color sidebar_highlight   {{ $accent }}  {{ $selection }}
+color sidebar_indicator   {{ $pink }}    {{ $selection }}
+
+color quoted              {{ $rosewater }} {{ $bg }}
+color quoted1             {{ $warn }}      {{ $bg }}
+color quoted2             {{ $ok }}        {{ $bg }}
+color quoted3             {{ $secondary }} {{ $bg }}
+color quoted4             {{ $primary }}   {{ $bg }}
+color quoted5             {{ $purple }}    {{ $bg }}
+
+color body                {{ $secondary }} {{ $bg }} "[\\-\\.+_a-zA-Z0-9]+@[\\-\\.a-zA-Z0-9]+"
+color body          bold  {{ $primary }}  {{ $bg }} "(https?|ftp)://[\\-\\.,/%~_:?&=\\#a-zA-Z0-9]+"
+color body          bold  {{ $pink }}     {{ $bg }} "(^|[[:space:]])\\*[^[:space:]]+\\*([[:space:]]|$)"
+color body                {{ $accent }}   {{ $bg }} "(^|[[:space:]])_[^[:space:]]+_([[:space:]]|$)"
+color body                {{ $purple }}   {{ $bg }} "(^|[[:space:]])/[^[:space:]]+/([[:space:]]|$)"
+color body                {{ $ok }}       {{ $bg }} "(Good signature)"
+color body                {{ $err }}      {{ $bg }} "(BAD signature)"
+color body                {{ $fgMuted }}  {{ $bg }} "^gpg: "
+color body          bold  {{ $err }}      {{ $bg }} "^gpg: BAD signature from.*"
+color body          bold  {{ $ok }}       {{ $bg }} "^gpg: Good signature .*"
+
+mono bold                 bold
+mono underline            underline
+mono indicator            reverse
+mono error                bold
+mono header               bold "^(From|To|Cc|Bcc|Reply-To|Subject|Date):"
+mono quoted               bold
+mono body                 bold "^gpg: (Good|BAD signature)"
