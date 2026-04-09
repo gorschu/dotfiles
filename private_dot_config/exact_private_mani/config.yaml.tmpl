@@ -1,23 +1,9 @@
 {{- $theme := includeTemplate "palettes/active-theme" . | fromJson -}}
-{{- $header := "" -}}
-{{- if eq $theme.name "tokyonight" -}}
-  {{- $header = $theme.accent.magenta -}}
-{{- else -}}
-  {{- $header = $theme.accent.pink -}}
-{{- end -}}
-{{- $titlecol := $theme.semantic.primary -}}
+{{- $header := $theme.selected.accent -}}
+{{- $titlecol := $theme.semantic.info -}}
 {{- $key := $theme.semantic.warning -}}
-{{- $separator := $theme.ui.fg_muted | default $theme.ui.comment -}}
-{{- $value := "" -}}
-{{- if eq $theme.name "tokyonight" -}}
-  {{- if eq $theme.meta.appearance "light" -}}
-    {{- $value = $theme.ui.fg -}}
-  {{- else -}}
-    {{- $value = $theme.ui.fg_dark -}}
-  {{- end -}}
-{{- else -}}
-  {{- $value = $theme.ui.fg -}}
-{{- end -}}
+{{- $separator := (get $theme.ui "border_muted") | default $theme.ui.fg_muted | default $theme.ui.comment -}}
+{{- $value := $theme.ui.fg -}}
 {{- $vtrue := $theme.semantic.success -}}
 {{- $vfalse := $theme.semantic.error -}}
 {{- $p1 := "" -}}
@@ -28,20 +14,20 @@
 {{- $p6 := "" -}}
 {{- $p7 := "" -}}
 {{- if eq $theme.name "tokyonight" -}}
-  {{- $p1 = $theme.semantic.error -}}
-  {{- $p2 = $theme.accent.orange -}}
-  {{- $p3 = $theme.semantic.warning -}}
-  {{- $p4 = $theme.semantic.success -}}
-  {{- $p5 = $theme.accent.green1 -}}
-  {{- $p6 = $theme.semantic.primary -}}
-  {{- $p7 = $theme.accent.magenta -}}
+  {{- $p1 = $theme.accent.orange -}}
+  {{- $p2 = $theme.semantic.success -}}
+  {{- $p3 = $theme.semantic.secondary -}}
+  {{- $p4 = $theme.semantic.primary -}}
+  {{- $p5 = $theme.accent.magenta -}}
+  {{- $p6 = $theme.semantic.warning -}}
+  {{- $p7 = $theme.semantic.error -}}
 {{- else -}}
-  {{- $p1 = $theme.accent.red -}}
+  {{- $p1 = $theme.accent.rosewater -}}
   {{- $p2 = $theme.accent.peach -}}
   {{- $p3 = $theme.semantic.warning -}}
   {{- $p4 = $theme.semantic.success -}}
   {{- $p5 = $theme.accent.teal -}}
-  {{- $p6 = $theme.semantic.primary -}}
+  {{- $p6 = $theme.selected.accent -}}
   {{- $p7 = $theme.accent.mauve -}}
 {{- end -}}
 themes:

@@ -1,21 +1,35 @@
 {{- $theme := includeTemplate "palettes/active-theme" . | fromJson -}}
+{{- $promptColor := $theme.selected.accent -}}
+{{- $errorColor := $theme.semantic.error -}}
+{{- $successColor := $theme.semantic.success -}}
+{{- $warningColor := $theme.semantic.warning -}}
+{{- $infoColor := $theme.semantic.info -}}
+{{- $secondaryColor := $theme.semantic.secondary -}}
+{{- $mutedColor := $theme.ui.fg_muted | default $theme.ui.comment -}}
+{{- $replaceColor := "" -}}
+{{- if eq $theme.name "tokyonight" -}}
+  {{- $replaceColor = $theme.accent.magenta -}}
+{{- else -}}
+  {{- $replaceColor = $theme.accent.mauve -}}
+{{- end -}}
 [aws]
 disabled = false
 symbol = "  "
 
 [character]
-error_symbol = "[~~>](bold red) "
-success_symbol = "[=>>](bold green) "
-vimcmd_replace_one_symbol = "[<<=](bold purple) "
-vimcmd_replace_symbol = "[<<=](bold purple) "
-vimcmd_symbol = "[<<=](bold yellow) "
-vimcmd_visual_symbol = "[<<=](bold cyan) "
+error_symbol = "[~~>](bold {{ $errorColor }}) "
+success_symbol = "[=>>](bold {{ $promptColor }}) "
+vimcmd_replace_one_symbol = "[<<=](bold {{ $replaceColor }}) "
+vimcmd_replace_symbol = "[<<=](bold {{ $replaceColor }}) "
+vimcmd_symbol = "[<<=](bold {{ $warningColor }}) "
+vimcmd_visual_symbol = "[<<=](bold {{ $secondaryColor }}) "
 
 [cmd_duration]
 disabled = false
 format = "  [$duration]($style) "
 min_time_to_notify = 180000
 show_notifications = true
+style = "bold {{ $warningColor }}"
 
 [conda]
 symbol = " "
@@ -26,6 +40,8 @@ symbol = " "
 [directory]
 fish_style_pwd_dir_length = 1
 read_only = " "
+read_only_style = "bold {{ $errorColor }}"
+style = "bold {{ $infoColor }}"
 truncation_length = 3
 truncation_symbol = "…/"
 
@@ -50,6 +66,7 @@ symbol = " "
 [git_branch]
 disabled = false
 symbol = " "
+style = "bold {{ $promptColor }}"
 
 [git_commit]
 disabled = false
@@ -58,9 +75,12 @@ tag_disabled = false
 
 [git_metrics]
 disabled = false
+added_style = "bold {{ $successColor }}"
+deleted_style = "bold {{ $errorColor }}"
 
 [git_status]
 disabled = false
+style = "bold {{ $warningColor }}"
 deleted = "󱂥 "
 ahead = "󰩍 "
 behind = "󰥥 "
@@ -70,6 +90,7 @@ symbol = " "
 
 [hg_branch]
 symbol = " "
+style = "bold {{ $promptColor }}"
 
 {{- $hostnameColor := $theme.semantic.primary -}}
 {{- $rootColor := $theme.semantic.error -}}
@@ -105,7 +126,7 @@ symbol = " "
 
 [os]
 disabled = false
-style = "bold blue"
+style = "bold {{ $infoColor }}"
 [os.symbols]
 Fedora = "  "
 Arch = "󰣇 "
@@ -141,15 +162,18 @@ disabled = false
 map_symbol = true
 sigint_symbol = "‼️"
 format = '[\[$symbol$common_meaning$signal_name$maybe_int\]]($style) '
+style = "bold {{ $errorColor }}"
 
 [terraform]
 symbol = "󱁢 "
 
 [time]
 disabled = false
+format = "at [$time]($style) "
+style = "bold {{ $secondaryColor }}"
 
 [username]
 format = "[$user]($style)"
 show_always = true
-style_root = "{{ $rootColor }}"
-style_user = "{{ $userColor }}"
+style_root = "bold {{ $rootColor }}"
+style_user = "bold {{ $promptColor }}"
