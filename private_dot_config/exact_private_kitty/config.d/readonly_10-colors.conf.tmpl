@@ -1,0 +1,5 @@
+{{ if eq .colorscheme.name "tokyonight" }}
+include {{ .chezmoi.homeDir }}/.externals/tokyonight.nvim/extras/kitty/tokyonight_{{ .colorscheme.flavor }}.conf
+{{ else if eq .colorscheme.name "catppuccin" }}
+include {{ .chezmoi.homeDir }}/.externals/kitty/catppuccin/themes/{{ .colorscheme.flavor }}.conf
+{{ end }}

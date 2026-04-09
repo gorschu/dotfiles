@@ -24,7 +24,7 @@ done
 echo ""
 echo "#* Theme configuration managed by chezmoi"
 {{ if eq .colorscheme.name "tokyonight" -}}
-echo 'color_theme = "/usr/share/btop/themes/tokyo-night.theme"'
+echo 'color_theme = "tokyonight_{{ .colorscheme.flavor }}"'
 {{ else if eq .colorscheme.name "catppuccin" -}}
 echo 'color_theme = "catppuccin_{{ .colorscheme.flavor }}"'
 {{ else -}}
