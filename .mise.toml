@@ -5,7 +5,7 @@
 experimental = true
 
 [tools]
-prek = "v0.3.6" # renovate: datasource=github-releases depName=j178/prek
+prek = "v0.3.9" # renovate: datasource=github-releases depName=j178/prek
 
 [tasks.install-hooks]
 description = "Install pre-commit hooks using prek"
