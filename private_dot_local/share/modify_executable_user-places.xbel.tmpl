@@ -1,0 +1,41 @@
+#!/usr/bin/env python3
+import os
+import sys
+import time
+
+content = sys.stdin.read()
+
+places = [
+{{ range (index . "dolphin_places" | default (list)) -}}
+    ("file://" + os.path.expanduser("{{ .path }}"), "{{ .title }}", "{{ .icon }}"),
+{{ end -}}
+]
+
+if '</xbel>' not in content:
+    sys.stdout.write(content)
+    sys.exit(0)
+
+to_add = [(href, title, icon) for href, title, icon in places if href not in content]
+
+if not to_add:
+    sys.stdout.write(content)
+    sys.exit(0)
+
+ts = int(time.time())
+bookmarks = ''
+for i, (href, title, icon) in enumerate(to_add):
+    bookmarks += (
+        f' <bookmark href="{href}">\n'
+        f'  <title>{title}</title>\n'
+        f'  <info>\n'
+        f'   <metadata owner="http://freedesktop.org">\n'
+        f'    <bookmark:icon name="{icon}"/>\n'
+        f'   </metadata>\n'
+        f'   <metadata owner="http://www.kde.org">\n'
+        f'    <ID>{ts}/{i}</ID>\n'
+        f'   </metadata>\n'
+        f'  </info>\n'
+        f' </bookmark>\n'
+    )
+
+sys.stdout.write(content.replace('</xbel>', bookmarks + '</xbel>', 1))
