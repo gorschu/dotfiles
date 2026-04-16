@@ -3,7 +3,7 @@
 colorscheme:
   name: catppuccin
   flavor: mocha
-  sub_flavor: rosewater
+  sub_flavor: lavender
   # name: tokyonight
   # flavor: storm
   kde: auto
