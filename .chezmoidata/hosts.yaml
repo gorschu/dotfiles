@@ -8,6 +8,7 @@ hosts:
     flatpak:
       apps:
         - com.valvesoftware.Steam
+        - com.valvesoftware.Steam.Utility.steamtinkerlaunch
         - net.davidotek.pupgui2
         - com.usebottles.bottles
         - com.discordapp.Discord
