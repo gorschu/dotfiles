@@ -2,17 +2,18 @@
 {{ if $host.has_mail -}}
 # Mail tools
 brew "isync"
+brew "msmtp"
 brew "neomutt"
 brew "notmuch"
-brew "msmtp"
-brew "w3m"
-brew "urlscan"
+brew "par"
 brew "poppler"
+brew "urlscan"
+brew "w3m"
 {{ end -}}
 {{ if $host.has_pim -}}
 # PIM tools
-brew "vdirsyncer", restart_service: true
-brew "todoman"
 brew "khal"
 brew "khard"
+brew "todoman"
+brew "vdirsyncer", restart_service: true
 {{ end -}}
