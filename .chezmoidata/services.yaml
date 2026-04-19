@@ -15,3 +15,4 @@ services:
       - mail-sync.timer
       - rclone-mount@gdrive.service
       - rclone-mount@dropbox.service
+      - rclone-mount@ocis.service
