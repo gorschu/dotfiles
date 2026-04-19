@@ -55,6 +55,14 @@ kwriteconfig6 --file "$_cfg/kcminputrc" --group "Keyboard" --key "NumLock" 0
 kwriteconfig6 --file "$_cfg/kcminputrc" --group "Keyboard" --key "RepeatDelay" 250
 kwriteconfig6 --file "$_cfg/kcminputrc" --group "Keyboard" --key "RepeatRate" 40
 
+# --- Fonts ---
+kwriteconfig6 --file "$_cfg/kdeglobals" --group "General" --key "font"                 "Adwaita Sans,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,,0,0"
+kwriteconfig6 --file "$_cfg/kdeglobals" --group "General" --key "fixed"               "Adwaita Mono,10,-1,5,400,0,0,0,1,0,0,0,0,0,0,1,,0,0"
+kwriteconfig6 --file "$_cfg/kdeglobals" --group "General" --key "toolBarFont"         "Adwaita Sans,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,,0,0"
+kwriteconfig6 --file "$_cfg/kdeglobals" --group "General" --key "menuFont"            "Adwaita Sans,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,,0,0"
+kwriteconfig6 --file "$_cfg/kdeglobals" --group "General" --key "smallestReadableFont" "Adwaita Sans,8,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,,0,0"
+kwriteconfig6 --file "$_cfg/kdeglobals" --group "WM"      --key "activeFont"          "Adwaita Sans,10,-1,5,600,0,0,0,0,0,0,0,0,0,0,1,SemiBold,0,0"
+
 # --- Theme ---
 {{- if eq .colorscheme.kde "auto" }}
 kwriteconfig6 --file "$_cfg/kdeglobals" --group "KDE" --key "AutomaticLookAndFeel" "true"
