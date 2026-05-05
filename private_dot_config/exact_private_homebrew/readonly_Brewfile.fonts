@@ -1,6 +1,7 @@
 cask "font-adwaita"
 cask "font-dejavu"
-cask "font-ibm-plex"
+cask "font-ibm-plex-sans"
+cask "font-ibm-plex-mono"
 cask "font-iosevka"
 cask "font-jetbrains-mono"
 cask "font-libertinus"
