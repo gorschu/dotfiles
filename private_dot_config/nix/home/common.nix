@@ -13,6 +13,7 @@ in
     ./modules/gui.nix
     ./modules/media.nix
     ./modules/network.nix
+    ./modules/plasma.nix
     ./modules/systemd-packages.nix
   ];
 

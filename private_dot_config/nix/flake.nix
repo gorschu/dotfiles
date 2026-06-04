@@ -18,6 +18,11 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    plasma-manager = {
+      url = "github:nix-community/plasma-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
     nixgl = {
       url = "github:nix-community/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -32,7 +37,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nixgl, llm-agents, catppuccin, ... }:
+  outputs = { self, nixpkgs, home-manager, plasma-manager, nixgl, llm-agents, catppuccin, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -41,23 +46,25 @@
         overlays = [ nixgl.overlay ];
       };
 
-      mkHome = hostModule:
+      mkHome = hostName: hostModule:
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           extraSpecialArgs = {
+            inherit hostName;
             llm-agents = llm-agents.packages.${system};
           };
           modules = [
             catppuccin.homeModules.catppuccin
+            plasma-manager.homeModules.plasma-manager
             ./home/common.nix
             hostModule
           ];
         };
     in {
       homeConfigurations = {
-        artemis = mkHome ./home/hosts/artemis.nix;
-        apollo = mkHome ./home/hosts/apollo.nix;
-        hephaestus = mkHome ./home/hosts/hephaestus.nix;
+        artemis = mkHome "artemis" ./home/hosts/artemis.nix;
+        apollo = mkHome "apollo" ./home/hosts/apollo.nix;
+        hephaestus = mkHome "hephaestus" ./home/hosts/hephaestus.nix;
       };
     };
 }
