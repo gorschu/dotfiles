@@ -1,7 +1,3 @@
 {{- $versions := .versions -}}
-# Binaries not available in Homebrew
-[".local/bin/cliphist"]
-  type = "file"
-  url = "https://github.com/sentriz/cliphist/releases/download/v{{ $versions.cliphist }}/v{{ $versions.cliphist }}-linux-amd64"
-  executable = true
-  refreshPeriod = "168h"
+# Binaries fetched from e.g. GitHub releases.
+# Stub kept for future additions; all current entries migrated to Nix.

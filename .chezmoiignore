@@ -1,5 +1,6 @@
 README.md
 LICENSE
+MIGRATION_*.txt
 modified_externally
 justfile
 system-ansible/
@@ -25,8 +26,6 @@ bootstrap
 .config/khal
 .config/khard
 .config/todoman
-.config/systemd/user/homebrew.vdirsyncer.service.d
-.config/systemd/user/homebrew.vdirsyncer.timer
 {{ end }}
 {{ if not $host.has_mail }}
 .config/neomutt

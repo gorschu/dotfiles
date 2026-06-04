@@ -1,2 +1,0 @@
-brew "syncthing", restart_service: true
-brew "wgcf"
