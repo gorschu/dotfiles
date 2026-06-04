@@ -82,8 +82,10 @@ This will:
   - Install home-manager
   - Run `home-manager switch --flake ~/.config/nix#<hostname>`
     -> installs all Nix packages, creates HM-managed services
-  - Run `brew bundle --cleanup` on an empty bundle list
-    -> uninstalls every brew package
+
+Note: the brew bundle script was removed in an earlier commit; brew
+packages are NOT automatically uninstalled by chezmoi apply. Use the
+manual uninstall in step 8 to remove them.
 
 If home-manager switch errors with "Existing file ... would be
 clobbered" for ~/.config/atuin/config.toml, re-run the switch
