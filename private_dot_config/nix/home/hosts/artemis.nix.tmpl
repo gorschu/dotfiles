@@ -1,5 +1,5 @@
 {{- $h := index .hosts "artemis" -}}
-{ pkgs, mylib, ... }:
+{ ... }:
 
 {
   imports = [
@@ -9,9 +9,5 @@
     {{- if $h.has_pim }}
     ../modules/pim.nix
     {{- end }}
-  ];
-
-  home.packages = [
-    (mylib.nixGLWrap pkgs.ghostty)
   ];
 }
