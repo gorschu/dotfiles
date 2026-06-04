@@ -1,10 +1,7 @@
 ---
-# Per-host feature flags and configuration
+# Per-host chezmoi configuration
 hosts:
   artemis:
-    has_mail: true
-    has_pim: true
-    is_laptop: false
     flatpak:
       apps:
         - com.valvesoftware.Steam
@@ -16,11 +13,3 @@ hosts:
         - runtime/org.freedesktop.Platform.VulkanLayer.vkBasalt/x86_64/25.08
         - runtime/org.freedesktop.Platform.VulkanLayer.gamescope/x86_64/25.08
         - runtime/org.freedesktop.Platform.VulkanLayer.MangoHud/x86_64/25.08
-  apollo:
-    has_mail: true
-    has_pim: true
-    is_laptop: true
-  hephaestus:
-    has_mail: true
-    has_pim: true
-    is_laptop: true

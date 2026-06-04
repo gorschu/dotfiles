@@ -20,21 +20,6 @@ bootstrap
 .config/systemd
 {{- end }}
 
-{{- $host := index (.hosts | default dict) .chezmoi.hostname | default dict -}}
-{{ if not $host.has_pim }}
-.config/vdirsyncer
-.config/khal
-.config/khard
-.config/todoman
-{{ end }}
-{{ if not $host.has_mail }}
-.config/neomutt
-.config/msmtp
-.config/notmuch
-.config/isyncrc
-.config/systemd/user/mail-sync.service
-.config/systemd/user/mail-sync.timer
-{{ end }}
 {{ if .is_work_machine }}
 bin
 .config/*

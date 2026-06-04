@@ -1,14 +1,9 @@
-{{- $h := index .hosts "apollo" -}}
 { pkgs, ... }:
 
 {
   imports = [
-    {{- if $h.has_mail }}
     ../modules/mail.nix
-    {{- end }}
-    {{- if $h.has_pim }}
     ../modules/pim.nix
-    {{- end }}
   ];
 
   home.packages = with pkgs; [

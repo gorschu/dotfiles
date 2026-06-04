@@ -1,7 +1,7 @@
-{{- $kdeTheme := .colorscheme.kde | default "auto" -}}
 { hostName, ... }:
 
 let
+  kdeTheme = "auto";
   touchpadsByHost = {
     apollo = [
       {
@@ -171,8 +171,8 @@ in
     configFile = {
       "kdeglobals" = {
         "KDE" = {
-          AutomaticLookAndFeel = {{ if eq $kdeTheme "auto" }}true{{ else }}false{{ end }};
-          LookAndFeelPackage = {{ if eq $kdeTheme "auto" }}null{{ else }}"{{ $kdeTheme }}"{{ end }};
+          AutomaticLookAndFeel = kdeTheme == "auto";
+          LookAndFeelPackage = if kdeTheme == "auto" then null else kdeTheme;
         };
       };
 
