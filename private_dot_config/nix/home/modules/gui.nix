@@ -19,11 +19,17 @@ in
     package = ghostty-wrapped;
     systemd.enable = true;
     settings = {
-      # Monaspace fonts
-      font-family = "Monaspace Neon Frozen Medium";
-      font-family-bold = "Monaspace Neon Frozen Bold";
-      font-family-italic = "Monaspace Radon Frozen Medium";
-      font-family-bold-italic = "Monaspace Radon Frozen Bold";
+      # Family + style configured separately. Ghostty requires the
+      # corresponding font-family-* to be specified for each font-style-*
+      # to take effect, so all four faces are declared explicitly.
+      font-family = "Monaspace Neon Frozen";
+      font-family-bold = "Monaspace Neon Frozen";
+      font-family-italic = "Monaspace Radon Frozen";
+      font-family-bold-italic = "Monaspace Radon Frozen";
+      font-style = "Medium";
+      font-style-bold = "Bold";
+      font-style-italic = "Medium Italic";
+      font-style-bold-italic = "Bold Italic";
       font-size = 11;
 
       # Contextual alternates (texture healing)
