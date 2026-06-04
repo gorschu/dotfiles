@@ -1,7 +1,0 @@
----
-# Python CLI tools installed via uv tool install (not in homebrew)
-uv:
-  tools:
-    - vdirsyncer
-    - khal
-    - khard
