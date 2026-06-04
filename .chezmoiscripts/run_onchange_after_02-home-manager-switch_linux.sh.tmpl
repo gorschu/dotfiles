@@ -22,4 +22,5 @@ if ! command -v home-manager >/dev/null 2>&1; then
 fi
 
 echo "Running home-manager switch for {{ .chezmoi.hostname }}..."
-home-manager switch --flake "${HOME}/.config/nix#{{ .chezmoi.hostname }}"
+home-manager --option accept-flake-config true switch \
+  --flake "${HOME}/.config/nix#{{ .chezmoi.hostname }}"

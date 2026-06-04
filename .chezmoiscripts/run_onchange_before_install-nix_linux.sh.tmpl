@@ -13,32 +13,14 @@ fi
 
 # Determinate manages /etc/nix/nix.conf and overwrites it on upgrades.
 # Custom settings belong in /etc/nix/nix.custom.conf, which the managed file
-# !includes. We seed:
-#   - trusted-users: lets @wheel members add substituters at flake level
-#   - extra-substituters / extra-trusted-public-keys: the Numtide cache used
-#     for llm-agents.nix builds, set globally so flake nixConfig is unneeded
-#     (avoids the per-user accept-flake-config prompt on fresh hosts).
-#
-# Each line is checked exactly so adding one doesn't depend on whether
-# another is already present.
-
-ensure_line() {
-  local line="$1"
-  if ! sudo grep -qFx "$line" /etc/nix/nix.custom.conf 2>/dev/null; then
-    echo "  + $line"
-    echo "$line" | sudo tee -a /etc/nix/nix.custom.conf >/dev/null
-    return 0
-  fi
-  return 1
-}
-
-needs_restart=0
-echo "Reconciling /etc/nix/nix.custom.conf..."
-ensure_line 'trusted-users = root @wheel' && needs_restart=1
-ensure_line 'extra-substituters = https://cache.numtide.com' && needs_restart=1
-ensure_line 'extra-trusted-public-keys = niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g=' && needs_restart=1
-
-if [[ $needs_restart -eq 1 ]]; then
+# !includes. We seed trusted-users so @wheel members can use flake-declared
+# substituters. The actual substituter + key are declared in flake nixConfig
+# so the flake is self-sufficient for standalone use; the home-manager switch
+# script passes --accept-flake-config to skip the per-user prompt in our
+# automation flow.
+if ! sudo grep -qFx 'trusted-users = root @wheel' /etc/nix/nix.custom.conf 2>/dev/null; then
+  echo "Adding trusted-users to /etc/nix/nix.custom.conf..."
+  echo 'trusted-users = root @wheel' | sudo tee -a /etc/nix/nix.custom.conf >/dev/null
   sudo systemctl restart nix-daemon
 fi
 

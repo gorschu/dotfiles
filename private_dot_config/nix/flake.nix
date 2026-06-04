@@ -1,10 +1,16 @@
 {
   description = "gorschu's portable toolbox";
 
-  # The Numtide cache (used for llm-agents.nix builds) is configured
-  # system-wide via /etc/nix/nix.custom.conf seeded by the install-nix
-  # bootstrap script. Keeping it out of nixConfig avoids the per-user
-  # accept-flake-config prompt on fresh hosts.
+  # Numtide cache for llm-agents.nix builds. The chezmoi-driven
+  # home-manager switch passes --accept-flake-config so this is
+  # honored without prompting. Standalone users will see a one-time
+  # prompt; that's the expected portable behavior.
+  nixConfig = {
+    extra-substituters = [ "https://cache.numtide.com" ];
+    extra-trusted-public-keys = [
+      "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
+    ];
+  };
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
