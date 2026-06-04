@@ -24,7 +24,7 @@ in
 {
   programs.plasma = {
     enable = true;
-    overrideConfig = false;
+    overrideConfig = true;
 
     input.keyboard = {
       layouts = [
