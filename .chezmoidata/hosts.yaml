@@ -12,6 +12,7 @@ hosts:
         - net.davidotek.pupgui2
         - com.usebottles.bottles
         - com.discordapp.Discord
+        - net.lutris.Lutris
         - runtime/org.freedesktop.Platform.VulkanLayer.vkBasalt/x86_64/25.08
         - runtime/org.freedesktop.Platform.VulkanLayer.gamescope/x86_64/25.08
         - runtime/org.freedesktop.Platform.VulkanLayer.MangoHud/x86_64/25.08
