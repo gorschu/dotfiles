@@ -1,22 +1,13 @@
 #!/usr/bin/env bash
 # Reconcile home-manager with the current flake.
-# Reruns whenever flake.nix, flake.lock, common.nix, or this host's module changes.
+# Reruns whenever any nix source file or the flake.lock changes.
 {{- $nixDir := joinPath .chezmoi.homeDir ".config/nix" }}
-{{- $hostFile := printf "%s/home/hosts/%s.nix" $nixDir .chezmoi.hostname }}
-{{- $flakeFile := printf "%s/flake.nix" $nixDir }}
-{{- $commonFile := printf "%s/home/common.nix" $nixDir }}
+{{- range $f := glob (printf "%s/**/*.nix" $nixDir) }}
+# {{ $f }}: {{ include $f | sha256sum }}
+{{- end }}
 {{- $lockFile := printf "%s/flake.lock" $nixDir }}
-{{- if stat $flakeFile }}
-# flake hash:  {{ include $flakeFile | sha256sum }}
-{{- end }}
 {{- if stat $lockFile }}
-# lock hash:   {{ include $lockFile | sha256sum }}
-{{- end }}
-{{- if stat $commonFile }}
-# common hash: {{ include $commonFile | sha256sum }}
-{{- end }}
-{{- if stat $hostFile }}
-# host hash:   {{ include $hostFile | sha256sum }}
+# {{ $lockFile }}: {{ include $lockFile | sha256sum }}
 {{- end }}
 
 set -euo pipefail
