@@ -1,0 +1,32 @@
+#Type   Path                                            Mode  User     Group    Age Argument
+{{ with joinPath .chezmoi.homeDir ".scratch" | stat }}{{ if eq .type "dir" }}
+# Cache + regenerable data redirected to the scratch subvolume,
+# which is intentionally outside any btrbk snapshot job.
+# Destination paths under ~/.scratch mirror their original $HOME locations
+# so it's obvious at a glance which directory came from where.
+
+# Destination tree inside scratch.
+d       %h/.scratch/.cache                              0700  gorschu  gorschu  -   -
+d       %h/.scratch/.local                              0700  gorschu  gorschu  -   -
+d       %h/.scratch/.local/share                        0700  gorschu  gorschu  -   -
+d       %h/.scratch/.local/share/containers             0700  gorschu  gorschu  -   -
+d       %h/.scratch/.cargo                              0700  gorschu  gorschu  -   -
+d       %h/.scratch/.cargo/registry                     0700  gorschu  gorschu  -   -
+d       %h/.scratch/.npm                                0700  gorschu  gorschu  -   -
+d       %h/.scratch/go                                  0700  gorschu  gorschu  -   -
+d       %h/.scratch/go/pkg                              0700  gorschu  gorschu  -   -
+d       %h/.scratch/go/pkg/mod                          0700  gorschu  gorschu  -   -
+
+# Parent dirs in $HOME required for the L+ symlinks below.
+d       %h/.cargo                                       0700  gorschu  gorschu  -   -
+d       %h/go                                           0700  gorschu  gorschu  -   -
+d       %h/go/pkg                                       0700  gorschu  gorschu  -   -
+
+# Replace existing paths with symlinks into scratch.
+# L+ = create symlink, replacing whatever's at the destination.
+L+      %h/.cache                                       -     -        -        -   %h/.scratch/.cache
+L+      %h/.local/share/containers                      -     -        -        -   %h/.scratch/.local/share/containers
+L+      %h/.cargo/registry                              -     -        -        -   %h/.scratch/.cargo/registry
+L+      %h/.npm                                         -     -        -        -   %h/.scratch/.npm
+L+      %h/go/pkg/mod                                   -     -        -        -   %h/.scratch/go/pkg/mod
+{{ end }}{{ end }}
