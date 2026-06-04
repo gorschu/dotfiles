@@ -1,36 +1,54 @@
 ================================================================
-Adding trusted-users to existing Determinate Nix installs
+Seeding nix.custom.conf on existing Determinate Nix installs
 ================================================================
 
-The chezmoi-side install-nix bootstrap now appends
+The chezmoi-side install-nix bootstrap appends three lines to
+/etc/nix/nix.custom.conf (which Determinate's managed
+/etc/nix/nix.conf !includes):
+
   trusted-users = root @wheel
-to /etc/nix/nix.custom.conf (which Determinate's managed
-/etc/nix/nix.conf !includes). Custom file is used because the
-managed nix.conf gets overwritten on Determinate upgrades.
+  extra-substituters = https://cache.numtide.com
+  extra-trusted-public-keys = niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g=
+
+Custom file is used because the managed nix.conf gets overwritten
+on Determinate upgrades.
 
 For machines installed BEFORE that change (artemis at minimum,
 possibly apollo and hephaestus depending on rollout order), run
 this once to align with the new baseline.
 
-Symptom this fixes:
+Symptoms this fixes:
   warning: ignoring untrusted substituter 'https://cache.numtide.com'
   ... when running home-manager switch from the user account.
+
+  do you want to allow configuration setting 'extra-substituters'
+  ... interactive prompt during home-manager switch.
 
 ----------------------------------------------------------------
 Apply
 ----------------------------------------------------------------
 
-   # If a previous attempt appended to the managed file, clean it up first:
+   # If a previous attempt appended trusted-users to the managed
+   # file directly, clean it up first:
    sudo sed -i '/^trusted-users = root @wheel$/d' /etc/nix/nix.conf
 
-   # Then add to the custom file (created if missing):
-   echo 'trusted-users = root @wheel' | sudo tee -a /etc/nix/nix.custom.conf
+   # Add the three lines to the custom file (created if missing).
+   # The script that ships with the dotfiles does this idempotently;
+   # the snippet below replicates it for one-off manual runs.
+   sudo tee -a /etc/nix/nix.custom.conf >/dev/null <<'EOF'
+trusted-users = root @wheel
+extra-substituters = https://cache.numtide.com
+extra-trusted-public-keys = niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g=
+EOF
    sudo systemctl restart nix-daemon
 
 Verify:
 
-   nix config show | grep -E '^trusted-users'
-   # expected: trusted-users = root @wheel
+   nix config show | grep -E '^(trusted-users|extra-substituters|extra-trusted-public-keys)'
+   # expected:
+   #   trusted-users = root @wheel
+   #   extra-substituters = ... https://cache.numtide.com ...
+   #   extra-trusted-public-keys = ... niks3.numtide.com-1:... ...
 
-After this, flake nixConfig substituters (cache.numtide.com etc.)
-are honored without --accept-flake-config prompts.
+After this, the Numtide cache substituter is honored without
+flake-level nixConfig or per-user accept-flake-config prompts.
