@@ -4,6 +4,8 @@ Documentation=https://rclone.org/commands/rclone_mount/
 After=network-online.target
 Wants=network-online.target
 ConditionPathExists=%h/.config/rclone/rclone.conf
+StartLimitIntervalSec=10m
+StartLimitBurst=5
 
 [Service]
 Type=notify
@@ -28,8 +30,6 @@ Restart=always
 RestartSec=15
 RestartSteps=5
 RestartMaxDelaySec=5m
-StartLimitIntervalSec=10m
-StartLimitBurst=5
 StandardOutput=journal
 StandardError=journal
 
