@@ -1,6 +1,10 @@
 # source in fzf
-# try homebrew first (HOMEBREW_PREFIX set in readonly_00-homebrew.zsh.tmpl)
-if [ -f "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh" ]; then
+# try nix-profile first (home-manager / nix profile install)
+if [ -f "$HOME/.nix-profile/share/fzf/key-bindings.zsh" ]; then
+  source "$HOME/.nix-profile/share/fzf/key-bindings.zsh"
+  source "$HOME/.nix-profile/share/fzf/completion.zsh"
+# then homebrew (HOMEBREW_PREFIX set in readonly_00-homebrew.zsh.tmpl)
+elif [ -f "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh" ]; then
   source "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh"
   source "$HOMEBREW_PREFIX/opt/fzf/shell/completion.zsh"
 {{ if eq .chezmoi.os "linux" }}

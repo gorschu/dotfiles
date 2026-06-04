@@ -44,8 +44,9 @@ elif ! getent hosts {{ range .mail.accounts }}{{ .imap_host }}{{ break }}{{ end 
   exit 0
 fi
 
-# Run mbsync for all accounts
-if ! {{ lookPath "mbsync" | default (printf "%s/bin/mbsync" .homebrew.prefix) }} -a 2>&1 | tee -a "${LOG_FILE}"; then
+# Run mbsync for all accounts. Binaries resolved via PATH at runtime
+# (systemd user env contains ~/.nix-profile/bin via environment.d).
+if ! mbsync -a 2>&1 | tee -a "${LOG_FILE}"; then
   notify_error "mbsync failed - check ${LOG_FILE}"
   exit 1
 fi
@@ -53,7 +54,7 @@ fi
 log "mbsync completed, running notmuch"
 
 # Index new mail
-if ! {{ lookPath "notmuch" | default (printf "%s/bin/notmuch" .homebrew.prefix) }} new 2>&1 | tee -a "${LOG_FILE}"; then
+if ! notmuch new 2>&1 | tee -a "${LOG_FILE}"; then
   notify_error "notmuch indexing failed - check ${LOG_FILE}"
   exit 1
 fi
