@@ -1,0 +1,15 @@
+# Nix daemon environment.
+# Determinate Nix doesn't ship the profile.d helper, so set PATH directly.
+# Upstream Nix users still get the profile.d script sourced if present.
+if [[ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]]; then
+  . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+elif [[ -d /nix/var/nix/profiles/default/bin ]]; then
+  export NIX_PROFILES="/nix/var/nix/profiles/default ${HOME}/.nix-profile"
+  export NIX_SSL_CERT_FILE=${NIX_SSL_CERT_FILE:-/etc/ssl/certs/ca-certificates.crt}
+  path=(${HOME}/.nix-profile/bin /nix/var/nix/profiles/default/bin $path)
+fi
+
+# home-manager session variables (XDG_DATA_DIRS, MANPATH, etc.)
+if [[ -f "${HOME}/.nix-profile/etc/profile.d/hm-session-vars.sh" ]]; then
+  . "${HOME}/.nix-profile/etc/profile.d/hm-session-vars.sh"
+fi

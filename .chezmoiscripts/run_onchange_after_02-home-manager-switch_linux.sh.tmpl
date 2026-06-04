@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# Reconcile home-manager with the current flake.
+# Reruns whenever flake.nix, flake.lock, common.nix, or this host's module changes.
+{{- $nixDir := joinPath .chezmoi.homeDir ".config/nix" }}
+{{- $hostFile := printf "%s/home/hosts/%s.nix" $nixDir .chezmoi.hostname }}
+{{- $flakeFile := printf "%s/flake.nix" $nixDir }}
+{{- $commonFile := printf "%s/home/common.nix" $nixDir }}
+{{- $lockFile := printf "%s/flake.lock" $nixDir }}
+{{- if stat $flakeFile }}
+# flake hash:  {{ include $flakeFile | sha256sum }}
+{{- end }}
+{{- if stat $lockFile }}
+# lock hash:   {{ include $lockFile | sha256sum }}
+{{- end }}
+{{- if stat $commonFile }}
+# common hash: {{ include $commonFile | sha256sum }}
+{{- end }}
+{{- if stat $hostFile }}
+# host hash:   {{ include $hostFile | sha256sum }}
+{{- end }}
+
+set -euo pipefail
+
+if [[ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]]; then
+  . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+fi
+
+if ! command -v home-manager >/dev/null 2>&1; then
+  echo "home-manager not available, skipping switch."
+  exit 0
+fi
+
+echo "Running home-manager switch for {{ .chezmoi.hostname }}..."
+home-manager switch --flake "${HOME}/.config/nix#{{ .chezmoi.hostname }}"
