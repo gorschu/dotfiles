@@ -1,12 +1,10 @@
 {
   description = "gorschu's portable toolbox";
 
-  nixConfig = {
-    extra-substituters = [ "https://cache.numtide.com" ];
-    extra-trusted-public-keys = [
-      "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
-    ];
-  };
+  # The Numtide cache (used for llm-agents.nix builds) is configured
+  # system-wide via /etc/nix/nix.custom.conf seeded by the install-nix
+  # bootstrap script. Keeping it out of nixConfig avoids the per-user
+  # accept-flake-config prompt on fresh hosts.
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
