@@ -1,8 +1,0 @@
-exec-once = /usr/lib/pam_kwallet_init
-exec-once = ~/.config/hypr/scripts/monitor-hotplug.sh
-{{- if lookPath "dms" }}
-exec-once = dms run
-{{- else }}
-exec-once = /usr/bin/hypridle
-{{- end }}
-exec-once = systemctl --user start hyprpolkitagent

@@ -1,3 +1,13 @@
+{{- if stat "/etc/xdg/quickshell/noctalia-shell" }}
+# Bridge mode: Noctalia handles idle (DPMS, backlight, suspend) via its own
+# IdleService. hypridle only translates logind's Lock signal into Noctalia's
+# IPC so loginctl lock-session, KDE Connect, etc. trigger the lock screen.
+general {
+    lock_cmd = qs -c noctalia-shell ipc call lockScreen lock
+    before_sleep_cmd = qs -c noctalia-shell ipc call lockScreen lock
+    after_sleep_cmd = hyprctl dispatch dpms on
+}
+{{- else }}
 general {
     lock_cmd = pidof hyprlock || hyprlock       # avoid starting multiple hyprlock instances.
     before_sleep_cmd = loginctl lock-session    # lock before suspend.
@@ -46,3 +56,4 @@ listener {
     timeout = 3600                                                    # 60 mins no matter what
     on-timeout = systemctl suspend                                    # suspend pc
 }
+{{- end }}

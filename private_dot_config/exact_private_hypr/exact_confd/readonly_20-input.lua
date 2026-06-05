@@ -1,0 +1,21 @@
+hl.config({
+    input = {
+        kb_layout  = "de",
+        kb_variant = "nodeadkeys",
+        kb_model   = "pc105",
+        kb_options = "",
+        kb_rules   = "",
+
+        numlock_by_default = true,
+        repeat_rate  = 40,
+        repeat_delay = 250,
+
+        follow_mouse = 0,
+
+        sensitivity = 0,
+
+        touchpad = {
+            natural_scroll = true,
+        },
+    },
+})
