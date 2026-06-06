@@ -15,6 +15,7 @@ in
     ./modules/network.nix
     ./modules/plasma.nix
     ./modules/systemd-packages.nix
+    ./modules/vicinae.nix
   ];
 
   home.username = "gorschu";
