@@ -1,7 +1,10 @@
-{ hostName, ... }:
+{ hostName, pkgs, ... }:
 
 let
   kdeTheme = "auto";
+  qdbusCompat = pkgs.writeShellScriptBin "qdbus" ''
+    exec qdbus6 "$@"
+  '';
   touchpadsByHost = {
     apollo = [
       {
@@ -22,6 +25,10 @@ let
   };
 in
 {
+  home.packages = [
+    qdbusCompat
+  ];
+
   programs.plasma = {
     enable = true;
     overrideConfig = true;
@@ -114,6 +121,32 @@ in
 
       lowBattery.powerProfile = "powerSaving";
     };
+
+    panels = [
+      {
+        location = "bottom";
+        height = 42;
+        hiding = "autohide";
+        floating = true;
+        widgets = [
+          "org.kde.plasma.kickoff"
+          "org.kde.plasma.pager"
+          {
+            iconTasks.launchers = [
+              "preferred://browser"
+              "applications:kitty.desktop"
+              "preferred://filemanager"
+            ];
+          }
+          "org.kde.plasma.marginsseparator"
+          "org.kde.plasma.systemtray"
+          {
+            digitalClock.calendar.showWeekNumbers = true;
+          }
+          "org.kde.plasma.showdesktop"
+        ];
+      }
+    ];
 
     krunner.shortcuts.launch = [
       "Meta+Space"
