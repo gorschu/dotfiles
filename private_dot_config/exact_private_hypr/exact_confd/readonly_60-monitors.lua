@@ -26,6 +26,6 @@ end)
 
 hl.on("monitor.removed", function(mon)
   if is_homeoffice(mon) then
-    hl.exec_cmd("hyprctl keyword monitor " .. laptop .. ",preferred,auto,1.2")
+    hl.exec_cmd("hyprctl keyword monitor " .. laptop .. ",preferred,auto,1.0")
   end
 end)
