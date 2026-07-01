@@ -1,6 +1,0 @@
-# Propagates Nix env to systemd --user so GUI sessions (KDE etc.) inherit it.
-# Terminals get the same values via Determinate's nix-daemon.sh in .zprofile.d.
-PATH={{ .chezmoi.homeDir }}/.nix-profile/bin:/nix/var/nix/profiles/default/bin:${PATH}
-NIX_PROFILES=/nix/var/nix/profiles/default {{ .chezmoi.homeDir }}/.nix-profile
-NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
-XDG_DATA_DIRS={{ .chezmoi.homeDir }}/.nix-profile/share:/nix/var/nix/profiles/default/share:${XDG_DATA_DIRS}

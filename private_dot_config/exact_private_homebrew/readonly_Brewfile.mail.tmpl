@@ -1,0 +1,19 @@
+{{- $host := index (.hosts | default dict) .chezmoi.hostname | default dict -}}
+{{ if $host.has_mail -}}
+# Mail tools
+brew "isync"
+brew "msmtp"
+brew "neomutt"
+brew "notmuch"
+brew "par"
+brew "poppler"
+brew "urlscan"
+brew "w3m"
+{{ end -}}
+{{ if $host.has_pim -}}
+# PIM tools
+brew "khal"
+brew "khard"
+brew "todoman"
+brew "vdirsyncer", restart_service: true
+{{ end -}}

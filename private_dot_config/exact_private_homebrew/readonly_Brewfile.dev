@@ -1,0 +1,13 @@
+brew "distrobox"
+brew "go"
+brew "lua"
+brew "luarocks"
+brew "rust"
+brew "rustup"
+brew "uv"
+
+brew "specify" # github speckit
+brew "gemini-cli"
+cask "codex"
+cask "claude-code"
+cask "copilot-cli"

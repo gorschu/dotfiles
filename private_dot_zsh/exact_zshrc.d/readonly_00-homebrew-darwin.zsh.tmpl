@@ -1,7 +1,0 @@
-{{ if eq .chezmoi.os "darwin" -}}
-# macOS work machine still uses Homebrew (~/homebrew install).
-# brew shellenv sets HOMEBREW_PREFIX, PATH, MANPATH, INFOPATH correctly.
-if [[ -x "${HOME}/homebrew/bin/brew" ]]; then
-  eval "$(${HOME}/homebrew/bin/brew shellenv)"
-fi
-{{- end }}

@@ -1,0 +1,150 @@
+#!/bin/bash
+
+set -euo pipefail
+
+if [[ ${XDG_CURRENT_DESKTOP:-} != "KDE" ]]; then
+  exit 0
+fi
+
+
+function _escapeShortcut() {
+  local _tab=$'\t'
+  local _str=$1
+  echo "${_str//\\t/${_tab}}"
+}
+
+_cfg="${XDG_CONFIG_HOME:-$HOME/.config}"
+
+# --- Input ---
+{{- $host := index (.hosts | default dict) .chezmoi.hostname | default dict -}}
+{{ if $host.is_laptop -}}
+# Touchpad natural scroll (laptops) — detect via DBus so device name/ID doesn't need hardcoding
+# qdbus6 segfaults when reading InputDevice properties, so we use busctl instead.
+_kwin_dev="/org/kde/KWin/InputDevice"
+_kwin_iface="org.kde.KWin.InputDevice"
+_kwin_mgr="org.kde.KWin.InputDeviceManager"
+
+_dev_prop() { busctl --user get-property org.kde.KWin "$_kwin_dev/$1" "$_kwin_iface" "$2" 2>/dev/null; }
+_dev_list=$(busctl --user get-property org.kde.KWin "$_kwin_dev" "$_kwin_mgr" devicesSysNames 2>/dev/null \
+  | sed 's/^[^ ]* //;s/"//g')
+
+for _sn in $_dev_list; do
+  [[ "$(_dev_prop "$_sn" supportsScrollTwoFinger)" == *true* ]] || continue
+
+  _tp_name=$(_dev_prop "$_sn" name | sed 's/^s "//;s/"$//')
+  _tp_vendor=$(_dev_prop "$_sn" vendor | awk '{print $2}')
+  _tp_product=$(_dev_prop "$_sn" product | awk '{print $2}')
+
+  kwriteconfig6 --file "$_cfg/kcminputrc" \
+    --group "Libinput" --group "$_tp_vendor" --group "$_tp_product" --group "$_tp_name" \
+    --key "NaturalScroll" "true"
+done
+
+# Allow laptop speakers/headphones to be boosted above 100%
+kwriteconfig6 --file "$_cfg/plasmaparc" --group "General" --key "RaiseMaximumVolume" --type bool "true"
+{{ end -}}
+# --- Keyboard Layout ---
+kwriteconfig6 --file "$_cfg/kxkbrc" --group "Layout" --key "Use" "true"
+kwriteconfig6 --file "$_cfg/kxkbrc" --group "Layout" --key "LayoutList" "de"
+kwriteconfig6 --file "$_cfg/kxkbrc" --group "Layout" --key "VariantList" "nodeadkeys"
+kwriteconfig6 --file "$_cfg/kxkbrc" --group "Layout" --key "Model" "pc105"
+kwriteconfig6 --file "$_cfg/kxkbrc" --group "Layout" --key "ResetOldOptions" "true"
+kwriteconfig6 --file "$_cfg/kxkbrc" --group "Layout" --key "Options" "caps:escape"
+
+kwriteconfig6 --file "$_cfg/kcminputrc" --group "Keyboard" --key "NumLock" 0
+kwriteconfig6 --file "$_cfg/kcminputrc" --group "Keyboard" --key "RepeatDelay" 250
+kwriteconfig6 --file "$_cfg/kcminputrc" --group "Keyboard" --key "RepeatRate" 40
+
+# --- Fonts ---
+kwriteconfig6 --file "$_cfg/kdeglobals" --group "General" --key "font"                 "Adwaita Sans,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,,0,0"
+kwriteconfig6 --file "$_cfg/kdeglobals" --group "General" --key "fixed"               "Adwaita Mono,10,-1,5,400,0,0,0,1,0,0,0,0,0,0,1,,0,0"
+kwriteconfig6 --file "$_cfg/kdeglobals" --group "General" --key "toolBarFont"         "Adwaita Sans,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,,0,0"
+kwriteconfig6 --file "$_cfg/kdeglobals" --group "General" --key "menuFont"            "Adwaita Sans,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,,0,0"
+kwriteconfig6 --file "$_cfg/kdeglobals" --group "General" --key "smallestReadableFont" "Adwaita Sans,8,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,,0,0"
+kwriteconfig6 --file "$_cfg/kdeglobals" --group "WM"      --key "activeFont"          "Adwaita Sans,10,-1,5,600,0,0,0,0,0,0,0,0,0,0,1,SemiBold,0,0"
+
+# --- Theme ---
+{{- if eq .colorscheme.kde "auto" }}
+kwriteconfig6 --file "$_cfg/kdeglobals" --group "KDE" --key "AutomaticLookAndFeel" "true"
+kwriteconfig6 --file "$_cfg/kdeglobals" --group "KDE" --delete-key "LookAndFeelPackage" 2>/dev/null || true
+{{- else }}
+kwriteconfig6 --file "$_cfg/kdeglobals" --group "KDE" --key "AutomaticLookAndFeel" "false"
+kwriteconfig6 --file "$_cfg/kdeglobals" --group "KDE" --key "LookAndFeelPackage" "{{ .colorscheme.kde }}"
+{{- end }}
+
+# --- Global Shortcuts ---
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "Window Close" "$(_escapeShortcut "Meta+Q\tAlt+F4,Alt+F4,Close Window")"
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "Overview" "$(_escapeShortcut "Meta+W\tMeta,Meta+W,Toggle Overview")"
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "services" --group "org.kde.krunner.desktop" --key "_launch" "$(_escapeShortcut "Meta+Space\tAlt+F2\tSearch")"
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "services" --group "net.local.terminal.desktop" --key "_launch" "Meta+Return"
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "services" --group "net.local.1password.desktop" --key "_launch" "Shift+Meta+Space"
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "services" --group "net.local.1password-2.desktop" --key "_launch" "Shift+Meta+P"
+# Window cycling for current app (Meta+^ like GNOME Alt+Tab for same app)
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows of Current Application" "Meta+^,Meta+^,Walk Through Windows of Current Application"
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows of Current Application (Reverse)" "Meta+Shift+^,Meta+Shift+^,Walk Through Windows of Current Application (Reverse)"
+# Disable Activities shortcut (conflicts with Meta+Q)
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "plasmashell" --key "manage activities" "none,Meta+Q,Show Activity Switcher"
+# Move lock screen to Meta+Shift+L (frees Meta+L for window focus)
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "ksmserver" --key "Lock Session" "$(_escapeShortcut "Meta+Shift+L\tScreensaver,Meta+L\tScreensaver,Lock Session")"
+# Directional window focus (vim-style)
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "Switch Window Left" "Meta+H,Meta+Alt+Left,Switch to Window to the Left"
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "Switch Window Down" "Meta+J,Meta+Alt+Down,Switch to Window Below"
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "Switch Window Up" "Meta+K,Meta+Alt+Up,Switch to Window Above"
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "Switch Window Right" "Meta+L,Meta+Alt+Right,Switch to Window to the Right"
+
+# --- Screen Lock ---
+kwriteconfig6 --file "$_cfg/kscreenlockerrc" --group "Daemon" --key "LockGrace" 30
+kwriteconfig6 --file "$_cfg/kscreenlockerrc" --group "Daemon" --key "Timeout" 10
+
+# --- KWin ---
+kwriteconfig6 --file "$_cfg/kwinrc" --group "Desktops" --key "Number" 2
+kwriteconfig6 --file "$_cfg/kwinrc" --group "Desktops" --key "Rows" 1
+kwriteconfig6 --file "$_cfg/kwinrc" --group "Effect-overview" --key "GridBorderActivate" 1
+kwriteconfig6 --file "$_cfg/kwinrc" --group "NightColor" --key "Active" "true"
+kwriteconfig6 --file "$_cfg/kwinrc" --group "Windows" --key "FocusPolicy" "FocusFollowsMouse"
+# Warp mouse cursor to focused window
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "MoveMouseToFocus" "Meta+Ö,Meta+F5,Move Mouse to Focus"
+
+# --- Baloo (file indexing) ---
+kwriteconfig6 --file "$_cfg/baloofilerc" --group "General" --key "exclude folders" "\$HOME/go/,\$HOME/mail/,\$HOME/data/mail/,\$HOME/data/projects/,\$HOME/data/general/"
+kwriteconfig6 --file "$_cfg/baloofilerc" --group "General" --key "only basic indexing" "true"
+
+# --- Power (AC) ---
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "AC" --group "Display" --key "UseProfileSpecificDisplayBrightness" "true"
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "AC" --group "Display" --key "DimDisplayIdleTimeoutSec" 600
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "AC" --group "Display" --key "TurnOffDisplayIdleTimeoutSec" 1800
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "AC" --group "Display" --key "TurnOffDisplayIdleTimeoutWhenLockedSec" 120
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "AC" --group "Performance" --key "PowerProfile" "balanced"
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "AC" --group "SuspendAndShutdown" --key "AutoSuspendAction" 1
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "AC" --group "SuspendAndShutdown" --key "AutoSuspendIdleTimeoutSec" 3600
+
+# --- Power (Battery) ---
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "Battery" --group "Display" --key "DisplayBrightness" 50
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "Battery" --group "Display" --key "UseProfileSpecificDisplayBrightness" "true"
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "Battery" --group "Display" --key "DimDisplayIdleTimeoutSec" 300
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "Battery" --group "Display" --key "TurnOffDisplayIdleTimeoutSec" 600
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "Battery" --group "Display" --key "TurnOffDisplayIdleTimeoutWhenLockedSec" 120
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "Battery" --group "Performance" --key "PowerProfile" "balanced"
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "Battery" --group "SuspendAndShutdown" --key "AutoSuspendAction" 1
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "Battery" --group "SuspendAndShutdown" --key "AutoSuspendIdleTimeoutSec" 1800
+
+# --- Power (Low Battery) ---
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "LowBattery" --group "Performance" --key "PowerProfile" "power-saver"
+
+# --- Session ---
+kwriteconfig6 --file "$_cfg/ksmserverrc" --group "General" --key "loginMode" "emptySession"
+
+# --- KWallet ---
+kwriteconfig6 --file "$_cfg/kwalletrc" --group "Wallet" --key "Close When Idle" "false"
+kwriteconfig6 --file "$_cfg/kwalletrc" --group "Wallet" --key "Close on Screensaver" "false"
+kwriteconfig6 --file "$_cfg/kwalletrc" --group "Wallet" --key "Default Wallet" "kdewallet"
+kwriteconfig6 --file "$_cfg/kwalletrc" --group "Wallet" --key "Enabled" "true"
+kwriteconfig6 --file "$_cfg/kwalletrc" --group "Wallet" --key "Idle Timeout" 10
+kwriteconfig6 --file "$_cfg/kwalletrc" --group "Wallet" --key "Launch Manager" "true"
+kwriteconfig6 --file "$_cfg/kwalletrc" --group "Wallet" --key "Leave Manager Open" "false"
+kwriteconfig6 --file "$_cfg/kwalletrc" --group "Wallet" --key "Leave Open" "true"
+kwriteconfig6 --file "$_cfg/kwalletrc" --group "Wallet" --key "Prompt on Open" "true"
+kwriteconfig6 --file "$_cfg/kwalletrc" --group "Wallet" --key "Use One Wallet" "true"
+
+# --- Apply ---
+qdbus6 org.kde.KWin /KWin reconfigure

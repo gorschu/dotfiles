@@ -1,0 +1,10 @@
+[Unit]
+Description=Sync calendars, contacts and tasks via vdirsyncer
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=15min
+AccuracySec=1min
+
+[Install]
+WantedBy=timers.target

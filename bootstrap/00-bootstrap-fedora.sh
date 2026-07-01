@@ -22,4 +22,7 @@ sudo dnf install -y just git curl jq nodejs-npm bsdtar gnupg2-scdaemon
 print_section "Installing chezmoi"
 sudo dnf install -y chezmoi
 
+print_section "Installing Homebrew"
+install_homebrew
+
 print_complete

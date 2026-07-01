@@ -1,0 +1,12 @@
+[General]
+count=1
+rules=cd4685d8-3504-4bdb-9971-de31732b7cf6
+
+[cd4685d8-3504-4bdb-9971-de31732b7cf6]
+Description=Application settings for Vuescan
+clientmachine=localhost
+fsplevel=3
+fsplevelrule=2
+wmclass=vuescan Vuescan
+wmclasscomplete=true
+wmclassmatch=1
