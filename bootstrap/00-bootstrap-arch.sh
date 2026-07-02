@@ -20,7 +20,7 @@ sudo pacman -S --needed --noconfirm just git curl jq npm libarchive gnupg python
 print_section "Installing chezmoi"
 sudo pacman -S --needed --noconfirm chezmoi
 
-print_section "Installing Homebrew"
-install_homebrew
+print_section "Checking Homebrew"
+warn_homebrew_missing
 
 print_complete

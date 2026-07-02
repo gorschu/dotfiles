@@ -9,15 +9,22 @@
 
 set -euo pipefail
 
-source "${XDG_CONFIG_HOME:-{{ .chezmoi.homeDir }}/.config}/homebrew/env"
+BREW_ENV="${XDG_CONFIG_HOME:-{{ .chezmoi.homeDir }}/.config}/homebrew/env"
+
+if [[ ! -r "${BREW_ENV}" ]]; then
+  echo "WARNING: Homebrew env missing at ${BREW_ENV}; skipping bundle."
+  exit 0
+fi
+
+source "${BREW_ENV}"
+
+if [[ ! -x "${BREW_BIN}" ]]; then
+  echo "WARNING: Homebrew not available at ${BREW_BIN}; skipping bundle."
+  exit 0
+fi
 
 FONT_DIR="${XDG_DATA_HOME:-{{ .chezmoi.homeDir }}/.local/share}/fonts"
 COMBINED_BREWFILE="${BREW_CACHE}/Brewfile.combined"
-
-if [[ ! -x "${BREW_BIN}" ]]; then
-  echo "Homebrew not available, skipping bundle."
-  exit 0
-fi
 
 # Combine all Brewfiles into one temporary file
 mkdir -p "${BREW_CACHE}"

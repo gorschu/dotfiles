@@ -8,6 +8,8 @@ set -euo pipefail
 BREW_PREFIX="/home/linuxbrew/.linuxbrew"
 if [[ -x "${BREW_PREFIX}/bin/brew" ]]; then
   export PATH="${PATH}:${BREW_PREFIX}/bin:${BREW_PREFIX}/sbin"
+else
+  echo "WARNING: Homebrew not found at ${BREW_PREFIX}; brew bundle will be skipped."
 fi
 
 # Check if chezmoi is installed
