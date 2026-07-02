@@ -1,6 +1,5 @@
 brew "b2-tools"
 brew "flarectl"
-brew "helm"
 brew "helmfile"
 brew "kubectl"
 brew "k3sup"

@@ -1,5 +1,5 @@
 [Unit]
-Description=Sync calendars, contacts and tasks via vdirsyncer
+Description=Periodically sync calendars, contacts and tasks
 
 [Timer]
 OnBootSec=2min

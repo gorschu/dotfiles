@@ -1,0 +1,12 @@
+[Unit]
+Description=Atuin daemon
+ConditionPathIsExecutable=/usr/bin/atuin
+
+[Service]
+ExecStart=/usr/bin/atuin daemon start
+Restart=on-failure
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target

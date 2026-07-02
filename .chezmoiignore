@@ -25,8 +25,8 @@ bootstrap
 .config/khal
 .config/khard
 .config/todoman
-.config/systemd/user/homebrew.vdirsyncer.service.d
-.config/systemd/user/homebrew.vdirsyncer.timer
+.config/systemd/user/vdirsyncer.service
+.config/systemd/user/vdirsyncer.timer
 {{ end }}
 {{ if not $host.has_mail }}
 .config/neomutt
