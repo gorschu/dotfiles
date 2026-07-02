@@ -3,7 +3,7 @@ Description=Atuin daemon
 ConditionPathIsExecutable=/usr/bin/atuin
 
 [Service]
-ExecStart=/usr/bin/atuin daemon start
+ExecStart=/usr/bin/atuin daemon
 Restart=on-failure
 StandardOutput=journal
 StandardError=journal
