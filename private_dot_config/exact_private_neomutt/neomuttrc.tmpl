@@ -58,7 +58,7 @@ folder-hook 'gmail/*' 'save-hook . "{{ .chezmoi.homeDir }}/mail/gmail/Archive"'
 folder-hook 'gmx/*' 'save-hook . "{{ .chezmoi.homeDir }}/mail/gmx/Archive/%[%Y]"'
 
 # Editor
-set editor = "nvim"
+set editor = "$EDITOR"
 
 # Compose settings
 set fast_reply = yes

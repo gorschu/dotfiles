@@ -1,4 +1,9 @@
+brew "go"
+brew "lua"
+brew "luarocks"
+brew "rustup-init"
 brew "specify" # github speckit
+brew "uv"
 cask "codex"
 cask "claude-code"
 cask "copilot-cli"

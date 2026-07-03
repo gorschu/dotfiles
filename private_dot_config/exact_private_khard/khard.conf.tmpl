@@ -6,5 +6,5 @@
 path = ~/.local/share/vdirsyncer/contacts/
 
 [general]
-editor = nvim
-merge_editor = nvim -d
+editor = {{ if lookPath "nvim" }}nvim{{ else }}vi{{ end }}
+merge_editor = {{ if lookPath "nvim" }}nvim -d{{ else }}vi{{ end }}
