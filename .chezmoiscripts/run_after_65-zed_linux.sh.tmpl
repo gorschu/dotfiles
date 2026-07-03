@@ -1,0 +1,87 @@
+#!/bin/bash
+# Install Zed from the upstream Linux tarball.
+
+set -euo pipefail
+
+{{- if ne .chezmoi.os "linux" }}
+exit 0
+{{- end }}
+
+if [[ -z "${DISPLAY:-}" && "${XDG_SESSION_TYPE:-}" != "x11" && "${XDG_SESSION_TYPE:-}" != "wayland" ]]; then
+  echo "Skipping Zed installation: no GUI session detected"
+  exit 0
+fi
+
+case "$(uname -m)" in
+  x86_64 | amd64)
+    ZED_ARCH="x86_64"
+    ;;
+  aarch64 | arm64)
+    ZED_ARCH="aarch64"
+    ;;
+  *)
+    echo "Skipping Zed installation: unsupported architecture $(uname -m)"
+    exit 0
+    ;;
+esac
+
+ZED_VERSION="${ZED_VERSION:-latest}"
+ZED_APP_DIR="${HOME}/.local/zed.app"
+ZED_BIN="${HOME}/.local/bin/zed"
+ZED_DESKTOP_ID="dev.zed.Zed"
+ZED_DESKTOP_FILE="${HOME}/.local/share/applications/${ZED_DESKTOP_ID}.desktop"
+
+ensure_zed_links() {
+  mkdir -p "${HOME}/.local/bin" "${HOME}/.local/share/applications"
+
+  if [[ -x "${ZED_APP_DIR}/bin/zed" ]]; then
+    ln -sf "${ZED_APP_DIR}/bin/zed" "${ZED_BIN}"
+  elif [[ -x "${ZED_APP_DIR}/bin/cli" ]]; then
+    ln -sf "${ZED_APP_DIR}/bin/cli" "${ZED_BIN}"
+  else
+    return 1
+  fi
+
+  local src_dir="${ZED_APP_DIR}/share/applications"
+  if [[ -f "${src_dir}/${ZED_DESKTOP_ID}.desktop" ]]; then
+    cp "${src_dir}/${ZED_DESKTOP_ID}.desktop" "${ZED_DESKTOP_FILE}"
+  elif [[ -f "${src_dir}/zed.desktop" ]]; then
+    cp "${src_dir}/zed.desktop" "${ZED_DESKTOP_FILE}"
+  fi
+
+  if [[ -f "${ZED_DESKTOP_FILE}" ]]; then
+    sed -i "s|Icon=zed|Icon=${ZED_APP_DIR}/share/icons/hicolor/512x512/apps/zed.png|g" "${ZED_DESKTOP_FILE}"
+    sed -i "s|Exec=zed|Exec=${ZED_APP_DIR}/bin/zed|g" "${ZED_DESKTOP_FILE}"
+  fi
+}
+
+if [[ -x "${ZED_APP_DIR}/bin/zed" || -x "${ZED_APP_DIR}/bin/cli" ]]; then
+  ensure_zed_links
+  echo "Zed is already installed"
+  exit 0
+fi
+
+if ! command -v curl >/dev/null 2>&1; then
+  echo "Skipping Zed installation: curl is not available"
+  exit 0
+fi
+
+TEMP_DIR="$(mktemp -d "${TMPDIR:-/tmp}/zed-XXXXXX")"
+cleanup() {
+  rm -rf "${TEMP_DIR}"
+}
+trap cleanup EXIT
+
+ZED_TARBALL="${TEMP_DIR}/zed-linux-${ZED_ARCH}.tar.gz"
+ZED_URL="https://cloud.zed.dev/releases/stable/${ZED_VERSION}/download?asset=zed&arch=${ZED_ARCH}&os=linux&source=chezmoi"
+
+echo "Downloading Zed ${ZED_VERSION} for linux-${ZED_ARCH}..."
+curl -fsSL "${ZED_URL}" -o "${ZED_TARBALL}"
+
+rm -rf "${ZED_APP_DIR}"
+mkdir -p "${HOME}/.local"
+tar -xzf "${ZED_TARBALL}" -C "${HOME}/.local"
+
+ensure_zed_links
+
+echo "Zed installed at ${ZED_APP_DIR}"
