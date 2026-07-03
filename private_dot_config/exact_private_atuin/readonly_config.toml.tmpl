@@ -32,7 +32,8 @@ sync_frequency = "10m"
 
 ## which search mode to use
 ## possible values: prefix, fulltext, fuzzy, skim
-search_mode = "daemon-fuzzy"
+#search_mode = "daemon-fuzzy"
+search_mode = "fuzzy"
 
 ## which filter mode to use
 ## possible values: global, host, session, directory
@@ -129,13 +130,6 @@ keymap_mode = "vim-insert"
 
 [sync]
 records = true
-
-{{ if ne .chezmoi.os "darwin" }}
-[daemon]
-enabled = true
-{{ $xdg := env "XDG_RUNTIME_DIR" }}
-socket_path = {{ with $xdg }}"{{ $xdg }}/atuin.sock"{{ end }}
-{{ end }}
 
 [search]
 ## The list of enabled filter modes, in order of priority.

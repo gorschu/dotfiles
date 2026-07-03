@@ -11,7 +11,6 @@ services:
       - app-com.mitchellh.ghostty.service
       - podman.socket
       - podman-auto-update.timer
-      - atuin-daemon.service
       - syncthing.service
       - vdirsyncer.timer
       - mail-sync.timer
