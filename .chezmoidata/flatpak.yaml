@@ -6,6 +6,5 @@ common:
       - eu.betterbird.Betterbird
       - com.hamrick.VueScan
       - md.obsidian.Obsidian
-      - io.mpv.Mpv
       - org.gimp.GIMP
       - org.libreoffice.LibreOffice
