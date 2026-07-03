@@ -1,5 +1,5 @@
 brew "specify" # github speckit
-brew "gemini-cli"
 cask "codex"
 cask "claude-code"
 cask "copilot-cli"
+brew "lazydocker"
