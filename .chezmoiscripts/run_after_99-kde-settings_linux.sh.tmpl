@@ -147,4 +147,5 @@ kwriteconfig6 --file "$_cfg/kwalletrc" --group "Wallet" --key "Prompt on Open" "
 kwriteconfig6 --file "$_cfg/kwalletrc" --group "Wallet" --key "Use One Wallet" "true"
 
 # --- Apply ---
-qdbus6 org.kde.KWin /KWin reconfigure
+{{- $qdbus := lookPath "qdbus-qt6" | default (lookPath "qdbus6") | default "qdbus6" }}
+{{ $qdbus }} org.kde.KWin /KWin reconfigure
