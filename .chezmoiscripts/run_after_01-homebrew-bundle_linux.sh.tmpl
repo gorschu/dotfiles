@@ -46,8 +46,10 @@ if [[ ! -s "${COMBINED_BREWFILE}" ]]; then
   exit 0
 fi
 
-echo "Running brew bundle with cleanup..."
-"${BREW_BIN}" bundle --file "${COMBINED_BREWFILE}" --cleanup
+echo "Running brew bundle..."
+"${BREW_BIN}" bundle --file "${COMBINED_BREWFILE}"
+echo "Running brew bundle cleanup..."
+"${BREW_BIN}" bundle --file "${COMBINED_BREWFILE}" cleanup --force
 
 if [[ -d "${FONT_DIR}" ]]; then
   echo "Refreshing font cache..."
