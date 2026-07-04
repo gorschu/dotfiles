@@ -1,14 +1,74 @@
 #!/usr/bin/env bash
 
-# import and trust our GPG Key
-GPGKEY=DEE550054AA972F6
-GPGKEY_FINGERPRINT=0A47650A15E4F0F4003EC450DEE550054AA972F6
+set -euo pipefail
 
-gpg --keyserver keyserver.ubuntu.com --receive-keys "$GPGKEY"
-echo -e "5\ny\n" | gpg --command-fd 0 --expert --edit-key "$GPGKEY_FINGERPRINT" trust
+GPGKEY="{{ .gpgkey }}"
+GPGKEY_FINGERPRINT="{{ get . "gpgkey_fingerprint" | default .gpgkey }}"
 
-# power up yubikey if present
-! ykman info 2>&1 | grep -q -i error && gpg --card-status
+OP_GPG_VAULT="{{ get . "gpg_bootstrap_vault" | default "Private" }}"
+OP_GPG_ITEM="{{ get . "gpg_bootstrap_item" | default "GPG Key Personal" }}"
+OP_GPG_PUBLIC_FIELD="{{ get . "gpg_bootstrap_public_field" | default "public_cert" }}"
+OP_GPG_SECRET_SUBKEYS_FIELD="{{ get . "gpg_bootstrap_secret_subkeys_field" | default "secret_subkeys" }}"
+OP_GPG_OWNERTRUST_FIELD="{{ get . "gpg_bootstrap_ownertrust_field" | default "ownertrust" }}"
 
-GPG_TTY=$(tty)
-export GPG_TTY
+if tty_path=$(tty 2>/dev/null); then
+  export GPG_TTY="$tty_path"
+fi
+
+if ! command -v op >/dev/null; then
+  echo "ERROR: 1Password CLI (op) is required to bootstrap GPG keys."
+  exit 1
+fi
+
+if ! command -v gpg >/dev/null; then
+  echo "ERROR: gpg is required to bootstrap GPG keys."
+  exit 1
+fi
+
+op_ready() {
+  timeout 5 op whoami </dev/null >/dev/null 2>&1 && return 0
+  timeout 20 op signin </dev/null >/dev/null 2>&1 || return 1
+  timeout 5 op whoami </dev/null >/dev/null 2>&1
+}
+
+if ! op_ready; then
+  echo "ERROR: Not signed in to 1Password. Sign in first, then re-run chezmoi apply."
+  exit 1
+fi
+
+tmpdir=$(mktemp -d)
+chmod 700 "$tmpdir"
+cleanup() {
+  rm -rf "$tmpdir"
+}
+trap cleanup EXIT
+
+fetch_field() {
+  local field="$1"
+  local output="$2"
+
+  echo "Fetching ${field} from 1Password item ${OP_GPG_ITEM}..."
+  op read "op://${OP_GPG_VAULT}/${OP_GPG_ITEM}/${field}" \
+    --out-file "$output" \
+    --force >/dev/null
+  chmod 600 "$output"
+}
+
+fetch_field "$OP_GPG_PUBLIC_FIELD" "$tmpdir/public.asc"
+fetch_field "$OP_GPG_SECRET_SUBKEYS_FIELD" "$tmpdir/secret-subkeys.asc"
+fetch_field "$OP_GPG_OWNERTRUST_FIELD" "$tmpdir/ownertrust.txt"
+
+gpgconf --kill gpg-agent 2>/dev/null || true
+gpgconf --kill keyboxd 2>/dev/null || true
+
+echo "Importing GPG public certificate and secret subkeys..."
+gpg --import "$tmpdir/public.asc"
+gpg --import "$tmpdir/secret-subkeys.asc"
+gpg --import-ownertrust "$tmpdir/ownertrust.txt"
+
+if ! gpg --list-secret-keys "$GPGKEY_FINGERPRINT" >/dev/null 2>&1; then
+  echo "ERROR: GPG secret subkeys for ${GPGKEY} were not imported correctly."
+  exit 1
+fi
+
+echo "GPG bootstrap import complete for ${GPGKEY}."

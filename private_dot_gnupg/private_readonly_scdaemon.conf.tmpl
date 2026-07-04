@@ -1,7 +1,8 @@
 {{ if ne .chezmoi.os "darwin" }}
 {{ if eq .chezmoi.osRelease.id "fedora" }}
-# prefer the built-in CCID driver so gpg-agent owns the reader and caches PINs properly
-# (leaving disable-ccid unset keeps pcscd out of the way)
+# Fedora desktops commonly have pcscd around already. If smartcard commands are
+# used, go through PC/SC instead of having scdaemon claim the CCID device.
+disable-ccid
 # let the card relock itself after 10 minutes of inactivity
 card-timeout 600
 {{ end }}

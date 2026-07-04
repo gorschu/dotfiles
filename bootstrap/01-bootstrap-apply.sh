@@ -19,14 +19,6 @@ if ! command -v chezmoi >/dev/null; then
   exit 1
 fi
 
-# GPG/Yubikey setup
-if command -v ykman >/dev/null && ykman list 2>/dev/null | grep -qi yubikey; then
-  echo "Yubikey detected, resetting GPG setup"
-  rm -rf "${HOME}/.gnupg"
-  pkill gpg-agent 2>/dev/null || true
-  pkill keyboxd 2>/dev/null || true
-fi
-
 project_root="$(git rev-parse --show-toplevel)"
 
 echo "Applying dotfiles..."

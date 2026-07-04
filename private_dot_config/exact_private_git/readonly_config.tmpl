@@ -42,7 +42,7 @@
 	name = Gordon Schulz
 	email = {{ $secrets.personal.gorschu.email }}
 {{ end }}
-	signingkey = {{ .gpgkey }}
+	signingkey = {{ get . "gpg_signing_key" | default .gpgkey }}
 
 [github]
 	user = gorschu
