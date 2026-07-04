@@ -1,8 +1,19 @@
 #!/bin/bash
 # 00-bootstrap-lib.sh - Shared functions for bootstrap scripts
 
-# Detect current OS
+# Detect current OS distributor id
 detect_os() {
+  local id
+
+  if command -v lsb_release >/dev/null 2>&1; then
+    if id=$(lsb_release --id --short 2>/dev/null) && [[ -n "$id" ]]; then
+      id=${id,,}
+      id=${id//[[:space:]]/}
+      echo "$id"
+      return 0
+    fi
+  fi
+
   if [[ -f /etc/os-release ]]; then
     # shellcheck source=/dev/null
     source /etc/os-release
@@ -37,7 +48,7 @@ print_complete() {
   echo -e "\t --- Bootstrap Complete ---"
   echo ""
   echo -e "\tNext steps:"
-  echo -e "\t1. Apply dotfiles: ${ROOT}/01-bootstrap-apply.sh"
+  echo -e "\t1. Apply dotfiles: ${ROOT}/bootstrap/01-bootstrap-apply.sh"
   echo ""
 }
 

@@ -21,7 +21,16 @@ state:
 
 # Bootstrap fresh system (1Password + chezmoi)
 bootstrap:
-    ./bootstrap.sh
+    @bash -euo pipefail -c ' \
+      source ./bootstrap/00-bootstrap-lib.sh; \
+      os="$(detect_os)"; \
+      script="./bootstrap/00-bootstrap-${os}.sh"; \
+      if [[ ! -x "$script" ]]; then \
+        echo "ERROR: Unsupported OS: $os ($script not found or not executable)" >&2; \
+        exit 1; \
+      fi; \
+      exec "$script" \
+    '
 
 pre-commit-install:
     prek install --hook-type commit-msg
