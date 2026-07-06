@@ -1,5 +1,10 @@
-{{- if and (eq .chezmoi.os "linux") (eq (get .chezmoi.osRelease "id") "arch") -}}
+{{- $osID := get .chezmoi.osRelease "id" -}}
+{{- if and (eq .chezmoi.os "linux") (or (eq $osID "arch") (eq $osID "fedora")) -}}
 # Post-update commands
 [post_commands]
+{{- if eq $osID "arch" }}
 "System Ansible Sync" = "cd ~/Projects/ansible-workstations-arch/ansible && git pull && ./run-playbook.sh -l {{ .chezmoi.hostname }}"
-{{- end -}}
+{{- else if eq $osID "fedora" }}
+"System Ansible Sync" = "cd ~/Projects/ansible-workstations-fedora && git pull && ./run-playbook.sh -l {{ .chezmoi.hostname }}"
+{{- end }}
+{{- end }}

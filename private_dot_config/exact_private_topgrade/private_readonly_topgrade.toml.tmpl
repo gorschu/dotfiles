@@ -1,9 +1,14 @@
 {{- $configHome := env "XDG_CONFIG_HOME" | default (joinPath .chezmoi.homeDir ".config") }}
+{{- $topgradeD := joinPath $configHome "topgrade/topgrade.d" }}
+{{- $sourceTopgradeD := joinPath .chezmoi.sourceDir "private_dot_config/exact_private_topgrade/topgrade.d" }}
+{{- $homebrewSystemdDropin := or (stat (joinPath $sourceTopgradeD "post_commands-homebrew-systemd.toml.tmpl")) (stat (joinPath $sourceTopgradeD "post_commands-homebrew-systemd.toml")) }}
 # Include dropin configuration files from topgrade.d/
 [include]
 paths = [
-  "{{ joinPath $configHome "topgrade/topgrade.d/post_commands-ansible.toml" }}",
-  "{{ joinPath $configHome "topgrade/topgrade.d/post_commands-homebrew-systemd.toml" }}",
+  "{{ joinPath $topgradeD "post_commands-ansible.toml" }}",
+{{- if $homebrewSystemdDropin }}
+  "{{ joinPath $topgradeD "post_commands-homebrew-systemd.toml" }}",
+{{- end }}
 ]
 
 [misc]
