@@ -29,6 +29,9 @@ d       %h/data/media/pictures/synced                       0700  gorschu  gorsc
 d       %h/data/media/videos                                0700  gorschu  gorschu  -   -
 d       %h/data/projects/synced                             0700  gorschu  gorschu  -   -
 d       %h/data/synced                                      0700  gorschu  gorschu  -   -
+d       %h/data/cloud                                       0700  gorschu  gorschu  -   -
+d       %h/data/cloud/mega                                  0700  gorschu  gorschu  -   -
+d       %h/data/cloud/insync                                0700  gorschu  gorschu  -   -
 {{ end }}{{ end }}
 
 {{ with joinPath .chezmoi.homeDir "data/.ready" | stat }}
@@ -56,6 +59,10 @@ L+      %h/Documents                                        -     -        -    
 L+      %h/Pictures                                         -     -        -        -   %h/data/media/pictures
 L+      %h/Videos                                           -     -        -        -   %h/data/media/videos
 L+      %h/Projects                                         -     -        -        -   %h/data/projects
+L+      %h/Cloud/mega                                       -     -        -        -   %h/data/cloud/mega
+L+      %h/MEGA                                             -     -        -        -   %h/Cloud/mega
+L+      %h/Cloud/insync                                     -     -        -        -   %h/data/cloud/insync
+L+      %h/Insync                                           -     -        -        -   %h/Cloud/insync
 
 # Synced view - links to synced subdirs in data/
 L+      %h/synced                                           -     -        -        -   %h/data/synced
