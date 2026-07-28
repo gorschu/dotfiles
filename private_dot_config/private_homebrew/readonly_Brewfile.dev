@@ -1,3 +1,5 @@
+brew "forgejo-cli"
+brew "gh"
 brew "go"
 brew "lua"
 brew "luarocks"
