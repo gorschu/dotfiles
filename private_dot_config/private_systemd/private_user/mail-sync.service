@@ -6,6 +6,7 @@ ConditionPathIsDirectory=%h/data/mail
 
 [Service]
 Type=oneshot
+RestrictAddressFamilies=AF_UNIX AF_INET
 ExecStart=%h/.local/bin/mail-sync
 StandardOutput=journal
 StandardError=journal
