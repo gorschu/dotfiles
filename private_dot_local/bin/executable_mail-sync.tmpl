@@ -44,11 +44,22 @@ elif ! getent hosts {{ range .mail.accounts }}{{ .imap_host }}{{ break }}{{ end 
   exit 0
 fi
 
-# Run mbsync for all accounts
-if ! {{ lookPath "mbsync" | default (printf "%s/bin/mbsync" .homebrew.prefix) }} -a 2>&1 | tee -a "${LOG_FILE}"; then
-  notify_error "mbsync failed - check ${LOG_FILE}"
-  exit 1
-fi
+# Run mbsync for all accounts, retrying transient network failures before
+# notifying the user.
+MBSYNC_ATTEMPTS=3
+for ((attempt = 1; attempt <= MBSYNC_ATTEMPTS; attempt++)); do
+  if {{ lookPath "mbsync" | default (printf "%s/bin/mbsync" .homebrew.prefix) }} -a 2>&1 | tee -a "${LOG_FILE}"; then
+    break
+  fi
+
+  if ((attempt == MBSYNC_ATTEMPTS)); then
+    notify_error "mbsync failed after ${MBSYNC_ATTEMPTS} attempts - check ${LOG_FILE}"
+    exit 1
+  fi
+
+  log "mbsync attempt ${attempt}/${MBSYNC_ATTEMPTS} failed; retrying in 15 seconds"
+  sleep 15
+done
 
 log "mbsync completed, running notmuch"
 
