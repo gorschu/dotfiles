@@ -1,0 +1,47 @@
+#!/bin/sh
+# Open a neomutt attachment in its desktop application.
+#
+# neomutt deletes the temp file as soon as the viewer returns, so we copy the
+# attachment somewhere stable first and detach the viewer. Called from
+# mailcap.gui as: open-external %s %t
+
+set -eu
+
+src=$1
+mime=${2:-application/octet-stream}
+
+case $mime in
+application/pdf) ext=pdf ;;
+image/png) ext=png ;;
+image/jpeg) ext=jpg ;;
+image/gif) ext=gif ;;
+image/webp) ext=webp ;;
+image/svg+xml) ext=svg ;;
+text/html) ext=html ;;
+text/calendar) ext=ics ;;
+text/csv) ext=csv ;;
+text/plain) ext=txt ;;
+application/zip) ext=zip ;;
+application/vnd.openxmlformats-officedocument.wordprocessingml.document) ext=docx ;;
+application/vnd.openxmlformats-officedocument.spreadsheetml.sheet) ext=xlsx ;;
+application/vnd.openxmlformats-officedocument.presentationml.presentation) ext=pptx ;;
+application/msword) ext=doc ;;
+application/vnd.ms-excel) ext=xls ;;
+application/vnd.oasis.opendocument.text) ext=odt ;;
+application/vnd.oasis.opendocument.spreadsheet) ext=ods ;;
+*) ext=${src##*.} ;;
+esac
+
+dir=$(mktemp -d "${XDG_RUNTIME_DIR:-/tmp}/neomutt-attach.XXXXXX")
+base=$(basename "$src")
+case $base in
+*.*) dest=$dir/$base ;;
+*) dest=$dir/$base.$ext ;;
+esac
+
+cp -- "$src" "$dest"
+chmod 600 "$dest"
+
+setsid xdg-open "$dest" >/dev/null 2>&1 &
+
+# vim: set ft=sh:

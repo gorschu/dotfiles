@@ -43,8 +43,11 @@ bind pager l view-attachments
 bind pager H display-toggle-weed
 
 # Attachments
-bind attach <return> view-mailcap
-bind attach l view-mailcap
+# view-pager forces the copiousoutput entry (pdftotext, w3m, pandoc);
+# view-mailcap takes the first matching entry, which is the desktop app
+bind attach <return> view-pager
+bind attach l view-pager
+bind attach o view-mailcap
 bind attach h exit
 
 # Notmuch tag modification

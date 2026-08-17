@@ -1,18 +1,33 @@
-# HTML - view in browser or use w3m for inline
-text/html; xdg-open %s ; nametemplate=%s.html ; needstrict
-text/html; w3m -I %{charset} -T text/html; copiousoutput
+# Ordering matters: copiousoutput entries MUST come last per type.
+# NeoMutt picks entries as follows:
+#   inline / auto_view  -> only copiousoutput entries are considered
+#   <view-pager>        -> first copiousoutput entry (bound to <return>/l)
+#   <view-mailcap>      -> first matching entry, period (bound to o)
+# So the GUI viewer goes first and the text preview goes last.
+#
+# open-external copies the attachment out of neomutt's temp dir (which is
+# deleted the moment the viewer returns) and detaches the desktop app.
+
+# HTML
+text/html; ~/.config/neomutt/scripts/open-external %s %t
+text/html; w3m -I %{charset} -T text/html; copiousoutput; nametemplate=%s.html
 
 # Images
-image/*; xdg-open %s ; needstrict
+image/*; ~/.config/neomutt/scripts/open-external %s %t
 
-# PDF - auto-view as text
-application/pdf; pdftotext -layout %s -; copiousoutput
-application/pdf; xdg-open %s
+# PDF
+application/pdf; ~/.config/neomutt/scripts/open-external %s %t
+application/pdf; pdftotext -layout %s -; copiousoutput; nametemplate=%s.pdf
 
 # Office documents
-application/vnd.openxmlformats-officedocument.wordprocessingml.document; pandoc -f docx -t plain %s; copiousoutput
-application/vnd.oasis.opendocument.text; pandoc -f odt -t plain %s; copiousoutput
-application/msword; pandoc -f doc -t plain %s; copiousoutput
+application/vnd.openxmlformats-officedocument.wordprocessingml.document; ~/.config/neomutt/scripts/open-external %s %t
+application/vnd.openxmlformats-officedocument.wordprocessingml.document; pandoc -f docx -t plain %s; copiousoutput; nametemplate=%s.docx
 
-# Fallback to xdg-open
-*/*; xdg-open %s ; needstrict
+application/vnd.oasis.opendocument.text; ~/.config/neomutt/scripts/open-external %s %t
+application/vnd.oasis.opendocument.text; pandoc -f odt -t plain %s; copiousoutput; nametemplate=%s.odt
+
+application/msword; ~/.config/neomutt/scripts/open-external %s %t
+application/msword; pandoc -f doc -t plain %s; copiousoutput; nametemplate=%s.doc
+
+# Fallback
+*/*; ~/.config/neomutt/scripts/open-external %s %t
