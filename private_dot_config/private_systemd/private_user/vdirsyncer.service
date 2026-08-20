@@ -1,7 +1,7 @@
 [Unit]
 Description=Sync calendars, contacts and tasks via vdirsyncer
 ConditionPathExists=%h/.config/vdirsyncer/config
-ConditionPathIsExecutable=/usr/bin/vdirsyncer
+ConditionFileIsExecutable=/usr/bin/vdirsyncer
 
 [Service]
 Type=oneshot
