@@ -6,3 +6,4 @@ common:
       - eu.betterbird.Betterbird
       - com.hamrick.VueScan
       - md.obsidian.Obsidian
+      - org.cryptomator.Cryptomator
