@@ -45,6 +45,7 @@ bin
 !.config/ghostty
 .config/chezmoi/personal
 !.config/git
+!.config/k9s
 !.config/lazygit
 !.config/lazydocker
 !.config/nvim
