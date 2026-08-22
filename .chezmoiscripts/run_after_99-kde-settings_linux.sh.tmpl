@@ -113,7 +113,11 @@ kwriteconfig6 --file "$_cfg/baloofilerc" --group "General" --key "only basic ind
 kwriteconfig6 --file "$_cfg/powerdevilrc" --group "AC" --group "Display" --key "UseProfileSpecificDisplayBrightness" "true"
 kwriteconfig6 --file "$_cfg/powerdevilrc" --group "AC" --group "Display" --key "DimDisplayIdleTimeoutSec" 600
 kwriteconfig6 --file "$_cfg/powerdevilrc" --group "AC" --group "Display" --key "TurnOffDisplayIdleTimeoutSec" 1800
+{{- if $host.is_laptop }}
 kwriteconfig6 --file "$_cfg/powerdevilrc" --group "AC" --group "Display" --key "TurnOffDisplayIdleTimeoutWhenLockedSec" 120
+{{- else }}
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "AC" --group "Display" --key "TurnOffDisplayIdleTimeoutWhenLockedSec" 1800
+{{- end }}
 kwriteconfig6 --file "$_cfg/powerdevilrc" --group "AC" --group "Performance" --key "PowerProfile" "balanced"
 kwriteconfig6 --file "$_cfg/powerdevilrc" --group "AC" --group "SuspendAndShutdown" --key "AutoSuspendAction" 1
 kwriteconfig6 --file "$_cfg/powerdevilrc" --group "AC" --group "SuspendAndShutdown" --key "AutoSuspendIdleTimeoutSec" 3600
