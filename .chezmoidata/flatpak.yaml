@@ -7,3 +7,4 @@ common:
       - com.hamrick.VueScan
       - md.obsidian.Obsidian
       - org.cryptomator.Cryptomator
+      - com.spotify.Client
