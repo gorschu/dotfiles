@@ -1,0 +1,5 @@
+brew "specify" # github speckit
+cask "codex"
+cask "claude-code"
+cask "copilot-cli"
+cask "antigravity-cli"
