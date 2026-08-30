@@ -2,7 +2,7 @@
 {{- $host := index (.hosts | default dict) .chezmoi.hostname | default dict -}}
 {{ with joinPath .chezmoi.homeDir "data/games" | stat }}
 L+      %h/Games                      -     -        -        -   %h/data/games
-{{- if $host.has_gaming }}
+{{- if (index $host "has_gaming") }}
 d       %h/data/games/xlcore          0700  gorschu  gorschu  -   -
 L+      %h/.xlcore                    -     -        -        -   %h/data/games/xlcore
 {{- end }}
