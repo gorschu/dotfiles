@@ -1,0 +1,13 @@
+{{- $home := .chezmoi.homeDir -}}
+# AI tool state on the data partition (see user-tmpfiles.d/10-data.conf).
+# Needs to live here, not just in the shell rc, so GUI apps launched by the
+# desktop session pick it up too.
+{{- with joinPath $home "data/general/ai/claude" | stat }}
+CLAUDE_CONFIG_DIR={{ $home }}/.config/claude
+{{- end }}
+{{- with joinPath $home "data/general/ai/codex" | stat }}
+CODEX_HOME={{ $home }}/.config/codex
+{{- end }}
+{{- with joinPath $home "data/general/ai/copilot" | stat }}
+COPILOT_HOME={{ $home }}/.config/copilot
+{{- end }}
