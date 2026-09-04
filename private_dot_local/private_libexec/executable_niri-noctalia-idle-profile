@@ -1,0 +1,92 @@
+#!/bin/bash
+
+# Generate Noctalia's Niri-session idle policy from the current UPower state:
+# lock after 10 minutes, then turn off the screen and suspend sooner on battery
+# than on AC. With --monitor, rewrite the profile whenever the power source changes.
+
+set -euo pipefail
+
+if (( $# < 1 || $# > 2 )); then
+    echo "usage: niri-noctalia-idle-profile IDLE_CONFIG [--monitor]" >&2
+    exit 2
+fi
+
+readonly idle_config="$1"
+readonly mode="${2:-}"
+
+if [[ -n "$mode" && "$mode" != "--monitor" ]]; then
+    echo "niri-noctalia-idle-profile: unknown option: ${mode}" >&2
+    exit 2
+fi
+
+read_power_source() {
+    local property
+
+    if ! property="$(busctl --system get-property \
+        org.freedesktop.UPower \
+        /org/freedesktop/UPower \
+        org.freedesktop.UPower \
+        OnBattery 2>/dev/null)"; then
+        # Conservative fallback for a laptop if UPower is temporarily absent.
+        printf '%s\n' battery
+        return
+    fi
+
+    if [[ "$property" == "b true" ]]; then
+        printf '%s\n' battery
+    else
+        printf '%s\n' ac
+    fi
+}
+
+write_profile() {
+    local idle_directory power_source screen_off_timeout suspend_timeout temporary
+
+    power_source="$(read_power_source)"
+    if [[ "$power_source" == "battery" ]]; then
+        screen_off_timeout=600
+        suspend_timeout=1800
+    else
+        screen_off_timeout=1800
+        suspend_timeout=3600
+    fi
+
+    idle_directory="$(dirname "$idle_config")"
+    if [[ ! -d "$idle_directory" ]]; then
+        install -d -m 0700 "$idle_directory"
+    fi
+    temporary="$(mktemp "${idle_config}.XXXXXX")"
+
+    {
+        printf '%s\n' '[idle]'
+        printf '%s\n' 'behavior_order = ["lock", "screen-off", "suspend"]'
+        printf '%s\n\n' 'pre_action_fade_seconds = 2.0'
+        printf '%s\n' '[idle.behavior.lock]'
+        printf '%s\n' 'timeout = 600'
+        printf '%s\n' 'action = "lock"'
+        printf '%s\n\n' 'enabled = true'
+        printf '%s\n' '[idle.behavior.screen-off]'
+        printf 'timeout = %s\n' "$screen_off_timeout"
+        printf '%s\n' 'action = "screen_off"'
+        printf '%s\n\n' 'enabled = true'
+        printf '%s\n' '[idle.behavior.suspend]'
+        printf 'timeout = %s\n' "$suspend_timeout"
+        printf '%s\n' 'action = "lock_and_suspend"'
+        printf '%s\n' 'enabled = true'
+    } >"$temporary"
+
+    if [[ -r "$idle_config" ]] && cmp -s "$temporary" "$idle_config"; then
+        rm -f "$temporary"
+    else
+        chmod 0600 "$temporary"
+        mv -f "$temporary" "$idle_config"
+    fi
+}
+
+write_profile
+
+if [[ "$mode" == "--monitor" ]]; then
+    while IFS= read -r _event; do
+        write_profile
+    done < <(upower --monitor)
+fi

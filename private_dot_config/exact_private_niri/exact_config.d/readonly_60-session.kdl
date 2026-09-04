@@ -1,0 +1,34 @@
+// Reuse Plasma's Qt integration and application-menu layout without exporting
+// either setting into Plasma or other graphical sessions.
+environment {
+    QT_QPA_PLATFORMTHEME "kde"
+    XDG_MENU_PREFIX "plasma-"
+}
+
+gestures {
+    hot-corners {
+        off
+    }
+}
+
+hotkey-overlay {
+    skip-at-startup
+}
+
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+// Kanshi reacts to connector profiles, while Niri owns lid-driven panel power.
+// Normalize migrated columns only after Niri reports the destination ready.
+switch-events {
+    lid-close {
+        spawn "sh" "-c" r#"exec "$HOME/.local/libexec/niri-output-profile" DP-1 33.333% eDP-1"#;
+    }
+    lid-open {
+        spawn "sh" "-c" r#"exec "$HOME/.local/libexec/niri-output-profile" eDP-1 100%"#;
+    }
+}
+
+// Required for activation tokens from shell notification actions on Niri.
+debug {
+    honor-xdg-activation-with-invalid-serial
+}

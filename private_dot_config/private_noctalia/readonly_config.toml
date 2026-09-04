@@ -1,0 +1,90 @@
+# Noctalia owns only Niri's shell surfaces. KDE remains authoritative for
+# application appearance, and Vicinae owns launcher and clipboard history.
+
+[shell]
+setup_wizard_enabled = false
+niri_overview_type_to_launch_enabled = false
+polkit_agent = false
+launch_apps_as_systemd_services = false
+clipboard_enabled = false
+
+[wallpaper]
+enabled = false
+
+[theme]
+mode = "dark"
+source = "builtin"
+builtin = "Catppuccin"
+
+[theme.templates]
+enable_builtin_templates = false
+builtin_ids = []
+enable_community_templates = false
+community_ids = []
+
+[notification]
+enable_daemon = true
+position = "top_right"
+layer = "top"
+offset_x = 10
+offset_y = 42
+
+[osd]
+position = "top_right"
+offset_x = 10
+offset_y = 42
+
+[lockscreen]
+enabled = true
+blurred_desktop = false
+tint_intensity = 0.35
+
+[bar]
+order = ["work"]
+
+[bar.work]
+position = "top"
+enabled = true
+auto_hide = false
+reserve_space = true
+layer = "top"
+thickness = 32
+background_opacity = 1.0
+border_width = 0.0
+shadow = false
+radius = 0
+margin_ends = 0
+margin_edge = 0
+padding = 10
+widget_spacing = 5
+capsule = false
+start = ["workspaces", "active_window"]
+center = ["date", "clock"]
+end = ["tray", "notifications", "network", "bluetooth", "volume", "brightness", "battery", "control-center", "session"]
+
+[widget.date]
+type = "clock"
+format = "{:%a %d %b · CW %V}"
+
+[widget.workspaces]
+style = "regular"
+show_labels = true
+label_source = "id"
+hide_when_empty = false
+show_all_outputs = false
+focused_color = "primary"
+occupied_color = "secondary"
+empty_color = "surface_variant"
+urgent_color = "error"
+
+[widget.active_window]
+min_length = 80
+max_length = 420
+title_scroll = "on_hover"
+display = "icon_and_text"
+
+[dock]
+enabled = false
+
+[desktop_widgets]
+enabled = false

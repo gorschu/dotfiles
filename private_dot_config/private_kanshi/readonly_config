@@ -1,0 +1,14 @@
+# Exact connected-output matching keeps the laptop-only profile from matching
+# while the docked display is present. Kanshi configures layout but deliberately
+# leaves eDP-1 power to Niri's built-in lid handling: on while open, off while
+# closed, and restored immediately when the lid opens.
+profile docked {
+    output DP-1 enable mode preferred position 0,0 scale 1
+    output eDP-1 mode preferred position 5120,0 scale 1
+    exec $HOME/.local/libexec/niri-output-profile DP-1 33.333% eDP-1
+}
+
+profile mobile {
+    output eDP-1 mode preferred position 0,0 scale 1
+    exec $HOME/.local/libexec/niri-output-profile eDP-1 100%
+}

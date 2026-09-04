@@ -1,0 +1,132 @@
+#!/bin/bash
+
+# Wait for Niri's output and lid state to settle after a profile change, then
+# reapply the target output's width policy to migrated tiled columns and move
+# focus away from any empty workspace Niri left active during the transition.
+
+set -euo pipefail
+
+readonly log_tag="${0##*/}"
+readonly max_attempts=300
+readonly poll_interval=0.1
+
+if [[ $# -lt 2 || $# -gt 3 ]]; then
+    echo "usage: ${0##*/} OUTPUT COLUMN_WIDTH [LID_OUTPUT]" >&2
+    exit 2
+fi
+
+readonly target_output="$1"
+readonly column_width="$2"
+readonly lid_output="${3:-}"
+
+for command_name in jq niri; do
+    if ! command -v "$command_name" >/dev/null 2>&1; then
+        echo "${log_tag}: required command not found: ${command_name}" >&2
+        exit 1
+    fi
+done
+
+lid_is_closed() {
+    local lid_state lid_state_file
+
+    for lid_state_file in /proc/acpi/button/lid/*/state; do
+        [[ -r "$lid_state_file" ]] || continue
+        if read -r _ lid_state <"$lid_state_file" && [[ "$lid_state" == "closed" ]]; then
+            return 0
+        fi
+    done
+
+    return 1
+}
+
+wait_for_output_state() {
+    local attempt outputs_json
+
+    for ((attempt = 0; attempt < max_attempts; attempt++)); do
+        if outputs_json="$(niri msg --json outputs 2>/dev/null)" &&
+            jq --exit-status \
+                --arg target "$target_output" \
+                --arg lid "$lid_output" \
+                --argjson wait_for_lid "$wait_for_lid_output" '
+                    (.[$target].logical != null)
+                    and (
+                        ($wait_for_lid == false)
+                        or (.[$lid] == null)
+                        or (.[$lid].logical == null)
+                    )
+                ' <<<"$outputs_json" >/dev/null; then
+            return 0
+        fi
+
+        sleep "$poll_interval"
+    done
+
+    return 1
+}
+
+wait_for_lid_output=false
+if [[ -n "$lid_output" ]] && lid_is_closed; then
+    wait_for_lid_output=true
+fi
+readonly wait_for_lid_output
+
+if ! wait_for_output_state; then
+    echo "${log_tag}: output state did not converge for target ${target_output}" >&2
+    exit 1
+fi
+
+# Niri correctly moves workspaces when an output is disabled by lid handling,
+# but it preserves their old column widths and may leave focus on the new empty
+# workspace. Reapply this output's width policy, then restore recent focus.
+workspaces_json="$(niri msg --json workspaces)"
+readonly workspaces_json
+windows_json="$(niri msg --json windows)"
+readonly windows_json
+target_workspace_ids="$(
+    jq --compact-output --arg output "$target_output" \
+        '[.[] | select(.output == $output) | .id]' <<<"$workspaces_json"
+)"
+readonly target_workspace_ids
+
+if [[ "$target_workspace_ids" == "[]" ]]; then
+    echo "${log_tag}: output has no workspaces after profile application: ${target_output}" >&2
+    exit 1
+fi
+
+tiled_window_ids_text="$(
+    jq --raw-output --argjson workspace_ids "$target_workspace_ids" '
+        .[]
+        | select(.is_floating == false)
+        | select(.workspace_id as $id | $workspace_ids | index($id) != null)
+        | .id
+    ' <<<"$windows_json"
+)"
+readonly tiled_window_ids_text
+
+tiled_window_ids=()
+if [[ -n "$tiled_window_ids_text" ]]; then
+    mapfile -t tiled_window_ids <<<"$tiled_window_ids_text"
+fi
+readonly -a tiled_window_ids
+
+target_focus_window_id="$(
+    jq --raw-output --argjson workspace_ids "$target_workspace_ids" '
+        map(select(.workspace_id as $id | $workspace_ids | index($id) != null))
+        | if length == 0 then
+            empty
+          else
+            (map(select(.is_focused)) | first | .id) //
+            (sort_by(.focus_timestamp.secs // 0, .focus_timestamp.nanos // 0) | last | .id)
+          end
+    ' <<<"$windows_json"
+)"
+readonly target_focus_window_id
+
+for window_id in "${tiled_window_ids[@]}"; do
+    niri msg action set-window-width --id "$window_id" "$column_width" \
+        >/dev/null 2>&1 || continue
+done
+
+if [[ -n "$target_focus_window_id" ]]; then
+    niri msg action focus-window --id "$target_focus_window_id" >/dev/null 2>&1 || true
+fi

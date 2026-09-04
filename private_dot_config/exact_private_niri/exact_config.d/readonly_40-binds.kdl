@@ -1,0 +1,129 @@
+binds {
+    Mod+Shift+Slash { show-hotkey-overlay; }
+
+    // Applications and session UI.
+    Mod+Space repeat=false hotkey-overlay-title="Vicinae Launcher" { spawn "vicinae" "toggle"; }
+    Alt+F2 repeat=false hotkey-overlay-title="Vicinae Launcher" { spawn "vicinae" "toggle"; }
+    Mod+V repeat=false hotkey-overlay-title="Clipboard History" {
+        spawn "vicinae" "vicinae://extensions/vicinae/clipboard/history";
+    }
+    // Let Niri provide the only window outline. Kitty launched in Plasma keeps
+    // its normal decorations because this is a per-launch override.
+    Mod+Return hotkey-overlay-title="Kitty Terminal" {
+        spawn "kitty" "--override" "hide_window_decorations=yes";
+    }
+    Mod+E repeat=false hotkey-overlay-title="Dolphin File Manager" { spawn "dolphin"; }
+    Mod+W repeat=false { toggle-overview; }
+    Mod+Q repeat=false { close-window; }
+    Alt+F4 repeat=false { close-window; }
+    Mod+Shift+L repeat=false allow-when-locked=true hotkey-overlay-title="Lock Session" {
+        spawn "noctalia" "msg" "session" "lock";
+    }
+    Mod+Shift+E repeat=false hotkey-overlay-title="Log Out" { quit; }
+
+    // Vim-like focus and movement. Vertical navigation treats a nested column
+    // and the workspace stack as one continuous axis.
+    Mod+H { focus-column-left; }
+    Mod+J { focus-window-or-workspace-down; }
+    Mod+K { focus-window-or-workspace-up; }
+    Mod+L { focus-column-right; }
+
+    Mod+Ctrl+H { move-column-left; }
+    Mod+Ctrl+J { move-window-down-or-to-workspace-down; }
+    Mod+Ctrl+K { move-window-up-or-to-workspace-up; }
+    Mod+Ctrl+L { move-column-right; }
+
+    Mod+Alt+H { focus-monitor-left; }
+    Mod+Alt+J { focus-monitor-down; }
+    Mod+Alt+K { focus-monitor-up; }
+    Mod+Alt+L { focus-monitor-right; }
+
+    Mod+Ctrl+Alt+H { move-column-to-monitor-left; }
+    Mod+Ctrl+Alt+J { move-column-to-monitor-down; }
+    Mod+Ctrl+Alt+K { move-column-to-monitor-up; }
+    Mod+Ctrl+Alt+L { move-column-to-monitor-right; }
+
+    // Shift addresses the outer workspace layer directly. Ctrl+Shift moves
+    // the whole nested column rather than only its focused window.
+    Mod+Shift+J { focus-workspace-down; }
+    Mod+Shift+K { focus-workspace-up; }
+    Mod+Ctrl+Shift+J { move-column-to-workspace-down; }
+    Mod+Ctrl+Shift+K { move-column-to-workspace-up; }
+
+    // Preserve Plasma's directional desktop shortcuts as cross-session
+    // aliases. Niri's previous/next workspace axis is up/down.
+    Mod+Ctrl+Left { focus-workspace-up; }
+    Mod+Ctrl+Right { focus-workspace-down; }
+    Mod+Ctrl+Shift+Left { move-column-to-workspace-up; }
+    Mod+Ctrl+Shift+Right { move-column-to-workspace-down; }
+
+    // Dynamic workspaces, addressed positionally on the focused output.
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+
+    Mod+Ctrl+1 { move-window-to-workspace 1; }
+    Mod+Ctrl+2 { move-window-to-workspace 2; }
+    Mod+Ctrl+3 { move-window-to-workspace 3; }
+    Mod+Ctrl+4 { move-window-to-workspace 4; }
+    Mod+Ctrl+5 { move-window-to-workspace 5; }
+    Mod+Ctrl+6 { move-window-to-workspace 6; }
+    Mod+Ctrl+7 { move-window-to-workspace 7; }
+    Mod+Ctrl+8 { move-window-to-workspace 8; }
+    Mod+Ctrl+9 { move-window-to-workspace 9; }
+
+    Mod+Ctrl+Shift+1 { move-column-to-workspace 1; }
+    Mod+Ctrl+Shift+2 { move-column-to-workspace 2; }
+    Mod+Ctrl+Shift+3 { move-column-to-workspace 3; }
+    Mod+Ctrl+Shift+4 { move-column-to-workspace 4; }
+    Mod+Ctrl+Shift+5 { move-column-to-workspace 5; }
+    Mod+Ctrl+Shift+6 { move-column-to-workspace 6; }
+    Mod+Ctrl+Shift+7 { move-column-to-workspace 7; }
+    Mod+Ctrl+Shift+8 { move-column-to-workspace 8; }
+    Mod+Ctrl+Shift+9 { move-column-to-workspace 9; }
+
+    // Layout controls.
+    Mod+C hotkey-overlay-title="Consume Window into Column" { consume-window-into-column; }
+    Mod+Ctrl+C hotkey-overlay-title="Expel Window from Column" { expel-window-from-column; }
+    Mod+R { switch-preset-column-width; }
+    Mod+Shift+R { switch-preset-column-width-back; }
+    Mod+F { maximize-column; }
+    Mod+Shift+F { fullscreen-window; }
+    Mod+T { toggle-column-tabbed-display; }
+    Mod+Shift+T { toggle-window-floating; }
+
+    // Existing Plasma-adjacent 1Password bindings.
+    Mod+Shift+Space repeat=false hotkey-overlay-title="1Password Quick Access" {
+        spawn "/opt/1Password/1password" "--quick-access";
+    }
+    Mod+Shift+P repeat=false hotkey-overlay-title="1Password" {
+        spawn "/opt/1Password/1password" "--toggle";
+    }
+
+    // Screenshots are native Niri actions and use the configured screenshot path.
+    Mod+Shift+S repeat=false hotkey-overlay-title="Interactive Screenshot" { screenshot; }
+    Print { screenshot; }
+    Ctrl+Print { screenshot-screen; }
+    Alt+Print { screenshot-window; }
+
+    // Noctalia changes the devices and presents the matching OSD.
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "noctalia" "msg" "volume-up"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "noctalia" "msg" "volume-down"; }
+    XF86AudioMute allow-when-locked=true { spawn "noctalia" "msg" "volume-mute"; }
+    XF86AudioMicMute allow-when-locked=true { spawn "noctalia" "msg" "mic-mute"; }
+    XF86MonBrightnessUp allow-when-locked=true { spawn "noctalia" "msg" "brightness-up"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "noctalia" "msg" "brightness-down"; }
+    XF86AudioPlay allow-when-locked=true { spawn "noctalia" "msg" "media" "toggle"; }
+    XF86AudioPause allow-when-locked=true { spawn "noctalia" "msg" "media" "toggle"; }
+    XF86AudioStop allow-when-locked=true { spawn "noctalia" "msg" "media" "stop"; }
+    XF86AudioPrev allow-when-locked=true { spawn "noctalia" "msg" "media" "previous"; }
+    XF86AudioNext allow-when-locked=true { spawn "noctalia" "msg" "media" "next"; }
+
+    Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+}

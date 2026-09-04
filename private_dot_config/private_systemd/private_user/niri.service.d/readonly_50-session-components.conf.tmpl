@@ -1,0 +1,4 @@
+[Unit]
+{{- range (index .services.systemd.session_wants "niri.service") }}
+Wants={{ . }}
+{{- end }}

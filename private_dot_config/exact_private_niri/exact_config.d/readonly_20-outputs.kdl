@@ -1,0 +1,30 @@
+// Kanshi owns modes and positions. Niri owns the built-in panel's power state
+// through its automatic lid handling. These blocks never turn an output off.
+output "DP-1" {
+    scale 1.0
+    transform "normal"
+
+    layout {
+        default-column-width { proportion 0.33333; }
+        preset-column-widths {
+            proportion 0.33333
+            proportion 0.5
+            proportion 0.66667
+            proportion 1.0
+        }
+    }
+}
+
+output "eDP-1" {
+    scale 1.0
+    transform "normal"
+
+    layout {
+        default-column-width { proportion 1.0; }
+        preset-column-widths {
+            proportion 0.5
+            proportion 0.66667
+            proportion 1.0
+        }
+    }
+}

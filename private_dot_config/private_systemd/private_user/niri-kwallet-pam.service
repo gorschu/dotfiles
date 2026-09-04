@@ -1,0 +1,12 @@
+[Unit]
+Description=Pass login credentials to KWallet after Niri is ready
+PartOf=graphical-session.target
+After=niri.service
+Before=plasma-kded6.service xdg-desktop-autostart.target
+ConditionEnvironment=PAM_KWALLET5_LOGIN
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+Slice=background.slice
+ExecStart=/usr/libexec/pam_kwallet_init

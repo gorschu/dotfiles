@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -euo pipefail
+
+# Noctalia v5 beta.10 has no switch for its unconditional system color-mode
+# publication. Swallow only that exact write so its fixed Mocha palette stays
+# private to the shell; preserve normal GSettings behavior for everything else
+# the process may invoke.
+if [[ $# -eq 4 \
+    && "$1" == "set" \
+    && "$2" == "org.gnome.desktop.interface" \
+    && "$3" == "color-scheme" ]]; then
+    exit 0
+fi
+
+exec /usr/bin/gsettings "$@"

@@ -17,3 +17,18 @@ services:
       - rclone-mount@gdrive.service
       - rclone-mount@dropbox.service
       - rclone-mount@ocis.service
+    # Units wanted only by a particular graphical session. A managed drop-in
+    # consumes this list; these units are never globally enabled.
+    session_wants:
+      niri.service:
+        - kanshi.service
+        - vicinae.service
+        # Run Fedora's PAM bridge through a Niri-only one-shot unit after the
+        # compositor is ready and before KDED or XDG autostarts. The packaged
+        # unit assumes Plasma's KWin/KCMinIt ordering, which is absent here and
+        # causes all kinds of problems if not explicitely defined.
+        - niri-kwallet-pam.service
+        - plasma-kded6.service
+        - plasma-knighttimed.service
+        - plasma-polkit-agent.service
+        - niri-noctalia.service

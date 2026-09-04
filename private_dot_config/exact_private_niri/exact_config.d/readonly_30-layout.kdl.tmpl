@@ -1,0 +1,68 @@
+{{- $mocha := .palettes.catppuccin.flavors.mocha -}}
+layout {
+    gaps 10
+    center-focused-column "on-overflow"
+    always-center-single-column
+    background-color "{{ $mocha.ui.base }}"
+
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+        proportion 1.0
+    }
+    default-column-width { proportion 0.33333; }
+
+    focus-ring {
+        width 4
+        active-color "{{ $mocha.accent.mauve }}"
+        inactive-color "{{ $mocha.ui.surface2 }}"
+        urgent-color "{{ $mocha.accent.red }}"
+    }
+
+    border {
+        off
+    }
+
+    shadow {
+        off
+    }
+
+    tab-indicator {
+        hide-when-single-tab
+        place-within-column
+        width 4
+        active-color "{{ $mocha.accent.yellow }}"
+        inactive-color "{{ $mocha.ui.surface2 }}"
+        urgent-color "{{ $mocha.accent.red }}"
+    }
+
+    insert-hint {
+        color "{{ $mocha.accent.lavender }}80"
+    }
+}
+
+overview {
+    backdrop-color "{{ $mocha.ui.crust }}"
+    workspace-shadow {
+        off
+    }
+}
+
+recent-windows {
+    debounce-ms 750
+    open-delay-ms 150
+
+    highlight {
+        active-color "{{ $mocha.accent.lavender }}cc"
+        urgent-color "{{ $mocha.accent.red }}cc"
+        corner-radius 8
+    }
+
+    binds {
+        Alt+Tab { next-window scope="output"; }
+        Alt+Shift+Tab { previous-window scope="output"; }
+        Alt+grave { next-window filter="app-id"; }
+        Alt+Shift+grave { previous-window filter="app-id"; }
+    }
+}

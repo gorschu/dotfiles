@@ -1,0 +1,28 @@
+input {
+    keyboard {
+        xkb {
+            layout "de"
+            variant "nodeadkeys"
+            options "caps:escape"
+        }
+        repeat-rate 40
+        repeat-delay 250
+        numlock
+    }
+
+    touchpad {
+        tap
+        dwt
+        natural-scroll
+        scroll-method "two-finger"
+    }
+
+    mouse {
+        accel-profile "adaptive"
+    }
+
+    // Moving the pointer focuses only windows already fully visible; it never
+    // scrolls the column strip as a side effect.
+    focus-follows-mouse max-scroll-amount="0%"
+    warp-mouse-to-focus
+}

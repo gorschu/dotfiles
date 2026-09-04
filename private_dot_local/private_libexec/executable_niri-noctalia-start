@@ -1,0 +1,156 @@
+#!/bin/bash
+
+set -euo pipefail
+
+readonly log_tag="niri-noctalia"
+readonly runtime_home="${XDG_RUNTIME_DIR:?XDG_RUNTIME_DIR is not set}/noctalia-niri-config"
+readonly runtime_config_dir="${runtime_home}/noctalia"
+readonly runtime_idle_config="${runtime_config_dir}/idle.toml"
+readonly managed_config="${XDG_CONFIG_HOME:-${HOME}/.config}/noctalia/config.toml"
+readonly idle_helper="${HOME}/.local/libexec/niri-noctalia-idle-profile"
+readonly command_shim_dir="${HOME}/.local/libexec/niri-noctalia-bin"
+readonly gsettings_shim="${command_shim_dir}/gsettings"
+
+for command_name in busctl gdbus noctalia systemd-notify upower; do
+    if ! command -v "$command_name" >/dev/null 2>&1; then
+        echo "${log_tag}: required command not found: ${command_name}" >&2
+        exit 1
+    fi
+done
+
+if [[ ! -r "$managed_config" ]]; then
+    echo "${log_tag}: managed config is not readable: ${managed_config}" >&2
+    exit 1
+fi
+
+if [[ ! -x "$idle_helper" ]]; then
+    echo "${log_tag}: idle-profile helper is not executable: ${idle_helper}" >&2
+    exit 1
+fi
+
+if [[ ! -x "$gsettings_shim" ]]; then
+    echo "${log_tag}: gsettings isolation shim is not executable: ${gsettings_shim}" >&2
+    exit 1
+fi
+
+# KDED supplies KDE's application and theme integration under Niri. Wait for
+# it to become ready, but never change its module set: KDE remains the sole
+# authority over its own runtime and configuration. Noctalia registers as a
+# StatusNotifier host against whichever watcher KDE provides.
+if ! gdbus wait --session --timeout 15 org.kde.kded6; then
+    echo "${log_tag}: KDED is unavailable; continuing without KDE background integration" >&2
+fi
+
+# KDED owns the watcher name even when the module's D-Bus object is absent.
+# Poll the actual object so a stale name cannot be mistaken for a usable tray
+# registry. This only observes KDED; it never loads or changes a KDE module.
+watcher_ready=false
+for ((attempt = 0; attempt < 150; attempt++)); do
+    if gdbus call \
+        --session \
+        --dest org.kde.StatusNotifierWatcher \
+        --object-path /StatusNotifierWatcher \
+        --method org.freedesktop.DBus.Properties.Get \
+        org.kde.StatusNotifierWatcher RegisteredStatusNotifierItems \
+        >/dev/null 2>&1; then
+        watcher_ready=true
+        break
+    fi
+    sleep 0.1
+done
+
+if [[ "$watcher_ready" != true ]]; then
+    echo "${log_tag}: KDED's StatusNotifier watcher object is unavailable" >&2
+    exit 1
+fi
+
+install -d -m 0700 "$runtime_config_dir"
+
+{
+    printf '%s\n' '[include]'
+    printf '%s\n' 'autoload = false'
+    printf 'files = ["%s", "idle.toml"]\n' "$managed_config"
+} >"${runtime_config_dir}/config.toml"
+
+# Write a complete profile before Noctalia starts, then keep it current from
+# UPower events. systemd's default control-group kill mode cleans up the
+# monitor process together with Noctalia.
+"$idle_helper" "$runtime_idle_config"
+"$idle_helper" "$runtime_idle_config" --monitor &
+idle_monitor_pid=$!
+
+# Noctalia v5 beta.10 unconditionally publishes its own dark/light mode to
+# GNOME GSettings even when application templates are disabled. Put a narrowly
+# scoped shim first in PATH for this process only; all unrelated gsettings
+# commands still pass through to the real executable.
+#
+# Keep Noctalia in the foreground under systemd. Its --daemon flag forks and
+# would make systemd treat this service as having exited.
+env PATH="${command_shim_dir}:${PATH}" NOCTALIA_CONFIG_HOME="$runtime_home" noctalia &
+noctalia_pid=$!
+
+cleanup() {
+    trap - EXIT INT TERM
+    kill "$idle_monitor_pid" "$noctalia_pid" 2>/dev/null || true
+    wait "$idle_monitor_pid" "$noctalia_pid" 2>/dev/null || true
+}
+
+terminate() {
+    cleanup
+    exit 0
+}
+
+trap cleanup EXIT
+trap terminate INT TERM
+
+# The watcher is the registry; Noctalia is the visible tray host. Require its
+# per-process host name before reporting readiness.
+if ! gdbus wait --session --timeout 15 "org.kde.StatusNotifierHost-${noctalia_pid}"; then
+    echo "${log_tag}: Noctalia did not register as a StatusNotifier host" >&2
+    exit 1
+fi
+
+# Notifications are different: Noctalia is the selected notification UI for
+# Niri, so readiness requires the D-Bus name to belong to this process.
+if ! gdbus wait --session --timeout 15 org.freedesktop.Notifications; then
+    echo "${log_tag}: Noctalia did not acquire org.freedesktop.Notifications" >&2
+    exit 1
+fi
+
+read -r owner_signature notification_pid < <(
+    busctl --user call \
+        org.freedesktop.DBus \
+        /org/freedesktop/DBus \
+        org.freedesktop.DBus \
+        GetConnectionUnixProcessID \
+        s org.freedesktop.Notifications
+)
+
+if [[ "$owner_signature" != "u" || "$notification_pid" != "$noctalia_pid" ]]; then
+    echo "${log_tag}: notifications belong to PID ${notification_pid:-unknown}, not Noctalia PID ${noctalia_pid}" >&2
+    exit 1
+fi
+
+systemd-notify --ready --status="Noctalia owns notifications and hosts the tray through the existing watcher"
+
+set +e
+exited_pid=""
+wait -n -p exited_pid "$idle_monitor_pid" "$noctalia_pid"
+exit_status=$?
+set -e
+
+case "$exited_pid" in
+    "$idle_monitor_pid")
+        echo "${log_tag}: UPower monitor exited unexpectedly with status ${exit_status}" >&2
+        ;;
+    "$noctalia_pid")
+        echo "${log_tag}: Noctalia exited unexpectedly with status ${exit_status}" >&2
+        ;;
+    *)
+        echo "${log_tag}: an unknown child exited unexpectedly with status ${exit_status}" >&2
+        ;;
+esac
+
+# Any child exit is unexpected here. A deliberate service stop reaches the
+# TERM trap above, so force a failure and let Restart=on-failure recover.
+exit 1

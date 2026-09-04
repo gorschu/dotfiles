@@ -1,0 +1,8 @@
+// Niri 26.04 work-session configuration.
+
+include "config.d/10-input.kdl"
+include "config.d/20-outputs.kdl"
+include "config.d/30-layout.kdl"
+include "config.d/40-binds.kdl"
+include "config.d/50-window-rules.kdl"
+include "config.d/60-session.kdl"
