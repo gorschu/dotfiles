@@ -45,6 +45,15 @@ position = "top_right"
 offset_x = 10
 offset_y = 42
 
+[nightlight]
+enabled = true
+force = false
+temperature_day = 6500
+temperature_night = 4000
+
+[location]
+auto_locate = true
+
 [lockscreen]
 enabled = true
 blurred_desktop = false
@@ -72,7 +81,15 @@ font_family = "JetBrains Mono"
 capsule = false
 start = ["workspaces", "active_window"]
 center = ["date", "clock"]
-end = ["tray", "notifications", "network", "bluetooth", "volume", "brightness", "battery", "wallhaven", "control-center", "session"]
+end = ["caffeine", "nightlight", "wallhaven", "control-center", "session", "utility-gap", "tray", "tray-gap", "notifications", "network", "bluetooth", "volume", "brightness", "battery"]
+
+[widget.utility-gap]
+type = "spacer"
+length = 20
+
+[widget.tray-gap]
+type = "spacer"
+length = 20
 
 [widget.wallhaven]
 type = "noctalia/wallhaven:wallhaven"
