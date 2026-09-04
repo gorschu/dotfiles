@@ -5,7 +5,7 @@ binds {
     Mod+Space repeat=false hotkey-overlay-title="Vicinae Launcher" { spawn "vicinae" "toggle"; }
     Alt+F2 repeat=false hotkey-overlay-title="Vicinae Launcher" { spawn "vicinae" "toggle"; }
     Mod+V repeat=false hotkey-overlay-title="Clipboard History" {
-        spawn "vicinae" "vicinae://extensions/vicinae/clipboard/history";
+        spawn "vicinae" "vicinae://launch/clipboard/history";
     }
     // Reuse Kitty's process while letting Niri provide the only window outline.
     Mod+Return hotkey-overlay-title="Kitty Terminal" {
