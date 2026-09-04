@@ -1,0 +1,17 @@
+- 1.1.20
+- _NAME: MX Master 3S
+  _modelId: B03400000000
+  _sensitive:
+    dpi: true
+  _serial: ABB10FC7
+  _unitId: ABB10FC7
+  _wpid: B034
+  dpi: 1200
+- _NAME: MX Mechanical
+  _modelId: B36600000000
+  _sensitive:
+    fn-swap: true
+  _serial: BF1DA684
+  _unitId: BF1DA684
+  _wpid: B366
+  fn-swap: false

@@ -1,6 +1,5 @@
 README.md
 LICENSE
-modified_externally
 justfile
 system-ansible/
 */**/*.include
