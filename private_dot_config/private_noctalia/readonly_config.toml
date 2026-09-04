@@ -9,12 +9,18 @@ launch_apps_as_systemd_services = false
 clipboard_enabled = false
 font_family = "Adwaita Sans"
 
+[shell.panel]
+open_near_click_control_center = true
+
 [wallpaper]
 enabled = true
 
 [plugins]
 enabled = ["noctalia/wallhaven"]
 auto_update = "all"
+
+[plugin_settings."noctalia/wallhaven"]
+browser_open_near_click = true
 
 [theme]
 mode = "dark"
