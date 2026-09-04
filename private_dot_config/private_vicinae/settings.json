@@ -10,6 +10,11 @@
 {
   "$schema": "https://vicinae.com/schemas/config.json",
   "close_on_focus_loss": false,
+  "font": {
+    "normal": {
+      "family": "Adwaita Sans"
+    }
+  },
   "pop_to_root_on_close": true,
   "theme": {
     "dark": {
