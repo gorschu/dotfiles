@@ -137,6 +137,8 @@ kwriteconfig6 --file "$_cfg/kwinrc" --group "Desktops" --key "Rows" 1
 kwriteconfig6 --file "$_cfg/kwinrc" --group "Effect-overview" --key "GridBorderActivate" 1
 kwriteconfig6 --file "$_cfg/kwinrc" --group "NightColor" --key "Active" "true"
 kwriteconfig6 --file "$_cfg/kwinrc" --group "Windows" --key "FocusPolicy" "FocusFollowsMouse"
+kwriteconfig6 --file "$_cfg/kwinrc" --group "Windows" --key "AutoRaise" "true"
+kwriteconfig6 --file "$_cfg/kwinrc" --group "Windows" --key "AutoRaiseInterval" 750
 # Warp mouse cursor to focused window
 kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "MoveMouseToFocus" "Meta+Ö,Meta+F5,Move Mouse to Focus"
 
