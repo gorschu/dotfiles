@@ -13,12 +13,8 @@ font_family = "Adwaita Sans"
 enabled = true
 
 [plugins]
-enabled = ["nzlov/daily-wallpaper"]
+enabled = ["noctalia/wallhaven"]
 auto_update = "all"
-
-[plugin_settings."nzlov/daily-wallpaper"]
-source = "bing"
-locale = "de-DE"
 
 [theme]
 mode = "dark"
@@ -70,7 +66,10 @@ font_family = "JetBrains Mono"
 capsule = false
 start = ["workspaces", "active_window"]
 center = ["date", "clock"]
-end = ["tray", "notifications", "network", "bluetooth", "volume", "brightness", "battery", "control-center", "session"]
+end = ["tray", "notifications", "network", "bluetooth", "volume", "brightness", "battery", "wallhaven", "control-center", "session"]
+
+[widget.wallhaven]
+type = "noctalia/wallhaven:wallhaven"
 
 [widget.date]
 type = "clock"
