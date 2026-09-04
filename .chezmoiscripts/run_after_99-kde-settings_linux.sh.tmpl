@@ -92,6 +92,41 @@ kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "Switch Win
 kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "Switch Window Up" "Meta+K,Meta+Alt+Up,Switch to Window Above"
 kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "Switch Window Right" "Meta+L,Meta+Alt+Right,Switch to Window to the Right"
 
+# Workspace navigation shared with Niri. Keep Plasma's function-key desktop
+# shortcuts as aliases, and move its numbered task-manager activation behind
+# Shift so Meta+number has the same meaning in both sessions. KGlobalAccel
+# matches the symbols produced by Shift+number on the configured German layout,
+# so spell those symbols explicitly rather than using Meta+Shift+number.
+_task_manager_keys=('!' '"' '§' '$' '%' '&' '/' '(' ')')
+for _desktop in {1..9}; do
+  _switch_shortcuts="Meta+${_desktop}"
+  _switch_defaults="none"
+  _task_manager_shortcut="Meta+${_task_manager_keys[_desktop - 1]}"
+
+  if (( _desktop <= 4 )); then
+    _switch_shortcuts=$(_escapeShortcut "Meta+${_desktop}\tCtrl+F${_desktop}\tMeta+F${_desktop}")
+    _switch_defaults=$(_escapeShortcut "Ctrl+F${_desktop}\tMeta+F${_desktop}")
+  fi
+
+  kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" \
+    --key "Switch to Desktop ${_desktop}" \
+    "${_switch_shortcuts},${_switch_defaults},Switch to Desktop ${_desktop}"
+  kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" \
+    --key "Window to Desktop ${_desktop}" \
+    "Meta+Ctrl+${_desktop},none,Window to Desktop ${_desktop}"
+  kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "plasmashell" \
+    --key "activate task manager entry ${_desktop}" \
+    "${_task_manager_shortcut},Meta+${_desktop},Activate Task Manager Entry ${_desktop}"
+done
+unset _desktop _switch_shortcuts _switch_defaults _task_manager_shortcut _task_manager_keys
+
+# Vim-style previous/next aliases. Plasma's existing Ctrl+Meta+Left/Right and
+# Ctrl+Shift+Meta+Left/Right directional shortcuts remain untouched.
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "Switch to Previous Desktop" "Meta+Shift+K,none,Switch to Previous Desktop"
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "Switch to Next Desktop" "Meta+Shift+J,none,Switch to Next Desktop"
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "Window to Previous Desktop" "Meta+Ctrl+Shift+K,none,Window to Previous Desktop"
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "Window to Next Desktop" "Meta+Ctrl+Shift+J,none,Window to Next Desktop"
+
 # --- Screen Lock ---
 kwriteconfig6 --file "$_cfg/kscreenlockerrc" --group "Daemon" --key "LockGrace" 30
 kwriteconfig6 --file "$_cfg/kscreenlockerrc" --group "Daemon" --key "Timeout" 10
