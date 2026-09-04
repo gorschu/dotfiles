@@ -1,0 +1,6 @@
+// Keep four real desktops. Niri adds its mandatory trailing empty workspace,
+// which becomes positional workspace 5.
+workspace "1"
+workspace "2"
+workspace "3"
+workspace "4"

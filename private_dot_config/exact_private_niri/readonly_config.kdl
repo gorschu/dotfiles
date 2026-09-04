@@ -1,7 +1,12 @@
 // Niri 26.04 work-session configuration.
 
+// Let Niri provide the only window outline. This also suppresses fallback
+// client-side title bars in apps such as Spotify.
+prefer-no-csd
+
 include "config.d/10-input.kdl"
 include "config.d/20-outputs.kdl"
+include "config.d/25-workspaces.kdl"
 include "config.d/30-layout.kdl"
 include "config.d/40-binds.kdl"
 include "config.d/50-window-rules.kdl"
