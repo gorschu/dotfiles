@@ -1,0 +1,9 @@
+#!/bin/sh
+# megasync-session-start - Start a megasync session. It is kind of shit and
+# needs special treatment.
+
+case ":${XDG_CURRENT_DESKTOP:-}:" in
+*:niri:*) export QT_XCB_GL_INTEGRATION=none ;;
+esac
+
+exec /usr/bin/megasync "$@"
