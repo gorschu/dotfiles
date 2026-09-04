@@ -10,7 +10,15 @@ clipboard_enabled = false
 font_family = "Adwaita Sans"
 
 [wallpaper]
-enabled = false
+enabled = true
+
+[plugins]
+enabled = ["nzlov/daily-wallpaper"]
+auto_update = "all"
+
+[plugin_settings."nzlov/daily-wallpaper"]
+source = "bing"
+locale = "de-DE"
 
 [theme]
 mode = "dark"
