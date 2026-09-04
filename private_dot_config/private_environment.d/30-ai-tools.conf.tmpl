@@ -5,6 +5,9 @@
 {{- with joinPath $home "data/general/ai/claude" | stat }}
 CLAUDE_CONFIG_DIR={{ $home }}/.config/claude
 {{- end }}
+# Claude's desktop launcher otherwise changes from Chromium's KWallet backend
+# in Plasma to gnome-libsecret under Niri. Keep one encrypted credential store.
+CLAUDE_PASSWORD_STORE=kwallet6
 {{- with joinPath $home "data/general/ai/codex" | stat }}
 CODEX_HOME={{ $home }}/.config/codex
 {{- end }}
