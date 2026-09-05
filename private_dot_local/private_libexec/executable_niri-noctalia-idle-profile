@@ -59,8 +59,15 @@ write_profile() {
 
     {
         printf '%s\n' '[idle]'
-        printf '%s\n' 'behavior_order = ["lock", "screen-off", "suspend"]'
-        printf '%s\n\n' 'pre_action_fade_seconds = 2.0'
+        printf '%s\n' 'behavior_order = ["dim", "lock", "screen-off", "suspend"]'
+        # Hardware dimming provides the warning; avoid a fullscreen fade before it.
+        printf '%s\n\n' 'pre_action_fade_seconds = 0.0'
+        printf '%s\n' '[idle.behavior.dim]'
+        printf 'timeout = %s\n' "$((screen_off_timeout / 2))"
+        printf '%s\n' 'action = "command"'
+        printf '%s\n' 'command = "$HOME/.local/libexec/niri-idle-brightness dim"'
+        printf '%s\n' 'resume_command = "$HOME/.local/libexec/niri-idle-brightness restore"'
+        printf '%s\n\n' 'enabled = true'
         printf '%s\n' '[idle.behavior.lock]'
         printf '%s\n' 'timeout = 600'
         printf '%s\n' 'action = "lock"'

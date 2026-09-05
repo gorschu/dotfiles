@@ -45,6 +45,9 @@ position = "top_right"
 offset_x = 10
 offset_y = 42
 
+[brightness]
+enable_ddcutil = true
+
 [nightlight]
 enabled = true
 force = false

@@ -10,6 +10,7 @@ Type=notify
 NotifyAccess=all
 Slice=session.slice
 ExecStart=%h/.local/libexec/niri-noctalia-start
+ExecStopPost=%h/.local/libexec/niri-idle-brightness restore
 Restart=on-failure
 RestartSec=2
 TimeoutStartSec=30

@@ -1,0 +1,97 @@
+#!/usr/bin/python3
+"""Cap idle brightness at 10%, preserving each display's previous setting."""
+
+import fcntl
+import json
+import os
+from pathlib import Path
+import re
+import subprocess
+import sys
+
+BACKLIGHT = Path('/sys/class/backlight')
+DRM = Path('/sys/class/drm')
+
+
+def run(*args):
+    return subprocess.run(args, check=True, text=True, capture_output=True,
+                          timeout=15).stdout
+
+
+def displays():
+    for path in BACKLIGHT.iterdir():
+        yield {'kind': 'backlight', 'id': path.name,
+               'value': int((path / 'brightness').read_text()),
+               'maximum': int((path / 'max_brightness').read_text())}
+    seen = set()
+    for path in DRM.glob('card*-*'):
+        try:
+            if re.search(r'-(eDP|LVDS|DSI)-', path.name):
+                continue
+            if (path / 'status').read_text().strip() != 'connected':
+                continue
+            edid = (path / 'edid').read_bytes()[:128].hex()
+            if len(edid) != 256 or edid in seen:
+                continue
+            seen.add(edid)
+            output = run('ddcutil', '--edid', edid, '--brief', 'getvcp', '10')
+            match = re.search(r'^VCP 10 C (\d+) (\d+)\s*$', output, re.M)
+            if match:
+                yield {'kind': 'ddc', 'id': edid, 'value': int(match[1]),
+                       'maximum': int(match[2])}
+        except (OSError, subprocess.SubprocessError) as error:
+            print(f'Idle brightness: skipping {path.name}: {error}', file=sys.stderr)
+
+
+def set_brightness(display, value):
+    if display['kind'] == 'backlight':
+        run('brightnessctl', '--device', display['id'], 'set', str(value))
+    else:
+        # EDID selection avoids restoring a different display after hotplug.
+        run('ddcutil', '--edid', display['id'], 'setvcp', '10', str(value))
+
+
+def save(path, state):
+    temporary = path.with_suffix('.tmp')
+    temporary.write_text(json.dumps(state))
+    temporary.replace(path)
+
+
+def main():
+    if len(sys.argv) != 2 or sys.argv[1] not in ('dim', 'restore'):
+        sys.exit('usage: niri-idle-brightness dim|restore')
+    os.umask(0o077)
+    directory = Path(os.environ['XDG_RUNTIME_DIR']) / 'niri-idle-brightness'
+    directory.mkdir(mode=0o700, exist_ok=True)
+    state_path = directory / 'state.json'
+    with (directory / 'lock').open('w') as lock:
+        # Serialize a resume arriving while a slow DDC request is in flight.
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        state = json.loads(state_path.read_text()) if state_path.exists() else []
+        if sys.argv[1] == 'dim':
+            for display in displays():
+                if any((old['kind'], old['id']) == (display['kind'], display['id'])
+                       for old in state):
+                    continue  # Preserve originals, including disconnected monitors.
+                target = max(1, display['maximum'] // 10)
+                if display['value'] <= target:
+                    continue
+                state.append(display)
+                save(state_path, state)  # Preserve restoration data before writing.
+                try:
+                    set_brightness(display, target)
+                except (OSError, subprocess.SubprocessError) as error:
+                    print(f'Idle brightness: dim failed: {error}', file=sys.stderr)
+        else:
+            pending = []
+            for display in state:
+                try:
+                    set_brightness(display, display['value'])
+                except (OSError, subprocess.SubprocessError) as error:
+                    print(f'Idle brightness: restore failed: {error}', file=sys.stderr)
+                    pending.append(display)
+            save(state_path, pending)
+
+
+if __name__ == '__main__':
+    main()
