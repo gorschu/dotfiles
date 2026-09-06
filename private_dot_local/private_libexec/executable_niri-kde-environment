@@ -1,0 +1,16 @@
+#!/bin/sh
+# Shared systemd services do not inherit Niri's KDL environment.
+# Leave Plasma and every other desktop's environment exactly as inherited.
+case ":${XDG_CURRENT_DESKTOP-}:" in
+    *:KDE:*|*:Plasma:*|*:plasma:*) ;;
+    *:niri:*)
+        export QT_QPA_PLATFORMTHEME=kde
+        if [ "${1-}" = "--application-menu" ]; then
+            export XDG_MENU_PREFIX=plasma-
+        fi
+        ;;
+esac
+if [ "${1-}" = "--application-menu" ]; then
+    shift
+fi
+exec "$@"
