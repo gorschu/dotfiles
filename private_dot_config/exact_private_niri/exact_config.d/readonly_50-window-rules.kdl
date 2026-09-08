@@ -50,4 +50,8 @@ window-rule {
 window-rule {
     match app-id=r#"(?i)firefox$"# title=r#"^Picture-in-Picture$"#
     open-floating true
+    // A modest 16:9 starting size on both the laptop and ultrawide.
+    default-column-width { fixed 640; }
+    default-window-height { fixed 360; }
+    default-floating-position x=24 y=24 relative-to="bottom-right"
 }

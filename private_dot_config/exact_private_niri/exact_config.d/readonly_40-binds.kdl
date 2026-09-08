@@ -98,6 +98,9 @@ binds {
     Mod+Shift+F { fullscreen-window; }
     Mod+T { toggle-column-tabbed-display; }
     Mod+Shift+T { toggle-window-floating; }
+    Mod+Shift+V repeat=false hotkey-overlay-title="Focus Floating / Tiled Windows" {
+        switch-focus-between-floating-and-tiling;
+    }
 
     // Existing Plasma-adjacent 1Password bindings.
     Mod+Shift+Space repeat=false hotkey-overlay-title="1Password Quick Access" {
@@ -112,6 +115,18 @@ binds {
     Print { screenshot; }
     Ctrl+Print { screenshot-screen; }
     Alt+Print { screenshot-window; }
+
+    // Select "niri Dynamic Cast Target" in the sharing picker first.
+    // These actions change its target without starting a sharing session.
+    Mod+Shift+C repeat=false hotkey-overlay-title="Share Focused Window" {
+        set-dynamic-cast-window;
+    }
+    Mod+Alt+C repeat=false hotkey-overlay-title="Share Focused Monitor" {
+        set-dynamic-cast-monitor;
+    }
+    Mod+Ctrl+Shift+C repeat=false hotkey-overlay-title="Clear Shared Target" {
+        clear-dynamic-cast-target;
+    }
 
     // Noctalia changes the devices and presents the matching OSD.
     XF86AudioRaiseVolume allow-when-locked=true { spawn "noctalia" "msg" "volume-up"; }
