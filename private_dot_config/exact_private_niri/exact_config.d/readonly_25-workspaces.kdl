@@ -1,6 +1,2 @@
-// Keep four real desktops. Niri adds its mandatory trailing empty workspace,
-// which becomes positional workspace 5.
-workspace "1"
-workspace "2"
-workspace "3"
-workspace "4"
+// All workspaces are dynamic. Empty workspaces disappear after leaving them.
+// Niri keeps one trailing empty workspace on each monitor.

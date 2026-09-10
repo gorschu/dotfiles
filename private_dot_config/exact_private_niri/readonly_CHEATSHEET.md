@@ -61,8 +61,10 @@ you can still move and resize it. Reopen PiP to pick up new opening defaults.
 | Meta+Ctrl+Left / Right | Previous / next workspace (KDE-style aliases) |
 | Meta+Ctrl+Shift+Left / Right | Move column to previous / next workspace |
 
-Workspaces 1–4 are named and persistent. Shortcuts 5–9 use positional workspace
-indices; they do not create nine persistent desktops. Spotify opens on workspace 4.
+All workspaces are dynamic: empty workspaces disappear after you leave them.
+Niri always keeps one empty workspace at the bottom of each monitor. Shortcuts
+1–9 address current positions on the focused monitor; numbers can shift as
+workspaces disappear. Spotify opens normally, without a workspace assignment.
 
 ## Screenshots and screen sharing
 

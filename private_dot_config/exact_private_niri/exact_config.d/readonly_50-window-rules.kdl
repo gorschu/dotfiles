@@ -43,11 +43,6 @@ window-rule {
 }
 
 window-rule {
-    match app-id=r#"(?i)^spotify$"#
-    open-on-workspace "4"
-}
-
-window-rule {
     match app-id=r#"(?i)firefox$"# title=r#"^Picture-in-Picture$"#
     open-floating true
     // A modest 16:9 starting size on both the laptop and ultrawide.
