@@ -16,19 +16,19 @@ window-rule {
 }
 
 window-rule {
-    match app-id=r#"(?i)^1password$"#
+    match app-id=r#"^com\.onepassword\.OnePassword$"#
     open-floating true
 }
 
 window-rule {
-    match app-id=r#"(?i)^1password$"#
+    match app-id=r#"^com\.onepassword\.OnePassword$"#
     exclude title=r#"(?i).*quick access.*"#
     default-column-width { fixed 1000; }
     default-window-height { fixed 850; }
 }
 
 window-rule {
-    match app-id=r#"(?i)^1password$"# title=r#"(?i).*quick access.*"#
+    match app-id=r#"^com\.onepassword\.OnePassword$"# title=r#"(?i).*quick access.*"#
     default-column-width { fixed 900; }
 }
 
