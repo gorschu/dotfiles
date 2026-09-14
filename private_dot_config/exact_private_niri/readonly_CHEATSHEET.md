@@ -61,8 +61,8 @@ you can still move and resize it. Reopen PiP to pick up new opening defaults.
 | Meta+Ctrl+Left / Right | Previous / next workspace (KDE-style aliases) |
 | Meta+Ctrl+Shift+Left / Right | Move column to previous / next workspace |
 
-Workspaces 1–4 are named and persistent, even when empty. Shortcuts 1–4
-address these stable names; shortcuts 5–9 address current workspace positions.
+Workspaces 1–3 are named and persistent, even when empty. Shortcuts 1–3
+address these stable names; shortcuts 4–9 address current workspace positions.
 Niri still keeps a trailing empty workspace on each monitor and can create
 additional dynamic workspaces. Spotify has no workspace assignment.
 
