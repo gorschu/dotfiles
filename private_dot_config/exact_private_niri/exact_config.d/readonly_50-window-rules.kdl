@@ -50,3 +50,10 @@ window-rule {
     default-window-height { fixed 360; }
     default-floating-position x=24 y=24 relative-to="bottom-right"
 }
+
+// Start WoW fullscreen so it receives the monitor size when its window opens.
+// The Proton app ID is shared, so also match the game's exact title.
+window-rule {
+    match app-id="^steam_app_default$" title="^World of Warcraft$"
+    open-fullscreen true
+}
