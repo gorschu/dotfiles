@@ -32,3 +32,5 @@ services:
         - plasma-knighttimed.service
         - plasma-polkit-agent.service
         - niri-noctalia.service
+        # Bridge legacy Wine/X11 tray icons into Noctalia's StatusNotifier tray.
+        - plasma-xembedsniproxy.service
