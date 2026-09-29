@@ -1,0 +1,17 @@
+#!/bin/sh
+# Vicinae confirms before invoking this command. Ask the compositor/session
+# manager to exit so its normal cleanup runs; terminating logind's session
+# directly kills niri-session before it can stop the user services.
+case ":${XDG_CURRENT_DESKTOP-}:" in
+    *:niri:*)
+        exec niri msg action quit --skip-confirmation
+        ;;
+    *:KDE:*|*:Plasma:*|*:plasma:*)
+        exec gdbus call --session --dest org.kde.Shutdown \
+            --object-path /Shutdown --method org.kde.Shutdown.logout
+        ;;
+    *)
+        echo "desktop-logout: unsupported desktop: ${XDG_CURRENT_DESKTOP-unknown}" >&2
+        exit 1
+        ;;
+esac

@@ -95,6 +95,10 @@ Screenshots are saved under `~/Pictures/Screenshots/`.
 | Meta+Escape | Toggle application inhibition of Niri shortcuts |
 | Meta+Shift+Slash | Built-in shortcut overlay |
 
+To log out, use **Meta+Shift+E** or Vicinae's **Log Out** command. Both let Niri
+exit normally and clean up its session services before returning to the login
+screen. Vicinae uses Plasma's native logout method when running in KDE.
+
 Volume, microphone mute, brightness, and media keys use Noctalia and also work
 while locked. `Slash` above is the slash keysym in the configured binding.
 

@@ -16,6 +16,18 @@
     }
   },
   "pop_to_root_on_close": true,
+  "providers": {
+    "power": {
+      "entrypoints": {
+        "logout": {
+          "preferences": {
+            "confirm": true,
+            "customProgram": "\"$HOME/.local/libexec/desktop-logout\""
+          }
+        }
+      }
+    }
+  },
   "theme": {
     "dark": {
       "name": "catppuccin-mocha",
