@@ -15,6 +15,23 @@ window-rule {
     }
 }
 
+// xembedsniproxy keeps a mapped 32px container for each legacy tray icon.
+// Its X11 opacity hint is lost through xwayland-satellite, exposing a black
+// tile. Keep the container mapped for icon rendering and click forwarding.
+window-rule {
+    match app-id="^xembedsniproxy$"
+    open-floating true
+    open-focused false
+    default-column-width { fixed 32; }
+    default-window-height { fixed 32; }
+    max-width 32
+    max-height 32
+    opacity 0.0
+    focus-ring { off; }
+    border { off; }
+    shadow { off; }
+}
+
 window-rule {
     match app-id=r#"^com\.onepassword\.OnePassword$"#
     open-floating true
