@@ -4,7 +4,7 @@
 [shell]
 setup_wizard_enabled = false
 niri_overview_type_to_launch_enabled = false
-polkit_agent = false
+polkit_agent = true
 launch_apps_as_systemd_services = false
 clipboard_enabled = false
 font_family = "Adwaita Sans"
