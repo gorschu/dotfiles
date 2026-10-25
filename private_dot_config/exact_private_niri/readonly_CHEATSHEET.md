@@ -14,9 +14,7 @@ Meta = Super = Windows/logo key. Direction keys: H left, J down, K up, L right.
 | Meta+Q or Alt+F4 | Close focused window |
 | Alt+Tab or Meta+Tab | Next recent window on this monitor |
 | Alt+Shift+Tab or Meta+Shift+Tab | Previous recent window on this monitor |
-| Alt+grave / Alt+Shift+grave | Next / previous window of the same application |
-
-`grave` means the backtick keysym; its physical key depends on the keyboard layout.
+| Alt+^ or Meta+^ (add Shift for previous) | Next / previous window of the same application |
 
 ## Arrange windows
 

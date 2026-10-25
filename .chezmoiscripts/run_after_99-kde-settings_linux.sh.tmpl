@@ -79,9 +79,9 @@ kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "services" --group "org.
 kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "services" --group "net.local.terminal.desktop" --key "_launch" "Meta+Return"
 kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "services" --group "net.local.1password.desktop" --key "_launch" "Shift+Meta+Space"
 kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "services" --group "net.local.1password-2.desktop" --key "_launch" "Shift+Meta+P"
-# Window cycling for current app (Meta+^ like GNOME Alt+Tab for same app)
-kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows of Current Application" "Meta+^,Meta+^,Walk Through Windows of Current Application"
-kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows of Current Application (Reverse)" "Meta+Shift+^,Meta+Shift+^,Walk Through Windows of Current Application (Reverse)"
+# Window cycling for current app (Meta+^ / Alt+^, mirroring Meta+Tab / Alt+Tab)
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows of Current Application" "$(_escapeShortcut "Meta+^\tAlt+^,Meta+^\tAlt+^,Walk Through Windows of Current Application")"
+kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows of Current Application (Reverse)" "$(_escapeShortcut "Meta+Shift+^\tAlt+Shift+^,Meta+Shift+^\tAlt+Shift+^,Walk Through Windows of Current Application (Reverse)")"
 # Disable Activities shortcut (conflicts with Meta+Q)
 kwriteconfig6 --file "$_cfg/kglobalshortcutsrc" --group "plasmashell" --key "manage activities" "none,Meta+Q,Show Activity Switcher"
 # Move lock screen to Meta+Shift+L (frees Meta+L for window focus)
