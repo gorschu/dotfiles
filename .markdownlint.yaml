@@ -1,0 +1,2 @@
+# Use the shared defaults directly from chezmoi's source, including before apply.
+extends: ./private_dot_config/private_markdownlint/readonly_config.yaml

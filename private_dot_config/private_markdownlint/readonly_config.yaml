@@ -1,0 +1,7 @@
+# Shared Markdown defaults. Pass --config ~/.config/markdownlint/config.yaml to markdownlint-cli2
+# when running outside a repository that explicitly extends this configuration.
+MD013:
+  line_length: 120
+  heading_line_length: 120
+  code_blocks: false
+  tables: false

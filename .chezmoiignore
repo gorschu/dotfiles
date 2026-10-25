@@ -47,6 +47,7 @@ bin
 !.config/k9s
 !.config/lazygit
 !.config/lazydocker
+!.config/markdownlint
 !.config/nvim
 !.config/tig
 !.config/tmux
