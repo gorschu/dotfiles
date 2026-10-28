@@ -45,8 +45,11 @@ echo ""
 echo "Note: To use git via SSH, run:"
 echo "  chezmoi git remote set-url origin git@github.com:gorschu/dotfiles"
 echo ""
-echo "!!! Remember to log into atuin *IMMEDIATELY* to not blow up your database with wrong keys !!!"
-echo "!!! If the wrong key was used, stop atuin-daemon.service, delete the bad files, then restart it."
+echo "!!! BEFORE USING ATUIN: log in with your existing account and ORIGINAL encryption key !!!"
+echo "!!! Recording history or Threads with a different key can leave you with incompatible encrypted records !!!"
+echo "!!! If the wrong key was used, disable daemon autostart, then stop the daemon before recovery:"
+echo "    atuin config set daemon.autostart false && atuin daemon stop"
+echo "!!! Do not delete databases or keys blindly. Recover the original key before syncing or re-enabling autostart."
 echo ""
 
 # vim: set ft=sh:

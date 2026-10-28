@@ -1,6 +1,4 @@
-# source in atuin
+# Atuin initializes history, the configured PTY proxy, and the Threads picker.
 if (($+commands[atuin])); then
-  bindkey -r "^r" # remove ctrl-r keybinding, atuin covers it
-  eval "$(atuin hex init zsh)"
-  eval "$(atuin init zsh)"
+  eval "$(atuin init zsh --bind-ai-resume)"
 fi
