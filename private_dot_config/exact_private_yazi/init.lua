@@ -37,8 +37,12 @@ end, 500, Status.RIGHT)
 -- add mtime to status
 Status:children_add(function()
   local h = cx.active.current.hovered
+  if h == nil or h.cha.mtime == nil then
+    return ""
+  end
+
   return ui.Line({
-    ui.Span(os.date(_, tostring(h.cha.mtime):sub(1, 10))):fg("blue"),
+    ui.Span(os.date("%c", math.floor(h.cha.mtime))):fg("blue"),
     ui.Span(" "),
   })
 end, 500, Status.RIGHT)
