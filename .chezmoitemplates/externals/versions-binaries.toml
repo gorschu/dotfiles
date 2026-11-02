@@ -3,4 +3,3 @@
 # Format: tool = "version" # renovate: datasource=github-releases depName=owner/repo
 
 [versions]
-  cliphist = "0.7.0"  # renovate: datasource=github-releases depName=sentriz/cliphist

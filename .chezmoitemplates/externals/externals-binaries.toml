@@ -1,7 +1,2 @@
 {{- $versions := .versions -}}
-# Binaries not available in Homebrew
-[".local/bin/cliphist"]
-  type = "file"
-  url = "https://github.com/sentriz/cliphist/releases/download/v{{ $versions.cliphist }}/v{{ $versions.cliphist }}-linux-amd64"
-  executable = true
-  refreshPeriod = "168h"
+# Pinned binaries managed outside Homebrew
