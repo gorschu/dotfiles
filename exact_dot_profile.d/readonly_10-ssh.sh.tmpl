@@ -15,7 +15,9 @@
     {{ $kssh_askpass_base = "/usr/bin" }}
 {{ end }}
 expr "$XDG_CURRENT_DESKTOP" : ".*GNOME.*" 1>/dev/null && export SSH_ASKPASS={{ $ssh_askpass_base }}/gnome-ssh-askpass
-expr "$XDG_CURRENT_DESKTOP" : ".*KDE.*" 1>/dev/null && export SSH_ASKPASS={{ $kssh_askpass_base }}/ksshaskpass
+if [[ "$XDG_CURRENT_DESKTOP" == *KDE* || "$XDG_CURRENT_DESKTOP" == niri ]]; then
+  export SSH_ASKPASS={{ $kssh_askpass_base }}/ksshaskpass
+fi
 [ -z "$SSH_ASKPASS" ] && export SSH_ASKPASS={{ $ssh_askpass_base }}/x11-ssh-askpass
 
 # only set SSH_AUTH_SOCK when we not connected via SSH

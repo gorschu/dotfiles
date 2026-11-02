@@ -1,4 +1,6 @@
 [Desktop Entry]
 Type=Application
 Name=NetworkManager Applet
+Exec=nm-applet
+TryExec=nm-applet
 NotShowIn=KDE;GNOME;niri;

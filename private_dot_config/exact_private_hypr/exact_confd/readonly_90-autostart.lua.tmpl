@@ -1,5 +1,5 @@
 hl.on("hyprland.start", function()
-    hl.exec_cmd("/usr/lib/pam_kwallet_init")
+    hl.exec_cmd("/usr/libexec/pam_kwallet_init")
     hl.exec_cmd("/usr/bin/hypridle")
 {{- if stat "/etc/xdg/quickshell/noctalia-shell" }}
     hl.exec_cmd("qs -c noctalia-shell")

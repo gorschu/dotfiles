@@ -1,4 +1,6 @@
 [Desktop Entry]
 Type=Application
 Name=Xwayland Video Bridge
+Exec=xwaylandvideobridge
+TryExec=xwaylandvideobridge
 NotShowIn=GNOME;niri;
