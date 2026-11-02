@@ -45,9 +45,9 @@
   refreshPeriod = "168h"
   include = ["*/themes/*"]
 
-[".externals/zsh-syntax-highlighting/catppuccin"]
+[".externals/fast-syntax-highlighting/catppuccin"]
   type = "archive"
-  url = "https://github.com/catppuccin/zsh-syntax-highlighting/archive/main.tar.gz"
+  url = "https://github.com/catppuccin/zsh-fsh/archive/main.tar.gz"
   exact = true
   stripComponents = 2
   refreshPeriod = "168h"

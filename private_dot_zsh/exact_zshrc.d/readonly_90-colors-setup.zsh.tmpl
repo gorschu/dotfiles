@@ -6,5 +6,12 @@ export LS_COLORS="$(vivid generate default)"
 export EZA_COLORS="${LS_COLORS}"
 
 {{ if eq .colorscheme.name "catppuccin" }}
-source {{ .chezmoi.homeDir }}/.externals/zsh-syntax-highlighting/catppuccin/catppuccin_{{ .colorscheme.flavor }}-zsh-syntax-highlighting.zsh
+# Zephyr runs this once before the first prompt, after all plugins have loaded.
+function _apply_fsh_theme() {
+  local theme_file="{{ .chezmoi.homeDir }}/.externals/fast-syntax-highlighting/catppuccin/catppuccin-{{ .colorscheme.flavor }}.ini"
+  if [[ "$FAST_THEME_NAME" != "catppuccin-{{ .colorscheme.flavor }}" || "$theme_file" -nt "$FAST_WORK_DIR/current_theme.zsh" ]]; then
+    fast-theme -q "$theme_file"
+  fi
+}
+add-post-zshrc-hook _apply_fsh_theme
 {{ end }}
