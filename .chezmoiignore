@@ -1,7 +1,6 @@
 README.md
 LICENSE
 justfile
-system-ansible/
 */**/*.include
 */**/*.include.asc
 secrets
@@ -43,7 +42,6 @@ bin
 !.config/bat
 !.config/btop
 !.config/ghostty
-.config/chezmoi/personal
 !.config/git
 !.config/k9s
 !.config/lazygit
@@ -60,8 +58,6 @@ bin
 .ssh/keys.public
 .ssh/config.d/personal
 .local/share/atuin
-.Xresources*
 {{ else }}
-.config/chezmoi/work
 .ssh/config.d/work
 {{ end }}
