@@ -2,11 +2,6 @@
 # Install/update packages, fonts and whatnot from all Brewfiles.
 # Remove anything not actively declared.
 
-{{- $homeDir := .chezmoi.homeDir }}
-{{- range .homebrew.bundleFiles }}
-# {{ . }}: {{ include (joinPath $homeDir .) | sha256sum }}
-{{- end }}
-
 set -euo pipefail
 
 BREW_ENV="${XDG_CONFIG_HOME:-{{ .chezmoi.homeDir }}/.config}/homebrew/env"

@@ -1,14 +1,10 @@
+{{- /* Empty output skips execution without consuming run_once state. */ -}}
+{{- if or (env "DISPLAY") (eq (env "XDG_SESSION_TYPE") "x11" "wayland") -}}
 #!/bin/bash
 # Install JetBrains Toolbox
 # Installation hash: {{ .chezmoi.os }}_{{ .chezmoi.arch }}
 
 set -euo pipefail
-
-# Skip installation if no GUI session
-if [[ -z "${DISPLAY:-}" ]] && [[ "${XDG_SESSION_TYPE:-}" != "x11" ]] && [[ "${XDG_SESSION_TYPE:-}" != "wayland" ]]; then
-  echo "Skipping JetBrains Toolbox installation: no GUI session detected"
-  exit 0
-fi
 
 INSTALL_DIR="${HOME}/.local/share/jetbrains-toolbox"
 SYMLINK_PATH="${HOME}/.local/bin/jetbrains-toolbox"
@@ -64,3 +60,4 @@ echo "${BUILD}" > "${INSTALL_DIR}/.build"
 rm -rf "${CACHE_DIR}"
 
 echo "JetBrains Toolbox build ${BUILD} installed"
+{{ end -}}

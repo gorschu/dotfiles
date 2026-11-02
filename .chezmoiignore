@@ -36,6 +36,7 @@ bootstrap
 .config/systemd/user/mail-sync.timer
 {{ end }}
 {{ if .is_work_machine }}
+.chezmoiscripts/bootstrap_before_linux.sh
 bin
 .config/*
 !.config/atuin
