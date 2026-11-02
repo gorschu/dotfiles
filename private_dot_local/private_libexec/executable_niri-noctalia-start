@@ -8,8 +8,6 @@ readonly runtime_config_dir="${runtime_home}/noctalia"
 readonly runtime_idle_config="${runtime_config_dir}/idle.toml"
 readonly managed_config="${XDG_CONFIG_HOME:-${HOME}/.config}/noctalia/config.toml"
 readonly idle_helper="${HOME}/.local/libexec/niri-noctalia-idle-profile"
-readonly command_shim_dir="${HOME}/.local/libexec/niri-noctalia-bin"
-readonly gsettings_shim="${command_shim_dir}/gsettings"
 
 for command_name in busctl gdbus noctalia systemd-notify upower; do
     if ! command -v "$command_name" >/dev/null 2>&1; then
@@ -25,11 +23,6 @@ fi
 
 if [[ ! -x "$idle_helper" ]]; then
     echo "${log_tag}: idle-profile helper is not executable: ${idle_helper}" >&2
-    exit 1
-fi
-
-if [[ ! -x "$gsettings_shim" ]]; then
-    echo "${log_tag}: gsettings isolation shim is not executable: ${gsettings_shim}" >&2
     exit 1
 fi
 
@@ -79,14 +72,9 @@ install -d -m 0700 "$runtime_config_dir"
 "$idle_helper" "$runtime_idle_config" --monitor &
 idle_monitor_pid=$!
 
-# Noctalia v5 beta.10 unconditionally publishes its own dark/light mode to
-# GNOME GSettings even when application templates are disabled. Put a narrowly
-# scoped shim first in PATH for this process only; all unrelated gsettings
-# commands still pass through to the real executable.
-#
 # Keep Noctalia in the foreground under systemd. Its --daemon flag forks and
 # would make systemd treat this service as having exited.
-env PATH="${command_shim_dir}:${PATH}" NOCTALIA_CONFIG_HOME="$runtime_home" noctalia &
+env NOCTALIA_CONFIG_HOME="$runtime_home" noctalia &
 noctalia_pid=$!
 
 cleanup() {

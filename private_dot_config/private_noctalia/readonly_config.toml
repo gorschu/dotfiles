@@ -26,6 +26,7 @@ browser_open_near_click = true
 mode = "dark"
 source = "builtin"
 builtin = "Catppuccin"
+sync_color_scheme = false
 
 [theme.templates]
 enable_builtin_templates = false
@@ -109,7 +110,7 @@ hide_when_empty = false
 show_all_outputs = false
 focused_color = "primary"
 occupied_color = "secondary"
-empty_color = "surface_variant"
+empty_color = "surface_container"
 urgent_color = "error"
 
 [widget.active_window]
