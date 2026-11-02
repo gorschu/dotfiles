@@ -6,28 +6,24 @@ import configparser
 import os
 import sys
 
-config_home = os.environ.get("XDG_CONFIG_HOME")
-if config_home is None:
-    home = os.environ.get("HOME", os.path.expanduser("~"))
-    config_home = os.path.join(home, ".config")
 xdg_desktop = os.environ.get("XDG_CURRENT_DESKTOP")
 
 config = configparser.ConfigParser()
-config.read(f"{config_home}/mimeapps.list")
+config.read_file(sys.stdin)
 
 if not config.has_section("Default Applications"):
     config.add_section("Default Applications")
 
 if xdg_desktop is not None and "GNOME" in xdg_desktop:
   config.set("Default Applications", "inode/directory", "org.gnome.Nautilus.desktop")
-if xdg_desktop is not None and xdg_desktop in ["KDE", "Hyprland"]:
+if xdg_desktop is not None and xdg_desktop in ["KDE", "Hyprland", "niri"]:
   config.set("Default Applications", "inode/directory", "org.kde.dolphin.desktop")
 
 config.set("Default Applications", "text/html", "firefox.desktop")
 config.set("Default Applications", "x-scheme-handler/http", "firefox.desktop")
 config.set("Default Applications", "x-scheme-handler/https", "firefox.desktop")
-config.set("Default Applications", "x-scheme-handler/mailto", "org.mozilla.thunderbird.desktop")
-config.set("Default Applications", "x-scheme-handler/mid", "org.mozilla.thunderbird.desktop")
-config.set("Default Applications", "message/rfc822", "org.mozilla.thunderbird.desktop")
+config.set("Default Applications", "x-scheme-handler/mailto", "eu.betterbird.Betterbird.desktop")
+config.set("Default Applications", "x-scheme-handler/mid", "eu.betterbird.Betterbird.desktop")
+config.set("Default Applications", "message/rfc822", "eu.betterbird.Betterbird.desktop")
 
 config.write(sys.stdout, space_around_delimiters=False)
