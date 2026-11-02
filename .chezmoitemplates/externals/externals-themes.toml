@@ -76,14 +76,6 @@
   refreshPeriod = "168h"
   include = ["*/themes/*"]
 
-[".externals/neomutt/catppuccin"]
-  type = "archive"
-  url = "https://github.com/catppuccin/neomutt/archive/main.tar.gz"
-  exact = true
-  stripComponents = 1
-  refreshPeriod = "168h"
-  include = ["*/neomuttrc"]
-
 [".externals/zathura/catppuccin"]
   type = "archive"
   url = "https://github.com/catppuccin/zathura/archive/main.tar.gz"
