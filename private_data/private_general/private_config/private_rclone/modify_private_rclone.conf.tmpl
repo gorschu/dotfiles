@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
-"""Merge rclone-base.conf + rclone-secrets.conf (both chezmoi-managed) with current rclone.conf,
+"""Merge source-provided rclone-base.conf + rclone-secrets.conf with current rclone.conf,
 preserving dynamic values that rclone manages itself."""
 
 import configparser
-import os
+import io
 import sys
 
-_data_home = os.path.expanduser("~/data/general/config/rclone")
-BASE_CONF = os.path.join(_data_home, "rclone-base.conf")
-SECRETS_CONF = os.path.join(_data_home, "rclone-secrets.conf")
+BASE_CONF = {{ include "private_data/private_general/private_config/private_rclone/private_rclone-base.conf" | toJson }}
+SECRETS_CONF = {{ include "private_data/private_general/private_config/private_rclone/encrypted_private_rclone-secrets.conf.asc" | decrypt | toJson }}
 PRESERVE = "__PRESERVE__"
 
 
@@ -19,10 +18,7 @@ class CaseConfigParser(configparser.RawConfigParser):
 
 def read_conf(source):
     conf = CaseConfigParser()
-    if hasattr(source, "read"):
-        conf.read_file(source)
-    else:
-        conf.read(source)
+    conf.read_file(source)
     return conf
 
 
@@ -52,13 +48,8 @@ def merge(base, secrets, current):
 
 
 def main():
-    for path in (BASE_CONF, SECRETS_CONF):
-        if not os.path.exists(path):
-            sys.stderr.write(f"missing: {path}\n")
-            sys.exit(1)
-
-    base = read_conf(BASE_CONF)
-    secrets = read_conf(SECRETS_CONF)
+    base = read_conf(io.StringIO(BASE_CONF))
+    secrets = read_conf(io.StringIO(SECRETS_CONF))
     current = read_conf(sys.stdin)
     out = merge(base, secrets, current)
     out.write(sys.stdout)
