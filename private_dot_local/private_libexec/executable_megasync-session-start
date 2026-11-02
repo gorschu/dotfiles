@@ -3,7 +3,12 @@
 # needs special treatment.
 
 case ":${XDG_CURRENT_DESKTOP:-}:" in
-*:niri:*) export QT_XCB_GL_INTEGRATION=none ;;
+*:niri:*)
+    export QT_XCB_GL_INTEGRATION=none
+    export QT_QPA_PLATFORMTHEME=kde
+    export DO_NOT_UNSET_QT_QPA_PLATFORMTHEME=1
+    export DO_NOT_SET_DESKTOP_SETTINGS_UNAWARE=1
+    ;;
 esac
 
 exec /usr/bin/megasync "$@"

@@ -20,8 +20,10 @@ window-rule {
 // tile. Keep the container mapped for icon rendering and click forwarding.
 window-rule {
     match app-id="^xembedsniproxy$"
+    open-on-workspace "3"
     open-floating true
     open-focused false
+    default-floating-position x=0 y=0 relative-to="bottom-right"
     default-column-width { fixed 32; }
     default-window-height { fixed 32; }
     max-width 32
