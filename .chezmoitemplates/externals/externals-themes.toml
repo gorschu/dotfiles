@@ -60,14 +60,6 @@
   stripComponents = 1
   refreshPeriod = "168h"
 
-[".externals/mako/catppuccin"]
-  type = "archive"
-  url = "https://github.com/catppuccin/mako/archive/main.tar.gz"
-  exact = true
-  stripComponents = 2
-  refreshPeriod = "168h"
-  include = ["*/src/*"]
-
 [".externals/glamour/catppuccin"]
   type = "archive"
   url = "https://github.com/catppuccin/glamour/archive/main.tar.gz"

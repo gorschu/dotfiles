@@ -1,9 +1,0 @@
----
-# DankMaterialShell plugins
-dms:
-  plugins:
-    common: []
-    niri:
-      - niriWindows           # List and switch to open Niri windows
-    hyprland:
-      - dankHyprlandWindows  # Switch between Hyprland windows with live previews
