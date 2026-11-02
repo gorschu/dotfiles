@@ -1,36 +1,22 @@
 #!/bin/bash
-# run_onchange_after - generates shell completions for installed binaries
-{{- $versions := includeTemplate "externals/versions-binaries.toml" . | fromToml -}}
-{{- $externalsCtx := merge (dict "versions" $versions.versions) . -}}
-# Dependencies hash: {{ includeTemplate "externals/externals-binaries.toml" $externalsCtx | sha256sum }}
+# Generate Bash and Zsh completions for Zed.
 
 set -euo pipefail
 
-echo "Generating shell completions..."
+if ! command -v zed &>/dev/null; then
+  echo "Zed not found, skipping shell completions"
+  exit 0
+fi
 
-# Completion directories
+echo "Generating Zed shell completions..."
+
+# Generate both before replacing files so errors leave existing completions intact.
+bash_completion=$(zed --completions bash)
+zsh_completion=$(zed --completions zsh)
+
 BASH_COMPLETIONS="${XDG_DATA_HOME:-${HOME}/.local/share}/bash-completion/completions"
 ZSH_COMPLETIONS="${HOME}/.zsh/.zsh_completions.d"
 
-# Create completion directories
-mkdir -p "${BASH_COMPLETIONS}"
-mkdir -p "${ZSH_COMPLETIONS}"
-
-# Helper function to generate completions
-# Usage: generate_completion <command> <bash-args> <zsh-args>
-generate_completion() {
-  local cmd="$1"
-  local bash_args="$2"
-  local zsh_args="$3"
-
-  if command -v "$cmd" &>/dev/null; then
-    echo "  Generating $cmd completions..."
-    $cmd "$bash_args" >"${BASH_COMPLETIONS}/${cmd}" 2>/dev/null || true
-    $cmd "$zsh_args" >"${ZSH_COMPLETIONS}/_${cmd}" 2>/dev/null || true
-  fi
-}
-
-# Generate completions for all tools
-generate_completion "zed" "--completions bash" "--completions zsh"
-
-# echo "  Shell completions generated"
+mkdir -p "${BASH_COMPLETIONS}" "${ZSH_COMPLETIONS}"
+printf '%s\n' "$bash_completion" >"${BASH_COMPLETIONS}/zed"
+printf '%s\n' "$zsh_completion" >"${ZSH_COMPLETIONS}/_zed"
