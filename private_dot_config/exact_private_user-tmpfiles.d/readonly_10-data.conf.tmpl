@@ -1,37 +1,37 @@
 #Type   Path                                                Mode  User     Group    Age Argument
 {{ with joinPath .chezmoi.homeDir "data" | stat }}{{ if eq .type "dir" }}
 # Directories under data/
-d       %h/data/general/mozilla/.mozilla                    0700  gorschu  gorschu  -   -
-d       %h/data/general/mozilla/.config/mozilla             0700  gorschu  gorschu  -   -
-d       %h/data/general/flatpak                             0700  gorschu  gorschu  -   -
-d       %h/data/general/config                              0700  gorschu  gorschu  -   -
-d       %h/data/general/config/google-chrome                0700  gorschu  gorschu  -   -
-d       %h/data/general/config/google-chrome-beta           0700  gorschu  gorschu  -   -
-d       %h/data/general/config/google-chrome-unstable       0700  gorschu  gorschu  -   -
-d       %h/data/general/config/vivaldi                      0700  gorschu  gorschu  -   -
-d       %h/data/general/config/vivaldi-snapshot             0700  gorschu  gorschu  -   -
-d       %h/data/general/config/b2                           0700  gorschu  gorschu  -   -
-d       %h/data/general/config/gh                           0700  gorschu  gorschu  -   -
-d       %h/data/general/config/rclone                      0700  gorschu  gorschu  -   -
-d       %h/data/general/config/terraform                   0700  gorschu  gorschu  -   -
-d       %h/data/general/config/sops                         0700  gorschu  gorschu  -   -
-d       %h/data/general/ai                                  0700  gorschu  gorschu  -   -
-d       %h/data/general/ai/claude                           0700  gorschu  gorschu  -   -
-d       %h/data/general/ai/codex                            0700  gorschu  gorschu  -   -
-d       %h/data/general/ai/copilot                          0700  gorschu  gorschu  -   -
-d       %h/data/general/ai/gemini                           0700  gorschu  gorschu  -   -
-d       %h/data/general/local/state/syncthing               0700  gorschu  gorschu  -   -
-d       %h/data/general/local/share/atuin                   0700  gorschu  gorschu  -   -
-d       %h/data/media/documents                             0700  gorschu  gorschu  -   -
-d       %h/data/media/documents/synced                      0700  gorschu  gorschu  -   -
-d       %h/data/media/pictures                              0700  gorschu  gorschu  -   -
-d       %h/data/media/pictures/synced                       0700  gorschu  gorschu  -   -
-d       %h/data/media/videos                                0700  gorschu  gorschu  -   -
-d       %h/data/projects/synced                             0700  gorschu  gorschu  -   -
-d       %h/data/synced                                      0700  gorschu  gorschu  -   -
-d       %h/data/cloud                                       0700  gorschu  gorschu  -   -
-d       %h/data/cloud/mega                                  0700  gorschu  gorschu  -   -
-d       %h/data/cloud/insync                                0700  gorschu  gorschu  -   -
+d       %h/data/general/mozilla/.mozilla                    0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/general/mozilla/.config/mozilla             0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/general/flatpak                             0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/general/config                              0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/general/config/google-chrome                0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/general/config/google-chrome-beta           0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/general/config/google-chrome-unstable       0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/general/config/vivaldi                      0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/general/config/vivaldi-snapshot             0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/general/config/b2                           0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/general/config/gh                           0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/general/config/rclone                      0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/general/config/terraform                   0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/general/config/sops                         0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/general/ai                                  0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/general/ai/claude                           0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/general/ai/codex                            0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/general/ai/copilot                          0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/general/ai/gemini                           0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/general/local/state/syncthing               0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/general/local/share/atuin                   0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/media/documents                             0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/media/documents/synced                      0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/media/pictures                              0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/media/pictures/synced                       0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/media/videos                                0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/projects/synced                             0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/synced                                      0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/cloud                                       0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/cloud/mega                                  0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/cloud/insync                                0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
 {{ end }}{{ end }}
 
 {{ with joinPath .chezmoi.homeDir "data/.ready" | stat }}

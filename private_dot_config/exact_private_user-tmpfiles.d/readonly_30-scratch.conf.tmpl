@@ -6,21 +6,21 @@
 # so it's obvious at a glance which directory came from where.
 
 # Destination tree inside scratch.
-d       %h/.scratch/.cache                              0700  gorschu  gorschu  -   -
-d       %h/.scratch/.local                              0700  gorschu  gorschu  -   -
-d       %h/.scratch/.local/share                        0700  gorschu  gorschu  -   -
-d       %h/.scratch/.local/share/containers             0700  gorschu  gorschu  -   -
-d       %h/.scratch/.cargo                              0700  gorschu  gorschu  -   -
-d       %h/.scratch/.cargo/registry                     0700  gorschu  gorschu  -   -
-d       %h/.scratch/.npm                                0700  gorschu  gorschu  -   -
-d       %h/.scratch/go                                  0700  gorschu  gorschu  -   -
-d       %h/.scratch/go/pkg                              0700  gorschu  gorschu  -   -
-d       %h/.scratch/go/pkg/mod                          0700  gorschu  gorschu  -   -
+d       %h/.scratch/.cache                              0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/.scratch/.local                              0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/.scratch/.local/share                        0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/.scratch/.local/share/containers             0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/.scratch/.cargo                              0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/.scratch/.cargo/registry                     0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/.scratch/.npm                                0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/.scratch/go                                  0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/.scratch/go/pkg                              0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/.scratch/go/pkg/mod                          0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
 
 # Parent dirs in $HOME required for the L+ symlinks below.
-d       %h/.cargo                                       0700  gorschu  gorschu  -   -
-d       %h/go                                           0700  gorschu  gorschu  -   -
-d       %h/go/pkg                                       0700  gorschu  gorschu  -   -
+d       %h/.cargo                                       0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/go                                           0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/go/pkg                                       0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
 
 # Replace existing paths with symlinks into scratch.
 # L+ = create symlink, replacing whatever's at the destination.

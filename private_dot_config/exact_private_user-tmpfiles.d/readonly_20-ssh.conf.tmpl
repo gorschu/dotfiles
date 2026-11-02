@@ -1,0 +1,9 @@
+#Type   Path                       Mode     User    Group    Age  Argument
+d       %h/tmp/.ssh                0700     {{ $.chezmoi.username }} {{ $.chezmoi.group }}     2d   -
+d       %h/.ssh                    0700     {{ $.chezmoi.username }} {{ $.chezmoi.group }}     -    -
+z       %h/.ssh/config.d           0700     {{ $.chezmoi.username }} {{ $.chezmoi.group }}     -    -
+z       %h/.ssh/known_hosts*       0600     {{ $.chezmoi.username }} {{ $.chezmoi.group }}     -    -
+d       %h/.ssh/keys.private       0700     {{ $.chezmoi.username }} {{ $.chezmoi.group }}     -    -
+z       %h/.ssh/keys.private/*     0600     {{ $.chezmoi.username }} {{ $.chezmoi.group }}     -    -
+d       %h/.ssh/keys.public        0755     {{ $.chezmoi.username }} {{ $.chezmoi.group }}     -    -
+z       %h/.ssh/keys.public/*.pub  0600     {{ $.chezmoi.username }} {{ $.chezmoi.group }}     -    -

@@ -1,17 +1,17 @@
 #Type   Path              Mode  User     Group    Age Argument
-z       %h/data/general/config/sops                0700  gorschu  gorschu
-z       %h/data/general/config/sops/age/keys.txt   0600  gorschu  gorschu
+z       %h/data/general/config/sops                0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}
+z       %h/data/general/config/sops/age/keys.txt   0600  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}
 
-z       %h/data/general/config/rclone              0700  gorschu  gorschu
-z       %h/data/general/config/rclone/rclone.conf  0600  gorschu  gorschu
+z       %h/data/general/config/rclone              0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}
+z       %h/data/general/config/rclone/rclone.conf  0600  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}
 
 {{ with joinPath .chezmoi.homeDir "data" | stat }}{{ if eq .type "dir" }}
-z       %h/data/media     0700  gorschu  gorschu  -   -
-z       %h/data/projects  0700  gorschu  gorschu  -   -
-z       %h/data/general   0700  gorschu  gorschu  -   -
+z       %h/data/media     0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+z       %h/data/projects  0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+z       %h/data/general   0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
 {{ else }}
-z       %h/Documents      0700  gorschu  gorschu  -   -
-z       %h/Pictures       0700  gorschu  gorschu  -   -
-z       %h/Videos         0700  gorschu  gorschu  -   -
-z       %h/Projects       0700  gorschu  gorschu  -   -
+z       %h/Documents      0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+z       %h/Pictures       0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+z       %h/Videos         0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+z       %h/Projects       0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
 {{ end }}{{ end }}
