@@ -1,5 +1,5 @@
 ---
 dolphin_places:
-  - path: ~/projects
+  - path: ~/Projects
     title: Projects
     icon: folder-development
