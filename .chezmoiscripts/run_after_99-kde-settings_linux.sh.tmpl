@@ -159,6 +159,8 @@ kwriteconfig6 --file "$_cfg/powerdevilrc" --group "AC" --group "Display" --key "
 kwriteconfig6 --file "$_cfg/powerdevilrc" --group "AC" --group "Performance" --key "PowerProfile" "balanced"
 kwriteconfig6 --file "$_cfg/powerdevilrc" --group "AC" --group "SuspendAndShutdown" --key "AutoSuspendAction" 1
 kwriteconfig6 --file "$_cfg/powerdevilrc" --group "AC" --group "SuspendAndShutdown" --key "AutoSuspendIdleTimeoutSec" 3600
+# Turn off the screen without suspending when the lid is closed on AC power.
+kwriteconfig6 --file "$_cfg/powerdevilrc" --group "AC" --group "SuspendAndShutdown" --key "LidAction" 64
 
 # --- Power (Battery) ---
 kwriteconfig6 --file "$_cfg/powerdevilrc" --group "Battery" --group "Display" --key "DisplayBrightness" 50
