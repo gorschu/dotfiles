@@ -64,6 +64,8 @@ kwriteconfig6 --file "$_cfg/kdeglobals" --group "General" --key "smallestReadabl
 kwriteconfig6 --file "$_cfg/kdeglobals" --group "WM"      --key "activeFont"          "Adwaita Sans,10,-1,5,600,0,0,0,0,0,0,0,0,0,0,1,SemiBold,0,0"
 
 # --- Theme ---
+# Breeze (Union) (Plasma 6.8+)
+kwriteconfig6 --file "$_cfg/kdeglobals" --group "KDE" --key "widgetStyle" "Union"
 {{- if eq .colorscheme.kde "auto" }}
 kwriteconfig6 --file "$_cfg/kdeglobals" --group "KDE" --key "AutomaticLookAndFeel" "true"
 kwriteconfig6 --file "$_cfg/kdeglobals" --group "KDE" --delete-key "LookAndFeelPackage" 2>/dev/null || true
@@ -193,3 +195,5 @@ kwriteconfig6 --file "$_cfg/kwalletrc" --group "Wallet" --key "Use One Wallet" "
 # --- Apply ---
 {{- $qdbus := lookPath "qdbus-qt6" | default (lookPath "qdbus6") | default "qdbus6" }}
 {{ $qdbus }} org.kde.KWin /KWin reconfigure
+
+# vim: ft=bash
