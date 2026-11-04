@@ -1,6 +1,5 @@
 [General]
-count=1
-rules=cd4685d8-3504-4bdb-9971-de31732b7cf6
+Order=cd4685d8-3504-4bdb-9971-de31732b7cf6
 
 [cd4685d8-3504-4bdb-9971-de31732b7cf6]
 Description=Application settings for Vuescan
