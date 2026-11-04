@@ -1,9 +1,14 @@
+{{- $brewPrefix := .homebrew.prefix -}}
+{{- if .is_work_machine -}}
+  {{- $brewPrefix = "${HOME}/homebrew" -}}
+{{- end -}}
 if command -v nvim >/dev/null 2>&1; then
   export EDITOR="nvim"
-  export GIT_EDITOR="nvim"
-  export VISUAL="nvim"
+elif [ -x "{{ $brewPrefix }}/bin/nvim" ]; then
+  # Login and desktop sessions may not have Homebrew on PATH yet.
+  export EDITOR="{{ $brewPrefix }}/bin/nvim"
 else
   export EDITOR="vi"
-  export GIT_EDITOR="vi"
-  export VISUAL="vi"
 fi
+export GIT_EDITOR="$EDITOR"
+export VISUAL="$EDITOR"
