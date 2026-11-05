@@ -1,0 +1,44 @@
+{{- $sync := includeTemplate "joplin/sync-settings" . | fromJson -}}
+{{- $connection := pick $sync "sync.target" "sync.9.path" "sync.9.username" -}}
+#!/usr/bin/env python3
+"""Merge desktop preferences and shared sync connection, preserving other settings."""
+
+import json
+import shutil
+import subprocess
+import sys
+
+managed = json.loads({{ .joplin.desktop.settings | toJson | toJson }})
+# Reuse the CLI account validation; only these three connection fields are managed.
+# The desktop password remains in Joplin's own keychain/database storage.
+managed.update(json.loads({{ $connection | toJson | toJson }}))
+original = sys.stdin.read()
+try:
+    settings = json.loads(original) if original.strip() else {}
+except json.JSONDecodeError:
+    sys.exit("Joplin settings are invalid JSON; leaving them unchanged.")
+if not isinstance(settings, dict):
+    sys.exit("Joplin settings must be a JSON object; leaving them unchanged.")
+
+# Avoid rewriting an already configured profile, even while Joplin is open.
+if all(key in settings and settings[key] == value for key, value in managed.items()):
+    sys.stdout.write(original)
+    sys.exit(0)
+
+# Joplin saves preferences on exit, so changes require a fully stopped app.
+# This also protects previews: quit Joplin before running chezmoi diff/apply.
+flatpak = shutil.which("flatpak")
+if flatpak:
+    result = subprocess.run(
+        [flatpak, "ps", "--columns=application"], capture_output=True, text=True
+    )
+    if result.returncode:
+        sys.exit("Cannot check whether Joplin is running; leaving settings unchanged.")
+    if "net.cozic.joplin_desktop" in result.stdout.splitlines():
+        sys.exit("Quit Joplin completely, including its tray process, then retry chezmoi.")
+
+settings.update(managed)
+json.dump(settings, sys.stdout, ensure_ascii=False, indent=4)
+sys.stdout.write("\n")
+
+# vim: ft=python

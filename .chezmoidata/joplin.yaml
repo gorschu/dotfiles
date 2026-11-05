@@ -1,0 +1,11 @@
+---
+joplin:
+  desktop:
+    settings:
+      editor.keyboardMode: vim
+      showTrayIcon: true
+      # Flatpak does not inherit the host's generic font aliases.
+      style.viewer.fontFamily: Source Sans 3
+      style.editor.fontFamily: JetBrains Mono
+      style.editor.monospaceFontFamily: JetBrains Mono
+      clipperServer.autoStart: true

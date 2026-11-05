@@ -22,6 +22,7 @@ bootstrap
 .local/bin/joplin
 .local/bin/joplin-decrypt
 .config/joplin/keymap.json
+.config/joplin-desktop
 {{ end }}
 {{ if not $host.has_pim }}
 .config/vdirsyncer
