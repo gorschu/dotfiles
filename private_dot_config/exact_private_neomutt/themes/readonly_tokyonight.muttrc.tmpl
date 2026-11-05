@@ -94,6 +94,11 @@ color index_tag           {{ $teal }}    {{ $bg }} "~T"
 color index_tags          {{ $teal }}    {{ $bg }} "~T"
 color index_collapsed     {{ $teal }}    {{ $bg }} "~T"
 
+# Keep flagged mail distinct from unread mail and the selected line.
+color index_flags   bold  {{ $orange }}  {{ $bg }} "~F"
+color index_author  bold  {{ $orange }}  {{ $bg }} "~F"
+color index_subject bold  {{ $orange }}  {{ $bg }} "~F"
+
 color index_number        {{ $err }}     {{ $bg }} "~D"
 color index_date          {{ $err }}     {{ $bg }} "~D"
 color index_flags         {{ $err }}     {{ $bg }} "~D"
