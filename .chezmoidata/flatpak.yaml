@@ -6,5 +6,6 @@ common:
       - eu.betterbird.Betterbird
       - com.hamrick.VueScan
       - md.obsidian.Obsidian
+      - net.cozic.joplin_desktop
       - org.cryptomator.Cryptomator
       - com.spotify.Client
