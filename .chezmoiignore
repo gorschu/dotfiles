@@ -21,6 +21,7 @@ bootstrap
 {{ if or (ne .chezmoi.os "linux") .is_work_machine (not $host.has_pim) }}
 .local/bin/joplin
 .local/bin/joplin-decrypt
+.config/joplin/keymap.json
 {{ end }}
 {{ if not $host.has_pim }}
 .config/vdirsyncer
