@@ -72,11 +72,16 @@ color index_tags          {{ $warn }}    {{ $bg }}
 color index_collapsed     {{ $fgMuted }} {{ $bg }}
 
 color index               {{ $fgSoft }}  {{ $bg }} "~R"
-color index         bold  {{ $primary }} {{ $bg }} "~N"
-color index         bold  {{ $primary }} {{ $bg }} "~U"
+color index         bold  {{ $ok }}      {{ $bg }} "~N"
+color index         bold  {{ $ok }}      {{ $bg }} "~U"
 color index         bold  {{ $teal }}    {{ $bg }} "~T"
 color index         bold  {{ $orange }}  {{ $bg }} "~F"
 color index         bold  {{ $err }}     {{ $bg }} "~D"
+
+# Field colors override the row color, so unread mail needs explicit rules.
+color index_flags   bold  {{ $ok }}      {{ $bg }} "~U"
+color index_author  bold  {{ $ok }}      {{ $bg }} "~U"
+color index_subject bold  {{ $ok }}      {{ $bg }} "~U"
 
 color index_number        {{ $teal }}    {{ $bg }} "~T"
 color index_date          {{ $teal }}    {{ $bg }} "~T"
