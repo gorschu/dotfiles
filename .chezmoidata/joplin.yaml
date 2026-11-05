@@ -5,7 +5,12 @@ joplin:
       editor.keyboardMode: vim
       showTrayIcon: true
       # Flatpak does not inherit the host's generic font aliases.
-      style.viewer.fontFamily: Source Sans 3
-      style.editor.fontFamily: JetBrains Mono
+      # The viewer inserts this as CSS; the numeric token needs literal quotes.
+      style.viewer.fontFamily: '"Source Sans 3"'
+      style.editor.fontFamily: Source Sans 3
+      style.editor.fontSize: 15
       style.editor.monospaceFontFamily: JetBrains Mono
       clipperServer.autoStart: true
+      mcp.enabled: true
+      spellChecker.enabled: true
+      editor.spellcheckBeta: true
