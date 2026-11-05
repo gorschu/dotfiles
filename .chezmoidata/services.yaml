@@ -16,6 +16,8 @@ services:
       - rclone-mount@gdrive.service
       - rclone-mount@dropbox.service
       - rclone-mount@ocis.service
+    enable_start_personal:
+      - repo-health.timer
     # Units wanted only by a particular graphical session. A managed drop-in
     # consumes this list; these units are never globally enabled.
     session_wants:

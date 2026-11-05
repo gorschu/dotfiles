@@ -73,6 +73,16 @@ targets:
     all: true
 
 tasks:
+{{ if and (eq .chezmoi.os "linux") (not .is_work_machine) }}
+  repo-check:
+    desc: Check local work, all branches and stashes without network access
+    cmd: '"$HOME/.local/bin/repo-health" inspect'
+    target: all
+    spec:
+      output: table
+      parallel: true
+      forks: 4
+{{ end }}
   status:
     desc: Show git status
     cmd: |

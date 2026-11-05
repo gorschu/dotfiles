@@ -51,6 +51,11 @@ declare -a user_services_enable_start=(
 {{- range .services.systemd.enable_start }}
     "{{ . }}"
 {{- end }}
+{{- if not .is_work_machine }}
+{{- range .services.systemd.enable_start_personal }}
+    "{{ . }}"
+{{- end }}
+{{- end }}
 )
 
 # Helper function to manage a service

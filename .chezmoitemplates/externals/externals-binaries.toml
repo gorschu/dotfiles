@@ -1,2 +1,9 @@
 {{- $versions := .versions -}}
 # Pinned binaries managed outside Homebrew
+{{ if and (eq .chezmoi.os "linux") (not .is_work_machine) }}
+[".local/bin/repo-health"]
+  type = "archive-file"
+  url = "https://github.com/gorschu/repo-health/releases/download/{{ $versions.repo_health }}/repo-health_{{ trimPrefix "v" $versions.repo_health }}_linux_{{ .chezmoi.arch }}.tar.gz"
+  path = "repo-health"
+  executable = true
+{{ end }}

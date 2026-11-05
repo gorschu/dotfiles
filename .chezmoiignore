@@ -10,6 +10,12 @@ renovate.json
 .gitignore
 bootstrap
 
+{{ if or (ne .chezmoi.os "linux") .is_work_machine }}
+.local/bin/repo-health
+.config/systemd/user/repo-health.service
+.config/systemd/user/repo-health.timer
+{{ end }}
+
 {{- /* Ignore Linux-specific files on non-Linux systems */ -}}
 {{- if ne .chezmoi.os "linux" }}
 .chezmoiscripts/*_linux.sh*

@@ -131,6 +131,12 @@
         "break",
         {
             "type": "command",
+            "text": "{{ .chezmoi.homeDir }}/.local/bin/repo-health summary",
+            "key": " PROJECTS",
+            "keyColor": "yellow"
+        },
+        {
+            "type": "command",
             "text": "{{ .chezmoi.homeDir}}/.local/bin/fastfetch-get_backup_status.sh",
             "key": "󰁯 BACKUP",
             "keyColor": "magenta"

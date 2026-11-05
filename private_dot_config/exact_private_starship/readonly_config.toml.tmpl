@@ -19,6 +19,26 @@
 {{- else -}}
   {{- $replaceColor = $theme.accent.mauve -}}
 {{- end -}}
+{{ if and (eq .chezmoi.os "linux") (not .is_work_machine) }}
+format = '${custom.repo_health_error}${custom.repo_health_warning}$all'
+
+[custom.repo_health_error]
+description = "Incomplete or stale repository checks"
+command = '"{{ .chezmoi.homeDir }}/.local/bin/repo-health" prompt --severity error 2>/dev/null || printf "Repo check failed"'
+when = true
+shell = ["/bin/sh"]
+format = "([$output]($style)\n)"
+style = "{{ $mutedColor }}"
+
+[custom.repo_health_warning]
+description = "Outstanding work in Mani repositories"
+command = '"{{ .chezmoi.homeDir }}/.local/bin/repo-health" prompt --severity warning'
+when = true
+shell = ["/bin/sh"]
+format = "([$output]($style)\n)"
+style = "{{ $mutedColor }}"
+{{ end }}
+
 [aws]
 disabled = false
 symbol = "  "

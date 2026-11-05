@@ -1,5 +1,6 @@
 # External binary versions
 # Renovate will update these versions, and they'll be substituted into download URLs
-# Format: tool = "version" # renovate: datasource=github-releases depName=owner/repo
+# Each pin carries its GitHub repository in a Renovate annotation.
 
 [versions]
+repo_health = "v0.1.1" # renovate: datasource=github-releases depName=gorschu/repo-health
