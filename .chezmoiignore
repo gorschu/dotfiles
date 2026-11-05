@@ -18,6 +18,10 @@ bootstrap
 {{- end }}
 
 {{- $host := index (.hosts | default dict) .chezmoi.hostname | default dict -}}
+{{ if or (ne .chezmoi.os "linux") .is_work_machine (not $host.has_pim) }}
+.local/bin/joplin
+.local/bin/joplin-decrypt
+{{ end }}
 {{ if not $host.has_pim }}
 .config/vdirsyncer
 .config/khal

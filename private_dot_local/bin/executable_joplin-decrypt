@@ -1,0 +1,65 @@
+#!/usr/bin/env python3
+"""Cache the existing E2EE password locally, then decrypt Joplin CLI notes."""
+
+import argparse
+import getpass
+import json
+import shutil
+import subprocess
+import sys
+import warnings
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Prompt for an existing E2EE password, cache it in the "
+        "Joplin CLI profile, and decrypt downloaded notes. Does not sync."
+    )
+    parser.parse_args()
+    joplin = shutil.which("joplin")
+    if not joplin:
+        print(
+            "Joplin CLI is missing; install the Homebrew PIM bundle first.",
+            file=sys.stderr,
+        )
+        return 127
+
+    try:
+        with warnings.catch_warnings():
+            warnings.simplefilter("error", getpass.GetPassWarning)
+            password = getpass.getpass("Joplin E2EE password: ")
+    except getpass.GetPassWarning:
+        print("A terminal with hidden password input is required.", file=sys.stderr)
+        return 1
+    except (EOFError, KeyboardInterrupt):
+        print("\nCancelled.", file=sys.stderr)
+        return 130
+    if not password:
+        print("Empty password; configuration was not changed.", file=sys.stderr)
+        return 1
+
+    # JSON handles quotes and backslashes. Keep the password out of argv and files.
+    result = subprocess.run(
+        [joplin, "config", "--import"],
+        input=json.dumps({"encryption.masterPassword": password}),
+        text=True,
+        capture_output=True,
+    )
+    del password
+    if result.returncode:
+        # Import diagnostics may contain settings; do not echo them.
+        print(
+            "Could not save the E2EE password; decryption was not started.",
+            file=sys.stderr,
+        )
+        return result.returncode if result.returncode > 0 else 1
+
+    return subprocess.call([joplin, "e2ee", "decrypt"])
+
+
+if __name__ == "__main__":
+    try:
+        sys.exit(main())
+    except KeyboardInterrupt:
+        print("\nCancelled.", file=sys.stderr)
+        sys.exit(130)

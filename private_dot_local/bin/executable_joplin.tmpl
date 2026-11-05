@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Sync before opening the default interactive profile; retain offline access.
+set -uo pipefail
+
+JOPLIN_BIN={{ joinPath .homebrew.prefix "bin/joplin" | quote }}
+if [[ ! -x "$JOPLIN_BIN" ]]; then
+  echo "Joplin CLI is missing; install the Homebrew PIM bundle first." >&2
+  exit 127
+fi
+
+if [[ $# -eq 0 && -t 0 && -t 1 ]]; then
+  "$JOPLIN_BIN" sync
+  status=$?
+  if [[ $status -ge 128 ]]; then
+    exit "$status"
+  elif [[ $status -ne 0 ]]; then
+    echo "Joplin sync failed; opening local notes for offline use." >&2
+  fi
+fi
+
+exec "$JOPLIN_BIN" "$@"
