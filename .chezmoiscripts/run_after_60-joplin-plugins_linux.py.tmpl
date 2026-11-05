@@ -1,0 +1,85 @@
+{{- $host := index (.hosts | default dict) .chezmoi.hostname | default dict -}}
+{{- if and (eq .chezmoi.os "linux") (not .is_work_machine) (get $host "has_pim") -}}
+#!/usr/bin/env python3
+"""Install missing Joplin plugins and remove unlisted packages; never update them."""
+
+import json
+from pathlib import Path
+import re
+import shutil
+import subprocess
+import sys
+import tarfile
+import tempfile
+import urllib.error
+import urllib.request
+
+DESIRED_PLUGINS = json.loads({{ .joplin.desktop.plugins | toJson | toJson }})
+PLUGIN_DIR = Path({{ joinPath .chezmoi.homeDir ".config/joplin-desktop/plugins" | toJson }})
+REPOSITORY = "https://raw.githubusercontent.com/joplin/plugins/master/plugins"
+
+
+def require_stopped():
+    flatpak = shutil.which("flatpak")
+    if not flatpak:
+        raise RuntimeError("Flatpak is missing; cannot check whether Joplin is running.")
+    result = subprocess.run(
+        [flatpak, "ps", "--columns=application"], capture_output=True, text=True
+    )
+    if result.returncode:
+        raise RuntimeError("Cannot check whether Joplin is running.")
+    if "net.cozic.joplin_desktop" in result.stdout.splitlines():
+        raise RuntimeError("Quit Joplin completely, including its tray process, then retry chezmoi.")
+
+
+def main():
+    if not isinstance(DESIRED_PLUGINS, list) or any(
+        not isinstance(plugin_id, str)
+        or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]*", plugin_id)
+        for plugin_id in DESIRED_PLUGINS
+    ):
+        raise ValueError("joplin.desktop.plugins must be a list of valid plugin IDs.")
+    if PLUGIN_DIR.is_symlink():
+        raise RuntimeError("Refusing to manage a symlinked Joplin plugins directory.")
+
+    desired = set(DESIRED_PLUGINS)
+    installed = {p.stem: p for p in PLUGIN_DIR.glob("*.jpl") if p.is_file() or p.is_symlink()}
+    missing = sorted(desired - installed.keys())
+    obsolete = sorted(installed.keys() - desired)
+    if not missing and not obsolete:
+        return
+
+    require_stopped()
+    PLUGIN_DIR.mkdir(parents=True, exist_ok=True, mode=0o700)
+    # Stage every download first. A failed download must not remove any plugins.
+    with tempfile.TemporaryDirectory(prefix=".chezmoi-", dir=PLUGIN_DIR) as tmp:
+        staging = Path(tmp)
+        for plugin_id in missing:
+            package = staging / f"{plugin_id}.jpl"
+            url = f"{REPOSITORY}/{plugin_id}/plugin.jpl"
+            with urllib.request.urlopen(url, timeout=30) as response, package.open("wb") as output:
+                shutil.copyfileobj(response, output)
+            # Read the manifest without extracting or executing plugin code.
+            with tarfile.open(package) as archive:
+                manifest = archive.extractfile("manifest.json")
+                if manifest is None or json.load(manifest).get("id") != plugin_id:
+                    raise ValueError(f"Unexpected plugin manifest for {plugin_id}.")
+
+        # Downloads may take time; check again before modifying installed packages.
+        require_stopped()
+        for plugin_id in missing:
+            destination = PLUGIN_DIR / f"{plugin_id}.jpl"
+            if not destination.exists():
+                (staging / destination.name).replace(destination)
+                print(f"Installed Joplin plugin: {plugin_id}")
+        for plugin_id in obsolete:
+            installed[plugin_id].unlink()
+            print(f"Removed Joplin plugin: {plugin_id}")
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except (OSError, ValueError, KeyError, RuntimeError, tarfile.TarError, urllib.error.URLError) as error:
+        sys.exit(f"Joplin plugin management failed: {error}")
+{{ end -}}

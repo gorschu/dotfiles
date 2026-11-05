@@ -1,6 +1,13 @@
 ---
 joplin:
   desktop:
+    # Own all additional plugin packages; update/configure them inside Joplin.
+    # Removing an ID deletes its package on the next apply (quit Joplin first).
+    plugins:
+      - com.whatever.quick-links
+      - joplin.plugin.templates
+      - io.github.personalizedrefrigerator.codemirror6-settings
+      - outline
     settings:
       editor.keyboardMode: vim
       showTrayIcon: true
