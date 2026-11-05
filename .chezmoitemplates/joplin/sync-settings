@@ -1,0 +1,9 @@
+{{- $secrets := includeTemplate "secrets/secrets-joplin" . | fromJson -}}
+{{- $account := index $secrets.accounts "personal" -}}
+{{- if or (empty $account.url) (empty $account.email) (empty $account.password) -}}
+{{- fail "Joplin personal account requires url, email and password in secrets/joplin.toml.asc" -}}
+{{- end -}}
+{{- if not (hasPrefix "https://" $account.url) -}}
+{{- fail "Joplin server URL must use HTTPS" -}}
+{{- end -}}
+{{- dict "sync.target" 9 "sync.9.path" $account.url "sync.9.username" $account.email "sync.9.password" $account.password | toJson -}}

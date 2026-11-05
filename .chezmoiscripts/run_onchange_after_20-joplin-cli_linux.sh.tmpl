@@ -1,0 +1,25 @@
+{{- $host := index (.hosts | default dict) .chezmoi.hostname | default dict -}}
+{{- if and (eq .chezmoi.os "linux") (not .is_work_machine) $host.has_pim -}}
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Hash encrypted source and templates, never plaintext credentials.
+# Account: {{ include "secrets/joplin.toml.asc" | sha256sum }}
+# Settings: {{ include ".chezmoitemplates/joplin/sync-settings" | sha256sum }}
+# Secrets helper: {{ include ".chezmoitemplates/secrets/secrets-joplin" | sha256sum }}
+
+JOPLIN_BIN={{ joinPath .homebrew.prefix "bin/joplin" | quote }}
+if [[ ! -x "$JOPLIN_BIN" ]]; then
+  echo "Joplin CLI is missing; install the Homebrew PIM bundle first." >&2
+  exit 1
+fi
+
+# Decrypt at execution time so chezmoi diff does not expose credentials.
+# Validate before starting Joplin; do not put secrets in arguments or files.
+settings=$(chezmoi --source {{ .chezmoi.sourceDir | quote }} execute-template \
+  '{{`{{ includeTemplate "joplin/sync-settings" . }}`}}')
+printf '%s' "$settings" | "$JOPLIN_BIN" config --import
+unset settings
+
+echo "Joplin CLI connection configured. Initial sync and E2EE unlocking are manual."
+{{ end -}}
