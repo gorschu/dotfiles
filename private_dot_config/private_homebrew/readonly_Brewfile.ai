@@ -1,4 +1,5 @@
 brew "specify" # github speckit
+brew "herdr"
 cask "codex"
 cask "claude-code"
 cask "copilot-cli"
