@@ -13,23 +13,28 @@ afew() {
   "$MISE_BIN" --cd "$HOME" --no-hooks exec -- afew "$@"
 }
 
-# Tag new messages by account and inbox location.
+# Tag new messages by account.
 for account in {{ keys .mail.accounts | sortAlpha | join " " }}; do
   "$NOTMUCH_BIN" tag "+$account" -- "path:$account/** and tag:new"
-  "$NOTMUCH_BIN" tag +inbox -- "folder:$account/INBOX and tag:new"
 done
+
+# Reconcile Trash before afew checks its tag blacklist. Keep the tag while any
+# copy remains in Trash; restored messages must not retain it.
+trash_folders='folder:"/^({{ keys .mail.accounts | sortAlpha | join "|" }})/Trash(/.*)?$/"'
+"$NOTMUCH_BIN" tag +trash -unread -- "$trash_folders and (not tag:trash or tag:unread)"
+"$NOTMUCH_BIN" tag -trash -- "tag:trash and not $trash_folders"
 
 # Keep new until filing succeeds; the afew move rules also require tag:new.
 afew --tag --new
 # afew 4.0.2 can exit zero after a failed reindex. Propagate that specific error.
 afew --move-mails --notmuch-args=--no-hooks 2>&1 |
   awk '{ print } /^ERROR:root:Could not update notmuch database / { failed = 1 } END { exit failed }'
-"$NOTMUCH_BIN" tag -inbox -- tag:new and tag:invoice
+# Reconcile all Inbox tags after filing, including moves of already indexed mail.
+inbox_folders='folder:"/^({{ keys .mail.accounts | sortAlpha | join "|" }})/INBOX$/"'
+"$NOTMUCH_BIN" tag +inbox -- "$inbox_folders and not tag:inbox"
+"$NOTMUCH_BIN" tag -inbox -- "tag:inbox and not $inbox_folders"
 "$NOTMUCH_BIN" tag -new -- tag:new
 
-# Sync folder location → tags (runs on all messages, not just new)
-{{ $notmuch }} tag -inbox -unread +trash -- path:fastmail/Trash/** and \(tag:inbox or tag:unread\)
-{{ $notmuch }} tag -inbox -unread +trash -- path:gmail/Trash/** and \(tag:inbox or tag:unread\)
-{{ $notmuch }} tag -inbox -unread +trash -- path:gmx/Trash/** and \(tag:inbox or tag:unread\)
+# Sync spam folder locations to tags.
 {{ $notmuch }} tag -inbox -unread +spam  -- path:fastmail/Spam/** and \(tag:inbox or tag:unread\)
 {{ $notmuch }} tag -inbox -unread +spam  -- path:gmx/Spam/** and \(tag:inbox or tag:unread\)
