@@ -1,0 +1,10 @@
+{{- $host := index (.hosts | default dict) .chezmoi.hostname | default dict -}}
+[settings]
+experimental = true
+pipx.uvx = true
+
+[tools]
+pipx = "latest"
+{{ if $host.has_mail -}}
+"pipx:afew" = { version = "4.0.2", python = "3.14" }
+{{ end -}}

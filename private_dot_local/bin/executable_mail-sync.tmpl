@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+{{- $filing := joinPath .chezmoi.sourceDir "secrets" "mail-filing.json.asc" | include | decrypt | fromJson }}
 # Mail sync wrapper for mbsync/neomutt
 
 set -euo pipefail
@@ -18,7 +19,8 @@ if ! flock -n 9; then
 fi
 
 log() {
-  local msg="$(date -Iseconds) $*"
+  local msg
+  msg="$(date -Iseconds) $*"
   echo "${msg}" >>"${LOG_FILE}"
   echo "$*"
 }
@@ -32,6 +34,26 @@ notify_error() {
 }
 
 log "Starting mail sync"
+
+# Check every afew destination before downloading or processing any messages.
+filing_folders=(
+{{ range $account := $filing.accounts -}}
+{{ range $filing.rules -}}
+  {{ printf "%s/%s/%s" $account $filing.parent .folder | quote }}
+{{ end -}}
+{{ end -}}
+)
+missing_folders=()
+for folder in "${filing_folders[@]}"; do
+  maildir="${HOME}/data/mail/${folder}"
+  if [[ ! -d "${maildir}/cur" || ! -d "${maildir}/new" || ! -d "${maildir}/tmp" ]]; then
+    missing_folders+=("${maildir}")
+  fi
+done
+if ((${#missing_folders[@]})); then
+  notify_error "Missing filing Maildirs (cur/new/tmp required): ${missing_folders[*]}"
+  exit 1
+fi
 
 # Check for network connectivity before attempting sync
 if command -v nm-online &>/dev/null; then

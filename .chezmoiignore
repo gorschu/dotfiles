@@ -39,6 +39,8 @@ bootstrap
 .config/systemd/user/vdirsyncer.timer
 {{ end }}
 {{ if not $host.has_mail }}
+.local/bin/mail-sync
+.config/afew
 .config/neomutt
 .config/msmtp
 .config/notmuch

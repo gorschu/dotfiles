@@ -1,6 +1,0 @@
-[settings]
-experimental = true
-pipx.uvx = true
-
-[tools]
-pipx = "latest"

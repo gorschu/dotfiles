@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Install missing global userland tools after the Homebrew bundle.
+
+set -euo pipefail
+
+MISE_CONFIG="${XDG_CONFIG_HOME:-{{ .chezmoi.homeDir }}/.config}/mise/config.toml"
+MISE_BIN={{ joinPath .homebrew.prefix "bin/mise" | quote }}
+
+if [[ ! -r "${MISE_CONFIG}" ]]; then
+  echo "No global mise config at ${MISE_CONFIG}; skipping tool installation."
+  exit 0
+fi
+
+if [[ ! -x "${MISE_BIN}" ]]; then
+  echo "ERROR: mise is missing at ${MISE_BIN}; install the Homebrew bundle first." >&2
+  exit 1
+fi
+
+export PATH={{ printf "%s/bin:%s/sbin" .homebrew.prefix .homebrew.prefix | quote }}:"${PATH}"
+
+# Avoid loading the chezmoi repository's development tools and hooks.
+echo "Installing global mise tools..."
+"${MISE_BIN}" --cd {{ .chezmoi.homeDir | quote }} --no-hooks --yes install

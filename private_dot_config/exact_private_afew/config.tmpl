@@ -1,0 +1,21 @@
+{{- $filing := joinPath .chezmoi.sourceDir "secrets" "mail-filing.json.asc" | include | decrypt | fromJson -}}
+{{- $accounts := $filing.accounts | sortAlpha -}}
+# Sender queries and subject patterns come from the encrypted filing rules.
+# The hook supplies --new and clears that tag only after filing succeeds.
+{{ range $index, $rule := $filing.rules }}
+[HeaderMatchingFilter.{{ $index }}]
+query = from:"/{{ $rule.sender }}/" AND folder:"/^({{ join "|" $accounts }})/({{ join "|" $rule.sources }})$/"
+header = Subject
+pattern = {{ $rule.subject }}
+tags = +invoice;+{{ $rule.tag }}
+tags_blacklist = spam;trash;deleted
+{{ end }}
+[MailMover]
+folders ={{ range $accounts }} {{ . }}/INBOX {{ . }}/{{ $filing.parent }}{{ end }}
+# Strip source-folder mbsync UIDs while preserving Maildir flags.
+rename = True
+{{ range $account := $accounts -}}
+{{ range $source := list "INBOX" $filing.parent -}}
+{{ $account }}/{{ $source }} ={{ range $filing.rules }} 'tag:new AND tag:{{ .tag }}':{{ $account }}/{{ $filing.parent }}/{{ .folder }}{{ end }}
+{{ end -}}
+{{ end -}}
