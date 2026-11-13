@@ -1,0 +1,49 @@
+#!/usr/bin/env python3
+"""Merge shared preferences without replacing Claude Code's local settings.
+
+Only keys in .chezmoitemplates/claude/settings.json are managed. Objects merge
+key by key and lists gain missing entries, so rules added from inside Claude
+Code survive. Keys absent there (such as herdr's hooks) are left untouched;
+removing a key there leaves its last value in the destination.
+"""
+
+import json
+import sys
+
+
+def merge(destination, preferences, path=""):
+    for key, value in preferences.items():
+        name = f"{path}.{key}" if path else key
+        if isinstance(value, dict):
+            current = destination.setdefault(key, {})
+            if not isinstance(current, dict):
+                sys.exit(f"Claude setting {name!r} must be an object; leaving settings unchanged.")
+            merge(current, value, name)
+        elif isinstance(value, list):
+            current = destination.setdefault(key, [])
+            if not isinstance(current, list):
+                sys.exit(f"Claude setting {name!r} must be a list; leaving settings unchanged.")
+            current.extend(item for item in value if item not in current)
+        else:
+            destination[key] = value
+
+
+original = sys.stdin.read()
+try:
+    settings = json.loads(original) if original.strip() else {}
+except json.JSONDecodeError as error:
+    sys.exit(f"Invalid Claude settings JSON; leaving them unchanged: {error}")
+if not isinstance(settings, dict):
+    sys.exit("Claude settings must be a JSON object; leaving them unchanged.")
+
+preferences = json.loads({{ include ".chezmoitemplates/claude/settings.json" | toJson }})
+merged = json.loads(json.dumps(settings))
+merge(merged, preferences)
+
+# Keep Claude Code's own formatting when nothing changed.
+if merged == settings:
+    sys.stdout.write(original)
+else:
+    sys.stdout.write(json.dumps(merged, indent=2, ensure_ascii=False) + "\n")
+
+# vim: ft=python

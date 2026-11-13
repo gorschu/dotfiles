@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "model": "opus",
+  "effortLevel": "high",
+  "theme": "dark",
+  "agentPushNotifEnabled": true,
+  "timeFormat": "24-hour",
+  "attribution": {
+    "commit": ""
+  },
+  "sandbox": {
+    "enabled": true
+  }
+}
