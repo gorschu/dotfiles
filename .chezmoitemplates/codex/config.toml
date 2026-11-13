@@ -1,0 +1,20 @@
+# Shared Codex preferences. Machine-specific state stays in the destination file.
+model = "gpt-6.1-sol"
+model_reasoning_effort = "high"
+service_tier = "default"
+web_search = "live"
+
+[features]
+tui_workspace = true
+image_generation_animation = true
+prevent_idle_sleep = true
+memories = true
+
+[tui]
+fullscreen_transcript = true
+collapse_turn_details = true
+animations = true
+notification_method = "osc777"
+notification_condition = "unfocused"
+notifications = ["agent-turn-complete", "approval-requested"]
+status_line = ["model-with-reasoning", "context-remaining", "git-branch"]

@@ -1,0 +1,45 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.11"
+# dependencies = ["tomlkit==0.13.3"]
+# ///
+"""Merge shared preferences without replacing Codex's local state or comments.
+
+Requires uv, installed by Brewfile.dev. The pinned TOML parser is cached by uv.
+Only keys in .chezmoitemplates/codex/config.toml are managed; removing a key there
+leaves its last value in the destination so local preferences can take over.
+"""
+
+import sys
+
+import tomlkit
+from tomlkit.exceptions import TOMLKitError
+from tomlkit.items import Table
+
+
+def merge(destination, preferences):
+    for key, value in preferences.items():
+        if isinstance(value, Table):
+            if key not in destination:
+                destination[key] = tomlkit.table()
+            if not isinstance(destination[key], Table):
+                sys.exit(f"Codex setting {key!r} must be a table; leaving config unchanged.")
+            merge(destination[key], value)
+        elif key not in destination or destination[key] != value:
+            destination[key] = value
+
+
+original = sys.stdin.read()
+try:
+    config = tomlkit.parse(original)
+    preferences = tomlkit.parse({{ include ".chezmoitemplates/codex/config.toml" | toJson }})
+    merge(config, preferences)
+    updated = tomlkit.dumps(config)
+    # Check the result before emitting any replacement content.
+    tomlkit.parse(updated)
+except TOMLKitError as error:
+    sys.exit(f"Invalid Codex TOML; leaving config unchanged: {error}")
+
+sys.stdout.write(updated)
+
+# vim: ft=python
