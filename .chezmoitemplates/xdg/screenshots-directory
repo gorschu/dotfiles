@@ -1,0 +1,9 @@
+{{- $home := .chezmoi.homeDir -}}
+{{- $pictures := joinPath $home "Pictures" -}}
+{{- with lookPath "xdg-user-dir" -}}
+  {{- $configured := output . "PICTURES" | trimSuffix "\n" -}}
+  {{- if and $configured (ne (clean $configured) $home) -}}
+    {{- $pictures = $configured -}}
+  {{- end -}}
+{{- end -}}
+{{- joinPath $pictures "Screenshots" -}}

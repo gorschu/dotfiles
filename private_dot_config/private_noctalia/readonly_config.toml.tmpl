@@ -12,6 +12,12 @@ font_family = "Adwaita Sans"
 [shell.panel]
 open_near_click_control_center = true
 
+[shell.screenshot]
+directory = {{ includeTemplate "xdg/screenshots-directory" . | toRawJson }}
+filename_pattern = {{ .screenshots.filename_pattern | toRawJson }}
+append_mode_suffix = false
+format = "png"
+
 [wallpaper]
 enabled = true
 

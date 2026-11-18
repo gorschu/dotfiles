@@ -1,3 +1,5 @@
+{{- $screenshotsDir := includeTemplate "xdg/screenshots-directory" . | replace "%" "%%" -}}
+{{- $filename := printf "%s.png" .screenshots.filename_pattern -}}
 // Reuse Plasma's Qt integration and application-menu layout without exporting
 // either setting into Plasma or other graphical sessions.
 environment {
@@ -15,7 +17,7 @@ hotkey-overlay {
     skip-at-startup
 }
 
-screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+screenshot-path {{ joinPath $screenshotsDir $filename | toRawJson }}
 
 // Kanshi reacts to connector profiles, while Niri owns lid-driven panel power.
 // Normalize migrated columns only after Niri reports the destination ready.

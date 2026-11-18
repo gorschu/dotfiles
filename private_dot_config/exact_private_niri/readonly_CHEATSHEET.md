@@ -81,7 +81,8 @@ picker. Then select a target with a shortcut. These shortcuts do not start a cal
 or initiate sharing. Clearing the target resets the stream to empty; end sharing
 in the calling application when finished.
 
-Screenshots are saved under `~/Pictures/Screenshots/`.
+Niri and Noctalia save screenshots in the `Screenshots` subdirectory of the
+XDG Pictures directory.
 
 ## Session and utilities
 

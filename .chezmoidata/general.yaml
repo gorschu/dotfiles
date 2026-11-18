@@ -1,5 +1,8 @@
 ---
 # General configuration shared across all machines
+screenshots:
+  filename_pattern: "Screenshot.%Y-%m-%d.%H-%M-%S"
+
 colorscheme:
   name: catppuccin
   flavor: mocha
