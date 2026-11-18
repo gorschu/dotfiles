@@ -85,7 +85,7 @@ font_family = "JetBrains Mono"
 capsule = false
 start = ["workspaces", "active_window"]
 center = ["date", "clock"]
-end = ["caffeine", "nightlight", "wallhaven", "control-center", "session", "utility-gap", "tray", "tray-gap", "notifications", "network", "bluetooth", "volume", "brightness", "battery"]
+end = ["caffeine", "nightlight", "wallhaven", "screenshot", "control-center", "session", "utility-gap", "tray", "tray-gap", "notifications", "network", "bluetooth", "volume", "brightness", "battery"]
 
 [widget.utility-gap]
 type = "spacer"
