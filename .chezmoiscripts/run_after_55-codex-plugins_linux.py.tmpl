@@ -1,0 +1,42 @@
+{{- if eq .chezmoi.os "linux" -}}
+#!/usr/bin/env python3
+"""Install missing declared plugins through the Codex CLI on apply."""
+
+import json
+import os
+import shutil
+import subprocess
+import sys
+
+plugins = json.loads({{ .codex.plugins | toJson | toJson }})
+os.environ["PATH"] = {{ joinPath .homebrew.prefix "bin" | toJson }} + os.pathsep + os.environ["PATH"]
+if not shutil.which("codex"):
+    print("Skipping Codex plugins because the Codex CLI is missing.", file=sys.stderr)
+    sys.exit(0)
+os.environ["CODEX_HOME"] = {{ joinPath .chezmoi.homeDir ".config/codex" | toJson }}
+
+
+def inventory(*args):
+    return json.loads(subprocess.check_output(["codex", "plugin", *args, "--json"]))
+
+
+def installed_plugins(market):
+    return {p["pluginId"]: p["enabled"] for p in inventory("list", "--marketplace", market)["installed"]}
+
+
+markets = {m["name"] for m in inventory("marketplace", "list")["marketplaces"]}
+fresh_markets = set()
+for selector, repo in plugins.items():
+    _, market = selector.rsplit("@", 1)
+    if repo and market not in markets:
+        subprocess.run(["codex", "plugin", "marketplace", "add", repo], check=True)
+        markets.add(market)
+        fresh_markets.add(market)
+    if not installed_plugins(market).get(selector):
+        if repo and market not in fresh_markets:
+            subprocess.run(["codex", "plugin", "marketplace", "upgrade", market], check=True)
+            fresh_markets.add(market)
+        subprocess.run(["codex", "plugin", "add", selector], check=True)
+        if not installed_plugins(market).get(selector):
+            sys.exit(f"Codex did not report {selector} installed and enabled.")
+{{ end -}}

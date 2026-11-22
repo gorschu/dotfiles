@@ -1,0 +1,30 @@
+{{- if eq .chezmoi.os "linux" -}}
+#!/usr/bin/env python3
+"""Install and enable declared Antigravity CLI plugins on apply."""
+
+import json
+import os
+import shutil
+import subprocess
+import sys
+
+plugins = json.loads({{ .agy.plugins | toJson | toJson }})
+os.environ["PATH"] = {{ joinPath .homebrew.prefix "bin" | toJson }} + os.pathsep + os.environ["PATH"]
+if not shutil.which("agy"):
+    print("Skipping Antigravity plugins because the agy CLI is missing.", file=sys.stderr)
+    sys.exit(0)
+
+inventory = json.loads(subprocess.check_output(["agy", "plugin", "list", "--json"]))
+enabled = {plugin["name"]: plugin["enabled"] for plugin in inventory}
+for name, repo in plugins.items():
+    if name not in enabled:
+        # agy copies the clone including .git, and cannot copy Git's fsmonitor socket.
+        env = os.environ.copy()
+        index = int(env.get("GIT_CONFIG_COUNT", "0"))
+        env[f"GIT_CONFIG_KEY_{index}"] = "core.fsmonitor"
+        env[f"GIT_CONFIG_VALUE_{index}"] = "false"
+        env["GIT_CONFIG_COUNT"] = str(index + 1)
+        subprocess.run(["agy", "plugin", "install", f"https://github.com/{repo}.git"], env=env, check=True)
+    elif not enabled[name]:
+        subprocess.run(["agy", "plugin", "enable", name], check=True)
+{{ end -}}

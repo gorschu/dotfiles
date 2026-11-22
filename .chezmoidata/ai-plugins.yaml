@@ -1,0 +1,15 @@
+# Plugin identifiers map to GitHub repositories. A null Codex source uses its hosted catalog.
+codex:
+  plugins:
+    agent-skills@agent-skills: addyosmani/agent-skills
+    superpowers@openai-curated-remote: null
+
+claude:
+  plugins:
+    agent-skills@addy-agent-skills: addyosmani/agent-skills
+    superpowers@claude-plugins-official: anthropics/claude-plugins-official
+
+agy:
+  plugins:
+    agent-skills: addyosmani/agent-skills
+    superpowers: obra/superpowers

@@ -1,0 +1,39 @@
+{{- if eq .chezmoi.os "linux" -}}
+#!/usr/bin/env python3
+"""Fetch missing user plugins from fresh Claude Code marketplaces."""
+
+import json
+import os
+import shutil
+import subprocess
+import sys
+
+plugins = json.loads({{ .claude.plugins | toJson | toJson }})
+os.environ["PATH"] = {{ joinPath .homebrew.prefix "bin" | toJson }} + os.pathsep + os.environ["PATH"]
+os.environ["CLAUDE_CONFIG_DIR"] = {{ joinPath .chezmoi.homeDir ".config/claude" | toJson }}
+if not shutil.which("claude"):
+    print("Skipping Claude plugins because the Claude CLI is missing.", file=sys.stderr)
+    sys.exit(0)
+
+
+def inventory(*args):
+    return json.loads(subprocess.check_output(["claude", "plugin", *args, "--json"]))
+
+
+installed = {p["id"]: p["enabled"] for p in inventory("list") if p.get("scope") == "user"}
+markets = {m["name"] for m in inventory("marketplace", "list")}
+fresh_markets = set()
+for selector, repo in plugins.items():
+    market = selector.rsplit("@", 1)[1]
+    if market not in markets:
+        subprocess.run(["claude", "plugin", "marketplace", "add", repo, "--scope", "user"], check=True)
+        markets.add(market)
+        fresh_markets.add(market)
+    if selector not in installed:
+        if market not in fresh_markets:
+            subprocess.run(["claude", "plugin", "marketplace", "update", market], check=True)
+            fresh_markets.add(market)
+        subprocess.run(["claude", "plugin", "install", selector, "--scope", "user"], check=True)
+    elif not installed[selector]:
+        subprocess.run(["claude", "plugin", "enable", selector, "--scope", "user"], check=True)
+{{ end -}}
