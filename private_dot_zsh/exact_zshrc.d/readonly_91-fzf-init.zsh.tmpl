@@ -15,7 +15,17 @@ elif [ -f ~/.fzf.zsh ]; then
 {{ end }}
 fi
 
-# Rebind ALT-C to ALT-D to avoid paperwm window center conflict
-bindkey -r '^[c'  # unbind default ALT-C
-# Map ALT-D to the same fzf-cd-widget that ALT-C uses
-bindkey '^[d' fzf-cd-widget
+for fzf_keymap in emacs viins vicmd; do
+  # PaperWM uses Alt-C to center the window.
+  if zle -l fzf-cd-widget >/dev/null; then
+    bindkey -M "$fzf_keymap" -r '^[c'
+    bindkey -M "$fzf_keymap" '^[d' fzf-cd-widget
+  fi
+
+  # Atuin Threads uses Ctrl-T.
+  if zle -l fzf-file-widget >/dev/null; then
+    bindkey -M "$fzf_keymap" -r '^T'
+    bindkey -M "$fzf_keymap" '^[t' fzf-file-widget
+  fi
+done
+unset fzf_keymap
