@@ -17,6 +17,19 @@
     "favorite_models": [],
     "model_parameters": []
   },
+  "agent_servers": {
+    "claude-acp": {
+      "type": "registry"
+    },
+    "codex-acp": {
+      "type": "registry"
+    },
+    "Antigravity": {
+      "type": "custom",
+      "command": {{ joinPath .homebrew.prefix "bin/agy" | toJson }},
+      "args": ["acp"]
+    }
+  },
   "git_panel": {
     "dock": "left"
   },
