@@ -35,6 +35,11 @@ d       %h/data/cloud/insync                                0700  {{ $.chezmoi.u
 {{ end }}{{ end }}
 
 {{ with joinPath .chezmoi.homeDir "data/.ready" | stat }}
+# VS Code data directories
+d       %h/data/general/config/vscode                      0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/general/config/vscode/user-data            0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+d       %h/data/general/config/vscode/dot-vscode           0700  {{ $.chezmoi.username }}  {{ $.chezmoi.group }}  -   -
+
 # Top-level symlinks into data/ (only after data drive is initialised)
 L+      %h/.mozilla                                         -     -        -        -   %h/data/general/mozilla/.mozilla
 L+      %h/.config/mozilla                                  -     -        -        -   %h/data/general/mozilla/.config/mozilla
@@ -43,6 +48,8 @@ L+      %h/.config/google-chrome-beta                       -     -        -    
 L+      %h/.config/google-chrome-unstable                   -     -        -        -   %h/data/general/config/google-chrome-unstable
 L+      %h/.config/vivaldi                                  -     -        -        -   %h/data/general/config/vivaldi
 L+      %h/.config/vivaldi-snapshot                         -     -        -        -   %h/data/general/config/vivaldi-snapshot
+L+      %h/.config/Code                                     -     -        -        -   %h/data/general/config/vscode/user-data
+L+      %h/.vscode                                          -     -        -        -   %h/data/general/config/vscode/dot-vscode
 L+      %h/.config/b2                                       -     -        -        -   %h/data/general/config/b2
 L+      %h/.config/gh                                       -     -        -        -   %h/data/general/config/gh
 L+      %h/.config/rclone                                   -     -        -        -   %h/data/general/config/rclone

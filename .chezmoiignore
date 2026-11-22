@@ -21,6 +21,7 @@ bootstrap
 .chezmoiscripts/*_linux.sh*
 .config/containers
 .config/systemd
+data/general/config/vscode
 {{- end }}
 
 {{- $host := index (.hosts | default dict) .chezmoi.hostname | default dict -}}

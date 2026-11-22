@@ -1,0 +1,77 @@
+#!/usr/bin/env python3
+"""Select the Linux Secret Service backend in VS Code's data-side argv.json."""
+
+import json
+import re
+import sys
+
+KEY = "password-store"
+BACKEND = "gnome-libsecret"
+STRING = r'"(?:[^"\\]|\\.)*"'
+COMMENTS = re.compile(rf'{STRING}|//[^\r\n]*|/\*[\s\S]*?\*/')
+TRAILING_COMMAS = re.compile(rf'{STRING}|,(?=\s*[}}\]])')
+WHITESPACE = re.compile(r"[ \t\r\n]*")
+
+
+def masked_json(source):
+    """Replace comments and trailing commas with whitespace to keep offsets."""
+    source = COMMENTS.sub(
+        lambda match: re.sub(r"[^\r\n]", " ", match[0]) if match[0].startswith("/") else match[0],
+        source,
+    )
+    return TRAILING_COMMAS.sub(lambda match: " " if match[0] == "," else match[0], source)
+
+
+def set_backend(source):
+    document = masked_json(source)
+    newline = "\r\n" if "\r\n" in source else "\n"
+    if not document.strip(" \t\r\n"):
+        if source and not source.endswith(("\r", "\n")):
+            source += newline
+        return source + json.dumps({KEY: BACKEND}, indent=2).replace("\n", newline) + newline
+
+    settings = json.loads(document)
+    if not isinstance(settings, dict):
+        raise ValueError("expected a JSON object")
+    if settings.get(KEY) == BACKEND:
+        return source
+
+    opening_brace = document.index("{")
+    if KEY not in settings:
+        remainder = source[opening_brace + 1:]
+        entry = f'{newline}  {json.dumps(KEY)}: {json.dumps(BACKEND)}'
+        if settings:
+            entry += ","
+        if not remainder.startswith(("\r", "\n")):
+            entry += newline
+        return source[:opening_brace + 1] + entry + remainder
+
+    # Walk top-level members so similarly named options inside values are ignored.
+    decoder = json.JSONDecoder()
+    position = WHITESPACE.match(document, opening_brace + 1).end()
+    spans = []
+    while document[position] != "}":
+        name, name_end = decoder.raw_decode(document, position)
+        colon = document.index(":", name_end)
+        value_start = WHITESPACE.match(document, colon + 1).end()
+        _, value_end = decoder.raw_decode(document, value_start)
+        if name == KEY:
+            spans.append((value_start, value_end))
+        position = WHITESPACE.match(document, value_end).end()
+        if document[position] == ",":
+            position = WHITESPACE.match(document, position + 1).end()
+
+    for start, end in reversed(spans):
+        source = source[:start] + json.dumps(BACKEND) + source[end:]
+    return source
+
+
+try:
+    original = sys.stdin.buffer.read().decode("utf-8")
+    # VS Code also accepts a leading UTF-8 BOM.
+    body = original.removeprefix("\ufeff")
+    updated = original[:len(original) - len(body)] + set_backend(body)
+except ValueError as error:
+    sys.exit(f"Invalid VS Code runtime arguments: {error}")
+
+sys.stdout.buffer.write(updated.encode("utf-8"))
