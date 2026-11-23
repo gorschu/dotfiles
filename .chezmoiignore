@@ -25,13 +25,13 @@ data/general/config/vscode
 {{- end }}
 
 {{- $host := index (.hosts | default dict) .chezmoi.hostname | default dict -}}
-{{ if or (ne .chezmoi.os "linux") .is_work_machine (not $host.has_pim) }}
+{{ if or (ne .chezmoi.os "linux") .is_work_machine (not (get $host "has_pim")) }}
 .local/bin/joplin
 .local/bin/joplin-decrypt
 .config/joplin/keymap.json
 .config/joplin-desktop
 {{ end }}
-{{ if not $host.has_pim }}
+{{ if not (get $host "has_pim") }}
 .config/vdirsyncer
 .config/khal
 .config/khard
@@ -39,7 +39,7 @@ data/general/config/vscode
 .config/systemd/user/vdirsyncer.service
 .config/systemd/user/vdirsyncer.timer
 {{ end }}
-{{ if not $host.has_mail }}
+{{ if not (get $host "has_mail") }}
 .local/bin/mail-sync
 .config/afew
 .config/neomutt
@@ -52,6 +52,8 @@ data/general/config/vscode
 {{ if .is_work_machine }}
 .chezmoiscripts/bootstrap_before_linux.sh
 bin
+data
+.zsh/zshrc.d/50-ai-tools.zsh
 .config/*
 !.config/atuin
 !.config/bat

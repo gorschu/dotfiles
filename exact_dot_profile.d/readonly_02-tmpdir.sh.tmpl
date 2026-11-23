@@ -1,3 +1,4 @@
+{{- if not (and .is_work_machine (eq .chezmoi.os "darwin")) -}}
 # shellcheck shell=bash
 if [[ -d "/tmp/${USER}" ]]; then
   export TMPDIR="${TMPDIR:-/tmp/${USER}}"
@@ -7,3 +8,4 @@ fi
 {{ if eq .chezmoi.os "linux" }}
 systemctl --user import-environment TMPDIR
 {{ end }}
+{{ end -}}

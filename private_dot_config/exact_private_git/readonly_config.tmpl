@@ -62,6 +62,10 @@
 [credential]
 {{ if .is_work_machine }}
 	helper = osxkeychain
+
+[credential "https://github.intern"]
+	helper =
+	helper = {{ printf "!%s auth git-credential" (lookPath "gh" | default "gh" | shellQuote) | quote }}
 {{ else }}
 	helper = cache --timeout=7200
 {{ end }}

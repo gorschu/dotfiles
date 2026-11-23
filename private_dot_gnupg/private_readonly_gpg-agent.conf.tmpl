@@ -1,10 +1,10 @@
 # https://github.com/drduh/config/blob/master/gpg-agent.conf
 # https://www.gnupg.org/documentation/manuals/gnupg/Agent-Options.html
 ttyname $GPG_TTY
-# cache keys for one hour before expiring
-default-cache-ttl 3600
-# no matter what, re-enforce entering correct passphrase after 2 hours
-max-cache-ttl 7200
+# Expire cached passphrases after 4 hours of inactivity.
+default-cache-ttl 14400
+# Require the passphrase again after 8 hours, even with continued use.
+max-cache-ttl 28800
 # don't grab all input
 no-grab
 # work around gnome-keyring issues

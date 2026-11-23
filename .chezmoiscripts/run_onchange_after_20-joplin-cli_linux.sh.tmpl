@@ -1,5 +1,5 @@
 {{- $host := index (.hosts | default dict) .chezmoi.hostname | default dict -}}
-{{- if and (eq .chezmoi.os "linux") (not .is_work_machine) $host.has_pim -}}
+{{- if and (eq .chezmoi.os "linux") (not .is_work_machine) (get $host "has_pim") -}}
 #!/usr/bin/env bash
 set -euo pipefail
 

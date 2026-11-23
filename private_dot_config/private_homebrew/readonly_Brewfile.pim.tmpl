@@ -1,5 +1,5 @@
 {{- $host := index (.hosts | default dict) .chezmoi.hostname | default dict -}}
-{{ if $host.has_pim -}}
+{{ if get $host "has_pim" -}}
 # PIM tools
 brew "joplin-cli"
 brew "todoman"
