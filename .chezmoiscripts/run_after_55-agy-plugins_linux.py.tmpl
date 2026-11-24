@@ -16,7 +16,7 @@ if not shutil.which("agy"):
 
 inventory = json.loads(subprocess.check_output(["agy", "plugin", "list", "--json"]))
 enabled = {plugin["name"]: plugin["enabled"] for plugin in inventory}
-for name, repo in plugins.items():
+for name, url in plugins.items():
     if name not in enabled:
         # agy copies the clone including .git, and cannot copy Git's fsmonitor socket.
         env = os.environ.copy()
@@ -24,7 +24,7 @@ for name, repo in plugins.items():
         env[f"GIT_CONFIG_KEY_{index}"] = "core.fsmonitor"
         env[f"GIT_CONFIG_VALUE_{index}"] = "false"
         env["GIT_CONFIG_COUNT"] = str(index + 1)
-        subprocess.run(["agy", "plugin", "install", f"https://github.com/{repo}.git"], env=env, check=True)
+        subprocess.run(["agy", "plugin", "install", url], env=env, check=True)
     elif not enabled[name]:
         subprocess.run(["agy", "plugin", "enable", name], check=True)
 {{ end -}}
