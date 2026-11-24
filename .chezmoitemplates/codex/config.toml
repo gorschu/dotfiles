@@ -1,5 +1,5 @@
 # Shared Codex preferences. Machine-specific state stays in the destination file.
-model = "gpt-6.1-sol"
+model = "gpt-6.2-sol"
 model_reasoning_effort = "high"
 service_tier = "default"
 web_search = "live"
