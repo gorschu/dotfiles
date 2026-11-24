@@ -8,6 +8,8 @@ import shutil
 import subprocess
 import sys
 
+subprocess.run([os.path.join(os.environ["CHEZMOI_SOURCE_DIR"], "bootstrap/heading.sh"), "Claude Code plugins"], check=True)
+
 plugins = json.loads({{ .claude.plugins | toJson | toJson }})
 os.environ["PATH"] = {{ joinPath .homebrew.prefix "bin" | toJson }} + os.pathsep + os.environ["PATH"]
 os.environ["CLAUDE_CONFIG_DIR"] = {{ joinPath .chezmoi.homeDir ".config/claude" | toJson }}

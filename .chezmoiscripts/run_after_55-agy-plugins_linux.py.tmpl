@@ -8,6 +8,8 @@ import shutil
 import subprocess
 import sys
 
+subprocess.run([os.path.join(os.environ["CHEZMOI_SOURCE_DIR"], "bootstrap/heading.sh"), "Antigravity plugins"], check=True)
+
 plugins = json.loads({{ .agy.plugins | toJson | toJson }})
 os.environ["PATH"] = {{ joinPath .homebrew.prefix "bin" | toJson }} + os.pathsep + os.environ["PATH"]
 if not shutil.which("agy"):

@@ -8,6 +8,7 @@ ROOT=$(git rev-parse --show-toplevel)
 # shellcheck source=bootstrap/00-bootstrap-lib.sh
 source "$ROOT/bootstrap/00-bootstrap-lib.sh"
 
+print_section "Fedora bootstrap"
 # Verify we're on Fedora/RHEL
 if ! [[ $(detect_os) =~ ^(fedora|rhel)$ ]]; then
   echo "ERROR: This script is designed for Fedora/RHEL-based systems"

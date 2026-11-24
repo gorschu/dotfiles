@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+"$CHEZMOI_SOURCE_DIR/bootstrap/heading.sh" "bat theme cache"
+
 {{ if lookPath "bat" }}
 {{- $configHome := env "XDG_CONFIG_HOME" | default (joinPath .chezmoi.homeDir ".config") }}
 {{ if stat (joinPath $configHome "bat/themes") }}

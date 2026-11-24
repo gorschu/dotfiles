@@ -4,6 +4,7 @@
 """Install missing Joplin plugins and remove unlisted packages; never update them."""
 
 import json
+import os
 from pathlib import Path
 import re
 import shutil
@@ -13,6 +14,8 @@ import tarfile
 import tempfile
 import urllib.error
 import urllib.request
+
+subprocess.run([os.path.join(os.environ["CHEZMOI_SOURCE_DIR"], "bootstrap/heading.sh"), "Joplin desktop plugins"], check=True)
 
 DESIRED_PLUGINS = json.loads({{ .joplin.desktop.plugins | toJson | toJson }})
 PLUGIN_DIR = Path({{ joinPath .chezmoi.homeDir ".config/joplin-desktop/plugins" | toJson }})

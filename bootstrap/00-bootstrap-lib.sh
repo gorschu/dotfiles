@@ -38,14 +38,12 @@ command_exists() {
 
 # Print a section header
 print_section() {
-  echo ""
-  echo -e "\t--- $1 ---"
+  "$ROOT/bootstrap/heading.sh" "$1"
 }
 
 # Print success message and next steps
 print_complete() {
-  echo ""
-  echo -e "\t --- Bootstrap Complete ---"
+  print_section "Bootstrap complete"
   echo ""
   echo -e "\tNext steps:"
   echo -e "\t1. Apply dotfiles: ${ROOT}/bootstrap/01-bootstrap-apply.sh"

@@ -8,6 +8,8 @@
 
 set -euo pipefail
 
+"$CHEZMOI_SOURCE_DIR/bootstrap/heading.sh" "User tmpfiles"
+
 echo "Applying user tmpfiles.d configuration..."
 systemd-tmpfiles --user --create
 

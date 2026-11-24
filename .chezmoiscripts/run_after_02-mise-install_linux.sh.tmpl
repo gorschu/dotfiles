@@ -3,6 +3,8 @@
 
 set -euo pipefail
 
+"$CHEZMOI_SOURCE_DIR/bootstrap/heading.sh" "mise tools"
+
 MISE_CONFIG="${XDG_CONFIG_HOME:-{{ .chezmoi.homeDir }}/.config}/mise/config.toml"
 MISE_BIN={{ joinPath .homebrew.prefix "bin/mise" | quote }}
 

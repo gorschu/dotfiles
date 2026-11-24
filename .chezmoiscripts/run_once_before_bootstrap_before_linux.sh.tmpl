@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+"$CHEZMOI_SOURCE_DIR/bootstrap/heading.sh" "GPG bootstrap"
+
 GPGKEY="{{ .gpgkey }}"
 GPGKEY_FINGERPRINT="{{ get . "gpgkey_fingerprint" | default .gpgkey }}"
 

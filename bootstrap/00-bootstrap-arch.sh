@@ -8,6 +8,7 @@ ROOT=$(git rev-parse --show-toplevel)
 # shellcheck source=bootstrap/00-bootstrap-lib.sh
 source "$ROOT/bootstrap/00-bootstrap-lib.sh"
 
+print_section "Arch bootstrap"
 require_os "arch"
 check_not_root
 

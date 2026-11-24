@@ -4,6 +4,11 @@
 
 set -euo pipefail
 
+ROOT=$(git rev-parse --show-toplevel)
+# shellcheck source=bootstrap/00-bootstrap-lib.sh
+source "$ROOT/bootstrap/00-bootstrap-lib.sh"
+print_section "Dotfiles bootstrap"
+
 # Append Homebrew to PATH without clobbering system tools
 BREW_PREFIX="/home/linuxbrew/.linuxbrew"
 if [[ -x "${BREW_PREFIX}/bin/brew" ]]; then
@@ -19,28 +24,24 @@ if ! command -v chezmoi >/dev/null; then
   exit 1
 fi
 
-project_root="$(git rev-parse --show-toplevel)"
-
-echo "Applying dotfiles..."
-
 # Step 1: Initialize chezmoi source directory
-XDG_CONFIG_HOME=$HOME/.config chezmoi init --source="${project_root}"
+print_section "Initialize chezmoi"
+XDG_CONFIG_HOME=$HOME/.config chezmoi init --source="${ROOT}"
 
 # Step 2: Apply externals first (themes/plugins that other configs depend on)
 # This must happen before step 3 because symlinks and includes reference these paths
-echo "Downloading external dependencies (themes, plugins)..."
-XDG_CONFIG_HOME=$HOME/.config chezmoi apply --source="${project_root}" "${HOME}/.externals"
+print_section "External dependencies"
+XDG_CONFIG_HOME=$HOME/.config chezmoi apply --source="${ROOT}" "${HOME}/.externals"
 
 # Step 3: Apply everything — deploys Brewfiles and runs brew bundle via after-scripts
-echo "Applying configuration files..."
-XDG_CONFIG_HOME=$HOME/.config chezmoi apply --source="${project_root}"
+print_section "Apply dotfiles (pass 1 of 2)"
+XDG_CONFIG_HOME=$HOME/.config chezmoi apply --source="${ROOT}"
 
 # Step 4: Re-apply so templates with lookPath render correctly now that brew tools are installed
-echo "Re-applying to finalize template rendering with installed tools..."
-XDG_CONFIG_HOME=$HOME/.config chezmoi apply --source="${project_root}"
+print_section "Apply dotfiles with installed tools (pass 2 of 2)"
+XDG_CONFIG_HOME=$HOME/.config chezmoi apply --source="${ROOT}"
 
-echo ""
-echo "Dotfiles applied successfully!"
+print_section "Dotfiles applied successfully"
 echo ""
 echo "Note: To use git via SSH, run:"
 echo "  chezmoi git remote set-url origin git@github.com:gorschu/dotfiles"

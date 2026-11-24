@@ -3,6 +3,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+"$CHEZMOI_SOURCE_DIR/bootstrap/heading.sh" "Joplin CLI settings"
+
 # Hash encrypted source and templates, never plaintext credentials.
 # Account: {{ include "secrets/joplin.toml.asc" | sha256sum }}
 # Settings: {{ include ".chezmoitemplates/joplin/sync-settings" | sha256sum }}

@@ -13,6 +13,8 @@
 
 set -euo pipefail
 
+"$CHEZMOI_SOURCE_DIR/bootstrap/heading.sh" "Flatpak applications"
+
 # Only run if flatpak is installed
 if ! command -v flatpak &>/dev/null; then
   echo "Flatpak not found, skipping flatpak management"

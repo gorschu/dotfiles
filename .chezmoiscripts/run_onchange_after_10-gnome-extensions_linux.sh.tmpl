@@ -4,6 +4,8 @@
 
 set -euo pipefail
 
+"$CHEZMOI_SOURCE_DIR/bootstrap/heading.sh" "GNOME extensions"
+
 # Only run if GNOME Shell is installed
 if ! command -v gnome-shell &>/dev/null; then
   echo "GNOME Shell not found, skipping extension management"

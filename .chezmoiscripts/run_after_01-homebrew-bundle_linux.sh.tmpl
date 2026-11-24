@@ -4,6 +4,8 @@
 
 set -euo pipefail
 
+"$CHEZMOI_SOURCE_DIR/bootstrap/heading.sh" "Homebrew bundle"
+
 BREW_ENV="${XDG_CONFIG_HOME:-{{ .chezmoi.homeDir }}/.config}/homebrew/env"
 
 if [[ ! -r "${BREW_ENV}" ]]; then

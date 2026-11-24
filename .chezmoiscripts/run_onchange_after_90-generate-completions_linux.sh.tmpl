@@ -3,6 +3,8 @@
 
 set -euo pipefail
 
+"$CHEZMOI_SOURCE_DIR/bootstrap/heading.sh" "Zed shell completions"
+
 if ! command -v zed &>/dev/null; then
   echo "Zed not found, skipping shell completions"
   exit 0
